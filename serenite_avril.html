@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Sérénité · Mon Mois Anti-SJSR</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  /* Palette fleurs de pommier */
+  --petal-white: #fdfaf8;
+  --petal-pink:  #f2c4ce;
+  --petal-rose:  #e8899a;
+  --blossom-deep:#c45c78;
+  --leaf-light:  #a8c89a;
+  --leaf-dark:   #5a8a5a;
+  --leaf-mid:    #7aab72;
+  --pistil:      #d4a843;
+  --bark:        #6b4c3b;
+  --bark-light:  #9b7060;
+  --bg:          #faf6f3;
+  --bg2:         #f5ede8;
+  --text:        #3a2820;
+  --muted:       rgba(58,40,32,0.45);
+  --card:        #ffffff;
+  --night:       #3a2030;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{
+  font-family:'Nunito',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+  padding-bottom:4rem;
+}
+
+/* ── Petal background texture ── */
+body::before{
+  content:'';
+  position:fixed;inset:0;
+  background:
+    radial-gradient(ellipse at 10% 20%, rgba(242,196,206,0.18) 0%, transparent 50%),
+    radial-gradient(ellipse at 90% 10%, rgba(168,200,154,0.12) 0%, transparent 45%),
+    radial-gradient(ellipse at 50% 80%, rgba(242,196,206,0.12) 0%, transparent 50%);
+  pointer-events:none;z-index:0;
+}
+
+/* ── HEADER ── */
+.header{
+  background: linear-gradient(160deg, #3a2030 0%, #5a2840 60%, #7a3850 100%);
+  padding:1rem 1.2rem 0.8rem;
+  position:sticky;top:0;z-index:100;
+  box-shadow:0 4px 24px rgba(58,32,48,0.3);
+  overflow:hidden;
+}
+.header::before{
+  content:'🌸';
+  position:absolute;right:-0.5rem;top:-0.5rem;
+  font-size:5rem;opacity:0.08;
+  transform:rotate(-15deg);
+  pointer-events:none;
+}
+.header::after{
+  content:'🌿';
+  position:absolute;left:0.5rem;bottom:-1rem;
+  font-size:4rem;opacity:0.06;
+  transform:rotate(10deg);
+  pointer-events:none;
+}
+.header-top{display:flex;align-items:center;justify-content:space-between;position:relative}
+.header h1{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.35rem;color:#fff;font-weight:400;
+  letter-spacing:0.02em;
+}
+.header h1 em{color:var(--petal-pink);font-style:italic}
+.header-sub{font-size:0.58rem;color:rgba(255,255,255,0.38);letter-spacing:0.12em;text-transform:uppercase;margin-top:0.1rem}
+
+/* Budget bar */
+.budget-bar{
+  background:rgba(255,255,255,0.08);
+  border:1px solid rgba(255,255,255,0.1);
+  border-radius:12px;padding:0.6rem 0.9rem;
+  margin-top:0.65rem;
+  display:flex;align-items:center;gap:0.75rem;
+  position:relative;
+}
+.budget-label{font-size:0.6rem;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:0.08em;white-space:nowrap}
+.budget-track{flex:1;background:rgba(255,255,255,0.1);border-radius:2rem;height:5px;overflow:hidden}
+.budget-fill{
+  height:100%;border-radius:2rem;
+  background:linear-gradient(90deg,var(--leaf-light),var(--petal-pink));
+  transition:width 0.5s ease;
+}
+.budget-amount{font-size:0.7rem;color:#fff;font-weight:700;white-space:nowrap}
+.budget-amount span{color:var(--petal-pink)}
+
+/* ── ALERT ── */
+.alert-bar{
+  background:linear-gradient(90deg,rgba(242,196,206,0.2),rgba(168,200,154,0.15));
+  border-left:3px solid var(--petal-rose);
+  margin:0.7rem 1rem 0;
+  padding:0.55rem 0.9rem;
+  border-radius:0 10px 10px 0;
+  font-size:0.7rem;line-height:1.5;
+  position:relative;z-index:1;
+}
+.alert-bar strong{color:var(--blossom-deep)}
+
+/* ── NAV TABS ── */
+.nav-tabs{
+  display:flex;gap:0;
+  margin:0.8rem 1rem 0;
+  background:rgba(58,40,32,0.06);
+  border-radius:12px;padding:0.2rem;
+  position:relative;z-index:1;
+}
+.nav-tab{
+  flex:1;text-align:center;
+  padding:0.5rem 0.2rem;
+  font-size:0.66rem;font-weight:700;
+  color:var(--muted);border-radius:9px;
+  cursor:pointer;transition:all 0.2s;
+  letter-spacing:0.03em;
+}
+.nav-tab.active{
+  background:linear-gradient(135deg,var(--blossom-deep),#a04060);
+  color:#fff;
+  box-shadow:0 2px 10px rgba(196,92,120,0.3);
+}
+
+/* ── CALENDAR ── */
+.calendar-section{padding:0.8rem 1rem 0;position:relative;z-index:1}
+.cal-month-header{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:0.9rem;
+}
+.cal-month-header h2{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.3rem;font-weight:600;
+  color:var(--text);
+  display:flex;align-items:center;gap:0.4rem;
+}
+.cal-budget-badge{
+  font-size:0.66rem;font-weight:700;
+  padding:0.25rem 0.7rem;border-radius:2rem;
+  background:rgba(90,138,90,0.12);color:var(--leaf-dark);
+  border:1px solid rgba(90,138,90,0.2);
+}
+.cal-weekdays{display:grid;grid-template-columns:repeat(7,1fr);gap:0.2rem;margin-bottom:0.3rem}
+.cal-wd{text-align:center;font-size:0.52rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;padding:0.2rem 0}
+
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:0.28rem}
+
+.cal-day{
+  aspect-ratio:1;border-radius:12px;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  cursor:pointer;
+  font-size:0.78rem;font-weight:700;color:var(--text);
+  background:var(--card);
+  transition:all 0.18s;
+  position:relative;
+  box-shadow:0 1px 4px rgba(58,40,32,0.06);
+  border:1.5px solid transparent;
+}
+.cal-day:active{transform:scale(0.92)}
+.cal-day.empty{background:transparent;box-shadow:none;cursor:default;border:none}
+.cal-day.no-menu{
+  background:rgba(58,40,32,0.03);
+  color:var(--muted);cursor:default;
+  box-shadow:none;border-color:transparent;
+}
+.cal-day .cal-dot{width:4px;height:4px;border-radius:50%;margin-top:0.12rem}
+.cal-day.has-menu .cal-dot{background:var(--leaf-mid)}
+.cal-day.has-menu{border-color:rgba(122,171,114,0.2)}
+.cal-day.livraison{border-color:var(--bark-light);background:linear-gradient(135deg,#fff8f5,#fff)}
+.cal-day.batch-day{border-color:var(--pistil);background:linear-gradient(135deg,#fffbf0,#fff)}
+.cal-day.birthday{
+  background:linear-gradient(135deg,#fff0f4,#fdf5f8);
+  border-color:var(--petal-rose);
+}
+.cal-day.birthday .cal-dot{background:var(--petal-rose)}
+.cal-day.active-day{
+  background:linear-gradient(135deg,var(--blossom-deep),#a04060);
+  color:#fff;
+  border-color:var(--blossom-deep);
+  box-shadow:0 4px 16px rgba(196,92,120,0.3);
+}
+.cal-day.active-day .cal-dot{background:rgba(255,255,255,0.7)}
+.cal-icon{font-size:0.6rem;margin-top:0.08rem}
+
+/* Week separator */
+.week-sep{
+  grid-column:1/-1;
+  height:1px;
+  background:linear-gradient(90deg,transparent,rgba(242,196,206,0.4),transparent);
+  margin:0.1rem 0;
+}
+
+/* ── LEGEND ── */
+.cal-legend{
+  display:flex;flex-wrap:wrap;gap:0.5rem;
+  margin:0.75rem 1rem 0;
+  font-size:0.62rem;color:var(--muted);
+  position:relative;z-index:1;
+}
+.leg{display:flex;align-items:center;gap:0.3rem}
+.ld{width:8px;height:8px;border-radius:3px}
+.ld-g{background:var(--leaf-mid)}.ld-l{background:var(--bark-light)}
+.ld-b{background:var(--pistil)}.ld-bday{background:var(--petal-rose)}
+
+/* ── OVERLAY & PANEL ── */
+.overlay{
+  position:fixed;inset:0;
+  background:rgba(58,32,48,0.45);
+  backdrop-filter:blur(3px);
+  z-index:150;opacity:0;pointer-events:none;
+  transition:opacity 0.3s;
+}
+.overlay.show{opacity:1;pointer-events:all}
+
+.day-panel{
+  position:fixed;bottom:0;left:0;right:0;
+  background:var(--bg);
+  border-radius:24px 24px 0 0;
+  box-shadow:0 -8px 40px rgba(58,32,48,0.2);
+  transform:translateY(100%);
+  transition:transform 0.35s cubic-bezier(0.32,0,0.67,1);
+  z-index:200;
+  max-height:88vh;
+  overflow-y:auto;
+}
+.day-panel.open{transform:translateY(0)}
+.panel-handle{
+  width:40px;height:4px;
+  background:rgba(58,40,32,0.12);
+  border-radius:2px;margin:0.75rem auto 0;
+}
+.panel-close{
+  position:absolute;right:1rem;top:0.8rem;
+  width:30px;height:30px;border-radius:50%;
+  background:rgba(58,40,32,0.07);border:none;
+  font-size:0.9rem;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  color:var(--muted);
+}
+
+/* Panel header */
+.panel-header{padding:0.3rem 1.2rem 0.9rem}
+.panel-date{
+  font-size:0.58rem;text-transform:uppercase;
+  letter-spacing:0.12em;color:var(--muted);font-weight:700;
+}
+.panel-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.4rem;font-weight:600;
+  color:var(--text);margin-top:0.2rem;
+  line-height:1.25;
+}
+.panel-mode{
+  display:inline-block;
+  font-family:'Nunito',sans-serif;
+  font-size:0.6rem;font-weight:700;
+  padding:0.2rem 0.65rem;border-radius:2rem;
+  margin-top:0.35rem;letter-spacing:0.04em;
+}
+.pm-l{background:rgba(155,112,96,0.1);color:var(--bark)}
+.pm-b{background:rgba(212,168,67,0.12);color:#8a6800}
+.pm-f{background:rgba(90,138,90,0.1);color:var(--leaf-dark)}
+.pm-bday{background:rgba(232,137,154,0.12);color:var(--blossom-deep)}
+
+/* Banners */
+.livraison-banner,.batch-banner,.bday-banner{
+  margin:0 1rem 0.7rem;border-radius:14px;
+  padding:0.75rem 1rem;font-size:0.71rem;line-height:1.65;
+}
+.livraison-banner{
+  background:linear-gradient(135deg,rgba(155,112,96,0.06),rgba(255,255,255,0.5));
+  border:1px solid rgba(155,112,96,0.2);color:#6b3820;
+}
+.batch-banner{
+  background:linear-gradient(135deg,rgba(212,168,67,0.07),rgba(255,255,255,0.5));
+  border:1px solid rgba(212,168,67,0.2);color:#7a5800;
+}
+.bday-banner{
+  background:linear-gradient(135deg,rgba(232,137,154,0.08),rgba(242,196,206,0.08));
+  border:1px solid rgba(232,137,154,0.25);color:#8a2840;
+}
+
+/* Meal cards */
+.panel-meals{padding:0 1rem;display:flex;flex-direction:column;gap:0.6rem}
+.meal-card{
+  background:#fff;border-radius:16px;
+  overflow:hidden;
+  box-shadow:0 2px 12px rgba(58,40,32,0.06);
+  border:1px solid rgba(58,40,32,0.05);
+}
+.meal-card.bday-card{
+  border-color:rgba(232,137,154,0.2);
+  background:linear-gradient(180deg,#fff9fb,#fff);
+}
+.meal-head{display:flex;align-items:center;gap:0.65rem;padding:0.75rem 0.9rem}
+.miw{
+  width:38px;height:38px;border-radius:11px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.1rem;flex-shrink:0;
+}
+.ic-mat{background:rgba(212,168,67,0.1)}
+.ic-mid{background:rgba(90,138,90,0.1)}
+.ic-gou{background:rgba(242,196,206,0.35)}
+.ic-din{background:rgba(58,40,32,0.05)}
+.ic-sna{background:rgba(232,137,154,0.1)}
+.ic-bday{background:linear-gradient(135deg,rgba(232,137,154,0.15),rgba(212,168,67,0.1))}
+
+.meal-lbl{font-size:0.58rem;text-transform:uppercase;letter-spacing:0.1em;font-weight:700;color:var(--muted)}
+.meal-time{font-size:0.67rem;color:var(--muted);margin-top:0.08rem}
+.meal-body{padding:0 0.9rem 0.9rem}
+
+.meal-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1rem;font-weight:600;
+  color:var(--text);margin-bottom:0.45rem;line-height:1.35;
+}
+
+.ingr-list{display:flex;flex-wrap:wrap;gap:0.28rem;margin-bottom:0.4rem}
+.ingr{
+  background:var(--bg);border-radius:2rem;
+  padding:0.2rem 0.55rem;font-size:0.67rem;
+  border:1px solid rgba(58,40,32,0.08);color:var(--text);
+}
+.ingr.fr{
+  border-color:rgba(90,138,90,0.3);
+  color:var(--leaf-dark);background:rgba(90,138,90,0.05);
+}
+.ingr.bd{
+  border-color:rgba(232,137,154,0.3);
+  color:var(--blossom-deep);background:rgba(232,137,154,0.05);
+}
+
+.ntags{display:flex;flex-wrap:wrap;gap:0.25rem;margin-top:0.35rem}
+.ntag{border-radius:2rem;padding:0.15rem 0.45rem;font-size:0.56rem;font-weight:700;letter-spacing:0.04em}
+.nt-fer{background:rgba(155,112,96,0.12);color:var(--bark)}
+.nt-mag{background:rgba(90,138,90,0.12);color:var(--leaf-dark)}
+.nt-alk{background:rgba(168,200,154,0.2);color:#3a6a3a}
+.nt-vitc{background:rgba(212,168,67,0.12);color:#8a6800}
+.nt-fun{background:rgba(232,196,206,0.4);color:var(--blossom-deep)}
+.nt-bday{background:rgba(232,137,154,0.12);color:var(--blossom-deep)}
+
+.conseil{
+  margin-top:0.45rem;padding:0.4rem 0.65rem;
+  border-radius:8px;font-size:0.68rem;line-height:1.5;
+  display:flex;gap:0.35rem;align-items:flex-start;
+}
+.c-sjsr{background:rgba(168,200,154,0.12);color:#3a6a3a;border-left:2px solid var(--leaf-mid)}
+.c-prep{background:rgba(155,112,96,0.08);color:#6b3820;border-left:2px solid var(--bark-light)}
+.c-bday{background:rgba(232,137,154,0.08);color:#8a2840;border-left:2px solid var(--petal-rose)}
+
+.snack-fun{
+  background:linear-gradient(135deg,rgba(232,196,206,0.2),rgba(168,200,154,0.12));
+  border-radius:10px;padding:0.5rem 0.75rem;
+  font-size:0.8rem;
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  text-align:center;margin-bottom:0.4rem;color:var(--text);
+}
+.snack-bday{
+  background:linear-gradient(135deg,rgba(232,137,154,0.1),rgba(212,168,67,0.08));
+  border-radius:10px;padding:0.5rem 0.75rem;
+  font-size:0.85rem;
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  text-align:center;margin-bottom:0.4rem;
+  color:var(--blossom-deep);
+}
+
+/* Infusion */
+.infusion-card{
+  background:linear-gradient(160deg,var(--night),#5a2840);
+  border-radius:16px;padding:1rem 1.1rem;
+  margin:0.75rem 1rem 1.8rem;
+  color:#fff;
+  box-shadow:0 6px 24px rgba(58,32,48,0.2);
+  position:relative;overflow:hidden;
+}
+.infusion-card::after{
+  content:'🌸';position:absolute;right:0.8rem;bottom:-0.5rem;
+  font-size:3rem;opacity:0.08;
+}
+.infusion-card h3{
+  font-family:'Cormorant Garamond',serif;
+  font-size:0.95rem;color:var(--petal-pink);
+  margin-bottom:0.3rem;
+}
+.infusion-card p{font-size:0.74rem;color:rgba(255,255,255,0.78);line-height:1.6}
+.infusion-card .inf-note{margin-top:0.35rem;font-size:0.62rem;color:rgba(255,255,255,0.35);font-style:italic}
+
+/* ── SHOPPING ── */
+.shop-section{padding:0.8rem 1rem;position:relative;z-index:1}
+.shop-week{
+  background:#fff;border-radius:16px;
+  margin-bottom:1rem;overflow:hidden;
+  box-shadow:0 2px 12px rgba(58,40,32,0.06);
+  border:1px solid rgba(58,40,32,0.05);
+}
+.shop-week-header{
+  padding:0.75rem 1rem;
+  background:linear-gradient(135deg,#5a2840,#7a3850);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.shop-week-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1rem;color:#fff;font-weight:400;
+}
+.shop-week-budget{font-size:0.72rem;font-weight:700;color:var(--petal-pink)}
+.shop-source-title{
+  font-size:0.57rem;text-transform:uppercase;letter-spacing:0.1em;
+  font-weight:700;color:var(--muted);
+  padding:0.65rem 1rem 0.3rem;
+  border-bottom:1px solid rgba(58,40,32,0.05);
+  margin-bottom:0.35rem;
+}
+.shop-source-block{padding:0 0 0.4rem}
+.shop-item{
+  display:flex;align-items:center;gap:0.6rem;
+  padding:0.35rem 1rem;
+  border-bottom:1px solid rgba(58,40,32,0.03);
+  font-size:0.75rem;transition:opacity 0.2s;
+}
+.shop-item:last-child{border-bottom:none}
+.shop-check{
+  width:19px;height:19px;border-radius:6px;
+  border:2px solid rgba(58,40,32,0.15);
+  flex-shrink:0;cursor:pointer;
+  transition:all 0.15s;
+  display:flex;align-items:center;justify-content:center;
+  font-size:0.7rem;color:#fff;
+}
+.shop-check.checked{background:var(--leaf-mid);border-color:var(--leaf-mid)}
+.shop-item.done .shop-item-name{text-decoration:line-through;color:var(--muted)}
+.shop-item.done{opacity:0.55}
+.shop-item-name{flex:1}
+.shop-item-price{font-size:0.67rem;font-weight:700;color:var(--bark-light);white-space:nowrap}
+
+/* ── TIPS ── */
+.tips-section{padding:0.8rem 1rem;position:relative;z-index:1}
+.tip-card{
+  background:#fff;border-radius:16px;
+  padding:1rem 1.1rem;margin-bottom:0.8rem;
+  box-shadow:0 2px 12px rgba(58,40,32,0.06);
+  border:1px solid rgba(58,40,32,0.04);
+  position:relative;overflow:hidden;
+}
+.tip-card::before{
+  content:attr(data-flower);
+  position:absolute;right:0.5rem;top:0.5rem;
+  font-size:2.5rem;opacity:0.06;
+}
+.tip-tag{
+  display:inline-block;font-size:0.57rem;font-weight:700;
+  padding:0.15rem 0.5rem;border-radius:2rem;margin-bottom:0.5rem;
+  letter-spacing:0.04em;
+}
+.tt-sjsr{background:rgba(168,200,154,0.2);color:var(--leaf-dark)}
+.tt-budget{background:rgba(212,168,67,0.12);color:#8a6800}
+.tt-batch{background:rgba(155,112,96,0.1);color:var(--bark)}
+.tip-card h3{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1rem;font-weight:600;
+  color:var(--text);margin-bottom:0.5rem;
+}
+.tip-card ul{padding-left:1.1rem}
+.tip-card ul li,.tip-card p{font-size:0.75rem;line-height:1.75;color:rgba(58,40,32,0.75)}
+.tip-card ul li{margin-bottom:0.1rem}
+
+/* Floral divider */
+.floral-div{
+  text-align:center;font-size:0.8rem;
+  letter-spacing:0.4em;color:var(--petal-pink);
+  margin:0.5rem 0;opacity:0.7;
+}
+
+/* Section title */
+.sect-title{
+  font-size:0.57rem;text-transform:uppercase;
+  letter-spacing:0.12em;color:var(--muted);font-weight:700;
+  margin:0.75rem 1rem 0.35rem;
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-top">
+    <div>
+      <h1>🌸 <em>Sérénité</em> · Avril 2026</h1>
+      <div class="header-sub">Menu mensuel anti-SJSR · Ketty</div>
+    </div>
+  </div>
+  <div class="budget-bar">
+    <span class="budget-label">🌿 Budget</span>
+    <div class="budget-track"><div class="budget-fill" id="budgetFill" style="width:52%"></div></div>
+    <span class="budget-amount" id="budgetAmount"><span>105€</span> / 200€</span>
+  </div>
+</div>
+
+<div class="alert-bar">
+  <strong>🌸 Rappels SJSR :</strong> Pas de café/thé noir après 14h · Infusion gingembre-curcuma chaque soir · Dîner léger avant 20h
+</div>
+
+<div class="nav-tabs">
+  <div class="nav-tab active" onclick="showView('calendar')">🌸 Calendrier</div>
+  <div class="nav-tab" onclick="showView('shopping')">🛒 Courses</div>
+  <div class="nav-tab" onclick="showView('tips')">🌿 Conseils</div>
+</div>
+
+<!-- ═══ CALENDAR ═══ -->
+<div id="view-calendar">
+  <div class="calendar-section">
+    <div class="cal-month-header">
+      <h2>🌸 Avril 2026</h2>
+      <span class="cal-budget-badge">200€ · Budget du mois</span>
+    </div>
+    <div class="cal-weekdays">
+      <div class="cal-wd">Lun</div><div class="cal-wd">Mar</div><div class="cal-wd">Mer</div>
+      <div class="cal-wd">Jeu</div><div class="cal-wd">Ven</div><div class="cal-wd">Sam</div>
+      <div class="cal-wd">Dim</div>
+    </div>
+    <div class="cal-grid" id="calGrid"></div>
+  </div>
+  <div class="cal-legend">
+    <span class="leg"><span class="ld ld-g" style="border-radius:50%"></span>Menu dispo</span>
+    <span class="leg"><span class="ld ld-l"></span>Livraison</span>
+    <span class="leg"><span class="ld ld-b"></span>Batch cooking</span>
+    <span class="leg"><span class="ld ld-bday"></span>Anniversaire 🎂</span>
+  </div>
+</div>
+
+<!-- ═══ SHOPPING ═══ -->
+<div id="view-shopping" style="display:none">
+  <div class="shop-section">
+    <div class="shop-week">
+      <div class="shop-week-header">
+        <span class="shop-week-title">🛒 Semaine 1 · 10–14 avril</span>
+        <span class="shop-week-budget">~105–130€</span>
+      </div>
+      <div class="shop-source-block">
+        <div class="shop-source-title">🌿 La Fourche · bio & sec · ~65€</div>
+        <div id="sl-fourche"></div>
+      </div>
+      <div class="shop-source-block">
+        <div class="shop-source-title">❄️ Picard · surgelés · ~40€</div>
+        <div id="sl-picard"></div>
+      </div>
+      <div class="shop-source-block">
+        <div class="shop-source-title">🥬 Bene Bono · frais · ~17-25€</div>
+        <div id="sl-beno"></div>
+      </div>
+    </div>
+    <div class="shop-week">
+      <div class="shop-week-header">
+        <span class="shop-week-title">🌸 Semaine 2 · 17–30 avril</span>
+        <span class="shop-week-budget">~70-95€ restants</span>
+      </div>
+      <div style="padding:0.75rem 1rem 0.9rem;font-size:0.76rem;color:var(--muted);font-style:italic;line-height:1.7">
+        🌱 La liste de semaine 2 sera générée après validation de la semaine 1.<br>
+        Budget restant estimé : <strong style="color:var(--leaf-dark)">~70 à 95€</strong> selon les restes de stock La Fourche.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ TIPS ═══ -->
+<div id="view-tips" style="display:none">
+  <div class="tips-section">
+
+    <div class="tip-card" data-flower="⚗️">
+      <span class="tip-tag tt-sjsr">🌿 SJSR · Fer & Magnésium</span>
+      <h3>Les binômes qui soulagent</h3>
+      <ul>
+        <li><strong>Lentilles + vinaigre de cidre</strong> → absorption fer ×3</li>
+        <li><strong>Sardines + persil</strong> → fer hème + vitamine C naturelle</li>
+        <li><strong>Épinards + ail</strong> → magnésium + soufre anti-inflammatoire</li>
+        <li><strong>Curcuma + poivre noir + huile</strong> → biodisponibilité ×20</li>
+        <li><strong>Sarrasin + fruits rouges</strong> → magnésium + antioxydants</li>
+        <li><strong>Chocolat 85% + amandes</strong> → double dose magnésium le soir</li>
+      </ul>
+    </div>
+
+    <div class="floral-div">🌸 · · · 🌸</div>
+
+    <div class="tip-card" data-flower="🚫">
+      <span class="tip-tag tt-sjsr">🚫 À éviter</span>
+      <h3>Les ennemis du SJSR</h3>
+      <ul>
+        <li>Café et thé noir <strong>après 14h</strong></li>
+        <li>Glutamate (exhausteurs E621, E622…) → lire les étiquettes</li>
+        <li>Sucre raffiné en soirée → pic glycémique nocturne</li>
+        <li>Alcool → aggrave les symptômes la nuit</li>
+        <li>Lactose et repas lourds le soir → inflammation digestive</li>
+        <li>Dîner après 20h → digestion active perturbe le repos</li>
+      </ul>
+    </div>
+
+    <div class="floral-div">🌿 · · · 🌿</div>
+
+    <div class="tip-card" data-flower="⏱">
+      <span class="tip-tag tt-batch">🍳 Batch cooking</span>
+      <h3>Chaque samedi matin · 1h30</h3>
+      <ul>
+        <li><strong>Air Fryer :</strong> amandes 8 min · graines de courge 6 min · tofu 15 min</li>
+        <li><strong>3 casseroles simultanées :</strong> lentilles + quinoa + sarrasin</li>
+        <li><strong>Poêle :</strong> épinards sautés ail → 3 portions dîners</li>
+        <li><strong>Ninja Creami :</strong> 2-3 bases à congeler pour les snacks TV</li>
+        <li><strong>Bocal gingembre :</strong> trancher tout → prêt toute la semaine</li>
+      </ul>
+    </div>
+
+    <div class="floral-div">🌸 · · · 🌸</div>
+
+    <div class="tip-card" data-flower="💰">
+      <span class="tip-tag tt-budget">🌸 Budget malin</span>
+      <h3>Répartition 200€ / mois d'avril</h3>
+      <ul>
+        <li><strong>La Fourche :</strong> ~65€ · commande unique · stocks 3-4 semaines</li>
+        <li><strong>Picard :</strong> ~40€ · surgelés = zéro gaspillage garanti</li>
+        <li><strong>Bene Bono :</strong> ~17-25€/semaine · légumes frais de saison</li>
+        <li>Dès le mois de mai : La Fourche ~30-40€ seulement (réassort partiel)</li>
+      </ul>
+    </div>
+
+    <div class="floral-div">🌙 · · · 🌸</div>
+
+    <div class="tip-card" data-flower="🍵">
+      <span class="tip-tag tt-sjsr">🌙 Infusion Lune Dorée</span>
+      <h3>Chaque soir entre 20h et 21h</h3>
+      <p>1cc gingembre Picard · ½cc curcuma · pincée poivre noir · eau à 80°C (pas bouillante) · infuser 8 min · boire sans sucre.<br><br>
+      Le gingembre réduit l'inflammation musculaire. Le curcuma potentialise l'action dopaminergique. Action ressentie sur les symptômes en <strong>3 à 4 semaines</strong> de régularité.</p>
+    </div>
+
+  </div>
+</div>
+
+<!-- OVERLAY -->
+<div class="overlay" id="overlay" onclick="closePanel()"></div>
+
+<!-- DAY PANEL -->
+<div class="day-panel" id="dayPanel">
+  <div class="panel-handle"></div>
+  <button class="panel-close" onclick="closePanel()">✕</button>
+  <div id="panelContent"></div>
+</div>
+
+<script>
+// ── INFUSIONS ──
+const INF = {
+  nom:"Infusion Lune Dorée 🌸",
+  recette:"1cc gingembre · ½cc curcuma · pincée poivre noir · eau 80°C · 8 min",
+  note:"Entre 20h et 21h, sans sucre. Tous les soirs."
+};
+const INF_BDAY = {
+  nom:"Infusion Anniversaire Dorée 🌸",
+  recette:"1cc gingembre · ½cc curcuma · pincée cardamome · 1 datte infusée · eau 80°C · 10 min",
+  note:"La version luxe pour votre soirée d'anniversaire 🌙"
+};
+
+// ── MENUS ──
+const MENUS = {
+  '10':{
+    name:"Vendredi 10 avril",
+    mode:"pm-l",modeLabel:"📦 Livraison — Tout arrive !",
+    livraison:true,batch:false,birthday:false,
+    meals:[
+      {ic:"☀️",cl:"ic-mat",lbl:"Petit-déjeuner",time:"7h – 9h",
+       title:"Chia pudding · Fruits rouges Picard",
+       ingr:[{t:"Graines de chia 3cs"},{t:"Lait de millet 200ml"},{t:"Fruits rouges Picard"},{t:"1 datte Medjool"}],
+       tags:[["MAG","nt-mag"],["FER","nt-fer"]],
+       conseil:{type:"prep",text:"Si livraison pas encore là le matin : sarrasin chaud + datte. Livraison attendue dans la journée !"}},
+      {ic:"🥗",cl:"ic-mid",lbl:"Déjeuner Bureau",time:"12h – 13h30",
+       title:"Lentilles corail · Thon · Persil",
+       ingr:[{t:"Lentilles corail 150g"},{t:"Thon au naturel"},{t:"Persil Picard"},{t:"Vinaigre de cidre"},{t:"Huile colza"}],
+       tags:[["FER","nt-fer"],["VIT-C","nt-vitc"],["MAG","nt-mag"]],
+       conseil:{type:"sjsr",text:"🌿 Lentilles + vinaigre de cidre = absorption du fer multipliée par 3. Le binôme anti-SJSR n°1 !"}},
+      {ic:"🍊",cl:"ic-gou",lbl:"Goûter",time:"avant 17h",
+       title:"6 amandes · 1 carré chocolat noir 85%",
+       ingr:[{t:"6 amandes"},{t:"1 carré chocolat 85% Togo"}],
+       tags:[["MAG","nt-mag"]],conseil:null},
+      {ic:"🌙",cl:"ic-din",lbl:"Dîner — Premiers légumes frais !",time:"19h – 20h max",
+       title:"Cabillaud Air Fryer · Légumes frais Bene Bono · Gingembre",
+       ingr:[{t:"1 portion cabillaud Picard"},{t:"Légumes frais Bene Bono",fr:true},{t:"Gingembre Picard"},{t:"Persillade Picard"},{t:"Huile olive"}],
+       tags:[["ALK","nt-alk"],["MAG","nt-mag"]],
+       conseil:{type:"prep",text:"🌿 Premiers légumes frais ! Air Fryer 180°C / 12 min. Légumes vapeur 8 min."}},
+      {ic:"📺",cl:"ic-sna",lbl:"Snack TV Anti-SJSR",time:"Soirée",
+       fun:"🌸 Graines de courge torréfiées · Air Fryer 160°C / 6 min",
+       ingr:[{t:"Graines de courge 30g"},{t:"Fleur de sel"}],
+       tags:[["MAG","nt-mag"],["FUN","nt-fun"]],
+       conseil:{type:"prep",text:"💡 Ce soir : préparer 2 bases Ninja Creami (framboises + mangue-gingembre) → congeler pour demain !"}}
+    ],infusion:INF},
+
+  '11':{
+    name:"Samedi 11 avril",
+    mode:"pm-b",modeLabel:"⏱ Batch Cooking",
+    livraison:false,batch:true,birthday:false,
+    meals:[
+      {ic:"☀️",cl:"ic-mat",lbl:"Petit-déjeuner",time:"7h – 9h",
+       title:"Chia pudding overnight · Salade fruits Picard",
+       ingr:[{t:"Chia pudding préparé hier soir"},{t:"Salade fruits Picard"},{t:"1 datte"}],
+       tags:[["MAG","nt-mag"],["VIT-C","nt-vitc"]],
+       conseil:{type:"prep",text:"Préparé vendredi soir → 0 effort ce matin réservé au batch !"}},
+      {ic:"🥗",cl:"ic-mid",lbl:"Déjeuner du Chef",time:"12h30",
+       title:"Tofu noisette Air Fryer · Légumes frais · Mélange thaï",
+       ingr:[{t:"Tofu noisette ail des ours"},{t:"Légumes frais Bene Bono",fr:true},{t:"Mélange thaïlandais Picard"},{t:"Gingembre + curcuma + poivre"}],
+       tags:[["ALK","nt-alk"],["MAG","nt-mag"]],
+       conseil:{type:"prep",text:"Vous méritez ce déjeuner coloré après le batch !"}},
+      {ic:"🍊",cl:"ic-gou",lbl:"Goûter",time:"avant 17h",
+       title:"Amandes torréfiées (batch) · 2 dattes Medjool",
+       ingr:[{t:"Amandes torréfiées (du batch)"},{t:"2 dattes Medjool"}],
+       tags:[["MAG","nt-mag"],["ALK","nt-alk"]],conseil:null},
+      {ic:"🌙",cl:"ic-din",lbl:"Dîner léger",time:"19h – 20h max",
+       title:"Velouté brocolis · Lait de coco Masala",
+       ingr:[{t:"Brocolis Picard 400g"},{t:"Lait de coco Masala 200ml"},{t:"Gingembre Picard"},{t:"Curcuma + poivre"},{t:"Ail Picard"}],
+       tags:[["ALK","nt-alk"],["MAG","nt-mag"]],
+       conseil:{type:"prep",text:"Cuire 12 min → mixer avec lait de coco. Graines de courge (batch) dessus."}},
+      {ic:"📺",cl:"ic-sna",lbl:"Snack TV Anti-SJSR",time:"Soirée",
+       fun:"🌸 Sorbet Ninja Creami Framboises (base de vendredi)",
+       ingr:[{t:"Base framboises congelée 24h"},{t:"Traiter 1 min au Creami !"}],
+       tags:[["ALK","nt-alk"],["FUN","nt-fun"]],conseil:null}
+    ],infusion:INF},
+
+  '12':{
+    name:"Dimanche 12 avril",
+    mode:"pm-f",modeLabel:"🌿 Légumes frais",
+    livraison:false,batch:false,birthday:false,
+    meals:[
+      {ic:"☀️",cl:"ic-mat",lbl:"Petit-déjeuner",time:"7h – 9h",
+       title:"Porridge sarrasin (batch) · Framboises · Chia",
+       ingr:[{t:"Sarrasin cuit (batch) 80g"},{t:"Lait de millet"},{t:"Framboises Picard"},{t:"Graines de chia"}],
+       tags:[["MAG","nt-mag"],["FER","nt-fer"]],conseil:null},
+      {ic:"🥗",cl:"ic-mid",lbl:"Déjeuner Plateau de la Mer",time:"12h30",
+       title:"Sardines · Quinoa froid · Légumes frais",
+       ingr:[{t:"Sardines 1 boîte"},{t:"Quinoa froid (batch) 100g"},{t:"Légumes frais Bene Bono",fr:true},{t:"Persil Picard"},{t:"Vinaigre de cidre + huile colza"}],
+       tags:[["FER","nt-fer"],["VIT-C","nt-vitc"],["MAG","nt-mag"]],
+       conseil:{type:"sjsr",text:"🌿 Sardines + persil = fer hème + vitamine C. Idéal pour calmer les symptômes nocturnes."}},
+      {ic:"🍊",cl:"ic-gou",lbl:"Goûter",time:"avant 17h",
+       title:"Chocolat 92% · Graines de courge · Amandes",
+       ingr:[{t:"1 carré chocolat 92%"},{t:"Graines de courge 15g"},{t:"6 amandes"}],
+       tags:[["MAG","nt-mag"]],conseil:null},
+      {ic:"🌙",cl:"ic-din",lbl:"Dîner léger",time:"19h – 20h max",
+       title:"Colin lieu · Légumes frais vapeur · Thym-Basilic",
+       ingr:[{t:"1 portion colin lieu Picard"},{t:"Légumes frais Bene Bono",fr:true},{t:"Thym + Basilic Picard"},{t:"Gingembre Picard"},{t:"Huile olive"}],
+       tags:[["ALK","nt-alk"],["MAG","nt-mag"]],
+       conseil:{type:"prep",text:"Colin à la poêle couvercle 8 min. Légumes vapeur 8 min. Simple et reposant."}},
+      {ic:"📺",cl:"ic-sna",lbl:"Snack TV Anti-SJSR",time:"Soirée",
+       fun:"🌸 Sorbet Ninja Creami Mangue-Gingembre",
+       ingr:[{t:"Base mangue-gingembre (batch samedi)"},{t:"Traiter 1 min au Creami"}],
+       tags:[["ALK","nt-alk"],["FUN","nt-fun"]],conseil:null}
+    ],infusion:INF},
+
+  '13':{
+    name:"Lundi 13 avril",
+    mode:"pm-f",modeLabel:"🌿 Légumes frais",
+    livraison:false,batch:false,birthday:false,
+    meals:[
+      {ic:"☀️",cl:"ic-mat",lbl:"Petit-déjeuner",time:"7h – 9h",
+       title:"Chia pudding · Cocktail fruits rouges",
+       ingr:[{t:"Chia pudding (préparé dimanche soir)"},{t:"Cocktail fruits rouges Picard"}],
+       tags:[["MAG","nt-mag"]],
+       conseil:{type:"prep",text:"Préparer dimanche soir → 0 effort lundi matin avant le travail."}},
+      {ic:"🥗",cl:"ic-mid",lbl:"Déjeuner Bureau",time:"12h – 13h30",
+       title:"Pois chiches curcuma · Maquereau · Légumes frais",
+       ingr:[{t:"Pois chiches 150g"},{t:"Maquereau 1 boîte"},{t:"Légumes frais Bene Bono",fr:true},{t:"Curcuma + poivre + huile"},{t:"Vinaigre de cidre"}],
+       tags:[["FER","nt-fer"],["MAG","nt-mag"],["VIT-C","nt-vitc"]],
+       conseil:{type:"sjsr",text:"🌿 Poêler 3 min les pois chiches avec curcuma+huile : la chaleur active les composés anti-inflammatoires."}},
+      {ic:"🍊",cl:"ic-gou",lbl:"Goûter",time:"avant 17h",
+       title:"Amandes · Datte · Chocolat noir 85%",
+       ingr:[{t:"8 amandes"},{t:"1 datte Medjool"},{t:"1 carré chocolat 85%"}],
+       tags:[["MAG","nt-mag"]],conseil:null},
+      {ic:"🌙",cl:"ic-din",lbl:"Dîner léger",time:"19h – 20h max",
+       title:"Crevettes ail-thym · Épinards · Gingembre",
+       ingr:[{t:"Crevettes Picard 100g"},{t:"Épinards Picard 200g"},{t:"Ail + Thym Picard"},{t:"Gingembre Picard"},{t:"Huile olive"}],
+       tags:[["ALK","nt-alk"],["MAG","nt-mag"]],
+       conseil:{type:"prep",text:"Poêle 5 min feu vif. Filet de vinaigre de cidre à la fin."}},
+      {ic:"📺",cl:"ic-sna",lbl:"Snack TV Anti-SJSR",time:"Soirée",
+       fun:"🌸 Sorbet Ninja Creami Fruits Rouges",
+       ingr:[{t:"Base fruits rouges à congeler ce soir"},{t:"Traiter 1 min au Creami demain"}],
+       tags:[["ALK","nt-alk"],["FUN","nt-fun"]],
+       conseil:{type:"prep",text:"💡 Congeler la base ce soir → sorbet prêt pour demain anniversaire 🎂"}}
+    ],infusion:INF},
+
+  '14':{
+    name:"Mardi 14 avril 🎂",
+    mode:"pm-bday",modeLabel:"🎂 Joyeux Anniversaire !",
+    livraison:false,batch:false,birthday:true,
+    meals:[
+      {ic:"☀️",cl:"ic-bday",lbl:"Petit-déjeuner d'anniversaire",time:"7h – 9h",
+       title:"Bol d'or · Quinoa · Mangue · Dattes · Amandes",
+       ingr:[{t:"Quinoa cuit 100g",bd:true},{t:"Mangues Picard 150g",bd:true},{t:"3 dattes Medjool",bd:true},{t:"Amandes effilées 20g"},{t:"Graines de chia 2cs"},{t:"Lait de millet chaud"}],
+       tags:[["MAG","nt-mag"],["FER","nt-fer"],["FUN","nt-bday"]],
+       conseil:{type:"bday",text:"🎂 Ce matin vous méritez un petit-déj de reine. Prenez le temps de le savourer !"}},
+      {ic:"🥗",cl:"ic-bday",lbl:"Déjeuner festif",time:"12h – 14h",
+       title:"Plateau festif · Maquereau · Quinoa · Salade fruits exotiques",
+       ingr:[{t:"Maquereau huile olive 2 boîtes",bd:true},{t:"Quinoa froid 150g"},{t:"Salade fruits Picard",bd:true},{t:"Persillade Picard"},{t:"Vinaigre de cidre + huile olive"}],
+       tags:[["FER","nt-fer"],["MAG","nt-mag"],["VIT-C","nt-vitc"],["FUN","nt-bday"]],
+       conseil:{type:"bday",text:"🎂 Plateau à déguster tranquillement. Prenez une vraie pause déjeuner aujourd'hui !"}},
+      {ic:"🍫",cl:"ic-bday",lbl:"Goûter d'anniversaire",time:"16h – 17h",
+       title:"Dégustation 3 chocolats noirs · Dattes Medjool",
+       ingr:[{t:"Chocolat 85% Togo",bd:true},{t:"Chocolat 80% fleur de sel",bd:true},{t:"Chocolat 92% Fairafric",bd:true},{t:"3 dattes Medjool",bd:true},{t:"Amandes 20g"}],
+       tags:[["MAG","nt-mag"],["FUN","nt-bday"]],
+       conseil:{type:"bday",text:"🎂 Dégustation comme une box de luxe. Vous avez 3 chocolats bio d'exception — savourez !"}},
+      {ic:"🌙",cl:"ic-bday",lbl:"Dîner d'anniversaire",time:"19h – 20h",
+       title:"Cabillaud en croûte d'amandes dorées · Haricots verts · Sauce gingembre",
+       ingr:[{t:"2 portions cabillaud Picard",bd:true},{t:"Haricots verts Picard 300g"},{t:"Amandes effilées 30g",bd:true},{t:"Gingembre + curcuma"},{t:"Huile olive + basilic Picard"}],
+       tags:[["ALK","nt-alk"],["MAG","nt-mag"],["FUN","nt-bday"]],
+       conseil:{type:"bday",text:"🎂 Appuyer les amandes sur le cabillaud → Air Fryer 180°C / 15 min → croûte dorée croustillante !"}},
+      {ic:"🎂",cl:"ic-bday",lbl:"Dessert d'anniversaire",time:"Soirée",
+       fun:"🌸🎂 Sorbet Fruits Rouges · Dattes · Chocolat fondu chaud",
+       ingr:[{t:"Sorbet fruits rouges Creami",bd:true},{t:"2 dattes tranchées",bd:true},{t:"1 carré chocolat 85% fondu",bd:true},{t:"Amandes effilées torréfiées"}],
+       tags:[["ALK","nt-alk"],["FUN","nt-bday"]],
+       conseil:{type:"bday",text:"🎂 Napper le sorbet de chocolat chaud fondu au moment de servir → effet coulant festif !"}}
+    ],infusion:INF_BDAY}
+};
+
+// ── CALENDAR ──
+const FIRST_DOW = 2; // April 1 2026 = Wednesday → col 2 (Mon=0)
+const DAYS_IN_MONTH = 30;
+
+function buildCalendar(){
+  const grid=document.getElementById('calGrid');
+  grid.innerHTML='';
+  for(let i=0;i<FIRST_DOW;i++){
+    const e=document.createElement('div');
+    e.className='cal-day empty';
+    grid.appendChild(e);
+  }
+  for(let d=1;d<=DAYS_IN_MONTH;d++){
+    const key=String(d);
+    const menu=MENUS[key];
+    const div=document.createElement('div');
+    const col=(FIRST_DOW+d-1)%7;
+
+    if(menu){
+      let cls='cal-day has-menu';
+      if(menu.birthday) cls+=' birthday';
+      if(menu.livraison) cls+=' livraison';
+      if(menu.batch) cls+=' batch-day';
+      div.className=cls;
+      div.onclick=()=>openDay(key);
+      const icon=menu.birthday?'🎂':menu.livraison?'📦':menu.batch?'⏱':'';
+      div.innerHTML=`${d}${icon?`<div class="cal-icon">${icon}</div>`:'<div class="cal-dot"></div>'}`;
+    } else {
+      div.className='cal-day no-menu';
+      div.innerHTML=`<span style="opacity:0.35">${d}</span>`;
+    }
+    grid.appendChild(div);
+
+    if(col===6){
+      const sep=document.createElement('div');
+      sep.className='week-sep';
+      grid.appendChild(sep);
+    }
+  }
+}
+
+// ── OPEN PANEL ──
+function openDay(key){
+  const d=MENUS[key];
+  if(!d) return;
+  document.querySelectorAll('.cal-day').forEach(el=>el.classList.remove('active-day'));
+  document.querySelectorAll('.cal-day').forEach(el=>{
+    const txt=el.firstChild?.textContent?.trim();
+    if(txt===key) el.classList.add('active-day');
+  });
+
+  let h='';
+  h+=`<div class="panel-header">
+    <div class="panel-date">${d.name}</div>
+    <div class="panel-title">${d.birthday?'🌸 Votre jour spécial':d.livraison?'📦 Tout arrive aujourd\'hui':d.batch?'⏱ Batch Cooking':'🌿 Légumes frais'}</div>
+    <div><span class="panel-mode ${d.mode}">${d.modeLabel}</span></div>
+  </div>`;
+
+  if(d.birthday){
+    h+=`<div class="bday-banner">🌸 <strong>Joyeux anniversaire Ketty !</strong> Ce menu est festif et toujours anti-SJSR — pensé pour que vous puissiez fêter votre journée sans souffrir cette nuit. Bonne fête 🎂</div>`;
+  }
+  if(d.livraison){
+    h+=`<div class="livraison-banner">📦 <strong>Tout arrive aujourd'hui !</strong> La Fourche + Picard + Bene Bono. Ce soir : premiers légumes frais au dîner. À préparer aussi ce soir : 2 bases Ninja Creami à congeler pour demain.</div>`;
+  }
+  if(d.batch){
+    h+=`<div class="batch-banner">⏱ <strong>Batch Cooking ce matin · 1h30</strong><br>
+    🔥 Air Fryer : Amandes 150°C/8min · Courge 160°C/6min · Tofu 180°C/15min<br>
+    🍳 Feux : Lentilles 300g + Quinoa 250g + Sarrasin 200g simultanément + Épinards poêlés<br>
+    🥶 Ninja Creami : base fruits rouges à congeler<br>
+    🍵 Gingembre Picard : tout trancher → bocal hermétique pour la semaine</div>`;
+  }
+
+  h+='<div class="panel-meals">';
+  d.meals.forEach(m=>{
+    const isBdayCard=d.birthday;
+    h+=`<div class="meal-card${isBdayCard?' bday-card':''}">
+      <div class="meal-head">
+        <div class="miw ${m.cl}">${m.ic}</div>
+        <div>
+          <div class="meal-lbl">${m.lbl}</div>
+          ${m.time?`<div class="meal-time">${m.time}</div>`:''}
+        </div>
+      </div>
+      <div class="meal-body">`;
+    const isSnack=(m.ic==='📺'||m.ic==='🎂');
+    if(isSnack&&m.fun) h+=`<div class="${d.birthday?'snack-bday':'snack-fun'}">${m.fun}</div>`;
+    h+=`<div class="meal-title">${m.title}</div>`;
+    h+=`<div class="ingr-list">`;
+    m.ingr.forEach(i=>h+=`<span class="ingr${i.fr?' fr':''}${i.bd?' bd':''}">🔸 ${i.t}</span>`);
+    h+=`</div>`;
+    if(m.tags?.length){
+      h+=`<div class="ntags">`;
+      m.tags.forEach(([l,c])=>h+=`<span class="ntag ${c}">${l}</span>`);
+      h+=`</div>`;
+    }
+    if(m.conseil){
+      const em=m.conseil.type==='sjsr'?'🌿':m.conseil.type==='bday'?'🎂':'🌸';
+      h+=`<div class="conseil c-${m.conseil.type}">${em} ${m.conseil.text}</div>`;
+    }
+    h+=`</div></div>`;
+  });
+  h+=`</div>`;
+  h+=`<div class="sect-title" style="margin-top:1rem">🌙 Infusion du soir</div>`;
+  h+=`<div class="infusion-card">
+    <h3>🍵 ${d.infusion.nom}</h3>
+    <p>${d.infusion.recette}</p>
+    <p class="inf-note">⏰ ${d.infusion.note}</p>
+  </div>`;
+
+  document.getElementById('panelContent').innerHTML=h;
+  document.getElementById('dayPanel').classList.add('open');
+  document.getElementById('overlay').classList.add('show');
+}
+
+function closePanel(){
+  document.getElementById('dayPanel').classList.remove('open');
+  document.getElementById('overlay').classList.remove('show');
+  document.querySelectorAll('.cal-day').forEach(el=>el.classList.remove('active-day'));
+}
+
+// ── SHOPPING ──
+const SHOP_DATA = {
+  fourche:[
+    {n:"Sardines huile olive bio × 6",p:"17,94€"},
+    {n:"Filets maquereau huile olive × 4",p:"15,96€"},
+    {n:"Thon albacore au naturel × 2",p:"6,70€"},
+    {n:"Lentilles corail bio 500g",p:"1,70€"},
+    {n:"Torsades lentilles corail 250g",p:"2,52€"},
+    {n:"Pois chiches au naturel 420g",p:"2,99€"},
+    {n:"Haricots rouges bio 425g",p:"3,69€"},
+    {n:"Tofu noisette ail des ours 200g",p:"2,99€"},
+    {n:"Sarrasin décortiqué bio 1kg",p:"3,90€"},
+    {n:"Quinoa duo rouge et blanc 500g",p:"3,99€"},
+    {n:"Graines de chia bio 500g",p:"3,65€"},
+    {n:"Graines de courge bio 250g",p:"3,51€"},
+    {n:"Amandes décortiquées bio 500g",p:"7,50€"},
+    {n:"Dattes Medjool bio 500g",p:"7,99€"},
+    {n:"Chocolat noir 85% Togo bio",p:"3,87€"},
+    {n:"Chocolat noir 80% fleur de sel",p:"2,99€"},
+    {n:"Chocolat noir 92% Fairafric",p:"3,45€"},
+  ],
+  picard:[
+    {n:"Cocktail de fruits rouges 450g",p:"6,99€"},
+    {n:"Framboises entières bio 450g",p:"9,99€"},
+    {n:"Mangues en morceaux bio 450g",p:"5,30€"},
+    {n:"Salade fruits bio 600g",p:"7,49€"},
+    {n:"Épinards en branches bio 600g",p:"2,90€"},
+    {n:"Haricots verts extra-fins 1kg",p:"2,69€"},
+    {n:"Brocolis sans pesticides 1kg",p:"3,60€"},
+    {n:"6 portions cabillaud MSC 600g",p:"17,99€"},
+    {n:"Filets colin lieu MSC 500g",p:"8,99€"},
+    {n:"Crevettes décortiquées 200g",p:"8,50€"},
+    {n:"Gingembre coupé 75g",p:"2,00€"},
+    {n:"Ail coupé 100g",p:"2,99€"},
+    {n:"Persil coupé 250g",p:"2,25€"},
+    {n:"Basilic coupé bio 50g",p:"2,40€"},
+    {n:"Thym coupé 50g",p:"2,00€"},
+  ],
+  beno:[
+    {n:"Panier légumes frais de saison · Bene Bono",p:"17–25€"},
+  ]
+};
+
+function buildShopping(){
+  ['fourche','picard','beno'].forEach(src=>{
+    const c=document.getElementById('sl-'+src);
+    c.innerHTML='';
+    SHOP_DATA[src].forEach((item,i)=>{
+      const div=document.createElement('div');
+      div.className='shop-item';
+      div.innerHTML=`<div class="shop-check" onclick="tCheck(this)"></div><span class="shop-item-name">${item.n}</span><span class="shop-item-price">${item.p}</span>`;
+      c.appendChild(div);
+    });
+  });
+}
+
+function tCheck(el){
+  el.classList.toggle('checked');
+  el.innerHTML=el.classList.contains('checked')?'✓':'';
+  el.closest('.shop-item').classList.toggle('done');
+}
+
+// ── VIEWS ──
+function showView(v){
+  ['calendar','shopping','tips'].forEach(id=>{
+    document.getElementById('view-'+id).style.display=id===v?'block':'none';
+  });
+  document.querySelectorAll('.nav-tab').forEach((el,i)=>{
+    el.classList.toggle('active',['calendar','shopping','tips'][i]===v);
+  });
+}
+
+// ── INIT ──
+buildCalendar();
+buildShopping();
+</script>
+</body>
+</html>
