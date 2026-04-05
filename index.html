@@ -183,11 +183,22 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .snack-bday{background:linear-gradient(135deg,rgba(232,137,154,0.1),rgba(212,168,67,0.08));border-radius:10px;padding:0.5rem 0.75rem;font-size:0.82rem;font-family:'Cormorant Garamond',serif;font-style:italic;text-align:center;margin-bottom:0.4rem;color:var(--blossom-deep)}
 
 /* Infusion */
-.infusion-card{background:linear-gradient(160deg,var(--night),#5a2840);border-radius:16px;padding:1rem 1.1rem;margin:0.75rem 1rem 1.8rem;color:#fff;box-shadow:0 6px 24px rgba(58,32,48,0.2);position:relative;overflow:hidden}
+.infusion-card{background:linear-gradient(160deg,var(--night),#5a2840);border-radius:16px;padding:1rem 1.1rem;margin:0.75rem 1rem 0.5rem;color:#fff;box-shadow:0 6px 24px rgba(58,32,48,0.2);position:relative;overflow:hidden}
 .infusion-card::after{content:'🌸';position:absolute;right:0.8rem;bottom:-0.5rem;font-size:3rem;opacity:0.08}
 .infusion-card h3{font-family:'Cormorant Garamond',serif;font-size:0.95rem;color:var(--petal-pink);margin-bottom:0.3rem}
 .infusion-card p{font-size:0.74rem;color:rgba(255,255,255,0.78);line-height:1.6}
 .infusion-card .inf-note{margin-top:0.35rem;font-size:0.62rem;color:rgba(255,255,255,0.35);font-style:italic}
+/* Lait d'or */
+.lait-or-card{background:linear-gradient(160deg,#5a3800,#8a5a10);border-radius:16px;padding:1rem 1.1rem;margin:0.5rem 1rem 1.8rem;color:#fff;box-shadow:0 6px 24px rgba(90,56,0,0.2);position:relative;overflow:hidden}
+.lait-or-card::after{content:'✨';position:absolute;right:0.8rem;bottom:-0.5rem;font-size:3rem;opacity:0.1}
+.lait-or-card h3{font-family:'Cormorant Garamond',serif;font-size:0.95rem;color:var(--pistil);margin-bottom:0.3rem}
+.lait-or-card p{font-size:0.74rem;color:rgba(255,255,255,0.78);line-height:1.6}
+.lait-or-card .lor-note{margin-top:0.35rem;font-size:0.62rem;color:rgba(255,255,255,0.35);font-style:italic}
+.soir-toggle{display:flex;gap:0.4rem;margin:0 1rem 0.5rem;position:relative;z-index:1}
+.soir-btn{flex:1;text-align:center;padding:0.45rem 0.3rem;border-radius:10px;font-size:0.65rem;font-weight:700;cursor:pointer;transition:all 0.2s;border:1.5px solid transparent}
+.soir-btn.active-inf{background:linear-gradient(135deg,var(--night),#5a2840);color:var(--petal-pink);border-color:rgba(232,137,154,0.3)}
+.soir-btn.active-lor{background:linear-gradient(135deg,#5a3800,#8a5a10);color:var(--pistil);border-color:rgba(212,168,67,0.3)}
+.soir-btn.inactive{background:rgba(58,40,32,0.06);color:var(--muted);border-color:transparent}
 
 /* IMPULSE PANEL */
 .impulse-panel{position:fixed;bottom:0;left:0;right:0;background:#fff;border-radius:24px 24px 0 0;box-shadow:0 -8px 40px rgba(124,92,191,0.2);transform:translateY(100%);transition:transform 0.35s cubic-bezier(0.32,0,0.67,1);z-index:300;max-height:80vh;overflow-y:auto}
@@ -240,6 +251,100 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .tip-card ul li,.tip-card p{font-size:0.75rem;line-height:1.75;color:rgba(58,40,32,0.75)}
 .floral-div{text-align:center;font-size:0.8rem;letter-spacing:0.4em;color:var(--petal-pink);margin:0.5rem 0;opacity:0.7}
 .sect-title{font-size:0.57rem;text-transform:uppercase;letter-spacing:0.12em;color:var(--muted);font-weight:700;margin:0.75rem 1rem 0.35rem}
+
+/* ── JOURNAL ── */
+.journal-section{padding:0.8rem 1rem;position:relative;z-index:1}
+.journal-card{background:#fff;border-radius:16px;padding:1rem;margin-bottom:0.8rem;box-shadow:0 2px 12px rgba(58,40,32,0.06);border:1px solid rgba(58,40,32,0.04)}
+.journal-card h3{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:600;color:var(--text);margin-bottom:0.6rem;display:flex;align-items:center;gap:0.4rem}
+.journal-date-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:0.6rem;font-size:0.72rem;color:var(--muted)}
+.stars-row{display:flex;gap:0.3rem;margin-bottom:0.5rem}
+.star{font-size:1.6rem;cursor:pointer;transition:transform 0.15s;filter:grayscale(1);opacity:0.35}
+.star.lit{filter:none;opacity:1;transform:scale(1.1)}
+.journal-labels{display:flex;gap:0.4rem;flex-wrap:wrap;margin-bottom:0.6rem}
+.jlabel{padding:0.25rem 0.6rem;border-radius:2rem;font-size:0.65rem;font-weight:700;cursor:pointer;border:1.5px solid transparent;transition:all 0.15s}
+.jlabel.jl-bad{background:rgba(196,92,120,0.08);color:var(--blossom-deep);border-color:rgba(196,92,120,0.15)}
+.jlabel.jl-ok{background:rgba(212,168,67,0.08);color:#8a6800;border-color:rgba(212,168,67,0.2)}
+.jlabel.jl-good{background:rgba(90,138,90,0.08);color:var(--leaf-dark);border-color:rgba(90,138,90,0.2)}
+.jlabel.selected{opacity:1;border-width:2px}
+.jlabel.jl-bad.selected{background:rgba(196,92,120,0.15)}
+.jlabel.jl-ok.selected{background:rgba(212,168,67,0.15)}
+.jlabel.jl-good.selected{background:rgba(90,138,90,0.15)}
+.journal-note{width:100%;background:var(--bg);border:1px solid rgba(58,40,32,0.1);border-radius:10px;padding:0.6rem 0.8rem;font-family:'Nunito',sans-serif;font-size:0.75rem;color:var(--text);resize:none;height:70px;outline:none;margin-bottom:0.5rem}
+.journal-note:focus{border-color:var(--petal-rose)}
+.journal-save{width:100%;background:linear-gradient(135deg,var(--blossom-deep),#a04060);color:#fff;border:none;border-radius:10px;padding:0.6rem;font-family:'Nunito',sans-serif;font-size:0.75rem;font-weight:700;cursor:pointer;letter-spacing:0.04em}
+.journal-history{margin-top:0.8rem}
+.jh-title{font-size:0.58rem;text-transform:uppercase;letter-spacing:0.1em;font-weight:700;color:var(--muted);margin-bottom:0.5rem}
+.jh-entry{display:flex;align-items:center;gap:0.6rem;padding:0.45rem 0;border-bottom:1px solid rgba(58,40,32,0.05);font-size:0.72rem}
+.jh-entry:last-child{border-bottom:none}
+.jh-date{color:var(--muted);font-size:0.65rem;min-width:50px}
+.jh-stars{font-size:0.8rem;min-width:60px}
+.jh-label{font-size:0.62rem;font-weight:700;padding:0.1rem 0.4rem;border-radius:2rem}
+.jh-note{color:var(--muted);font-size:0.65rem;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* Chart */
+.journal-chart{background:var(--bg);border-radius:12px;padding:0.8rem;margin-top:0.7rem}
+.chart-title{font-size:0.6rem;text-transform:uppercase;letter-spacing:0.1em;font-weight:700;color:var(--muted);margin-bottom:0.6rem}
+.chart-bars{display:flex;align-items:flex-end;gap:0.3rem;height:60px}
+.chart-bar-wrap{flex:1;display:flex;flex-direction:column;align-items:center;gap:0.2rem}
+.chart-bar{width:100%;border-radius:4px 4px 0 0;transition:height 0.3s;min-height:4px}
+.chart-bar-label{font-size:0.5rem;color:var(--muted)}
+
+/* ── TIMER ── */
+.timer-card{background:linear-gradient(135deg,var(--night),#4a2848);border-radius:16px;padding:1.2rem;margin-bottom:0.8rem;box-shadow:0 4px 20px rgba(58,32,48,0.2);text-align:center;color:#fff}
+.timer-title{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--petal-pink);margin-bottom:0.3rem}
+.timer-sub{font-size:0.68rem;color:rgba(255,255,255,0.45);margin-bottom:1rem}
+.timer-circle{width:110px;height:110px;border-radius:50%;border:4px solid rgba(255,255,255,0.1);margin:0 auto 1rem;position:relative;display:flex;align-items:center;justify-content:center}
+.timer-circle svg{position:absolute;top:-4px;left:-4px;transform:rotate(-90deg)}
+.timer-circle svg circle{fill:none;stroke:var(--petal-rose);stroke-width:4;stroke-linecap:round;stroke-dasharray:340;stroke-dashoffset:340;transition:stroke-dashoffset 1s linear}
+.timer-display{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:600;color:#fff;line-height:1}
+.timer-label-small{font-size:0.6rem;color:rgba(255,255,255,0.4)}
+.timer-btns{display:flex;gap:0.6rem;justify-content:center}
+.timer-btn{padding:0.55rem 1.2rem;border-radius:10px;border:none;font-family:'Nunito',sans-serif;font-weight:700;font-size:0.78rem;cursor:pointer;transition:all 0.15s}
+.tbtn-start{background:var(--petal-rose);color:#fff}
+.tbtn-reset{background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.7)}
+.timer-step{background:rgba(255,255,255,0.06);border-radius:10px;padding:0.5rem 0.8rem;margin-top:0.8rem;font-size:0.7rem;color:rgba(255,255,255,0.65);line-height:1.6}
+
+/* ── DÎNERS RAPIDES ── */
+.diner-section{padding:0.8rem 1rem;position:relative;z-index:1}
+.diner-mood-row{display:flex;gap:0.4rem;flex-wrap:wrap;margin-bottom:0.8rem}
+.mood-btn{flex:1;min-width:80px;background:#fff;border:1.5px solid rgba(58,40,32,0.08);border-radius:12px;padding:0.5rem 0.4rem;text-align:center;cursor:pointer;font-size:0.63rem;font-weight:700;color:var(--muted);transition:all 0.15s}
+.mood-btn.active{background:var(--night);color:var(--petal-pink);border-color:var(--night)}
+.mood-btn .mood-icon{font-size:1.2rem;display:block;margin-bottom:0.1rem}
+.diner-card{background:#fff;border-radius:14px;padding:0.85rem;margin-bottom:0.6rem;box-shadow:0 2px 10px rgba(58,40,32,0.06);border:1px solid rgba(58,40,32,0.05);display:flex;gap:0.75rem;align-items:flex-start}
+.diner-time-badge{background:var(--bg);border-radius:8px;padding:0.3rem 0.5rem;font-size:0.6rem;font-weight:700;color:var(--leaf-dark);text-align:center;white-space:nowrap;flex-shrink:0}
+.diner-info{flex:1}
+.diner-name{font-family:'Cormorant Garamond',serif;font-size:0.95rem;font-weight:600;color:var(--text);margin-bottom:0.2rem}
+.diner-ingr{font-size:0.68rem;color:var(--muted);line-height:1.5;margin-bottom:0.3rem}
+.diner-tags{display:flex;gap:0.25rem;flex-wrap:wrap}
+.diner-tag{font-size:0.55rem;font-weight:700;padding:0.12rem 0.4rem;border-radius:2rem;background:rgba(90,138,90,0.1);color:var(--leaf-dark)}
+
+/* ── URGENCE SJSR ── */
+.urgence-section{padding:0.8rem 1rem;position:relative;z-index:1}
+.urgence-header{background:linear-gradient(135deg,#8a1a2a,#c42840);border-radius:16px;padding:1rem;margin-bottom:0.8rem;color:#fff;text-align:center}
+.urgence-header h2{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:600;margin-bottom:0.2rem}
+.urgence-header p{font-size:0.7rem;color:rgba(255,255,255,0.7)}
+.urgence-step{background:#fff;border-radius:14px;padding:0.85rem 1rem;margin-bottom:0.6rem;box-shadow:0 2px 10px rgba(58,40,32,0.06);display:flex;gap:0.8rem;align-items:flex-start;border-left:3px solid var(--petal-rose)}
+.urgence-num{width:28px;height:28px;border-radius:50%;background:var(--blossom-deep);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.8rem;flex-shrink:0}
+.urgence-step h4{font-size:0.82rem;font-weight:700;color:var(--text);margin-bottom:0.2rem}
+.urgence-step p{font-size:0.72rem;color:var(--muted);line-height:1.5}
+.urgence-foods{background:var(--tdah-light);border-radius:12px;padding:0.8rem 1rem;margin-bottom:0.6rem}
+.urgence-foods h4{font-size:0.72rem;font-weight:700;color:var(--tdah);margin-bottom:0.5rem;text-transform:uppercase;letter-spacing:0.06em}
+.urgence-food-item{display:flex;align-items:center;gap:0.5rem;font-size:0.74rem;padding:0.3rem 0;border-bottom:1px solid rgba(124,92,191,0.08)}
+.urgence-food-item:last-child{border-bottom:none}
+.urgence-note{background:rgba(196,92,120,0.06);border:1px solid rgba(196,92,120,0.15);border-radius:12px;padding:0.8rem 1rem;font-size:0.72rem;color:#6a1a28;line-height:1.6}
+
+/* ── ALARMES ── */
+.alarm-section{padding:0 1rem 0.5rem;position:relative;z-index:1}
+.alarm-card{background:#fff;border-radius:14px;padding:0.85rem 1rem;margin-bottom:0.5rem;box-shadow:0 2px 10px rgba(58,40,32,0.06);display:flex;align-items:center;gap:0.8rem;border:1px solid rgba(58,40,32,0.05)}
+.alarm-icon{font-size:1.5rem;flex-shrink:0}
+.alarm-info{flex:1}
+.alarm-name{font-weight:700;font-size:0.8rem;color:var(--text)}
+.alarm-time{font-size:0.68rem;color:var(--muted);margin-top:0.05rem}
+.alarm-toggle{width:40px;height:22px;border-radius:11px;border:none;cursor:pointer;transition:all 0.2s;position:relative;flex-shrink:0}
+.alarm-toggle.on{background:var(--leaf-mid)}
+.alarm-toggle.off{background:rgba(58,40,32,0.12)}
+.alarm-toggle::after{content:'';position:absolute;top:3px;width:16px;height:16px;border-radius:50%;background:#fff;transition:all 0.2s;box-shadow:0 1px 3px rgba(0,0,0,0.2)}
+.alarm-toggle.on::after{left:21px}
+.alarm-toggle.off::after{left:3px}
 </style>
 </head>
 <body>
@@ -252,8 +357,8 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   </div>
   <div class="budget-bar">
     <span class="budget-label">🌿 Budget</span>
-    <div class="budget-track"><div class="budget-fill" style="width:52%"></div></div>
-    <span class="budget-amount"><span>105€</span> / 200€</span>
+    <div class="budget-track"><div class="budget-fill" id="budgetFill" style="width:52%"></div></div>
+    <span class="budget-amount" id="budgetAmount"><span>105€</span> / 200€</span>
   </div>
 </div>
 
@@ -275,9 +380,11 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 
 <!-- NAV -->
 <div class="nav-tabs">
-  <div class="nav-tab active" onclick="showView('calendar')">🌸 Calendrier</div>
+  <div class="nav-tab active" onclick="showView('calendar')">🌸 Agenda</div>
   <div class="nav-tab" onclick="showView('shopping')">🛒 Courses</div>
-  <div class="nav-tab" onclick="showView('tips')">🌿 Conseils</div>
+  <div class="nav-tab" onclick="showView('diner')">🍽 Ce soir</div>
+  <div class="nav-tab" onclick="showView('journal')">📔 Journal</div>
+  <div class="nav-tab" onclick="showView('urgence')">🚨 Urgence</div>
 </div>
 
 <!-- CALENDAR VIEW -->
@@ -407,6 +514,240 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
       Gingembre = anti-inflammatoire musculaire. Curcuma = action dopaminergique. <strong>Ce rituel aide aussi le TDAH</strong> — c'est un ancrage sensoriel qui signale à votre cerveau que la journée se termine.</p>
     </div>
 
+  </div>
+</div>
+
+<!-- DÎNER RAPIDE VIEW -->
+<div id="view-diner" style="display:none">
+  <div class="diner-section">
+    <div style="font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:600;color:var(--text);margin-bottom:0.6rem">🍽 Ce soir, j'ai envie de…</div>
+    <div class="diner-mood-row">
+      <div class="mood-btn active" onclick="filterDiner('tous',this)"><span class="mood-icon">✨</span>Tout voir</div>
+      <div class="mood-btn" onclick="filterDiner('rapide',this)"><span class="mood-icon">⚡</span>Rapide</div>
+      <div class="mood-btn" onclick="filterDiner('chaud',this)"><span class="mood-icon">🍲</span>Chaud</div>
+      <div class="mood-btn" onclick="filterDiner('leger',this)"><span class="mood-icon">🌿</span>Léger</div>
+    </div>
+    <div id="diner-list"></div>
+  </div>
+</div>
+
+<!-- JOURNAL VIEW -->
+<div id="view-journal" style="display:none">
+  <div class="journal-section">
+    <!-- Timer infusion -->
+    <div class="timer-card">
+      <div class="timer-title">🍵 Timer Infusion / Lait d'Or</div>
+      <div class="timer-sub">Appuyez sur Démarrer quand vous versez l'eau</div>
+      <div class="timer-circle">
+        <svg width="118" height="118" viewBox="0 0 118 118">
+          <circle cx="59" cy="59" r="54" id="timerCircle"/>
+        </svg>
+        <div>
+          <div class="timer-display" id="timerDisplay">8:00</div>
+          <div class="timer-label-small">minutes</div>
+        </div>
+      </div>
+      <div class="timer-btns">
+        <button class="timer-btn tbtn-start" id="timerBtn" onclick="toggleTimer()">▶ Démarrer</button>
+        <button class="timer-btn tbtn-reset" onclick="resetTimer()">↺ Reset</button>
+      </div>
+      <div class="timer-step" id="timerStep">🌸 Versez l'eau à 80°C et appuyez sur Démarrer</div>
+    </div>
+
+    <!-- Alarmes -->
+    <!-- SECTION MÉDICAMENTS -->
+    <div style="font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:600;color:var(--text);margin-bottom:0.5rem">💊 Mes médicaments</div>
+    <div style="font-size:0.65rem;color:var(--muted);margin-bottom:0.6rem;font-style:italic;padding:0.4rem 0.7rem;background:rgba(58,40,32,0.04);border-radius:8px;line-height:1.5">
+      ℹ️ Dosages prescrits par votre médecin. Ne jamais modifier sans avis médical.
+    </div>
+    <div class="alarm-section">
+      <!-- MATIN -->
+      <div style="font-size:0.58rem;text-transform:uppercase;letter-spacing:0.1em;font-weight:700;color:var(--muted);padding:0.3rem 0 0.3rem;margin-bottom:0.2rem">🌅 Matin — avec le petit-déjeuner</div>
+      <div class="alarm-card" style="border-left:3px solid var(--leaf-mid)">
+        <div class="alarm-icon">💊</div>
+        <div class="alarm-info">
+          <div class="alarm-name">Tramadol LP <span style="color:var(--leaf-dark);font-size:0.9em">50 mg</span></div>
+          <div class="alarm-time">Matin · avec le petit-déjeuner · <strong style="color:var(--leaf-dark)">1 comprimé</strong></div>
+        </div>
+        <button class="alarm-toggle on" id="alarm-tramadol-m" onclick="toggleAlarm('tramadol-m',this)"></button>
+      </div>
+      <div class="alarm-card" style="border-left:3px solid var(--leaf-mid)">
+        <div class="alarm-icon">💊</div>
+        <div class="alarm-info">
+          <div class="alarm-name">Lyrica <span style="color:var(--leaf-dark);font-size:0.9em">325 mg</span></div>
+          <div class="alarm-time">Matin · avec le petit-déjeuner · <strong style="color:var(--leaf-dark)">1 comprimé</strong></div>
+        </div>
+        <button class="alarm-toggle on" id="alarm-lyrica-m" onclick="toggleAlarm('lyrica-m',this)"></button>
+      </div>
+
+      <!-- SOIR -->
+      <div style="font-size:0.58rem;text-transform:uppercase;letter-spacing:0.1em;font-weight:700;color:var(--muted);padding:0.6rem 0 0.3rem;margin-bottom:0.2rem">🌙 Soir — avant le dîner</div>
+      <div class="alarm-card" style="border-left:3px solid var(--lavender,#9b8ec4)">
+        <div class="alarm-icon">💊</div>
+        <div class="alarm-info">
+          <div class="alarm-name">Tramadol LP <span style="color:#6b5fa0;font-size:0.9em">100 mg</span></div>
+          <div class="alarm-time">Soir · avant le dîner · <strong style="color:#6b5fa0">1 comprimé</strong></div>
+        </div>
+        <button class="alarm-toggle on" id="alarm-tramadol-s" onclick="toggleAlarm('tramadol-s',this)"></button>
+      </div>
+      <div class="alarm-card" style="border-left:3px solid var(--lavender,#9b8ec4)">
+        <div class="alarm-icon">💊</div>
+        <div class="alarm-info">
+          <div class="alarm-name">Lyrica <span style="color:#6b5fa0;font-size:0.9em">375 mg</span></div>
+          <div class="alarm-time">Soir · avant le dîner · <strong style="color:#6b5fa0">1 comprimé</strong></div>
+        </div>
+        <button class="alarm-toggle on" id="alarm-lyrica-s" onclick="toggleAlarm('lyrica-s',this)"></button>
+      </div>
+    </div>
+
+    <!-- COMPLÉMENTS À PRÉVOIR -->
+    <div style="font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:600;color:var(--text);margin:0.8rem 0 0.4rem">🌿 Compléments alimentaires <span style="font-family:'Nunito',sans-serif;font-size:0.6rem;background:rgba(212,168,67,0.15);color:#8a6800;padding:0.15rem 0.45rem;border-radius:2rem;font-weight:700;vertical-align:middle">À PRÉVOIR</span></div>
+    <div style="font-size:0.67rem;color:var(--muted);margin-bottom:0.6rem;line-height:1.6;padding:0.5rem 0.75rem;background:rgba(212,168,67,0.06);border-radius:10px;border-left:2px solid var(--pistil)">
+      💡 À discuter avec votre médecin. Activez quand vous commencez. Les horaires sont optimisés pour ne pas interférer avec le Tramadol et la Lyrica.
+    </div>
+    <div class="alarm-section">
+      <div class="alarm-card" style="opacity:0.6;border:1.5px dashed rgba(58,40,32,0.15)">
+        <div class="alarm-icon">🌿</div>
+        <div class="alarm-info">
+          <div class="alarm-name">Magnésium bisglycinate</div>
+          <div class="alarm-time">À prendre le soir au dîner · loin du Tramadol soir · 200-300mg</div>
+        </div>
+        <button class="alarm-toggle off" id="alarm-magnesium" onclick="toggleAlarm('magnesium',this)"></button>
+      </div>
+      <div class="alarm-card" style="opacity:0.6;border:1.5px dashed rgba(58,40,32,0.15)">
+        <div class="alarm-icon">🌱</div>
+        <div class="alarm-info">
+          <div class="alarm-name">Fer (bisglycinate)</div>
+          <div class="alarm-time">À prendre le matin à distance du Tramadol · avec vitamine C</div>
+        </div>
+        <button class="alarm-toggle off" id="alarm-fer" onclick="toggleAlarm('fer',this)"></button>
+      </div>
+      <div style="font-size:0.65rem;color:var(--muted);font-style:italic;padding:0.4rem 0.5rem;line-height:1.6">
+        ⚠️ Le fer ne doit pas être pris en même temps que la Lyrica — respecter 2h d'écart minimum. Valider avec votre médecin ou pharmacien.
+      </div>
+    </div>
+
+    <!-- RAPPELS QUOTIDIENS -->
+    <div style="font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:600;color:var(--text);margin:0.8rem 0 0.5rem">🔔 Rappels quotidiens</div>
+    <div class="alarm-section">
+      <div class="alarm-card">
+        <div class="alarm-icon">🍊</div>
+        <div class="alarm-info">
+          <div class="alarm-name">Goûter Dopamine</div>
+          <div class="alarm-time">Chaque jour à 16h30 · Avant 17h !</div>
+        </div>
+        <button class="alarm-toggle on" id="alarm-gouter" onclick="toggleAlarm('gouter',this)"></button>
+      </div>
+      <div class="alarm-card">
+        <div class="alarm-icon">🍵</div>
+        <div class="alarm-info">
+          <div class="alarm-name">Préparer l'infusion / Lait d'Or</div>
+          <div class="alarm-time">Chaque soir à 20h00</div>
+        </div>
+        <button class="alarm-toggle on" id="alarm-infusion" onclick="toggleAlarm('infusion',this)"></button>
+      </div>
+      <div class="alarm-card">
+        <div class="alarm-icon">⏱</div>
+        <div class="alarm-info">
+          <div class="alarm-name">Batch Cooking</div>
+          <div class="alarm-time">Samedi matin à 9h00</div>
+        </div>
+        <button class="alarm-toggle on" id="alarm-batch" onclick="toggleAlarm('batch',this)"></button>
+      </div>
+    </div>
+
+    <!-- Journal -->
+    <div class="journal-card" style="margin-top:0.5rem">
+      <h3>📔 Comment s'est passée votre nuit ?</h3>
+      <div class="journal-date-row">
+        <span id="journalDateLabel"></span>
+      </div>
+      <div class="stars-row" id="starsRow">
+        <span class="star" onclick="setStar(1)">⭐</span>
+        <span class="star" onclick="setStar(2)">⭐</span>
+        <span class="star" onclick="setStar(3)">⭐</span>
+        <span class="star" onclick="setStar(4)">⭐</span>
+        <span class="star" onclick="setStar(5)">⭐</span>
+      </div>
+      <div class="journal-labels">
+        <span class="jlabel jl-bad" onclick="selectLabel(this,'Crise sévère')">😰 Crise sévère</span>
+        <span class="jlabel jl-bad" onclick="selectLabel(this,'Agité')">😣 Agité</span>
+        <span class="jlabel jl-ok" onclick="selectLabel(this,'Moyen')">😐 Moyen</span>
+        <span class="jlabel jl-good" onclick="selectLabel(this,'Calme')">😌 Calme</span>
+        <span class="jlabel jl-good" onclick="selectLabel(this,'Très bien')">😊 Très bien</span>
+      </div>
+      <textarea class="journal-note" id="journalNote" placeholder="Notes libres… ce que vous avez mangé, comment vous vous sentez, ce qui a aidé…"></textarea>
+      <button class="journal-save" onclick="saveJournal()">💾 Enregistrer cette nuit</button>
+    </div>
+
+    <!-- Historique -->
+    <div class="journal-card">
+      <h3>📈 Mes dernières nuits</h3>
+      <div class="journal-chart">
+        <div class="chart-title">Qualité du sommeil · 7 derniers jours</div>
+        <div class="chart-bars" id="chartBars"></div>
+      </div>
+      <div class="journal-history" id="journalHistory"></div>
+    </div>
+  </div>
+</div>
+
+<!-- URGENCE SJSR VIEW -->
+<div id="view-urgence" style="display:none">
+  <div class="urgence-section">
+    <div class="urgence-header">
+      <h2>🚨 Urgence SJSR</h2>
+      <p>Crise nocturne · Jambes agitées · Que faire maintenant ?</p>
+    </div>
+
+    <div class="urgence-step">
+      <div class="urgence-num">1</div>
+      <div>
+        <h4>Levez-vous et marchez</h4>
+        <p>Marchez doucement dans l'appartement 3-5 min. Le mouvement soulage immédiatement les symptômes du SJSR.</p>
+      </div>
+    </div>
+    <div class="urgence-step">
+      <div class="urgence-num">2</div>
+      <div>
+        <h4>Massage des jambes</h4>
+        <p>Massez fermement les mollets et les cuisses de bas en haut. Utilisez une huile si disponible. 5-10 minutes.</p>
+      </div>
+    </div>
+    <div class="urgence-step">
+      <div class="urgence-num">3</div>
+      <div>
+        <h4>Chaud ou froid sur les jambes</h4>
+        <p>Certaines personnes sont soulagées par la chaleur (bouillotte), d'autres par le froid (gant froid). Testez les deux pour savoir ce qui vous convient.</p>
+      </div>
+    </div>
+    <div class="urgence-step">
+      <div class="urgence-num">4</div>
+      <div>
+        <h4>Étirements doux</h4>
+        <p>Allongez-vous et étirez les jambes en tendant les pieds vers vous puis vers l'avant. Répétez 10 fois lentement.</p>
+      </div>
+    </div>
+    <div class="urgence-step">
+      <div class="urgence-num">5</div>
+      <div>
+        <h4>Respiration profonde</h4>
+        <p>Inspirez 4 secondes · Retenez 4 secondes · Expirez 6 secondes. Répétez 5 fois. Réduit l'anxiété liée à la crise.</p>
+      </div>
+    </div>
+
+    <div class="urgence-foods">
+      <h4>🌙 Si la crise dure · Grignotage thérapeutique autorisé</h4>
+      <div class="urgence-food-item">🌰 <span><strong>Quelques amandes</strong> → magnésium rapide</span></div>
+      <div class="urgence-food-item">🍫 <span><strong>1 carré chocolat noir 85%</strong> → magnésium + dopamine</span></div>
+      <div class="urgence-food-item">🌴 <span><strong>1 datte Medjool</strong> → énergie rapide sans pic glycémique</span></div>
+      <div class="urgence-food-item">🍵 <span><strong>Infusion gingembre tiède</strong> → anti-inflammatoire musculaire</span></div>
+    </div>
+
+    <div class="urgence-note">
+      ⚠️ <strong>Ce qui aggrave les crises nocturnes :</strong> alcool la veille · café après 14h · dîner trop tard ou trop lourd · sucre raffiné en soirée · stress non géré · carence en fer non traitée.<br><br>
+      💜 <strong>Si les crises sont fréquentes</strong> : notez-les dans votre journal (onglet 📔) pour identifier les déclencheurs et en parler à votre médecin.
+    </div>
   </div>
 </div>
 
@@ -673,7 +1014,26 @@ function openDay(key){
     if(m.conseil){const em=m.conseil.type==='sjsr'?'🌿':m.conseil.type==='bday'?'🎂':m.conseil.type==='tdah'?'🧠':'🌸';h+=`<div class="conseil c-${m.conseil.type}">${em} ${m.conseil.text}</div>`;}
     h+=`</div></div>`;
   });
-  h+=`</div><div class="sect-title" style="margin-top:1rem">🌙 Infusion du soir</div><div class="infusion-card"><h3>🍵 ${d.infusion.nom}</h3><p>${d.infusion.recette}</p><p class="inf-note">⏰ ${d.infusion.note}</p></div>`;
+  h+=`</div>`;
+  h+=`<div class="sect-title" style="margin-top:1rem">🌙 Boisson du soir — choisissez</div>`;
+  h+=`<div class="soir-toggle">
+    <div class="soir-btn active-inf" id="btn-inf" onclick="toggleSoir('inf')">🍵 Infusion Lune Dorée</div>
+    <div class="soir-btn inactive" id="btn-lor" onclick="toggleSoir('lor')">✨ Lait d'Or</div>
+  </div>`;
+  h+=`<div id="soir-inf">
+    <div class="infusion-card">
+      <h3>🍵 ${d.infusion.nom}</h3>
+      <p>${d.infusion.recette}</p>
+      <p class="inf-note">⏰ ${d.infusion.note}</p>
+    </div>
+  </div>`;
+  h+=`<div id="soir-lor" style="display:none">
+    <div class="lait-or-card">
+      <h3>✨ Lait d'Or Apaisant</h3>
+      <p>200ml lait de millet chaud · 1cc curcuma · ½cc gingembre Picard · pincée poivre noir · pincée cannelle · 1 datte Medjool fondue (facultatif) · fouetter 30 secondes</p>
+      <p class="lor-note">⏰ Avant 21h · Idéal les soirs de faim ou de stress TDAH · Même action anti-SJSR et dopaminergique que l'infusion</p>
+    </div>
+  </div>`;
   document.getElementById('panelContent').innerHTML=h;
   document.getElementById('dayPanel').classList.add('open');
   document.getElementById('overlay').classList.add('show');
@@ -711,13 +1071,213 @@ function buildShopping(){
 function tCheck(el){el.classList.toggle('checked');el.innerHTML=el.classList.contains('checked')?'✓':'';el.closest('.shop-item').classList.toggle('done');}
 
 // ── VIEWS ──
-function showView(v){
-  ['calendar','shopping','tips'].forEach(id=>document.getElementById('view-'+id).style.display=id===v?'block':'none');
-  document.querySelectorAll('.nav-tab').forEach((el,i)=>el.classList.toggle('active',['calendar','shopping','tips'][i]===v));
-}
+// showView merged below
 
 buildCalendar();
 buildShopping();
+
+// ── DÎNER RAPIDE ──
+const DINERS = [
+  {cat:'rapide',time:'10 min',name:'Sardines · Haricots verts · Persillade',ingr:'1 boîte sardines · haricots verts Picard micro-ondes 5min · persillade Picard',tags:['FER','DOPA','ALK']},
+  {cat:'rapide',time:'8 min',name:'Chia bowl salé · Thon · Légumes',ingr:'Chia pudding non sucré · thon au naturel · légumes Bene Bono râpés · vinaigre cidre',tags:['FER','MAG','VIT-C']},
+  {cat:'chaud',time:'15 min',name:'Velouté brocolis express · Lait de coco',ingr:'Brocolis Picard · lait de coco Masala · gingembre · curcuma · mixer',tags:['ALK','MAG']},
+  {cat:'chaud',time:'12 min',name:'Cabillaud Air Fryer · Épinards ail',ingr:'1 portion cabillaud · épinards Picard · ail Picard · gingembre · huile olive',tags:['ALK','DOPA','MAG']},
+  {cat:'leger',time:'5 min',name:'Plateau froid · Maquereau · Quinoa · Salade',ingr:'Maquereau boîte · quinoa batch froid · mélange salade Picard · vinaigre cidre',tags:['FER','DOPA','MAG']},
+  {cat:'leger',time:'5 min',name:'Tofu noisette froid · Légumes frais · Basilic',ingr:'Tofu noisette · légumes Bene Bono · basilic Picard · huile colza · vinaigre cidre',tags:['ALK','MAG']},
+];
+
+function buildDiners(){
+  const c=document.getElementById('diner-list');
+  if(!c)return;
+  const colors={'FER':'rgba(155,112,96,0.12)','DOPA':'rgba(224,120,64,0.12)','ALK':'rgba(168,200,154,0.2)','MAG':'rgba(90,138,90,0.12)','VIT-C':'rgba(212,168,67,0.12)'};
+  c.innerHTML=DINERS.map(d=>`
+    <div class="diner-card" data-cat="${d.cat}">
+      <div class="diner-time-badge">⏱ ${d.time}</div>
+      <div class="diner-info">
+        <div class="diner-name">${d.name}</div>
+        <div class="diner-ingr">${d.ingr}</div>
+        <div class="diner-tags">${d.tags.map(t=>`<span class="diner-tag">${t}</span>`).join('')}</div>
+      </div>
+    </div>`).join('');
+}
+
+function filterDiner(cat,btn){
+  document.querySelectorAll('.mood-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.diner-card').forEach(card=>{
+    card.style.display=(cat==='tous'||card.dataset.cat===cat)?'flex':'none';
+  });
+}
+
+// ── TIMER ──
+let timerInterval=null, timerSeconds=480, timerRunning=false;
+const TIMER_STEPS=['🌸 Versez l\'eau à 80°C et appuyez sur Démarrer','🍵 Infusion en cours… les arômes se libèrent','💜 Presque prêt… encore un peu de patience','✨ Prêt à boire ! Installez-vous confortablement'];
+
+function updateTimerDisplay(){
+  const m=Math.floor(timerSeconds/60), s=timerSeconds%60;
+  const el=document.getElementById('timerDisplay');
+  if(el) el.textContent=m+':'+(s<10?'0':'')+s;
+  const circle=document.getElementById('timerCircle');
+  if(circle){
+    const pct=timerSeconds/480;
+    circle.style.strokeDashoffset=340-(340*pct);
+  }
+  const stepEl=document.getElementById('timerStep');
+  if(stepEl){
+    const idx=timerSeconds>360?0:timerSeconds>240?1:timerSeconds>60?2:3;
+    stepEl.textContent=TIMER_STEPS[idx];
+  }
+}
+
+function toggleTimer(){
+  const btn=document.getElementById('timerBtn');
+  if(!timerRunning){
+    timerRunning=true;
+    if(btn) btn.textContent='⏸ Pause';
+    timerInterval=setInterval(()=>{
+      if(timerSeconds>0){
+        timerSeconds--;
+        updateTimerDisplay();
+      } else {
+        clearInterval(timerInterval);
+        timerRunning=false;
+        if(btn) btn.textContent='▶ Démarrer';
+        const stepEl=document.getElementById('timerStep');
+        if(stepEl) stepEl.textContent='✨ Votre infusion est prête ! Bonne soirée 🌸';
+        if('vibrate' in navigator) navigator.vibrate([300,100,300]);
+      }
+    },1000);
+  } else {
+    timerRunning=false;
+    clearInterval(timerInterval);
+    if(btn) btn.textContent='▶ Continuer';
+  }
+}
+
+function resetTimer(){
+  clearInterval(timerInterval);
+  timerRunning=false;
+  timerSeconds=480;
+  const btn=document.getElementById('timerBtn');
+  if(btn) btn.textContent='▶ Démarrer';
+  updateTimerDisplay();
+  const stepEl=document.getElementById('timerStep');
+  if(stepEl) stepEl.textContent='🌸 Versez l\'eau à 80°C et appuyez sur Démarrer';
+}
+
+// ── JOURNAL ──
+let currentStar=0, currentLabel='';
+const JOURNAL_KEY='sjsr_journal';
+
+function setDateLabel(){
+  const el=document.getElementById('journalDateLabel');
+  if(el){
+    const now=new Date();
+    el.textContent='Nuit du '+now.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'});
+  }
+}
+
+function setStar(n){
+  currentStar=n;
+  document.querySelectorAll('.star').forEach((s,i)=>{
+    s.classList.toggle('lit',i<n);
+  });
+}
+
+function selectLabel(el,label){
+  document.querySelectorAll('.jlabel').forEach(l=>l.classList.remove('selected'));
+  el.classList.add('selected');
+  currentLabel=label;
+}
+
+function saveJournal(){
+  if(!currentStar){alert('Donnez une note en étoiles à votre nuit 🌸');return;}
+  const note=document.getElementById('journalNote')?.value||'';
+  const entries=JSON.parse(localStorage.getItem(JOURNAL_KEY)||'[]');
+  const now=new Date();
+  entries.unshift({date:now.toLocaleDateString('fr-FR'),stars:currentStar,label:currentLabel,note:note.substring(0,100)});
+  if(entries.length>30) entries.pop();
+  localStorage.setItem(JOURNAL_KEY,JSON.stringify(entries));
+  currentStar=0;currentLabel='';
+  document.querySelectorAll('.star').forEach(s=>s.classList.remove('lit'));
+  document.querySelectorAll('.jlabel').forEach(l=>l.classList.remove('selected'));
+  const noteEl=document.getElementById('journalNote');
+  if(noteEl) noteEl.value='';
+  loadJournalHistory();
+  alert('✅ Nuit enregistrée ! Continuez à noter pour suivre votre évolution 🌸');
+}
+
+function loadJournalHistory(){
+  const entries=JSON.parse(localStorage.getItem(JOURNAL_KEY)||'[]');
+  const hist=document.getElementById('journalHistory');
+  const chart=document.getElementById('chartBars');
+  if(hist){
+    if(!entries.length){hist.innerHTML='<p style="font-size:0.73rem;color:var(--muted);font-style:italic">Votre historique apparaîtra ici après la première nuit enregistrée 🌸</p>';return;}
+    hist.innerHTML='<div class="jh-title">Historique récent</div>'+entries.slice(0,7).map(e=>`
+      <div class="jh-entry">
+        <span class="jh-date">${e.date}</span>
+        <span class="jh-stars">${'⭐'.repeat(e.stars)}</span>
+        ${e.label?`<span class="jh-label" style="background:rgba(58,40,32,0.06);color:var(--muted)">${e.label}</span>`:''}
+        ${e.note?`<span class="jh-note">${e.note}</span>`:''}
+      </div>`).join('');
+  }
+  if(chart&&entries.length){
+    const last7=entries.slice(0,7).reverse();
+    const colors=['#e8899a','#e8a0aa','#d4a843','#a8c89a','#7aab72','#6b9e78','#5a8a5a'];
+    chart.innerHTML=last7.map((e,i)=>`
+      <div class="chart-bar-wrap">
+        <div class="chart-bar" style="height:${e.stars*10}px;background:${colors[Math.min(i,colors.length-1)]};opacity:${0.5+e.stars*0.1}"></div>
+        <div class="chart-bar-label">${e.date.split('/').slice(0,2).join('/')}</div>
+      </div>`).join('');
+  }
+}
+
+// ── ALARMES ──
+function toggleAlarm(name,btn){
+  const isOn=btn.classList.contains('on');
+  btn.classList.toggle('on',!isOn);
+  btn.classList.toggle('off',isOn);
+  const times={'gouter':'16:30','infusion':'20:00','batch':'09:00 Sam'};
+  if(!isOn){
+    // Try to request notification permission
+    if('Notification' in window) Notification.requestPermission();
+  }
+}
+
+// ── UPDATE VIEWS to include new ones ──
+const origShowView = showView;
+function showView(v){
+  const allViews=['calendar','shopping','diner','journal','urgence','tips'];
+  allViews.forEach(id=>{
+    const el=document.getElementById('view-'+id);
+    if(el) el.style.display=id===v?'block':'none';
+  });
+  document.querySelectorAll('.nav-tab').forEach((el,i)=>{
+    const map=['calendar','shopping','diner','journal','urgence'];
+    el.classList.toggle('active',map[i]===v);
+  });
+  if(v==='diner') buildDiners();
+  if(v==='journal'){setDateLabel();loadJournalHistory();updateTimerDisplay();}
+}
+
+// Hide tips view initially (merged into conseils accessible via journal)
+const tipsView=document.getElementById('view-tips');
+if(tipsView) tipsView.style.display='none';
+
+
+function toggleSoir(choice){
+  document.getElementById('soir-inf').style.display = choice==='inf' ? 'block' : 'none';
+  document.getElementById('soir-lor').style.display = choice==='lor' ? 'block' : 'none';
+  const bInf = document.getElementById('btn-inf');
+  const bLor = document.getElementById('btn-lor');
+  if(choice==='inf'){
+    bInf.className='soir-btn active-inf';
+    bLor.className='soir-btn inactive';
+  } else {
+    bInf.className='soir-btn inactive';
+    bLor.className='soir-btn active-lor';
+  }
+}
 </script>
 </body>
 </html>
