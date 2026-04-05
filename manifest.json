@@ -1,0 +1,24 @@
+{
+  "name": "Sérénité · Anti-SJSR & TDAH",
+  "short_name": "Sérénité",
+  "description": "Menu mensuel anti-SJSR et TDAH · Ketty",
+  "start_url": "/serenite-sjsr/",
+  "display": "standalone",
+  "background_color": "#3a2030",
+  "theme_color": "#3a2030",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png", 
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

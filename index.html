@@ -4,6 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <title>Sérénité · Anti-SJSR & TDAH</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#3a2030">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Sérénité">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="icon" type="image/png" href="icon-192.png">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -349,6 +356,16 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 </head>
 <body>
 
+<!-- PWA Install Banner -->
+<div id="install-banner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:1000;background:linear-gradient(135deg,#3a2030,#5a2840);padding:0.8rem 1rem;align-items:center;gap:0.8rem;box-shadow:0 -4px 20px rgba(58,32,48,0.3)">
+  <span style="font-size:1.5rem">🌸</span>
+  <div style="flex:1">
+    <div style="color:#fff;font-weight:700;font-size:0.82rem">Installer l'appli Sérénité</div>
+    <div style="color:rgba(255,255,255,0.55);font-size:0.68rem">Accès rapide depuis votre écran d'accueil</div>
+  </div>
+  <button onclick="installApp()" style="background:var(--petal-pink,#f2c4ce);color:#3a2030;border:none;border-radius:8px;padding:0.5rem 1rem;font-weight:700;font-size:0.75rem;cursor:pointer">Installer</button>
+  <button onclick="document.getElementById('install-banner').style.display='none'" style="background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.6);border:none;border-radius:8px;padding:0.5rem 0.6rem;font-size:0.8rem;cursor:pointer">✕</button>
+</div>
 <!-- HEADER -->
 <div class="header">
   <div>
@@ -1212,6 +1229,13 @@ function tCheck(el){el.classList.toggle('checked');el.innerHTML=el.classList.con
 buildCalendar();
 buildShopping();
 
+function installApp(){
+  if(deferredPrompt){
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then(()=>{ deferredPrompt=null; });
+  }
+}
+
 // ── DÎNER RAPIDE ──
 const DINERS = [
   {cat:'rapide',time:'10 min',name:'Sardines · Haricots verts · Persillade',ingr:'1 boîte sardines · haricots verts Picard micro-ondes 5min · persillade Picard',tags:['FER','DOPA','ALK']},
@@ -1413,6 +1437,20 @@ function toggleSoir(choice){
     bLor.className='soir-btn active-lor';
   }
 }
+</script>
+
+<script>
+// PWA Install prompt
+let deferredPrompt;
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  document.getElementById('install-banner').style.display = 'flex';
+});
+
+window.addEventListener('appinstalled', () => {
+  document.getElementById('install-banner').style.display = 'none';
+});
 </script>
 </body>
 </html>
