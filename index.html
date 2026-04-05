@@ -433,9 +433,9 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
     <div class="shop-week">
       <div class="shop-week-header">
         <span class="shop-week-title">🛒 Semaine 1 · 10–14 avril</span>
-        <span class="shop-week-budget">~105–130€</span>
+        <span class="shop-week-budget">~130–150€</span>
       </div>
-      <div class="shop-source-block"><div class="shop-source-title">🌿 La Fourche · bio & sec · ~65€</div><div id="sl-fourche"></div></div>
+      <div class="shop-source-block"><div class="shop-source-title">🌿 La Fourche · bio & sec · ~75€ (épices + nouvelles recettes)</div><div id="sl-fourche"></div></div>
       <div class="shop-source-block"><div class="shop-source-title">❄️ Picard · surgelés · ~40€</div><div id="sl-picard"></div></div>
       <div class="shop-source-block"><div class="shop-source-title">🥬 Bene Bono · frais · ~17-25€</div><div id="sl-beno"></div></div>
     </div>
@@ -845,6 +845,148 @@ const MENUS = {
   // ── 5 avril — Dimanche · DÉBROUILLE ──
   '5':{name:"Dimanche 5 avril",mode:"pm-f",modeLabel:"🌿 On se débrouille !",nextMeal:"Journal + Timer dispo dès ce soir 🌸",livraison:false,batch:false,birthday:false,
     meals:[
+      {ic:"☀️",cl:"ic-mat",lbl:"Petit-déjeuner · Focus & Fer",time:"7h – 9h",
+       title:"Chia pudding · Lait d\'amande · Myrtilles · Purée d\'amande",
+       ingr:[{t:"Graines de chia 3cs"},{t:"Lait d\'amande 200ml"},{t:"Myrtilles ou fruits rouges"},{t:"Purée d\'amande 1cs"},{t:"Cannelle"}],
+       tags:[["MAG","nt-mag"],["FER","nt-fer"]],
+       conseil:{type:"tdah",text:"🧠 Dès ce soir : utilisez le timer infusion et notez votre nuit dans le journal !"}},
+      {ic:"🥗",cl:"ic-mid",lbl:"Déjeuner · Protéine & Vitalité",time:"12h – 13h30",
+       title:"Bol lentilles vertes · Épinards · Persil · Citron",
+       ingr:[{t:"Lentilles vertes cuites 150g"},{t:"Épinards frais"},{t:"Persil plat frais"},{t:"Jus de citron (absorption fer)"},{t:"Huile de colza + Sel Santé"}],
+       tags:[["FER","nt-fer"],["MAG","nt-mag"],["VIT-C","nt-vitc"]],
+       conseil:{type:"sjsr",text:"🌿 Citron systématique sur les lentilles = absorption du fer multipliée. Persil = dopamine naturelle."}},
+      {ic:"🍊",cl:"ic-gou",lbl:"Collation · Zéro sucre raffiné",time:"avant 17h",
+       title:"Energy ball maison · Datte + Amande + Cacao brut",
+       ingr:[{t:"2 dattes Medjool"},{t:"6 amandes"},{t:"1cc cacao brut"},{t:"Coco râpée (optionnel)"}],
+       tags:[["MAG","nt-mag"],["DOPA","nt-dopa"],["TDAH","nt-tdah"]],
+       conseil:{type:"tdah",text:"🧠 Snack dopamine idéal TDAH — sucre naturel lent, pas de pic glycémique."}},
+      {ic:"🌙",cl:"ic-din",lbl:"Dîner · Sommeil & Anti-inflammation",time:"19h – 20h max",
+       title:"Papillote légère · Poisson blanc · Courgettes · Citron-Gingembre",
+       ingr:[{t:"Poisson blanc (cabillaud ou colin)"},{t:"Courgettes en lamelles"},{t:"Gingembre râpé"},{t:"Jus de citron"},{t:"Sel Santé + herbes de Provence"}],
+       tags:[["ALK","nt-alk"],["MAG","nt-mag"]],
+       conseil:{type:"prep",text:"🌸 Four 180°C / 20 min en papillote — vapeur douce, zéro matière grasse ajoutée."}},
+      {ic:"📺",cl:"ic-sna",lbl:"Snack TV Anti-SJSR",time:"Soirée",
+       fun:"🌸 Abricots rôtis au miel & thym (ou fruits de saison)",
+       ingr:[{t:"Abricots ou pêches coupés"},{t:"Filet de miel"},{t:"Thym frais"},{t:"Four 180°C / 15 min"}],
+       tags:[["ALK","nt-alk"],["FUN","nt-fun"]],conseil:null}
+    ],infusion:INF},
+
+  // ── 6 avril — Lundi ──
+  '6':{name:"Lundi 6 avril",mode:"pm-f",modeLabel:"🌿 On se débrouille !",nextMeal:"💊 Médicaments avec le petit-déjeuner",livraison:false,batch:false,birthday:false,
+    meals:[
+      {ic:"☀️",cl:"ic-mat",lbl:"Petit-déjeuner · Focus & Fer",time:"7h – 9h",
+       title:"Porridge sarrasin · Pomme râpée · Noisettes · Cannelle 💊",
+       ingr:[{t:"Flocons de sarrasin 80g"},{t:"Lait végétal"},{t:"Pomme râpée (vitamine C)"},{t:"Noisettes concassées"},{t:"Cannelle"},{t:"💊 Tramadol LP 50mg + Lyrica 325mg"}],
+       tags:[["MAG","nt-mag"],["FER","nt-fer"]],
+       conseil:{type:"tdah",text:"🧠 Médicaments avec ce repas. Cannelle = régulateur de glycémie idéal TDAH."}},
+      {ic:"🥗",cl:"ic-mid",lbl:"Déjeuner · Salades de la Mer",time:"12h – 13h30",
+       title:"Sardines · Mâche · Betteraves · Avocat · Huile de lin",
+       ingr:[{t:"Sardines 1 boîte"},{t:"Mâche ou salade"},{t:"Betteraves (circulation)"},{t:"Avocat ½"},{t:"Huile de lin + citron + Sel Santé"}],
+       tags:[["FER","nt-fer"],["DOPA","nt-dopa"],["MAG","nt-mag"]],
+       conseil:{type:"sjsr",text:"🌿 Betteraves = vasodilatateur naturel, améliore la circulation dans les jambes SJSR."}},
+      {ic:"🍊",cl:"ic-gou",lbl:"Collation · Énergie TDAH",time:"avant 17h",
+       title:"Energy ball · Datte + Amande + Zeste d\'orange",
+       ingr:[{t:"2 dattes Medjool"},{t:"8 amandes"},{t:"Zeste d\'orange (vit C)"},{t:"Sésame"}],
+       tags:[["MAG","nt-mag"],["DOPA","nt-dopa"],["TDAH","nt-tdah"]],conseil:null},
+      {ic:"🌙",cl:"ic-din",lbl:"Dîner · Sommeil 💊",time:"avant dîner",
+       title:"💊 Tramadol 100mg + Lyrica 375mg · Velouté potimarron-châtaignes",
+       ingr:[{t:"💊 Tramadol LP 100mg + Lyrica 375mg AVANT"},{t:"Potimarron 400g"},{t:"Châtaignes 50g"},{t:"Gingembre"},{t:"Lait de coco"},{t:"Sel Santé"}],
+       tags:[["ALK","nt-alk"],["MAG","nt-mag"]],
+       conseil:{type:"prep",text:"🌸 Velouté doux et réconfortant. Mixer avec lait de coco pour un résultat soyeux."}},
+      {ic:"📺",cl:"ic-sna",lbl:"Snack TV",time:"Soirée",
+       fun:"🌸 Graines de courge torréfiées + carré chocolat 85%",
+       ingr:[{t:"Graines de courge 30g"},{t:"1 carré chocolat 85%"}],
+       tags:[["MAG","nt-mag"],["DOPA","nt-dopa"],["FUN","nt-fun"]],conseil:null}
+    ],infusion:INF},
+
+  // ── 7 avril — Mardi ──
+  '7':{name:"Mardi 7 avril",mode:"pm-f",modeLabel:"🌿 On se débrouille !",nextMeal:"3 jours avant la livraison 💪",livraison:false,batch:false,birthday:false,
+    meals:[
+      {ic:"☀️",cl:"ic-mat",lbl:"Petit-déjeuner · Focus & Fer",time:"7h – 9h",
+       title:"Chia pudding · Lait riz · Kiwi · Noix de Grenoble · Oméga-3 💊",
+       ingr:[{t:"Graines de chia 3cs"},{t:"Lait de riz 200ml"},{t:"Kiwi (vitamine C++)"},{t:"Noix de Grenoble (Oméga-3)"},{t:"💊 Tramadol LP 50mg + Lyrica 325mg"}],
+       tags:[["MAG","nt-mag"],["FER","nt-fer"],["VIT-C","nt-vitc"]],
+       conseil:{type:"sjsr",text:"🌿 Kiwi = meilleure source vitamine C naturelle → absorption fer maximale."}},
+      {ic:"🥗",cl:"ic-mid",lbl:"Déjeuner · Bols Légumineuses",time:"12h – 13h30",
+       title:"Pois chiches · Poivrons rouges · Basilic · Huile d\'olive",
+       ingr:[{t:"Pois chiches 150g"},{t:"Poivrons rouges crus (vit C)"},{t:"Basilic frais (dopamine)"},{t:"Tomates mondées"},{t:"Huile d\'olive + Sel Santé + citron"}],
+       tags:[["FER","nt-fer"],["MAG","nt-mag"],["VIT-C","nt-vitc"],["DOPA","nt-dopa"]],
+       conseil:{type:"sjsr",text:"🌿 Poivrons rouges = vit C la plus concentrée des légumes → binôme parfait avec le fer des pois chiches."}},
+      {ic:"🍊",cl:"ic-gou",lbl:"Collation · Zéro sucre raffiné",time:"avant 17h",
+       title:"Amandes · Carré chocolat 85% · Datte",
+       ingr:[{t:"8 amandes"},{t:"1 carré chocolat 85%"},{t:"1 datte Medjool"}],
+       tags:[["MAG","nt-mag"],["DOPA","nt-dopa"],["TDAH","nt-tdah"]],conseil:null},
+      {ic:"🌙",cl:"ic-din",lbl:"Dîner · Anti-inflammation 💊",time:"avant dîner",
+       title:"💊 Médicaments AVANT · Brandade cabillaud-courgettes",
+       ingr:[{t:"💊 Tramadol LP 100mg + Lyrica 375mg AVANT"},{t:"Cabillaud vapeur 150g"},{t:"Courgettes mixées"},{t:"Huile d\'olive"},{t:"Ail + Sel Santé + citron"}],
+       tags:[["ALK","nt-alk"],["MAG","nt-mag"]],
+       conseil:{type:"prep",text:"🌸 Cuisson vapeur douce pour préserver vitamines B et C essentielles au système nerveux."}},
+      {ic:"📺",cl:"ic-sna",lbl:"Snack TV",time:"Soirée",
+       fun:"🌸 Poires rôties à la badiane au four",
+       ingr:[{t:"1 poire coupée en deux"},{t:"1 étoile de badiane"},{t:"Filet de miel"},{t:"Four 170°C / 20 min"}],
+       tags:[["ALK","nt-alk"],["FUN","nt-fun"]],conseil:null}
+    ],infusion:INF},
+
+  // ── 8 avril — Mercredi ──
+  '8':{name:"Mercredi 8 avril",mode:"pm-f",modeLabel:"🌿 On se débrouille !",nextMeal:"Plus que 2 jours 🌸",livraison:false,batch:false,birthday:false,
+    meals:[
+      {ic:"☀️",cl:"ic-mat",lbl:"Petit-déjeuner · Focus & Fer",time:"7h – 9h",
+       title:"Porridge sarrasin · Graines de courge · Framboises · Cannelle 💊",
+       ingr:[{t:"Flocons de sarrasin 80g"},{t:"Lait végétal"},{t:"Graines de courge (fer++)"},{t:"Framboises (vit C)"},{t:"Cannelle"},{t:"💊 Tramadol LP 50mg + Lyrica 325mg"}],
+       tags:[["MAG","nt-mag"],["FER","nt-fer"],["DOPA","nt-dopa"]],
+       conseil:{type:"tdah",text:"🧠 Graines de courge = zinc + tryptophane + fer → triple action SJSR et TDAH."}},
+      {ic:"🥗",cl:"ic-mid",lbl:"Déjeuner · Salade de la Mer",time:"12h – 13h30",
+       title:"Maquereau · Haricots verts · Persil plat · Betteraves",
+       ingr:[{t:"Maquereau 1 boîte"},{t:"Haricots verts cuits"},{t:"Persil plat frais (dopamine)"},{t:"Betteraves (circulation)"},{t:"Huile de colza + citron + Sel Santé"}],
+       tags:[["FER","nt-fer"],["DOPA","nt-dopa"],["MAG","nt-mag"]],
+       conseil:{type:"sjsr",text:"🌿 Persil plat = meilleure herbe anti-SJSR : vitamine C + fer + dopamine en une seule plante."}},
+      {ic:"🍊",cl:"ic-gou",lbl:"Collation · Énergie TDAH",time:"avant 17h",
+       title:"Energy ball · Datte + Cacao + Vanille",
+       ingr:[{t:"2 dattes Medjool"},{t:"6 amandes"},{t:"1cc cacao brut"},{t:"Vanille en poudre"}],
+       tags:[["MAG","nt-mag"],["DOPA","nt-dopa"],["TDAH","nt-tdah"]],conseil:null},
+      {ic:"🌙",cl:"ic-din",lbl:"Dîner · Sommeil 💊",time:"avant dîner",
+       title:"💊 Médicaments AVANT · Soupe panais-poires · Gingembre",
+       ingr:[{t:"💊 Tramadol LP 100mg + Lyrica 375mg AVANT"},{t:"Panais 300g"},{t:"1 poire"},{t:"Gingembre frais"},{t:"Bouillon maison sans glutamate"},{t:"Sel Santé"}],
+       tags:[["ALK","nt-alk"],["MAG","nt-mag"]],
+       conseil:{type:"prep",text:"🌸 Le panais-poire est naturellement sucré et doux — idéal pour un dîner apaisant avant le sommeil."}},
+      {ic:"📺",cl:"ic-sna",lbl:"Snack TV",time:"Soirée",
+       fun:"🌸 Amandes torréfiées + carré chocolat noir 92%",
+       ingr:[{t:"Amandes 20g"},{t:"1 carré chocolat 92%"}],
+       tags:[["MAG","nt-mag"],["FUN","nt-fun"]],conseil:null}
+    ],infusion:INF},
+
+  // ── 9 avril — Jeudi ──
+  '9':{name:"Jeudi 9 avril",mode:"pm-f",modeLabel:"🌿 Dernier jour avant livraison !",nextMeal:"Demain tout arrive 🎉",livraison:false,batch:false,birthday:false,
+    meals:[
+      {ic:"☀️",cl:"ic-mat",lbl:"Petit-déjeuner · Focus & Fer",time:"7h – 9h",
+       title:"Chia pudding · Lait coco · Mangue · Noisettes 💊",
+       ingr:[{t:"Graines de chia 3cs"},{t:"Lait de coco léger 200ml"},{t:"Mangue fraîche ou surgelée (vit C)"},{t:"Noisettes concassées"},{t:"💊 Tramadol LP 50mg + Lyrica 325mg"}],
+       tags:[["MAG","nt-mag"],["FER","nt-fer"],["VIT-C","nt-vitc"]],
+       conseil:{type:"tdah",text:"🧠 Demain c\'est la livraison — les vrais menus Sérénité complets arrivent ! 🌸"}},
+      {ic:"🥗",cl:"ic-mid",lbl:"Déjeuner · Bol Légumineuses",time:"12h – 13h30",
+       title:"Lentilles corail · Carottes au curcuma · Brocolis · Persil",
+       ingr:[{t:"Lentilles corail cuites 150g"},{t:"Carottes rôties au curcuma"},{t:"Brocolis vapeur"},{t:"Persil plat frais"},{t:"Sel Santé + citron + huile colza"}],
+       tags:[["FER","nt-fer"],["MAG","nt-mag"],["VIT-C","nt-vitc"],["DOPA","nt-dopa"]],
+       conseil:{type:"sjsr",text:"🌿 Curcuma sur les carottes + huile = anti-inflammatoire activé. Persil + citron = fer boosté."}},
+      {ic:"🍊",cl:"ic-gou",lbl:"Collation · Zéro sucre raffiné",time:"avant 17h",
+       title:"Figues fraîches ou sèches · Amandes · Chocolat 85%",
+       ingr:[{t:"2 figues"},{t:"6 amandes"},{t:"1 carré chocolat 85%"}],
+       tags:[["MAG","nt-mag"],["FER","nt-fer"],["TDAH","nt-tdah"]],conseil:null},
+      {ic:"🌙",cl:"ic-din",lbl:"Dîner · Anti-inflammation 💊",time:"avant dîner",
+       title:"💊 Médicaments AVANT · Poulet patate douce & sauge",
+       ingr:[{t:"💊 Tramadol LP 100mg + Lyrica 375mg AVANT"},{t:"Blanc de poulet"},{t:"Patate douce (IG bas)"},{t:"Sauge fraîche"},{t:"Huile d\'olive + Sel Santé"}],
+       tags:[["ALK","nt-alk"],["MAG","nt-mag"]],
+       conseil:{type:"prep",text:"🌸 Patate douce = glucide lent alcalinisant, parfait pour un dîner anti-SJSR. Four 190°C / 25 min."}},
+      {ic:"📺",cl:"ic-sna",lbl:"Snack TV",time:"Soirée",
+       fun:"🌸 Figues rôties au romarin · Four 170°C / 15 min",
+       ingr:[{t:"2 figues coupées"},{t:"Romarin frais"},{t:"Filet de miel"},{t:"Four 170°C / 15 min"}],
+       tags:[["ALK","nt-alk"],["FUN","nt-fun"]],conseil:null}
+    ],infusion:INF},
+
+
+  // ── 5 avril — Dimanche · DÉBROUILLE ──
+  '5':{name:"Dimanche 5 avril",mode:"pm-f",modeLabel:"🌿 On se débrouille !",nextMeal:"Journal + Timer dispo dès ce soir 🌸",livraison:false,batch:false,birthday:false,
+    meals:[
       {ic:"☀️",cl:"ic-mat",lbl:"Petit-déjeuner",time:"7h – 9h",
        title:"Ce que vous avez · Café/thé avant 14h seulement",
        ingr:[{t:"Pain + beurre ou céréales"},{t:"Fruit si disponible"},{t:"Café ou thé ☕ avant 14h max"}],
@@ -1071,8 +1213,8 @@ const MENUS = {
 
   '14':{name:"Mardi 14 avril 🎂",mode:"pm-bday",modeLabel:"🎂 Joyeux Anniversaire !",nextMeal:"Votre jour — savourez chaque repas",livraison:false,batch:false,birthday:true,
     meals:[
-      {ic:"☀️",cl:"ic-bday",lbl:"Petit-déjeuner d'anniversaire",time:"7h – 9h",title:"Bol d'or · Quinoa · Mangue · Dattes · Amandes",
-       ingr:[{t:"Quinoa cuit 100g",bd:true},{t:"Mangues Picard 150g",bd:true},{t:"3 dattes Medjool",bd:true},{t:"Amandes effilées 20g"},{t:"Graines de chia 2cs"},{t:"Lait de millet chaud"}],
+      {ic:"☀️",cl:"ic-bday",lbl:"Petit-déjeuner d'anniversaire",time:"7h – 9h",title:"Bol Royal d'anniversaire · Quinoa · Mangue · Dattes · Noisettes · Cannelle",
+       ingr:[{t:"Quinoa cuit 100g",bd:true},{t:"Mangues Picard 150g",bd:true},{t:"3 dattes Medjool",bd:true},{t:"Noisettes concassées 20g",bd:true},{t:"Graines de chia 2cs"},{t:"Lait de millet chaud"},{t:"Cannelle + pincée cardamome"}],
        tags:[["MAG","nt-mag"],["FER","nt-fer"],["DOPA","nt-dopa"],["FUN","nt-bday"]],
        conseil:{type:"bday",text:"🎂 Ce matin vous méritez un petit-déj de reine. Prenez le temps de le savourer — c'est votre jour !"}},
       {ic:"🥗",cl:"ic-bday",lbl:"Déjeuner festif",time:"12h – 14h",title:"Plateau festif · Maquereau · Quinoa · Salade fruits exotiques",
@@ -1087,8 +1229,8 @@ const MENUS = {
        ingr:[{t:"2 portions cabillaud Picard",bd:true},{t:"Haricots verts Picard 300g"},{t:"Amandes effilées 30g",bd:true},{t:"Gingembre + curcuma"},{t:"Huile olive + basilic Picard"}],
        tags:[["ALK","nt-alk"],["MAG","nt-mag"],["DOPA","nt-dopa"],["FUN","nt-bday"]],
        conseil:{type:"bday",text:"🎂 Appuyer les amandes sur le cabillaud → Air Fryer 180°C / 15 min → croûte dorée !"}},
-      {ic:"🎂",cl:"ic-bday",lbl:"Dessert d'anniversaire",time:"Soirée",fun:"🌸🎂 Sorbet Fruits Rouges · Dattes · Chocolat fondu chaud",
-       ingr:[{t:"Sorbet fruits rouges Creami",bd:true},{t:"2 dattes tranchées",bd:true},{t:"Carré chocolat 85% fondu",bd:true},{t:"Amandes effilées torréfiées"}],
+      {ic:"🎂",cl:"ic-bday",lbl:"Dessert d'anniversaire",time:"Soirée",fun:"🌸🎂 Mousse Chocolat 85% · Cerises · Piment · Sorbet Creami",
+       ingr:[{t:"Chocolat noir 85% fondu",bd:true},{t:"Blancs d'oeufs en neige (3)",bd:true},{t:"Cerises ou fruits rouges Picard",bd:true},{t:"Pincée de piment doux (circulation)",bd:true},{t:"Sorbet Ninja Creami fruits rouges",bd:true},{t:"Amandes effilées torréfiées"}],
        tags:[["ALK","nt-alk"],["DOPA","nt-dopa"],["FUN","nt-bday"]],
        conseil:{type:"bday",text:"🎂 Napper le sorbet de chocolat chaud fondu → effet coulant festif !"}}
     ],infusion:INF_BDAY}
@@ -1096,28 +1238,112 @@ const MENUS = {
 
 // ── SHOPPING ──
 const SHOP_DATA={
+
+  // ── LA FOURCHE · Bio & Sec ──
   fourche:[
-    {n:"Sardines huile olive bio × 6",p:"17,94€"},{n:"Filets maquereau huile olive × 4",p:"15,96€"},
-    {n:"Thon albacore au naturel × 2",p:"6,70€"},{n:"Lentilles corail bio 500g",p:"1,70€"},
-    {n:"Torsades lentilles corail 250g",p:"2,52€"},{n:"Pois chiches au naturel 420g",p:"2,99€"},
-    {n:"Haricots rouges bio 425g",p:"3,69€"},{n:"Tofu noisette ail des ours 200g",p:"2,99€"},
-    {n:"Sarrasin décortiqué bio 1kg",p:"3,90€"},{n:"Quinoa duo rouge et blanc 500g",p:"3,99€"},
-    {n:"Graines de chia bio 500g",p:"3,65€"},{n:"Graines de courge bio 250g",p:"3,51€"},
-    {n:"Amandes décortiquées bio 500g",p:"7,50€"},{n:"Dattes Medjool bio 500g",p:"7,99€"},
-    {n:"Chocolat noir 85% Togo bio",p:"3,87€"},{n:"Chocolat noir 80% fleur de sel",p:"2,99€"},
-    {n:"Chocolat noir 92% Fairafric",p:"3,45€"},
+    // Protéines & Poissons
+    {n:"🐟 Sardines huile olive bio × 6",p:"17,94€"},
+    {n:"🐟 Filets maquereau huile olive × 4",p:"15,96€"},
+    {n:"🐟 Thon albacore au naturel × 2",p:"6,70€"},
+    {n:"🫘 Lentilles corail bio 500g",p:"1,70€"},
+    {n:"🫘 Lentilles vertes bio 500g",p:"2,20€"},
+    {n:"🫘 Pois chiches au naturel bio 420g",p:"2,99€"},
+    {n:"🫘 Haricots rouges bio 425g",p:"3,69€"},
+    {n:"🫘 Pois cassés bio 500g",p:"1,90€"},
+    {n:"🫘 Torsades lentilles corail 250g",p:"2,52€"},
+    {n:"🧈 Tofu noisette ail des ours 200g",p:"2,99€"},
+    // Céréales & Féculents
+    {n:"🌾 Sarrasin décortiqué bio 1kg",p:"3,90€"},
+    {n:"🌾 Flocons de sarrasin bio 500g",p:"2,80€"},
+    {n:"🌾 Quinoa duo rouge et blanc 500g",p:"3,99€"},
+    {n:"🌾 Polenta de maïs bio 500g",p:"2,50€"},
+    {n:"🌾 Farine de riz bio 500g",p:"2,10€"},
+    // Graines & Oléagineux
+    {n:"🌱 Graines de chia bio 500g",p:"3,65€"},
+    {n:"🌱 Graines de courge bio 250g",p:"3,51€"},
+    {n:"🌱 Graines de lin bio 250g",p:"2,20€"},
+    {n:"🥜 Amandes décortiquées bio 500g",p:"7,50€"},
+    {n:"🥜 Noisettes décortiquées bio 200g",p:"4,50€"},
+    {n:"🥜 Pistaches bio non salées 150g",p:"5,99€"},
+    {n:"🥜 Noix de Grenoble bio 200g",p:"4,80€"},
+    {n:"🌴 Dattes Medjool bio 500g",p:"7,99€"},
+    {n:"🥜 Purée d'amande bio 250g",p:"5,50€"},
+    {n:"🌿 Coco râpée bio 200g",p:"2,40€"},
+    {n:"🍫 Cacao brut en poudre bio 200g",p:"4,50€"},
+    // Chocolats
+    {n:"🍫 Chocolat noir 85% Togo bio",p:"3,87€"},
+    {n:"🍫 Chocolat noir 80% fleur de sel",p:"2,99€"},
+    {n:"🍫 Chocolat noir 92% Fairafric",p:"3,45€"},
+    // Huiles & Condiments
+    {n:"🫒 Huile olive + tournesol bio 1L",p:"9,75€"},
+    {n:"🌿 Huile de colza vierge bio 1L",p:"4,09€"},
+    {n:"🌿 Huile de lin bio 250ml",p:"4,50€"},
+    {n:"🍎 Vinaigre de cidre bio 1L",p:"2,98€"},
+    {n:"🥛 Millet cuisine bio 3×20cl",p:"3,99€"},
+    {n:"🥥 Lait de coco curry Masala bio 200ml",p:"1,49€"},
+    // Épices & Assaisonnement Sel Santé
+    {n:"🧂 Sel de mer fin bio 500g",p:"1,80€"},
+    {n:"🌿 Curcuma bio en poudre 50g",p:"2,50€"},
+    {n:"🌿 Poivre noir bio moulu 50g",p:"2,20€"},
+    {n:"🌿 Herbes de Provence bio 20g",p:"1,90€"},
+    {n:"🌿 Cannelle bio en poudre 30g",p:"2,10€"},
+    {n:"🌿 Cardamome bio en poudre 20g",p:"2,80€"},
+    {n:"🌿 Piment doux bio 20g",p:"1,80€"},
+    {n:"🌿 Vanille en poudre bio 10g",p:"3,50€"},
+    {n:"🌿 Sésame bio 200g",p:"2,90€"},
+    {n:"🌿 Tahini (crème sésame) bio 250g",p:"4,20€"},
   ],
+
+  // ── PICARD · Surgelés ──
   picard:[
-    {n:"Cocktail fruits rouges 450g",p:"6,99€"},{n:"Framboises entières bio 450g",p:"9,99€"},
-    {n:"Mangues en morceaux bio 450g",p:"5,30€"},{n:"Salade fruits bio 600g",p:"7,49€"},
-    {n:"Épinards en branches bio 600g",p:"2,90€"},{n:"Haricots verts extra-fins 1kg",p:"2,69€"},
-    {n:"Brocolis sans pesticides 1kg",p:"3,60€"},{n:"6 portions cabillaud MSC 600g",p:"17,99€"},
-    {n:"Filets colin lieu MSC 500g",p:"8,99€"},{n:"Crevettes décortiquées 200g",p:"8,50€"},
-    {n:"Gingembre coupé 75g",p:"2,00€"},{n:"Ail coupé 100g",p:"2,99€"},
-    {n:"Persil coupé 250g",p:"2,25€"},{n:"Basilic coupé bio 50g",p:"2,40€"},
-    {n:"Thym coupé 50g",p:"2,00€"},
+    // Fruits
+    {n:"🍓 Cocktail fruits rouges bio 450g",p:"6,99€"},
+    {n:"🍓 Framboises entières bio 450g",p:"9,99€"},
+    {n:"🥭 Mangues en morceaux bio 450g",p:"5,30€"},
+    {n:"🍊 Salade fruits bio (mangue/orange/blueberry) 600g",p:"7,49€"},
+    {n:"🍒 Cerises bio 450g",p:"8,50€"},
+    // Légumes
+    {n:"🥬 Épinards en branches bio 600g",p:"2,90€"},
+    {n:"🫘 Haricots verts extra-fins France 1kg",p:"2,69€"},
+    {n:"🥦 Brocolis sans pesticides 1kg",p:"3,60€"},
+    {n:"🥕 Carottes en rondelles 600g",p:"2,20€"},
+    // Poissons
+    {n:"🐟 6 portions cabillaud MSC 600g",p:"17,99€"},
+    {n:"🐟 Filets colin lieu MSC 500g",p:"8,99€"},
+    {n:"🦐 Crevettes décortiquées ASC 200g",p:"8,50€"},
+    {n:"🥩 4 steaks hachés 5% MG 400g",p:"8,99€"},
+    // Aromates & Épices
+    {n:"🫚 Gingembre coupé 75g",p:"2,00€"},
+    {n:"🧄 Ail coupé 100g",p:"2,99€"},
+    {n:"🧅 Échalote coupée 100g",p:"2,85€"},
+    {n:"🌿 Persillade (persil+ail) 50g",p:"1,79€"},
+    {n:"🌿 Persil plat coupé 250g",p:"2,25€"},
+    {n:"🌿 Basilic coupé bio 50g",p:"2,40€"},
+    {n:"🌿 Thym coupé 50g",p:"2,00€"},
+    {n:"🌿 Sauge coupée 30g",p:"2,00€"},
+    {n:"🌿 Romarin coupé 30g",p:"2,00€"},
+    {n:"🌿 Mélange thaïlandais 60g",p:"2,00€"},
+    {n:"🌿 Mélange pour salades 50g",p:"2,00€"},
   ],
-  beno:[{n:"Panier légumes frais de saison · Bene Bono",p:"17–25€"}]
+
+  // ── BENE BONO / MARCHÉ · Frais ──
+  beno:[
+    {n:"🥬 Panier légumes frais de saison",p:"17–25€"},
+    {n:"🍆 Aubergines (caviar au tahini)",p:"selon marché"},
+    {n:"🍅 Tomates fraîches (salade pois chiches)",p:"selon marché"},
+    {n:"🫑 Poivrons rouges (vitamine C + fer)",p:"selon marché"},
+    {n:"🥕 Carottes fraîches (curcuma)",p:"selon marché"},
+    {n:"🍐 Poires (fruits rôtis / velouté panais)",p:"selon marché"},
+    {n:"🍑 Pêches ou abricots (moelleux / rôtis)",p:"selon marché"},
+    {n:"🥝 Kiwis (vitamine C++)",p:"selon marché"},
+    {n:"🌿 Persil plat frais (dopamine + fer)",p:"selon marché"},
+    {n:"🌿 Basilic frais (dopamine)",p:"selon marché"},
+    {n:"🌿 Sauge fraîche (poulet patate douce)",p:"selon marché"},
+    {n:"🍠 Patates douces (IG bas)",p:"selon marché"},
+    {n:"🌰 Châtaignes (velouté potimarron)",p:"selon marché"},
+    {n:"🥚 Œufs bio × 6 (mousse chocolat)",p:"~2,50€"},
+    {n:"🍋 Citrons bio × 4 (systématique)",p:"~1,50€"},
+  ]
 };
 
 // ── BUILD CALENDAR ──
