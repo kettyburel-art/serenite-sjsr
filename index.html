@@ -258,6 +258,289 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .tip-card ul{padding-left:1.1rem}
 .tip-card ul li,.tip-card p{font-size:0.75rem;line-height:1.75;color:rgba(58,40,32,0.75)}
 .floral-div{text-align:center;font-size:0.8rem;letter-spacing:0.4em;color:var(--petal-pink);margin:0.5rem 0;opacity:0.7}
+
+/* ── BATCH COOKING ── */
+.batch-view{padding:0.8rem 1rem;position:relative;z-index:1}
+.batch-hero{
+  background:linear-gradient(135deg,var(--night),#5a2840);
+  border-radius:16px;padding:1.2rem;margin-bottom:1rem;
+  color:#fff;position:relative;overflow:hidden;
+}
+.batch-hero::after{content:'⏱';position:absolute;right:1rem;bottom:-0.5rem;font-size:4rem;opacity:0.08}
+.batch-hero h2{font-family:'Cormorant Garamond',serif;font-size:1.3rem;color:var(--petal-pink);margin-bottom:0.3rem}
+.batch-hero p{font-size:0.73rem;color:rgba(255,255,255,0.65);line-height:1.6}
+.batch-hero .batch-time-total{
+  display:inline-flex;align-items:center;gap:0.4rem;
+  background:rgba(255,255,255,0.1);border-radius:2rem;
+  padding:0.3rem 0.8rem;font-size:0.7rem;font-weight:700;
+  color:var(--gold);margin-top:0.6rem;
+}
+
+.batch-week-selector{
+  display:flex;gap:0.4rem;flex-wrap:wrap;margin-bottom:1rem;
+}
+.batch-week-btn{
+  flex:1;min-width:120px;
+  background:#fff;border:2px solid rgba(58,40,32,0.1);
+  border-radius:12px;padding:0.6rem 0.8rem;
+  cursor:pointer;transition:all 0.2s;text-align:center;
+}
+.batch-week-btn.active{
+  background:linear-gradient(135deg,var(--blossom-deep),#a04060);
+  border-color:var(--blossom-deep);color:#fff;
+  box-shadow:0 4px 14px rgba(196,92,120,0.25);
+}
+.batch-week-btn .bwb-date{font-size:0.62rem;font-weight:700;letter-spacing:0.04em}
+.batch-week-btn .bwb-label{font-size:0.7rem;margin-top:0.1rem;opacity:0.7}
+
+.batch-section{background:#fff;border-radius:16px;margin-bottom:1rem;overflow:hidden;box-shadow:0 2px 14px rgba(58,40,32,0.06)}
+.batch-section-header{
+  padding:0.8rem 1rem;
+  display:flex;align-items:center;gap:0.7rem;
+}
+.batch-section-icon{
+  width:42px;height:42px;border-radius:12px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.3rem;flex-shrink:0;
+}
+.bsi-airfryer{background:rgba(196,112,74,0.12)}
+.bsi-feux{background:rgba(212,168,67,0.1)}
+.bsi-creami{background:rgba(155,142,196,0.12)}
+.bsi-herbes{background:rgba(107,158,120,0.1)}
+.bsi-infusion{background:linear-gradient(135deg,rgba(44,37,66,0.08),rgba(232,137,154,0.08))}
+.bsi-sel{background:rgba(212,168,67,0.08)}
+
+.batch-section-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1rem;font-weight:600;color:var(--text);
+}
+.batch-duration{
+  margin-left:auto;
+  font-size:0.62rem;font-weight:700;
+  background:rgba(212,168,67,0.12);color:#8a6800;
+  padding:0.2rem 0.6rem;border-radius:2rem;white-space:nowrap;
+}
+
+.batch-steps-list{padding:0 1rem 1rem}
+.batch-step{
+  display:flex;gap:0.75rem;align-items:flex-start;
+  padding:0.65rem 0;
+  border-bottom:1px solid rgba(58,40,32,0.05);
+}
+.batch-step:last-child{border-bottom:none}
+.batch-step-num{
+  width:24px;height:24px;border-radius:50%;
+  background:var(--blossom-deep);color:#fff;
+  font-size:0.65rem;font-weight:700;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;margin-top:0.1rem;
+}
+.batch-step-content{flex:1}
+.batch-step-action{
+  font-weight:700;font-size:0.8rem;
+  color:var(--text);margin-bottom:0.2rem;
+}
+.batch-step-detail{
+  font-size:0.72rem;color:var(--muted);line-height:1.5;
+}
+.batch-step-tip{
+  margin-top:0.3rem;
+  font-size:0.68rem;color:var(--leaf-dark);
+  font-style:italic;
+}
+
+.batch-ingredient-list{
+  padding:0 1rem 0.75rem;
+  display:flex;flex-wrap:wrap;gap:0.3rem;
+}
+.batch-ingr-tag{
+  background:var(--bg);border-radius:2rem;
+  padding:0.2rem 0.6rem;font-size:0.68rem;
+  border:1px solid rgba(58,40,32,0.08);
+}
+.batch-ingr-tag.highlight{
+  background:rgba(107,158,120,0.1);
+  border-color:rgba(107,158,120,0.25);
+  color:var(--leaf-dark);font-weight:700;
+}
+
+.batch-result-box{
+  margin:0 1rem 1rem;
+  background:linear-gradient(135deg,rgba(107,158,120,0.08),rgba(212,168,67,0.06));
+  border:1px solid rgba(107,158,120,0.2);
+  border-radius:12px;padding:0.8rem 1rem;
+}
+.batch-result-title{
+  font-size:0.6rem;text-transform:uppercase;letter-spacing:0.1em;
+  font-weight:700;color:var(--leaf-dark);margin-bottom:0.5rem;
+}
+.batch-result-item{
+  display:flex;align-items:center;gap:0.5rem;
+  font-size:0.75rem;padding:0.25rem 0;
+  color:var(--text);
+}
+.batch-result-item::before{content:'✓';color:var(--sage);font-weight:700}
+
+.batch-timer-inline{
+  display:inline-flex;align-items:center;gap:0.3rem;
+  background:rgba(196,112,74,0.08);color:var(--bark);
+  border-radius:2rem;padding:0.12rem 0.45rem;
+  font-size:0.6rem;font-weight:700;margin-left:0.4rem;
+}
+
+.batch-parallel-note{
+  margin:0 1rem 0.6rem;
+  background:rgba(155,142,196,0.08);
+  border-left:2px solid var(--lavender);
+  border-radius:0 8px 8px 0;
+  padding:0.5rem 0.8rem;
+  font-size:0.71rem;color:#5a4f8a;
+  line-height:1.5;
+}
+
+.batch-checkbox{
+  width:20px;height:20px;border-radius:6px;
+  border:2px solid rgba(58,40,32,0.15);
+  flex-shrink:0;cursor:pointer;
+  transition:all 0.15s;
+  display:flex;align-items:center;justify-content:center;
+  font-size:0.75rem;color:#fff;margin-top:0.05rem;
+}
+.batch-checkbox.done{background:var(--leaf-mid);border-color:var(--leaf-mid)}
+.batch-step.completed .batch-step-action{text-decoration:line-through;color:var(--muted)}
+.batch-step.completed .batch-step-detail{opacity:0.5}
+
+.batch-progress{
+  margin:0 1rem 0.5rem;
+  background:rgba(58,40,32,0.06);border-radius:2rem;
+  height:6px;overflow:hidden;
+}
+.batch-progress-fill{
+  height:100%;border-radius:2rem;
+  background:linear-gradient(90deg,var(--leaf-mid),var(--pistil));
+  transition:width 0.3s;
+}
+.batch-progress-text{
+  font-size:0.6rem;color:var(--muted);
+  text-align:center;margin-top:0.2rem;
+  font-weight:700;
+}
+
+.shop-usage{font-size:0.6rem;color:var(--leaf-dark);opacity:0.75;margin-top:0.15rem;font-style:italic;line-height:1.4}
+.shop-item{padding:0.55rem 0.75rem}
+
+/* ── JOURNAL NUITS SJSR ── */
+.sleep-card{background:#fff;border-radius:16px;margin:0.8rem 1rem;box-shadow:0 2px 14px rgba(58,40,32,0.07);overflow:hidden}
+.sleep-card-header{padding:0.85rem 1rem 0.5rem;background:linear-gradient(135deg,rgba(44,37,66,0.04),rgba(232,137,154,0.05))}
+.sleep-card-title{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:600;color:var(--text);display:flex;align-items:center;gap:0.5rem}
+.sleep-date-nav{display:flex;align-items:center;justify-content:space-between;padding:0.5rem 1rem;border-bottom:1px solid rgba(58,40,32,0.05)}
+.sleep-date-label{font-size:0.75rem;font-weight:700;color:var(--text)}
+.sleep-nav-btn{background:none;border:none;font-size:1.1rem;cursor:pointer;color:var(--muted);padding:0.2rem 0.5rem}
+
+.sleep-section{padding:0.75rem 1rem;border-bottom:1px solid rgba(58,40,32,0.05)}
+.sleep-section:last-child{border-bottom:none}
+.sleep-section-label{font-size:0.6rem;text-transform:uppercase;letter-spacing:0.1em;font-weight:700;color:var(--muted);margin-bottom:0.6rem;display:flex;align-items:center;gap:0.4rem}
+
+.sleep-time-row{display:flex;gap:0.6rem;margin-bottom:0.5rem}
+.sleep-time-field{flex:1}
+.sleep-time-field label{display:block;font-size:0.62rem;color:var(--muted);margin-bottom:0.3rem;font-weight:600}
+.sleep-time-field input[type="time"]{
+  width:100%;border:1.5px solid rgba(58,40,32,0.12);border-radius:10px;
+  padding:0.5rem 0.6rem;font-size:0.85rem;font-weight:700;
+  color:var(--text);background:#fafaf9;outline:none;
+  font-family:'Cormorant Garamond',serif;
+}
+.sleep-time-field input[type="time"]:focus{border-color:var(--blossom-deep)}
+
+.sleep-calc{
+  background:linear-gradient(135deg,rgba(44,37,66,0.06),rgba(107,158,120,0.06));
+  border-radius:10px;padding:0.6rem 0.8rem;margin:0.4rem 0;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.sleep-calc-label{font-size:0.62rem;color:var(--muted);font-weight:600}
+.sleep-calc-value{font-size:1rem;font-weight:700;color:var(--night);font-family:'Cormorant Garamond',serif}
+.sleep-calc-value.good{color:var(--leaf-dark)}
+.sleep-calc-value.warning{color:#c47a2a}
+.sleep-calc-value.bad{color:#b03030}
+
+.sleep-stars{display:flex;gap:0.4rem;margin:0.3rem 0}
+.sleep-star{font-size:1.4rem;cursor:pointer;opacity:0.3;transition:all 0.15s;line-height:1}
+.sleep-star.active{opacity:1}
+
+.sleep-quality-labels{display:flex;justify-content:space-between;font-size:0.55rem;color:var(--muted);margin-top:0.1rem}
+
+.sleep-feeling-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0.4rem;margin:0.3rem 0}
+.sleep-feeling-btn{
+  border:1.5px solid rgba(58,40,32,0.1);border-radius:10px;
+  padding:0.5rem 0.3rem;text-align:center;cursor:pointer;
+  background:#fafaf9;transition:all 0.15s;
+}
+.sleep-feeling-btn.selected{background:linear-gradient(135deg,var(--blossom-deep),#a04060);border-color:transparent;color:#fff}
+.sleep-feeling-btn .sfb-icon{font-size:1.1rem;display:block;margin-bottom:0.15rem}
+.sleep-feeling-btn .sfb-label{font-size:0.58rem;font-weight:600}
+
+.pain-slider-wrap{margin:0.3rem 0}
+.pain-slider-labels{display:flex;justify-content:space-between;font-size:0.55rem;color:var(--muted);margin-top:0.2rem}
+.pain-val-display{
+  font-size:1.1rem;font-weight:700;font-family:'Cormorant Garamond',serif;
+  text-align:center;margin:0.3rem 0 0.5rem;
+}
+.pain-val-display.p0{color:var(--leaf-dark)}
+.pain-val-display.p1,.pain-val-display.p2,.pain-val-display.p3{color:#c8a050}
+.pain-val-display.p4,.pain-val-display.p5,.pain-val-display.p6{color:#c47a2a}
+.pain-val-display.p7,.pain-val-display.p8{color:#c04040}
+.pain-val-display.p9,.pain-val-display.p10{color:#8b0000}
+input[type="range"].pain-range{
+  width:100%;-webkit-appearance:none;height:6px;
+  border-radius:3px;background:linear-gradient(90deg,var(--leaf-mid),#f4a43a,#c04040);
+  outline:none;
+}
+input[type="range"].pain-range::-webkit-slider-thumb{
+  -webkit-appearance:none;width:22px;height:22px;
+  border-radius:50%;background:#fff;border:3px solid var(--blossom-deep);
+  cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,0.15);
+}
+
+.sleep-notes-field{
+  width:100%;border:1.5px solid rgba(58,40,32,0.12);border-radius:10px;
+  padding:0.6rem 0.8rem;font-size:0.75rem;color:var(--text);
+  background:#fafaf9;outline:none;resize:none;
+  font-family:inherit;min-height:70px;box-sizing:border-box;
+}
+.sleep-notes-field:focus{border-color:var(--blossom-deep)}
+
+.sleep-save-btn{
+  display:block;width:calc(100% - 2rem);margin:0.5rem 1rem 1rem;
+  background:linear-gradient(135deg,var(--blossom-deep),#a04060);
+  color:#fff;border:none;border-radius:12px;padding:0.75rem;
+  font-size:0.8rem;font-weight:700;cursor:pointer;letter-spacing:0.05em;
+}
+
+/* ── STATS HEBDO ── */
+.sleep-stats-card{background:#fff;border-radius:16px;margin:0.8rem 1rem;box-shadow:0 2px 14px rgba(58,40,32,0.07);padding:1rem}
+.sleep-stats-title{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:600;color:var(--text);margin-bottom:0.8rem;display:flex;align-items:center;gap:0.5rem}
+.stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:0.6rem;margin-bottom:0.8rem}
+.stat-box{background:linear-gradient(135deg,rgba(107,158,120,0.07),rgba(212,168,67,0.05));border-radius:12px;padding:0.7rem;text-align:center}
+.stat-box-val{font-size:1.3rem;font-weight:700;font-family:'Cormorant Garamond',serif;color:var(--text)}
+.stat-box-label{font-size:0.58rem;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:0.06em;margin-top:0.15rem}
+
+.sleep-history-row{
+  display:flex;align-items:center;gap:0.5rem;
+  padding:0.5rem 0;border-bottom:1px solid rgba(58,40,32,0.05);
+}
+.sleep-history-row:last-child{border-bottom:none}
+.shr-date{font-size:0.65rem;font-weight:700;color:var(--muted);width:50px;flex-shrink:0}
+.shr-hours{font-size:0.75rem;font-weight:700;color:var(--text);width:45px;flex-shrink:0}
+.shr-stars{font-size:0.7rem;flex-shrink:0;width:65px}
+.shr-pain{font-size:0.65rem;font-weight:700;width:35px;flex-shrink:0;text-align:center}
+.shr-feeling{font-size:0.9rem;flex-shrink:0}
+.shr-bar{flex:1;height:6px;border-radius:3px;background:rgba(58,40,32,0.06)}
+.shr-bar-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--leaf-mid),var(--pistil))}
+
+.week-selector{display:flex;gap:0.4rem;padding:0 1rem 0.5rem;overflow-x:auto}
+.week-sel-btn{flex-shrink:0;background:#fff;border:1.5px solid rgba(58,40,32,0.1);border-radius:8px;padding:0.35rem 0.7rem;font-size:0.65rem;font-weight:700;cursor:pointer;white-space:nowrap}
+.week-sel-btn.active{background:var(--blossom-deep);border-color:var(--blossom-deep);color:#fff}
+
 .sect-title{font-size:0.57rem;text-transform:uppercase;letter-spacing:0.12em;color:var(--muted);font-weight:700;margin:0.75rem 1rem 0.35rem}
 
 /* ── RECETTE DÉTAIL ── */
@@ -407,8 +690,8 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   </div>
   <div class="budget-bar">
     <span class="budget-label">🌿 Budget</span>
-    <div class="budget-track"><div class="budget-fill" id="budgetFill" style="width:69%"></div></div>
-    <span class="budget-amount" id="budgetAmount"><span>139€</span> / 200€</span>
+    <div class="budget-track"><div class="budget-fill" id="budgetFill" style="width:100%"></div></div>
+    <span class="budget-amount" id="budgetAmount"><span>249€</span> / investissement initial</span>
   </div>
 </div>
 
@@ -431,6 +714,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 <!-- NAV -->
 <div class="nav-tabs">
   <div class="nav-tab active" onclick="showView('calendar')">🌸 Agenda</div>
+  <div class="nav-tab" onclick="showView('batch')">⏱ Batch</div>
   <div class="nav-tab" onclick="showView('shopping')">🛒 Courses</div>
   <div class="nav-tab" onclick="showView('diner')">🍽 Ce soir</div>
   <div class="nav-tab" onclick="showView('journal')">📔 Journal</div>
@@ -481,8 +765,8 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
         <span class="shop-week-title">🛒 Semaine 1 · 10–14 avril</span>
         <span class="shop-week-budget">~139€ semaine 1</span>
       </div>
-      <div class="shop-source-block"><div class="shop-source-title">🌿 La Fourche · bio & sec · ~75€ · stock 4–6 semaines</div><div id="sl-fourche"></div></div>
-      <div class="shop-source-block"><div class="shop-source-title">❄️ Picard · surgelés · ~40€ · stock 3–4 semaines</div><div id="sl-picard"></div></div>
+      <div class="shop-source-block"><div class="shop-source-title">🌿 La Fourche · bio & sec · ~95€ · stock 5 semaines</div><div id="sl-fourche"></div></div>
+      <div class="shop-source-block"><div class="shop-source-title">❄️ Picard · surgelés · ~130€ · stock 5 semaines</div><div id="sl-picard"></div></div>
       <div class="shop-source-block"><div class="shop-source-title">🥬 Bene Bono / Marché · frais · ~20-28€ · chaque semaine</div><div id="sl-beno"></div></div>
     </div>
     <div class="shop-week">
@@ -499,6 +783,44 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 </div>
 
 <!-- TIPS VIEW -->
+<div <div id="view-batch" style="display:none">
+  <div class="batch-view">
+
+    <div class="batch-hero">
+      <h2>⏱ Mes Sessions Batch Cooking</h2>
+      <p>Chaque samedi · 1h30 · Tout préparer pour la semaine<br>
+      Suivez les étapes dans l'ordre — tout est organisé en parallèle.</p>
+      <div class="batch-time-total">⏱ 1h30 au total · Semaine tranquille garantie</div>
+    </div>
+
+    <div class="batch-week-selector">
+      <div class="batch-week-btn active" onclick="selectBatchWeek(0,this)">
+        <div class="bwb-date">Sam 11 avr</div>
+        <div class="bwb-label">Session 1</div>
+      </div>
+      <div class="batch-week-btn" onclick="selectBatchWeek(1,this)">
+        <div class="bwb-date">Sam 18 avr</div>
+        <div class="bwb-label">Session 2</div>
+      </div>
+      <div class="batch-week-btn" onclick="selectBatchWeek(2,this)">
+        <div class="bwb-date">Sam 25 avr</div>
+        <div class="bwb-label">Session 3</div>
+      </div>
+      <div class="batch-week-btn" onclick="selectBatchWeek(3,this)">
+        <div class="bwb-date">Sam 2 mai</div>
+        <div class="bwb-label">Session 4</div>
+      </div>
+      <div class="batch-week-btn" onclick="selectBatchWeek(4,this)">
+        <div class="bwb-date">Sam 9 mai</div>
+        <div class="bwb-label">Session 5</div>
+      </div>
+    </div>
+
+    <div id="batch-content"></div>
+
+  </div>
+</div>
+
 <div id="view-tips" style="display:none">
   <div class="tips-section">
 
@@ -597,166 +919,192 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 
 <!-- JOURNAL VIEW -->
 <div id="view-journal" style="display:none">
+
+  <!-- Timer Infusion -->
   <div class="journal-section">
-    <!-- Timer infusion -->
     <div class="timer-card">
       <div class="timer-title">🍵 Timer Infusion / Lait d'Or</div>
       <div class="timer-sub">Appuyez sur Démarrer quand vous versez l'eau</div>
-      <div class="timer-circle">
-        <svg width="118" height="118" viewBox="0 0 118 118">
-          <circle cx="59" cy="59" r="54" id="timerCircle"/>
-        </svg>
-        <div>
-          <div class="timer-display" id="timerDisplay">8:00</div>
-          <div class="timer-label-small">minutes</div>
-        </div>
+      <div class="timer-countdown" id="timerCount">8:00</div>
+      <div class="timer-step" id="timerStep">🌸 Versez l\'eau à 80°C et appuyez sur Démarrer</div>
+      <div class="timer-controls">
+        <button class="timer-btn" id="timerBtn" onclick="toggleTimer()">▶ Démarrer</button>
+        <button class="timer-btn timer-btn-sec" onclick="resetTimer()">↺ Reset</button>
       </div>
-      <div class="timer-btns">
-        <button class="timer-btn tbtn-start" id="timerBtn" onclick="toggleTimer()">▶ Démarrer</button>
-        <button class="timer-btn tbtn-reset" onclick="resetTimer()">↺ Reset</button>
-      </div>
-      <div class="timer-step" id="timerStep">🌸 Versez l'eau à 80°C et appuyez sur Démarrer</div>
-    </div>
-
-    <!-- Alarmes -->
-    <!-- SECTION MÉDICAMENTS -->
-    <div style="font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:600;color:var(--text);margin-bottom:0.5rem">💊 Mes médicaments</div>
-    <div style="font-size:0.65rem;color:var(--muted);margin-bottom:0.6rem;font-style:italic;padding:0.4rem 0.7rem;background:rgba(58,40,32,0.04);border-radius:8px;line-height:1.5">
-      ℹ️ Dosages prescrits par votre médecin. Ne jamais modifier sans avis médical.
-    </div>
-    <div class="alarm-section">
-      <!-- MATIN -->
-      <div style="font-size:0.58rem;text-transform:uppercase;letter-spacing:0.1em;font-weight:700;color:var(--muted);padding:0.3rem 0 0.3rem;margin-bottom:0.2rem">🌅 Matin — avec le petit-déjeuner</div>
-      <div class="alarm-card" style="border-left:3px solid var(--leaf-mid)">
-        <div class="alarm-icon">💊</div>
-        <div class="alarm-info">
-          <div class="alarm-name">Tramadol LP <span style="color:var(--leaf-dark);font-size:0.9em">50 mg</span></div>
-          <div class="alarm-time">Matin · avec le petit-déjeuner · <strong style="color:var(--leaf-dark)">1 comprimé</strong></div>
-        </div>
-        <button class="alarm-toggle on" id="alarm-tramadol-m" onclick="toggleAlarm('tramadol-m',this)"></button>
-      </div>
-      <div class="alarm-card" style="border-left:3px solid var(--leaf-mid)">
-        <div class="alarm-icon">💊</div>
-        <div class="alarm-info">
-          <div class="alarm-name">Lyrica <span style="color:var(--leaf-dark);font-size:0.9em">325 mg</span></div>
-          <div class="alarm-time">Matin · avec le petit-déjeuner · <strong style="color:var(--leaf-dark)">1 comprimé</strong></div>
-        </div>
-        <button class="alarm-toggle on" id="alarm-lyrica-m" onclick="toggleAlarm('lyrica-m',this)"></button>
-      </div>
-
-      <!-- SOIR -->
-      <div style="font-size:0.58rem;text-transform:uppercase;letter-spacing:0.1em;font-weight:700;color:var(--muted);padding:0.6rem 0 0.3rem;margin-bottom:0.2rem">🌙 Soir — avant le dîner</div>
-      <div class="alarm-card" style="border-left:3px solid var(--lavender,#9b8ec4)">
-        <div class="alarm-icon">💊</div>
-        <div class="alarm-info">
-          <div class="alarm-name">Tramadol LP <span style="color:#6b5fa0;font-size:0.9em">100 mg</span></div>
-          <div class="alarm-time">Soir · avant le dîner · <strong style="color:#6b5fa0">1 comprimé</strong></div>
-        </div>
-        <button class="alarm-toggle on" id="alarm-tramadol-s" onclick="toggleAlarm('tramadol-s',this)"></button>
-      </div>
-      <div class="alarm-card" style="border-left:3px solid var(--lavender,#9b8ec4)">
-        <div class="alarm-icon">💊</div>
-        <div class="alarm-info">
-          <div class="alarm-name">Lyrica <span style="color:#6b5fa0;font-size:0.9em">375 mg</span></div>
-          <div class="alarm-time">Soir · avant le dîner · <strong style="color:#6b5fa0">1 comprimé</strong></div>
-        </div>
-        <button class="alarm-toggle on" id="alarm-lyrica-s" onclick="toggleAlarm('lyrica-s',this)"></button>
-      </div>
-    </div>
-
-    <!-- COMPLÉMENTS À PRÉVOIR -->
-    <div style="font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:600;color:var(--text);margin:0.8rem 0 0.4rem">🌿 Compléments alimentaires <span style="font-family:'Nunito',sans-serif;font-size:0.6rem;background:rgba(212,168,67,0.15);color:#8a6800;padding:0.15rem 0.45rem;border-radius:2rem;font-weight:700;vertical-align:middle">À PRÉVOIR</span></div>
-    <div style="font-size:0.67rem;color:var(--muted);margin-bottom:0.6rem;line-height:1.6;padding:0.5rem 0.75rem;background:rgba(212,168,67,0.06);border-radius:10px;border-left:2px solid var(--pistil)">
-      💡 À discuter avec votre médecin. Activez quand vous commencez. Les horaires sont optimisés pour ne pas interférer avec le Tramadol et la Lyrica.
-    </div>
-    <div class="alarm-section">
-      <div class="alarm-card" style="opacity:0.6;border:1.5px dashed rgba(58,40,32,0.15)">
-        <div class="alarm-icon">🌿</div>
-        <div class="alarm-info">
-          <div class="alarm-name">Magnésium bisglycinate</div>
-          <div class="alarm-time">À prendre le soir au dîner · loin du Tramadol soir · 200-300mg</div>
-        </div>
-        <button class="alarm-toggle off" id="alarm-magnesium" onclick="toggleAlarm('magnesium',this)"></button>
-      </div>
-      <div class="alarm-card" style="opacity:0.6;border:1.5px dashed rgba(58,40,32,0.15)">
-        <div class="alarm-icon">🌱</div>
-        <div class="alarm-info">
-          <div class="alarm-name">Fer (bisglycinate)</div>
-          <div class="alarm-time">À prendre le matin à distance du Tramadol · avec vitamine C</div>
-        </div>
-        <button class="alarm-toggle off" id="alarm-fer" onclick="toggleAlarm('fer',this)"></button>
-      </div>
-      <div style="font-size:0.65rem;color:var(--muted);font-style:italic;padding:0.4rem 0.5rem;line-height:1.6">
-        ⚠️ Le fer ne doit pas être pris en même temps que la Lyrica — respecter 2h d'écart minimum. Valider avec votre médecin ou pharmacien.
-      </div>
-    </div>
-
-    <!-- RAPPELS QUOTIDIENS -->
-    <div style="font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:600;color:var(--text);margin:0.8rem 0 0.5rem">🔔 Rappels quotidiens</div>
-    <div class="alarm-section">
-      <div class="alarm-card">
-        <div class="alarm-icon">🍊</div>
-        <div class="alarm-info">
-          <div class="alarm-name">Goûter Dopamine</div>
-          <div class="alarm-time">Chaque jour à 16h30 · Avant 17h !</div>
-        </div>
-        <button class="alarm-toggle on" id="alarm-gouter" onclick="toggleAlarm('gouter',this)"></button>
-      </div>
-      <div class="alarm-card">
-        <div class="alarm-icon">🍵</div>
-        <div class="alarm-info">
-          <div class="alarm-name">Préparer l'infusion / Lait d'Or</div>
-          <div class="alarm-time">Chaque soir à 20h00</div>
-        </div>
-        <button class="alarm-toggle on" id="alarm-infusion" onclick="toggleAlarm('infusion',this)"></button>
-      </div>
-      <div class="alarm-card">
-        <div class="alarm-icon">⏱</div>
-        <div class="alarm-info">
-          <div class="alarm-name">Batch Cooking</div>
-          <div class="alarm-time">Samedi matin à 9h00</div>
-        </div>
-        <button class="alarm-toggle on" id="alarm-batch" onclick="toggleAlarm('batch',this)"></button>
-      </div>
-    </div>
-
-    <!-- Journal -->
-    <div class="journal-card" style="margin-top:0.5rem">
-      <h3>📔 Comment s'est passée votre nuit ?</h3>
-      <div class="journal-date-row">
-        <span id="journalDateLabel"></span>
-      </div>
-      <div class="stars-row" id="starsRow">
-        <span class="star" onclick="setStar(1)">⭐</span>
-        <span class="star" onclick="setStar(2)">⭐</span>
-        <span class="star" onclick="setStar(3)">⭐</span>
-        <span class="star" onclick="setStar(4)">⭐</span>
-        <span class="star" onclick="setStar(5)">⭐</span>
-      </div>
-      <div class="journal-labels">
-        <span class="jlabel jl-bad" onclick="selectLabel(this,'Crise sévère')">😰 Crise sévère</span>
-        <span class="jlabel jl-bad" onclick="selectLabel(this,'Agité')">😣 Agité</span>
-        <span class="jlabel jl-ok" onclick="selectLabel(this,'Moyen')">😐 Moyen</span>
-        <span class="jlabel jl-good" onclick="selectLabel(this,'Calme')">😌 Calme</span>
-        <span class="jlabel jl-good" onclick="selectLabel(this,'Très bien')">😊 Très bien</span>
-      </div>
-      <textarea class="journal-note" id="journalNote" placeholder="Notes libres… ce que vous avez mangé, comment vous vous sentez, ce qui a aidé…"></textarea>
-      <button class="journal-save" onclick="saveJournal()">💾 Enregistrer cette nuit</button>
-    </div>
-
-    <!-- Historique -->
-    <div class="journal-card">
-      <h3>📈 Mes dernières nuits</h3>
-      <div class="journal-chart">
-        <div class="chart-title">Qualité du sommeil · 7 derniers jours</div>
-        <div class="chart-bars" id="chartBars"></div>
-      </div>
-      <div class="journal-history" id="journalHistory"></div>
     </div>
   </div>
+
+  <!-- Journal de Nuit -->
+  <div class="sleep-card">
+    <div class="sleep-card-header">
+      <div class="sleep-card-title">🌙 Journal de nuit SJSR</div>
+    </div>
+
+    <!-- Navigation date -->
+    <div class="sleep-date-nav">
+      <button class="sleep-nav-btn" onclick="sleepNavDate(-1)">‹</button>
+      <div>
+        <div class="sleep-date-label" id="sleepDateLabel">Lundi 6 avril 2026</div>
+        <div style="font-size:0.58rem;color:var(--muted);text-align:center" id="sleepSavedIndicator"></div>
+      </div>
+      <button class="sleep-nav-btn" onclick="sleepNavDate(1)">›</button>
+    </div>
+
+    <!-- Heures -->
+    <div class="sleep-section">
+      <div class="sleep-section-label">⏰ Horaires</div>
+      <div class="sleep-time-row">
+        <div class="sleep-time-field">
+          <label>Couché à</label>
+          <input type="time" id="slpBedtime" value="22:30" onchange="autoCalcSleep()">
+        </div>
+        <div class="sleep-time-field">
+          <label>Endormi(e) vers</label>
+          <input type="time" id="slpSleepTime" value="23:15" onchange="autoCalcSleep()">
+        </div>
+        <div class="sleep-time-field">
+          <label>Réveil à</label>
+          <input type="time" id="slpWakeTime" value="07:00" onchange="autoCalcSleep()">
+        </div>
+      </div>
+      <div class="sleep-calc">
+        <div>
+          <div class="sleep-calc-label">⏱ Temps au lit</div>
+        </div>
+        <div class="sleep-calc-value" id="slpTotalBed">8h 30min</div>
+      </div>
+      <div class="sleep-calc">
+        <div>
+          <div class="sleep-calc-label">😴 Sommeil réel</div>
+        </div>
+        <div class="sleep-calc-value" id="slpTotalSleep">7h 45min</div>
+      </div>
+      <div class="sleep-calc">
+        <div>
+          <div class="sleep-calc-label">⏳ Endormissement</div>
+        </div>
+        <div class="sleep-calc-value" id="slpLatency">45min</div>
+      </div>
+    </div>
+
+    <!-- Qualité du sommeil -->
+    <div class="sleep-section">
+      <div class="sleep-section-label">⭐ Qualité du sommeil</div>
+      <div class="sleep-stars" id="sleepQualityStars">
+        <span class="sleep-star" onclick="setSleepQuality(1)">★</span>
+        <span class="sleep-star" onclick="setSleepQuality(2)">★</span>
+        <span class="sleep-star" onclick="setSleepQuality(3)">★</span>
+        <span class="sleep-star" onclick="setSleepQuality(4)">★</span>
+        <span class="sleep-star" onclick="setSleepQuality(5)">★</span>
+      </div>
+      <div class="sleep-quality-labels">
+        <span>Très mauvais</span><span>Moyen</span><span>Excellent</span>
+      </div>
+    </div>
+
+    <!-- Réveil -->
+    <div class="sleep-section">
+      <div class="sleep-section-label">🌅 Comment je me sens au réveil</div>
+      <div class="sleep-feeling-grid" id="sleepFeelingGrid">
+        <div class="sleep-feeling-btn" onclick="setSleepFeeling('exhausted')">
+          <span class="sfb-icon">😫</span><span class="sfb-label">Épuisée</span>
+        </div>
+        <div class="sleep-feeling-btn" onclick="setSleepFeeling('tired')">
+          <span class="sfb-icon">😔</span><span class="sfb-label">Fatiguée</span>
+        </div>
+        <div class="sleep-feeling-btn" onclick="setSleepFeeling('ok')">
+          <span class="sfb-icon">😐</span><span class="sfb-label">Correcte</span>
+        </div>
+        <div class="sleep-feeling-btn" onclick="setSleepFeeling('good')">
+          <span class="sfb-icon">🙂</span><span class="sfb-label">Bien</span>
+        </div>
+        <div class="sleep-feeling-btn" onclick="setSleepFeeling('great')">
+          <span class="sfb-icon">😊</span><span class="sfb-label">Reposée</span>
+        </div>
+        <div class="sleep-feeling-btn" onclick="setSleepFeeling('excellent')">
+          <span class="sfb-icon">🌟</span><span class="sfb-label">Excellente</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Douleurs réveil -->
+    <div class="sleep-section">
+      <div class="sleep-section-label">🦵 Douleurs SJSR au réveil (0-10)</div>
+      <div class="pain-val-display p0" id="painMorningDisplay">0 — Aucune douleur</div>
+      <div class="pain-slider-wrap">
+        <input type="range" class="pain-range" id="painMorning" min="0" max="10" value="0"
+          oninput="updatePainDisplay('painMorning','painMorningDisplay')">
+      </div>
+      <div class="pain-slider-labels">
+        <span>0 · Aucune</span><span>5 · Modérée</span><span>10 · Insupportable</span>
+      </div>
+    </div>
+
+    <!-- Douleurs journée -->
+    <div class="sleep-section">
+      <div class="sleep-section-label">🌞 Douleurs SJSR dans la journée (0-10)</div>
+      <div class="pain-val-display p0" id="painDayDisplay">0 — Aucune douleur</div>
+      <div class="pain-slider-wrap">
+        <input type="range" class="pain-range" id="painDay" min="0" max="10" value="0"
+          oninput="updatePainDisplay('painDay','painDayDisplay')">
+      </div>
+      <div class="pain-slider-labels">
+        <span>0 · Aucune</span><span>5 · Modérée</span><span>10 · Insupportable</span>
+      </div>
+    </div>
+
+    <!-- Notes libres -->
+    <div class="sleep-section">
+      <div class="sleep-section-label">📝 Notes — Symptômes · Déclencheurs · Observations</div>
+      <textarea class="sleep-notes-field" id="sleepNotes"
+        placeholder="Ex: Jambes agitées vers 23h · Levée 2 fois · Dîner tardif hier..."></textarea>
+    </div>
+
+    <button class="sleep-save-btn" onclick="saveSleepEntry()">💾 Enregistrer cette nuit</button>
+  </div>
+
+  <!-- Statistiques hebdomadaires -->
+  <div class="sleep-stats-card">
+    <div class="sleep-stats-title">📊 Statistiques</div>
+
+    <!-- Sélecteur semaine -->
+    <div class="week-selector" id="sleepWeekSelector"></div>
+
+    <!-- Stats chiffrées -->
+    <div class="stats-grid" id="sleepStatsGrid">
+      <div class="stat-box">
+        <div class="stat-box-val" id="statAvgSleep">—</div>
+        <div class="stat-box-label">Sommeil moyen</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-box-val" id="statAvgQuality">—</div>
+        <div class="stat-box-label">Qualité moyenne</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-box-val" id="statAvgPainM">—</div>
+        <div class="stat-box-label">Douleur réveil moy.</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-box-val" id="statAvgPainD">—</div>
+        <div class="stat-box-label">Douleur journée moy.</div>
+      </div>
+    </div>
+
+    <!-- Historique des nuits -->
+    <div id="sleepHistoryList" style="margin-top:0.5rem"></div>
+  </div>
+
+  <!-- Rappels médicaments -->
+  <div class="journal-section">
+    <div class="sect-title">💊 Rappels médicaments</div>
+    <div class="alarm-list">
+      <div class="alarm-row"><span class="alarm-icon">🌅</span><div><div class="alarm-name">Tramadol LP 50mg + Lyrica 325mg</div><div class="alarm-time">Matin — avec le petit-déjeuner</div></div></div>
+      <div class="alarm-row"><span class="alarm-icon">🌙</span><div><div class="alarm-name">Tramadol LP 100mg + Lyrica 375mg</div><div class="alarm-time">Soir — AVANT le dîner (avant 19h30)</div></div></div>
+    </div>
+  </div>
+
 </div>
 
-<!-- URGENCE SJSR VIEW -->
 <div id="view-urgence" style="display:none">
   <div class="urgence-section">
     <div class="urgence-header">
@@ -1303,23 +1651,23 @@ const MENUS = {
        tags:[["MAG","nt-mag"],["FER","nt-fer"],["DOPA","nt-dopa"]],
        conseil:{type:"sjsr",text:"🌿 Journée douce post-anniversaire. Repas anti-inflammatoires pour récupérer."}},
       {ic:"🥗",cl:"ic-mid",lbl:"Déjeuner",time:"12h – 13h30",
-       title:"Quinoa · Sardines · Épinards · Persil · Citron",
-       ingr:[{t:"Quinoa froid 120g"},{t:"Sardines 1 boîte"},{t:"Épinards Picard sautés"},{t:"Persil plat frais haché"},{t:"Jus de citron + Sel Santé"}],
-       tags:[["FER","nt-fer"],["MAG","nt-mag"],["DOPA","nt-dopa"]],
-       conseil:{type:"sjsr",text:"🌿 Sardines + persil + citron = trio anti-SJSR parfait pour relancer après la fête."}},
+       title:"Bowl quinoa · Poulet grillé · Avocat · Carottes",
+       ingr:[{t:"Quinoa (batch) 120g"},{t:"Blanc de poulet grillé 120g"},{t:"Demi-avocat en tranches"},{t:"Carottes râpées"},{t:"Persil haché + citron + Sel Santé"},{t:"Huile d'olive + graines de lin"}],
+       tags:[["FER","nt-fer"],["MAG","nt-mag"],["DOPA","nt-dopa"],["VIT-C","nt-vitc"]],
+       conseil:{type:"sjsr",text:"🌿 Avocat + huile olive = graisses saines anti-inflammatoires. Poulet = protéine légère et digeste."}},
       {ic:"🍊",cl:"ic-gou",lbl:"Goûter",time:"avant 17h",
        title:"Amandes · Carré chocolat 85% · Datte",
        ingr:[{t:"8 amandes"},{t:"1 carré chocolat 85%"},{t:"1 datte Medjool"}],
        tags:[["MAG","nt-mag"],["DOPA","nt-dopa"]],conseil:null},
       {ic:"🌙",cl:"ic-din",lbl:"Dîner léger 💊",time:"19h – 20h max",
-       title:"💊 Médicaments AVANT · Velouté courgettes · Basilic",
-       ingr:[{t:"💊 Tramadol LP 100mg + Lyrica 375mg AVANT"},{t:"Courgettes 400g"},{t:"Ail Picard"},{t:"Basilic Picard"},{t:"Huile olive + Sel Santé"}],
+       title:"💊 Médicaments AVANT · Saumon au four · Purée patate douce · Brocoli",
+       ingr:[{t:"💊 Tramadol LP 100mg + Lyrica 375mg AVANT"},{t:"Saumon mi-cuit Picard 150g"},{t:"Patate douce 200g"},{t:"Brocolis Picard 150g"},{t:"Graines de lin + huile olive + Sel Santé"}],
        tags:[["ALK","nt-alk"],["MAG","nt-mag"]],
        conseil:{type:"prep",text:"🌸 Velouté ultra léger. Cuire 15 min, mixer avec basilic frais."}},
       {ic:"📺",cl:"ic-sna",lbl:"Snack TV",time:"Soirée",
        fun:"🌸 Sorbet Ninja Creami Fruits Rouges",
        ingr:[{t:"Base fruits rouges congelée"},{t:"Traiter 1 min au Creami"}],
-       tags:[["ALK","nt-alk"],["FUN","nt-fun"]],conseil:null}
+       tags:[["ALK","nt-alk"],["FUN","nt-fun"]],steps:["Prendre médicaments AVANT de cuisiner 💊","Patate douce : cuire à la vapeur 20 min puis écraser avec huile olive","Brocolis vapeur 8 min","Saumon Air Fryer 170°C / 12 min ou four 180°C / 15 min","Parsemer graines de lin sur le saumon","Dresser : purée + brocolis + saumon côte à côte"],cookTime:"20 min · Four ou Air Fryer",conseil:null}
     ],infusion:INF},
 
   // ── 16 avril — Jeudi ──
@@ -1358,10 +1706,10 @@ const MENUS = {
        ingr:[{t:"Flocons de sarrasin 80g"},{t:"Lait de millet"},{t:"Mangues Picard décongelées"},{t:"Graines de lin 1cs (Oméga-3)"},{t:"💊 Tramadol LP 50mg + Lyrica 325mg"}],
        tags:[["MAG","nt-mag"],["FER","nt-fer"],["DOPA","nt-dopa"]],conseil:null},
       {ic:"🥗",cl:"ic-mid",lbl:"Déjeuner",time:"12h – 13h30",
-       title:"Lentilles corail · Maquereau · Betteraves · Persil",
-       ingr:[{t:"Lentilles corail cuites 150g"},{t:"Maquereau 1 boîte"},{t:"Betteraves en dés"},{t:"Persil plat haché"},{t:"Vinaigre de cidre + huile colza"}],
-       tags:[["FER","nt-fer"],["MAG","nt-mag"],["DOPA","nt-dopa"]],
-       conseil:{type:"sjsr",text:"🌿 Maquereau = oméga-3 DHA précurseur dopamine. Vinaigre = fer ×3."}},
+       title:"Salade thon · Avocat · Tomates mondées · Graines de courge",
+       ingr:[{t:"Thon au naturel 1 boîte"},{t:"Demi-avocat en dés"},{t:"Tomates mondées"},{t:"Graines de courge torréfiées (batch)"},{t:"Persil haché + citron + Sel Santé"},{t:"Huile de lin 1cs"}],
+       tags:[["FER","nt-fer"],["MAG","nt-mag"],["DOPA","nt-dopa"],["VIT-C","nt-vitc"]],
+       conseil:{type:"sjsr",text:"🌿 Avocat + thon + graines = trio oméga-3 anti-SJSR. Tomates mondées = vit C sans acidité."}},
       {ic:"🍊",cl:"ic-gou",lbl:"Goûter",time:"avant 17h",
        title:"Chocolat 92% · Graines de courge · Amandes",
        ingr:[{t:"1 carré chocolat 92%"},{t:"Graines de courge 20g"},{t:"6 amandes"}],
@@ -1455,14 +1803,14 @@ const MENUS = {
        ingr:[{t:"8 amandes"},{t:"1 datte Medjool"},{t:"1 carré chocolat 85%"}],
        tags:[["MAG","nt-mag"],["DOPA","nt-dopa"]],conseil:null},
       {ic:"🌙",cl:"ic-din",lbl:"Dîner léger 💊",time:"19h – 20h max",
-       title:"💊 Médicaments AVANT · Tofu sauté · Épinards · Curcuma",
-       ingr:[{t:"💊 Tramadol LP 100mg + Lyrica 375mg AVANT"},{t:"Tofu noisette 100g"},{t:"Épinards Picard 200g"},{t:"Curcuma + poivre + huile"},{t:"Ail Picard + Sel Santé"}],
+       title:"💊 Médicaments AVANT · Filets de dinde · Courgettes-carottes rôties",
+       ingr:[{t:"💊 Tramadol LP 100mg + Lyrica 375mg AVANT"},{t:"Filets de dinde 150g"},{t:"Courgettes en rondelles"},{t:"Carottes en rondelles"},{t:"Thym + Sel Santé + huile olive"}],
        tags:[["ALK","nt-alk"],["MAG","nt-mag"]],
        conseil:{type:"prep",text:"🌸 Tofu Air Fryer 180°C / 12 min. Épinards poêlés ail 3 min."}},
       {ic:"📺",cl:"ic-sna",lbl:"Snack TV",time:"Soirée",
        fun:"🌸 Nectarines à la verveine rôties",
        ingr:[{t:"1 nectarine ou pêche coupée"},{t:"Verveine ou menthe"},{t:"Four 170°C / 15 min"}],
-       tags:[["ALK","nt-alk"],["FUN","nt-fun"]],conseil:null}
+       tags:[["ALK","nt-alk"],["FUN","nt-fun"]],steps:["Prendre médicaments AVANT 💊","Couper courgettes et carottes en rondelles","Mélanger légumes + huile olive + thym + Sel Santé","Four 200°C / 25 min en retournant à mi-cuisson","Poêler filets de dinde 5 min chaque côté à feu moyen","Dresser : dinde + légumes rôtis + citron pressé"],cookTime:"30 min · Four 200°C",conseil:null}
     ],infusion:INF},
 
   // ── 21 avril — Mardi LIVRAISON Bene Bono ──
@@ -1554,14 +1902,14 @@ const MENUS = {
        ingr:[{t:"Graines de chia 3cs"},{t:"Lait de millet 200ml"},{t:"Framboises Picard"},{t:"1cs purée amande"},{t:"Cannelle"},{t:"💊 Tramadol LP 50mg + Lyrica 325mg"}],
        tags:[["MAG","nt-mag"],["FER","nt-fer"]],conseil:null},
       {ic:"🥗",cl:"ic-mid",lbl:"Déjeuner",time:"12h – 13h30",
-       title:"Sardines · Quinoa · Légumes frais · Persil-citron",
-       ingr:[{t:"Sardines 1 boîte"},{t:"Quinoa (batch) 100g"},{t:"Légumes frais Bene Bono",fr:true},{t:"Persil plat haché"},{t:"Jus de citron + Sel Santé"}],
-       tags:[["FER","nt-fer"],["MAG","nt-mag"],["DOPA","nt-dopa"]],conseil:null},
+       title:"Poulet émincé · Lentilles vertes · Carottes curcuma · Sauge",
+       ingr:[{t:"Poulet émincé 120g"},{t:"Lentilles vertes (batch) 120g"},{t:"Carottes curcuma (batch)"},{t:"Sauge Picard"},{t:"Jus de citron + Sel Santé + huile colza"}],
+       tags:[["FER","nt-fer"],["MAG","nt-mag"],["VIT-C","nt-vitc"]],conseil:null},
       {ic:"🍊",cl:"ic-gou",lbl:"Goûter",time:"avant 17h",
        title:"Amandes · Noix Grenoble · Chocolat 85%",
        ingr:[{t:"6 amandes + 3 noix de Grenoble"},{t:"1 carré chocolat 85%"}],
        tags:[["MAG","nt-mag"],["DOPA","nt-dopa"]],
-       conseil:{type:"tdah",text:"🧠 Préparer bases Ninja Creami ce soir pour le batch de demain !"}},
+       conseil:{type:"sjsr",text:"🌿 Poulet + lentilles + carottes = protéine complète + fer non hémique boosté par la cuisson curcuma."}},
       {ic:"🌙",cl:"ic-din",lbl:"Dîner léger 💊",time:"19h – 20h max",
        title:"💊 Médicaments AVANT · Colin lieu · Épinards · Échalote-thym",
        ingr:[{t:"💊 Tramadol LP 100mg + Lyrica 375mg AVANT"},{t:"1 portion colin lieu"},{t:"Épinards Picard 200g"},{t:"Échalote + thym Picard"},{t:"Huile olive + Sel Santé"}],
@@ -1827,18 +2175,19 @@ const MENUS = {
        ingr:[{t:"Sarrasin cuit 80g"},{t:"Lait millet"},{t:"Salade fruits Picard (blueberries)"},{t:"Graines lin 1cs"},{t:"💊 Tramadol LP 50mg + Lyrica 325mg"}],
        tags:[["MAG","nt-mag"],["FER","nt-fer"],["DOPA","nt-dopa"]],conseil:null},
       {ic:"🥗",cl:"ic-mid",lbl:"Déjeuner Bureau",time:"12h – 13h30",
-       title:"Lentilles vertes · Sardines · Carottes curcuma · Persil",
-       ingr:[{t:"Lentilles vertes (batch) 150g"},{t:"Sardines 1 boîte"},{t:"Carottes curcuma"},{t:"Persil haché + citron"},{t:"Sel Santé + huile colza"}],
-       tags:[["FER","nt-fer"],["MAG","nt-mag"],["VIT-C","nt-vitc"],["DOPA","nt-dopa"]],conseil:null},
+       title:"Bowl quinoa · Poulet · Avocat · Carottes · Graines lin",
+       ingr:[{t:"Quinoa (batch) 120g"},{t:"Poulet grillé 120g"},{t:"Demi-avocat"},{t:"Carottes curcuma (batch)"},{t:"Persil haché + citron + Sel Santé"},{t:"Graines de lin 1cs (oméga-3)"}],
+       tags:[["FER","nt-fer"],["MAG","nt-mag"],["DOPA","nt-dopa"]],conseil:null},
       {ic:"🍊",cl:"ic-gou",lbl:"Goûter",time:"avant 17h",
        title:"Amandes · Datte · Chocolat 80% fleur de sel",
        ingr:[{t:"8 amandes"},{t:"1 datte"},{t:"1 carré chocolat 80% fleur de sel"}],
        tags:[["MAG","nt-mag"],["DOPA","nt-dopa"]],conseil:null},
       {ic:"🌙",cl:"ic-din",lbl:"Dîner léger 💊",time:"19h – 20h max",
-       title:"💊 Médicaments AVANT · Soupe lentilles-gingembre · Lait coco",
-       ingr:[{t:"💊 Tramadol LP 100mg + Lyrica 375mg AVANT"},{t:"Lentilles corail 80g"},{t:"Lait coco 150ml"},{t:"Gingembre + curcuma + poivre"},{t:"Sel Santé + citron"}],
+       title:"💊 Médicaments AVANT · Saumon four · Purée patate douce · Brocoli",
+       ingr:[{t:"💊 Tramadol LP 100mg + Lyrica 375mg AVANT"},{t:"Saumon mi-cuit Picard 150g"},{t:"Patate douce 200g"},{t:"Brocolis Picard 150g"},{t:"Graines de lin + huile olive + Sel Santé"}],
        tags:[["FER","nt-fer"],["ALK","nt-alk"],["MAG","nt-mag"]],
-       conseil:{type:"sjsr",text:"🌿 Soupe lentilles-lait coco = fer + alcalinisant + douceur. Parfait le soir."}},
+       conseil:{type:"sjsr",text:"🌿 Saumon + patate douce + brocoli = trio anti-SJSR classique. Oméga-3 + glucide lent + vit C."},
+      steps:["Médicaments AVANT 💊","Patate douce vapeur 20 min puis écraser avec huile olive","Brocolis vapeur 8 min","Saumon Air Fryer 170°C 12 min","Parsemer graines de lin","Dresser purée + brocolis + saumon"],cookTime:"20 min"},
       {ic:"📺",cl:"ic-sna",lbl:"Snack TV",time:"Soirée",
        fun:"🌸 Figues rôties au romarin",
        ingr:[{t:"2 figues coupées"},{t:"Romarin frais"},{t:"Filet de miel"},{t:"Four 170°C / 15 min"}],
@@ -1879,17 +2228,17 @@ const MENUS = {
        ingr:[{t:"Sarrasin cuit 80g"},{t:"Lait millet"},{t:"Mangues Picard"},{t:"Graines courge + lin"},{t:"💊 Tramadol LP 50mg + Lyrica 325mg"}],
        tags:[["MAG","nt-mag"],["FER","nt-fer"],["DOPA","nt-dopa"]],conseil:null},
       {ic:"🥗",cl:"ic-mid",lbl:"Déjeuner Bureau",time:"12h – 13h30",
-       title:"Pois chiches · Thon · Poivrons · Persil-citron",
-       ingr:[{t:"Pois chiches 150g"},{t:"Thon au naturel"},{t:"Poivrons rouges crus"},{t:"Persil haché"},{t:"Jus citron + Sel Santé + huile olive"}],
-       tags:[["FER","nt-fer"],["MAG","nt-mag"],["VIT-C","nt-vitc"],["DOPA","nt-dopa"]],conseil:null},
+       title:"Omelette roulée · Épinards · Persil · Graines de courge",
+       ingr:[{t:"3 oeufs bio"},{t:"Épinards Picard 100g"},{t:"Persil haché"},{t:"Graines de courge torréfiées"},{t:"Sel Santé + huile d'olive"},{t:"Citron pressé"}],
+       tags:[["FER","nt-fer"],["MAG","nt-mag"],["DOPA","nt-dopa"]],conseil:null},
       {ic:"🍊",cl:"ic-gou",lbl:"Goûter",time:"avant 17h",
        title:"Amandes · Pistaches · Chocolat 85%",
        ingr:[{t:"6 amandes + pistaches 15g"},{t:"1 carré chocolat 85%"}],
        tags:[["MAG","nt-mag"],["DOPA","nt-dopa"]],conseil:null},
       {ic:"🌙",cl:"ic-din",lbl:"Dîner léger 💊",time:"19h – 20h max",
-       title:"💊 Médicaments AVANT · Papillote cabillaud · Légumes mai",
-       ingr:[{t:"💊 Tramadol LP 100mg + Lyrica 375mg AVANT"},{t:"1 portion cabillaud"},{t:"Légumes frais Bene Bono",fr:true},{t:"Gingembre + citron + Sel Santé"}],
-       tags:[["ALK","nt-alk"],["MAG","nt-mag"]],conseil:null},
+       title:"💊 Médicaments AVANT · Dinde rôtie · Courgettes · Patate douce",
+       ingr:[{t:"💊 Tramadol LP 100mg + Lyrica 375mg AVANT"},{t:"Filets de dinde 150g"},{t:"Courgettes en rondelles"},{t:"Patate douce en cubes"},{t:"Sauge + Sel Santé + huile olive"}],
+       tags:[["ALK","nt-alk"],["MAG","nt-mag"]],steps:["Médicaments AVANT 💊","Patate douce + courgettes : huile + sauge + Sel Santé","Four 200°C / 25 min","Dinde poêlée 5 min chaque côté","Citron pressé sur tout"],cookTime:"30 min · Four 200°C",conseil:null},
       {ic:"📺",cl:"ic-sna",lbl:"Snack TV",time:"Soirée",
        fun:"🌸 Poires au four badiane-miel",
        ingr:[{t:"1 poire coupée"},{t:"Badiane + miel"},{t:"Four 170°C / 20 min"}],
@@ -1907,7 +2256,7 @@ const MENUS = {
        title:"Lentilles corail · Poulet · Patate douce · Sauge",
        ingr:[{t:"Lentilles corail (batch) 150g"},{t:"Poulet émincé"},{t:"Patate douce en dés"},{t:"Sauge + Sel Santé + citron"}],
        tags:[["FER","nt-fer"],["MAG","nt-mag"]],
-       conseil:{type:"sjsr",text:"🌿 Patate douce + lentilles = glucide lent + fer. Duo anti-SJSR alcalinisant."}},
+       conseil:{type:"sjsr",text:"🌿 Poulet + lentilles + patate douce = protéine + fer + glucide lent. Sauge = digestive et anti-inflammatoire."}},
       {ic:"🍊",cl:"ic-gou",lbl:"Goûter",time:"avant 17h",
        title:"Graines courge · Datte · Chocolat 92%",
        ingr:[{t:"Graines courge 20g"},{t:"1 datte"},{t:"1 carré chocolat 92%"}],
@@ -1941,7 +2290,7 @@ const MENUS = {
       {ic:"🌙",cl:"ic-din",lbl:"Dîner · Nouveaux légumes ! 💊",time:"19h – 20h max",
        title:"💊 Médicaments AVANT · Saumon mi-cuit · Légumes frais mai",
        ingr:[{t:"💊 Tramadol LP 100mg + Lyrica 375mg AVANT"},{t:"Saumon mi-cuit Picard"},{t:"Légumes frais Bene Bono mai",fr:true},{t:"Gingembre + citron + Sel Santé"}],
-       tags:[["ALK","nt-alk"],["MAG","nt-mag"],["DOPA","nt-dopa"]],
+       tags:[["ALK","nt-alk"],["MAG","nt-mag"]],
        conseil:{type:"prep",text:"🌸 Nouveaux légumes de mai ! Air Fryer saumon 170°C / 12 min. Légumes vapeur."}},
       {ic:"📺",cl:"ic-sna",lbl:"Snack TV",time:"Soirée",
        fun:"🌸 Amandes torréfiées + Chocolat 80% fleur de sel",
@@ -2013,123 +2362,129 @@ const MENUS = {
 // ── SHOPPING ──
 const SHOP_DATA={
 
-  // ── LA FOURCHE · Bio & Sec ──
+  // ── LA FOURCHE · Bio & Sec · ~100€ ──
   fourche:[
-    // Protéines & Poissons
-    {n:"🐟 Sardines huile olive bio × 6",p:"17,94€"},
-    {n:"🐟 Filets maquereau huile olive × 4",p:"15,96€"},
-    {n:"🐟 Thon albacore au naturel × 2",p:"6,70€"},
-    {n:"🫘 Lentilles corail bio 500g",p:"1,70€"},
-    {n:"🫘 Lentilles vertes bio 500g",p:"2,20€"},
-    {n:"🫘 Pois chiches au naturel bio 420g",p:"2,99€"},
-    {n:"🫘 Haricots rouges bio 425g",p:"3,69€"},
-    {n:"🫘 Pois cassés bio 500g",p:"1,90€"},
-    {n:"🫘 Torsades lentilles corail 250g",p:"2,52€"},
-    {n:"🧈 Tofu noisette ail des ours 200g",p:"2,99€"},
-    // Céréales & Féculents
-    {n:"🌾 Sarrasin décortiqué bio 1kg",p:"3,90€"},
-    {n:"🌾 Flocons de sarrasin bio 500g",p:"2,80€"},
-    {n:"🌾 Quinoa duo rouge et blanc 500g",p:"3,99€"},
-    {n:"🌾 Polenta de maïs bio 500g",p:"2,50€"},
-    {n:"🌾 Farine de riz bio 500g",p:"2,10€"},
-    // Graines & Oléagineux
-    {n:"🌱 Graines de chia bio 500g",p:"3,65€"},
-    {n:"🌱 Graines de courge bio 250g",p:"3,51€"},
-    {n:"🌱 Graines de lin bio 250g",p:"2,20€"},
-    {n:"🥜 Amandes décortiquées bio 500g",p:"7,50€"},
-    {n:"🥜 Noisettes décortiquées bio 200g",p:"4,50€"},
-    {n:"🥜 Pistaches bio non salées 150g",p:"5,99€"},
-    {n:"🥜 Noix de Grenoble bio 200g",p:"4,80€"},
-    {n:"🌴 Dattes Medjool bio 500g",p:"7,99€"},
-    {n:"🥜 Purée d'amande bio 250g",p:"5,50€"},
-    {n:"🌿 Coco râpée bio 200g",p:"2,40€"},
-    {n:"🍫 Cacao brut en poudre bio 200g",p:"4,50€"},
-    // Chocolats
-    {n:"🍫 Chocolat noir 85% Togo bio",p:"3,87€"},
-    {n:"🍫 Chocolat noir 80% fleur de sel",p:"2,99€"},
-    {n:"🍫 Chocolat noir 92% Fairafric",p:"3,45€"},
-    // Huiles & Condiments
-    {n:"🫒 Huile olive + tournesol bio 1L",p:"9,75€"},
-    {n:"🌿 Huile de colza vierge bio 1L",p:"4,09€"},
-    {n:"🌿 Huile de lin bio 250ml",p:"4,50€"},
-    {n:"🍎 Vinaigre de cidre bio 1L",p:"2,98€"},
-    {n:"🥛 Millet cuisine bio 3×20cl",p:"3,99€"},
-    {n:"🥥 Lait de coco curry Masala bio 200ml",p:"1,49€"},
-    // Épices & Assaisonnement Sel Santé
-    {n:"🧂 Sel de mer fin bio 500g",p:"1,80€"},
-    {n:"🌿 Curcuma bio en poudre 50g",p:"2,50€"},
-    {n:"🌿 Poivre noir bio moulu 50g",p:"2,20€"},
-    {n:"🌿 Herbes de Provence bio 20g",p:"1,90€"},
-    {n:"🌿 Cannelle bio en poudre 30g",p:"2,10€"},
-    {n:"🌿 Cardamome bio en poudre 20g",p:"2,80€"},
-    {n:"🌿 Piment doux bio 20g",p:"1,80€"},
-    {n:"🌿 Vanille en poudre bio 10g",p:"3,50€"},
-    {n:"🌿 Sésame bio 200g",p:"2,90€"},
-    {n:"🌿 Tahini (crème sésame) bio 250g",p:"4,20€"},
+    // 🐟 Protéines marines
+    {n:"🐟 Sardines huile olive bio × 12",p:"38,28€",u:"Déjeuners × 5 semaines"},
+    {n:"🐟 Maquereau huile olive bio × 8",p:"26,80€",u:"Déjeuners alternés × 5 sem"},
+    {n:"🐟 Thon albacore au naturel × 4",p:"13,40€",u:"Salade thon-avocat + déjeuners"},
+    // 🫘 Légumineuses
+    {n:"🫘 Lentilles corail bio 1kg",p:"3,40€",u:"Batch hebdo + veloutés dîner"},
+    {n:"🫘 Lentilles vertes bio 500g",p:"2,20€",u:"Déjeuners sem. 2 & 3"},
+    {n:"🫘 Pois chiches au naturel bio × 3",p:"8,97€",u:"Déjeuners bureau × 5 sem"},
+    {n:"🫘 Haricots rouges bio 425g × 2",p:"7,38€",u:"Déjeuners sem. 3 & 5"},
+    {n:"🫘 Pois cassés bio 500g",p:"1,90€",u:"Soupes dîner sem. 3 & 4"},
+    {n:"🧈 Tofu noisette ail des ours × 2",p:"5,98€",u:"Dîners lundi sem. 2 & 4"},
+    // 🌾 Céréales
+    {n:"🌾 Sarrasin décortiqué bio 1kg",p:"3,90€",u:"Batch hebdo — petit-déj quotidien"},
+    {n:"🌾 Flocons de sarrasin bio 500g",p:"2,80€",u:"Porridges matin"},
+    {n:"🌾 Quinoa duo bio 500g × 2",p:"7,98€",u:"Batch hebdo + brunchs"},
+    {n:"🌾 Polenta de maïs bio 500g",p:"2,50€",u:"Dîner agneau-polenta sem. 4"},
+    {n:"🌾 Farine de riz bio 500g",p:"2,10€",u:"Moelleux pêches-noisettes dim. 26 avr"},
+    // 🌱 Graines
+    {n:"🌱 Graines de chia bio 500g",p:"3,65€",u:"Chia pudding petit-déj × 5 sem"},
+    {n:"🌱 Graines de courge bio 250g × 2",p:"7,02€",u:"Batch torréfaction + snacks + veloutés"},
+    {n:"🌱 Graines de lin bio 250g",p:"2,20€",u:"Brunchs + déjeuners oméga-3"},
+    // 🥜 Oléagineux
+    {n:"🥜 Amandes décortiquées bio 500g × 2",p:"15,00€",u:"Batch + goûters + energy balls — usage quotidien"},
+    {n:"🥜 Noisettes décortiquées bio 200g",p:"4,50€",u:"Porridges + moelleux pêches"},
+    {n:"🥜 Pistaches bio non salées 150g",p:"5,99€",u:"Goûters + dîner agneau-polenta"},
+    {n:"🥜 Noix de Grenoble bio 200g",p:"4,80€",u:"Déjeuners sem. 4 & 5 — oméga-3"},
+    {n:"🌴 Dattes Medjool bio 500g",p:"7,99€",u:"Energy balls + goûters + brunchs"},
+    {n:"🥜 Purée d'amande bio 250g",p:"5,50€",u:"Chia pudding sem. 1 & 2"},
+    {n:"🌿 Coco râpée bio 200g",p:"2,40€",u:"Energy balls"},
+    {n:"🍫 Cacao brut en poudre bio 200g",p:"4,50€",u:"Energy balls × 5 sem + mousse choc"},
+    // 🍫 Chocolats
+    {n:"🍫 Chocolat noir 85% Togo bio × 3",p:"11,61€",u:"Goûters quotidiens + mousse chocolat"},
+    {n:"🍫 Chocolat noir 80% fleur de sel × 2",p:"5,98€",u:"Goûters sem. 4 & 5"},
+    {n:"🍫 Chocolat noir 92% Fairafric × 2",p:"6,90€",u:"Goûters sem. 2 & 3"},
+    // 🫒 Huiles & Condiments
+    {n:"🫒 Huile d'olive vierge extra bio 1L",p:"9,75€",u:"Cuisson quotidienne"},
+    {n:"🌿 Huile de colza vierge bio 1L",p:"4,09€",u:"Déjeuners bureau — oméga-3 cru"},
+    {n:"🌿 Huile de lin bio 250ml",p:"4,50€",u:"Salades sardines/maquereau"},
+    {n:"🍎 Vinaigre de cidre bio 1L",p:"2,98€",u:"Légumineuses bureau — absorption fer ×3"},
+    {n:"🥛 Lait de millet bio 6×200ml",p:"8,00€",u:"Petit-déj + veloutés + Lait d'Or"},
+    {n:"🥥 Lait de coco Masala bio × 3",p:"4,47€",u:"Veloutés dîner × 5 sem"},
+    {n:"🌿 Tahini crème sésame bio 250g",p:"4,20€",u:"Caviar aubergines brunchs sam."},
+    {n:"🍯 Miel bio liquide 250g",p:"3,50€",u:"Fruits rôtis snacks TV + brunch moelleux"},
+    // 🧂 Sel Santé maison
+    {n:"🧂 Sel de mer fin bio 500g",p:"1,80€",u:"Sel Santé batch hebdo"},
+    {n:"🌿 Curcuma bio en poudre 50g",p:"2,50€",u:"Sel Santé + carottes + tofu"},
+    {n:"🌿 Poivre noir moulu bio 50g",p:"2,20€",u:"Sel Santé + active curcuma"},
+    {n:"🌿 Herbes de Provence bio 20g × 2",p:"3,80€",u:"Sel Santé + papillotes"},
+    {n:"🌿 Cannelle bio en poudre 30g",p:"2,10€",u:"Porridges + veloutés courge"},
+    {n:"🌿 Cardamome bio en poudre 20g",p:"2,80€",u:"Anniversaire + Lait d'Or"},
+    {n:"🌿 Piment doux bio 20g",p:"1,80€",u:"Mousse chocolat anniversaire"},
+    {n:"🌿 Vanille en poudre bio 10g",p:"3,50€",u:"Compotées pommes snack TV"},
+    {n:"🌿 Sésame bio 200g",p:"2,90€",u:"Brunchs caviar aubergines"},
   ],
 
-  // ── PICARD · Surgelés ──
+  // ── PICARD · Surgelés · ~135€ ──
   picard:[
-    // Fruits
-    {n:"🍓 Cocktail fruits rouges bio 450g",p:"6,99€"},
-    {n:"🍓 Framboises entières bio 450g",p:"9,99€"},
-    {n:"🥭 Mangues en morceaux bio 450g",p:"5,30€"},
-    {n:"🍊 Salade fruits bio (mangue/orange/blueberry) 600g",p:"7,49€"},
-    {n:"🍒 Cerises bio 450g",p:"8,50€"},
-    // Légumes
-    {n:"🥬 Épinards en branches bio 600g",p:"2,90€"},
-    {n:"🫘 Haricots verts extra-fins France 1kg",p:"2,69€"},
-    {n:"🥦 Brocolis sans pesticides 1kg",p:"3,60€"},
-    {n:"🥕 Carottes en rondelles 600g",p:"2,20€"},
-    // Poissons
-    {n:"🐟 6 portions cabillaud MSC 600g",p:"17,99€"},
-    {n:"🐟 Filets colin lieu MSC 500g",p:"8,99€"},
-    {n:"🦐 Crevettes décortiquées ASC 200g",p:"8,50€"},
-    {n:"🥩 4 steaks hachés 5% MG 400g",p:"8,99€"},
-    // Aromates & Épices
-    {n:"🫚 Gingembre coupé 75g",p:"2,00€"},
-    {n:"🧄 Ail coupé 100g",p:"2,99€"},
-    {n:"🧅 Échalote coupée 100g",p:"2,85€"},
-    {n:"🌿 Persillade (persil+ail) 50g",p:"1,79€"},
-    {n:"🌿 Persil plat coupé 250g",p:"2,25€"},
-    {n:"🌿 Basilic coupé bio 50g",p:"2,40€"},
-    {n:"🌿 Thym coupé 50g",p:"2,00€"},
-    {n:"🌿 Sauge coupée 30g",p:"2,00€"},
-    {n:"🌿 Romarin coupé 30g",p:"2,00€"},
-    {n:"🌿 Mélange thaïlandais 60g",p:"2,00€"},
-    {n:"🌿 Mélange pour salades 50g",p:"2,00€"},
-    // Week-end brunch
-    {n:"🐟 Saumon mi-cuit portions 300g (brunch week-end)",p:"9,50€"},
-    {n:"🥦 Poireaux émincés 600g (papillotes)",p:"2,50€"},
-    {n:"🫛 Petits pois fins bio 600g (brunch)",p:"2,80€"},
+    // 🍓 Fruits Ninja Creami + petit-déj
+    {n:"🍓 Cocktail fruits rouges bio 450g × 2",p:"13,98€",u:"Bases Ninja Creami + brunchs"},
+    {n:"🍓 Framboises entières bio 450g × 2",p:"19,98€",u:"Bases Ninja Creami + porridges"},
+    {n:"🥭 Mangues en morceaux bio 450g × 2",p:"10,60€",u:"Bases Ninja Creami + porridges"},
+    {n:"🍊 Salade fruits bio 600g",p:"7,49€",u:"Petit-déj sem. 1 & 5"},
+    {n:"🍒 Cerises bio 450g",p:"8,50€",u:"Mousse choc anniversaire + goûters"},
+    // 🥬 Légumes
+    {n:"🥬 Épinards en branches bio 600g × 3",p:"8,70€",u:"Batch sautés ail hebdo"},
+    {n:"🫘 Haricots verts extra-fins 1kg",p:"2,69€",u:"Dîner cabillaud anniversaire 14 avr"},
+    {n:"🥦 Brocolis 1kg",p:"3,60€",u:"Dîner saumon-patate douce + tofu"},
+    {n:"🥕 Carottes en rondelles 600g",p:"2,20€",u:"Batch carottes curcuma sem. 2"},
+    {n:"🥬 Poireaux émincés 600g",p:"2,50€",u:"Papillotes dîners sem. 2 & 5"},
+    // 🐟 Poissons
+    {n:"🐟 6 portions cabillaud MSC 600g × 2",p:"35,98€",u:"Dîners papillotes + anniversaire"},
+    {n:"🐟 Filets colin lieu MSC 500g × 2",p:"17,98€",u:"Dîners papillotes alternance"},
+    {n:"🐟 Saumon mi-cuit portions 300g",p:"9,50€",u:"Brunchs sam. + dîners saumon-patate douce"},
+    {n:"🦐 Crevettes décortiquées ASC 200g",p:"8,50€",u:"Dîners sem. 3 & 5"},
+    // 🍗 Viandes blanches (Picard)
+    {n:"🍗 Filets de poulet bio 4×120g",p:"9,50€",u:"Déjeuners bowl quinoa-poulet × 4 sem"},
+    {n:"🦃 Escalopes de dinde × 4",p:"7,90€",u:"Dîners dinde-légumes rôtis sem. 3 & 5"},
+    {n:"🥩 Agneau confit portions 200g",p:"8,50€",u:"Dîner agneau-polenta sem. 4"},
+    // 🌿 Aromates
+    {n:"🫚 Gingembre coupé 75g × 2",p:"4,00€",u:"Infusions quotidiennes + dîners"},
+    {n:"🧄 Ail coupé 100g",p:"2,99€",u:"Épinards batch + dîners"},
+    {n:"🧅 Échalote coupée 100g",p:"2,85€",u:"Dîner colin sem. 4"},
+    {n:"🌿 Persil plat coupé 250g",p:"2,25€",u:"Déjeuners bureau quotidiens — dopamine"},
+    {n:"🌿 Basilic coupé bio 50g × 2",p:"4,80€",u:"Déjeuners + dîners + brunchs"},
+    {n:"🌿 Thym coupé 50g",p:"2,00€",u:"Papillotes + fruits rôtis"},
+    {n:"🌿 Sauge coupée 30g",p:"2,00€",u:"Poulet-patate douce + agneau"},
+    {n:"🌿 Romarin coupé 30g",p:"2,00€",u:"Figues rôties snack TV"},
   ],
 
-  // ── BENE BONO / MARCHÉ · Frais ──
+  // ── BENE BONO / MARCHÉ · Frais · ~25-30€/semaine ──
   beno:[
-    // Panier de base
-    {n:"🥬 Panier légumes frais de saison",p:"17–25€"},
-    {n:"🍋 Citrons bio × 6 (systématiques tous les jours)",p:"~2,00€"},
-    {n:"🥚 Œufs bio × 6 (brunchs + mousse anniversaire)",p:"~2,50€"},
-    // Légumes semaine
-    {n:"🍆 Aubergines × 2 (caviar au tahini)",p:"selon marché"},
-    {n:"🍅 Tomates fraîches (salade pois chiches)",p:"selon marché"},
-    {n:"🫑 Poivrons rouges × 2 (vitamine C + fer)",p:"selon marché"},
-    {n:"🥕 Carottes fraîches (curcuma)",p:"selon marché"},
-    {n:"🍠 Patates douces × 2 (poulet / IG bas)",p:"selon marché"},
-    // Légumes brunch week-end
-    {n:"🌿 Fenouil × 1 (papillote samedi soir)",p:"selon marché"},
-    {n:"🎃 Courge butternut ou potimarron (velouté dimanche)",p:"selon marché"},
-    {n:"🌰 Châtaignes (velouté potimarron-châtaignes)",p:"selon marché"},
-    // Fruits & desserts
-    {n:"🍐 Poires × 3 (rôties / velouté panais)",p:"selon marché"},
-    {n:"🍑 Pêches ou abricots × 4 (rôtis au four / moelleux)",p:"selon marché"},
-    {n:"🥝 Kiwis × 3 (vitamine C++)",p:"selon marché"},
+    // Essentiels chaque semaine
+    {n:"🍋 Citrons bio × 6 — SYSTÉMATIQUES",p:"~2€",u:"Sur tout : lentilles, poisson, salades, dîners"},
+    {n:"🥚 Œufs bio × 6",p:"~2,50€",u:"Brunchs week-end + mousse chocolat anniversaire"},
+    {n:"🍯 Miel bio (si pas La Fourche)",p:"~3€",u:"Fruits rôtis snack TV — abricots, poires, figues"},
+    // Légumes frais par usage
+    {n:"🥑 Avocats × 3",p:"marché",u:"Bowl quinoa-poulet-avocat (lun. sem. 1,2,4,5) + salade thon"},
+    {n:"🍆 Aubergines × 2",p:"marché",u:"Caviar aubergines-tahini brunchs sam. 11, 25 avr, 9 mai"},
+    {n:"🍅 Tomates fraîches × 4",p:"marché",u:"Brunch salade pois chiches-basilic dim."},
+    {n:"🫑 Poivrons rouges × 3",p:"marché",u:"Déjeuners bureau sem. 1, 3 & 5 — vit C + fer"},
+    {n:"🥕 Carottes fraîches × 4",p:"marché",u:"Batch carottes curcuma + déjeuner poulet"},
+    {n:"🍠 Patates douces × 4",p:"marché",u:"Dîners saumon-patate douce (sem.2,4) + poulet"},
+    {n:"🥒 Courgettes × 4",p:"marché",u:"Dîners papillotes + brandade (sem. 1,2,3,4)"},
+    {n:"🌿 Fenouil × 2",p:"marché",u:"Papillotes dîner sem. 2 & 4"},
+    {n:"🎃 Courge butternut ou potimarron × 3",p:"marché",u:"Veloutés dîner dim. sem. 2, 3 & 4"},
+    {n:"🌰 Châtaignes cuites × 2",p:"marché",u:"Veloutés potimarron-châtaignes"},
+    {n:"🥗 Betteraves cuites × 3",p:"marché",u:"Déjeuners sardines-betteraves (sem.2,3,5)"},
+    {n:"🧅 Panais × 2",p:"marché",u:"Velouté panais-poires dîner sem. 3 & 5"},
+    // Fruits frais par usage
+    {n:"🍐 Poires × 4",p:"marché",u:"Fruits rôtis snack TV + velouté panais"},
+    {n:"🍑 Pêches ou abricots × 6",p:"marché",u:"Fruits rôtis + moelleux pêches dim. 26 avr"},
+    {n:"🥝 Kiwis × 3",p:"marché",u:"Petit-déj vit C++ sem. 2"},
+    {n:"🍎 Pommes × 4",p:"marché",u:"Compotées snack TV sem. 4 & 5"},
+    {n:"🍑 Figues fraîches × 6",p:"marché",u:"Snack TV figues rôties romarin sem. 2,3,4"},
     // Herbes fraîches
-    {n:"🌿 Persil plat frais (dopamine + fer · systématique)",p:"selon marché"},
-    {n:"🌿 Basilic frais (dopamine · salade pois chiches)",p:"selon marché"},
-    {n:"🌿 Sauge fraîche (poulet patate douce dimanche)",p:"selon marché"},
-    {n:"🌿 Thym frais (abricots rôtis)",p:"selon marché"},
-    {n:"🌿 Romarin frais (figues rôties snack TV)",p:"selon marché"},
+    {n:"🌿 Persil plat frais",p:"marché",u:"TOUS les déjeuners bureau — dopamine + fer"},
+    {n:"🌿 Basilic frais",p:"marché",u:"Brunchs dominicaux + dîners basilic"},
+    {n:"🌿 Sauge fraîche",p:"marché",u:"Poulet-patate douce sem. 3"},
+    {n:"🌿 Thym frais",p:"marché",u:"Fruits rôtis abricots + poires"},
+    {n:"🌿 Romarin frais",p:"marché",u:"Figues rôties snack TV"},
+    {n:"🌿 Menthe fraîche",p:"marché",u:"Soupe pois cassés-menthe dîner sem. 3"},
   ]
 };
 
@@ -2244,7 +2599,8 @@ function buildShopping(){
     const c=document.getElementById('sl-'+src);c.innerHTML='';
     SHOP_DATA[src].forEach(item=>{
       const div=document.createElement('div');div.className='shop-item';
-      div.innerHTML=`<div class="shop-check" onclick="tCheck(this)"></div><span class="shop-item-name">${item.n}</span><span class="shop-item-price">${item.p}</span>`;
+      const usageHtml = item.u ? `<div class="shop-usage">📍 ${item.u}</div>` : '';
+      div.innerHTML=`<div class="shop-check" onclick="tCheck(this)"></div><div style="flex:1"><span class="shop-item-name">${item.n}</span>${usageHtml}</div><span class="shop-item-price">${item.p}</span>`;
       c.appendChild(div);
     });
   });
@@ -2320,8 +2676,650 @@ function getSmartCookTime(m){
   return '15 min';
 }
 
+
+// ── BATCH COOKING DATA ──
+const BATCH_WEEKS = [
+  {
+    date:"Samedi 11 avril · Première session !",
+    intro:"Votre toute première session batch cooking. Prenez le temps, c'est normal si ça prend un peu plus longtemps la première fois. Après, ça devient un automatisme !",
+    sections:[
+      {
+        icon:"🔥", iconClass:"bsi-airfryer", title:"Air Fryer — Toasts et torréfaction", duration:"20 min",
+        parallel:"💡 Lancez l'Air Fryer EN PREMIER pendant que vous préparez les casseroles sur les feux.",
+        ingredients:["Amandes décortiquées 150g","Graines de courge 100g"],
+        steps:[
+          {action:"Torréfier les amandes",detail:"Étaler les amandes sur la grille Air Fryer. 150°C pendant 8 minutes. Secouer à mi-cuisson. Elles doivent être dorées et légèrement craquantes.",tip:"Résultat : amandes pour la semaine entière de goûters et snacks TV. Stocker dans un bocal hermétique."},
+          {action:"Torréfier les graines de courge",detail:"Après les amandes, même procédé. 160°C pendant 6 minutes. Elles gonflent légèrement et deviennent croquantes. Ajouter une pincée de fleur de sel à la sortie.",tip:"Résultat : snacks TV + garniture veloutés. Bocal hermétique sur le plan de travail."}
+        ],
+        results:["150g amandes torréfiées → bocal 1 semaine","100g graines courge torréfiées → bocal 1 semaine"]
+      },
+      {
+        icon:"🍳", iconClass:"bsi-feux", title:"4 Feux — 3 Casseroles en simultané", duration:"25 min",
+        parallel:"💡 Démarrer les 3 casseroles EN MÊME TEMPS. Pendant qu'elles cuisent, préparez les bases Ninja Creami.",
+        ingredients:["Lentilles corail 300g","Quinoa duo 250g","Sarrasin décortiqué 200g","Eau froide","Sel"],
+        steps:[
+          {action:"Casserole 1 · Lentilles corail",detail:"Rincer 300g de lentilles corail. Les couvrir de 2× leur volume d'eau froide. Porter à ébullition, puis feu doux 15 minutes. Elles doivent être tendres mais pas en bouillie. Égoutter, rincer à l'eau froide pour stopper la cuisson.",tip:"Ne pas saler pendant la cuisson (les lentilles durcissent). Saler après égouttage."},
+          {action:"Casserole 2 · Quinoa",detail:"Rincer 250g de quinoa sous l'eau froide (obligatoire pour enlever l'amertume). Couvrir de 2× volume d'eau. Porter à ébullition, feu très doux 12 minutes couvercle fermé. Laisser gonfler 5 min hors du feu.",tip:"Le quinoa est cuit quand les petits germes blancs apparaissent. Égrainer avec une fourchette."},
+          {action:"Casserole 3 · Sarrasin",detail:"Rincer 200g de sarrasin. 2× volume d'eau. Porter à ébullition, feu doux 20 minutes. Il absorbe toute l'eau — c'est normal. Pas besoin d'égoutter.",tip:"Le sarrasin est parfait pour les porridges du matin. Il se réchauffe en 2 min avec du lait de millet."},
+          {action:"Casserole 4 · Épinards sautés",detail:"Dans une grande poêle : 1cs huile olive + 2 gousses ail coupé Picard. Faire revenir 1 min. Ajouter 600g épinards surgelés Picard. Couvrir 3 min puis mélanger. Assaisonner Sel Santé.",tip:"Résultat : 3 portions de légumes prêts pour les dîners de la semaine. Stocker au frigo."}
+        ],
+        results:["300g lentilles corail cuites → frigo 5 jours","250g quinoa cuit → frigo 5 jours","200g sarrasin cuit → frigo 5 jours","3 portions épinards ail → frigo 3-4 jours"]
+      },
+      {
+        icon:"🥶", iconClass:"bsi-creami", title:"Ninja Creami — 3 bases à congeler", duration:"15 min",
+        parallel:"💡 Préparer pendant que les casseroles cuisent. Les bases doivent congeler 24h minimum.",
+        ingredients:["Framboises Picard 200g","Mangues Picard 150g + gingembre 1cc","Fruits rouges Picard 200g"],
+        steps:[
+          {action:"Base 1 · Framboises",detail:"Mixer 200g framboises décongelées + jus de ½ citron. Goûter — doit être légèrement acidulé. Verser dans le moule Ninja Creami jusqu'à la ligne MAX. Fermer hermétiquement.",tip:""},
+          {action:"Base 2 · Mangue-Gingembre",detail:"Mixer 150g mangues décongelées + 1cc gingembre surgelé Picard + 1cc miel (optionnel). Goûter. Verser dans moule 2. Fermer.",tip:"Le gingembre dans le sorbet = anti-inflammatoire + saveur exotique."},
+          {action:"Base 3 · Fruits rouges",detail:"Mixer 200g cocktail fruits rouges décongelés. Verser dans moule 3. Fermer.",tip:""},
+          {action:"Mettre au congélateur",detail:"Placer les 3 moules BIEN À PLAT dans le congélateur. Ne pas bouger pendant 24h. Le lendemain soir : sortir un moule, traiter 1 minute au Creami, servir.",tip:"⚠️ Bien à plat = texture parfaite. Penché = sorbet grumeleux."}
+        ],
+        results:["3 sorbets pour les snacks TV de la semaine","À sortir chaque soir : traiter 1 min au Creami → prêt !"]
+      },
+      {
+        icon:"🍵", iconClass:"bsi-herbes", title:"Gingembre & Aromates — Prep semaine", duration:"10 min",
+        parallel:"💡 Faire pendant la cuisson des céréales.",
+        ingredients:["Gingembre Picard 75g (boîte entière)","Bocal hermétique propre"],
+        steps:[
+          {action:"Préparer le bocal gingembre",detail:"Ouvrir la boîte Picard de gingembre coupé. Verser TOUT le contenu dans un bocal hermétique. Garder au frigo. Prendre 1cc à chaque utilisation avec une petite cuillère.",tip:"Fini de chercher le gingembre au fond du congélateur ! Toujours prêt à portée de main."},
+          {action:"Préparer le Sel Santé maison",detail:"Dans un petit pot : 3cs sel de mer fin + 1cs curcuma + 1cc poivre noir moulu + 2cs herbes de Provence. Mélanger. Fermer. Étiqueter 'Sel Santé'. Utiliser à la place du sel ordinaire sur tous les plats.",tip:"Ce mélange remplace avantageusement tous les assaisonnements. Zéro glutamate, riche en anti-inflammatoires."}
+        ],
+        results:["Bocal gingembre prêt → 1 semaine","Sel Santé maison → 2-3 semaines","Zéro recherche d'épices pendant la semaine !"]
+      },
+      {
+        icon:"📦", iconClass:"bsi-sel", title:"Rangement & Conservation", duration:"10 min",
+        parallel:"💡 Pendant le refroidissement des céréales.",
+        ingredients:["Boîtes hermétiques × 6","Bocaux × 2","Étiquettes ou post-it"],
+        steps:[
+          {action:"Ranger les céréales cuites",detail:"Lentilles corail → boîte 1 (étiqueter + date). Quinoa → boîte 2. Sarrasin → boîte 3. Épinards → boîte 4. Toutes au frigo dans la même zone.",tip:"Mettez les boîtes devant dans le frigo, bien visibles. Si vous ne les voyez pas, vous oubliez de les utiliser !"},
+          {action:"Ranger les snacks",detail:"Amandes torréfiées → bocal 1 sur le plan de travail (visible !). Graines de courge → bocal 2 à côté. Pas au placard — sur le plan de travail pour les saisir facilement.",tip:"Règle TDAH : ce qui n'est pas visible n'existe pas. Vos snacks doivent être en vue !"},
+          {action:"Vérifier le frigo",detail:"Regarder ce qui reste des semaines précédentes. Finir les légumes Bene Bono les plus anciens EN PREMIER. Principe FIFO (premier entré = premier sorti).",tip:""}
+        ],
+        results:["Frigo organisé et visible","Snacks accessibles immédiatement","Semaine prête en 1 coup d'oeil"]
+      }
+    ]
+  },
+  {
+    date:"Samedi 18 avril · Session 2",
+    intro:"Vous avez déjà fait une session — c'est plus rapide maintenant ! Même déroulé, légèrement différent avec les nouvelles recettes de la semaine.",
+    sections:[
+      {
+        icon:"🔥", iconClass:"bsi-airfryer", title:"Air Fryer — Amandes, Courge, Tofu", duration:"25 min",
+        parallel:"💡 Tofu en dernier car il prend plus de temps. Amandes et courge d'abord.",
+        ingredients:["Amandes 150g","Graines courge 100g","Tofu noisette ail des ours 200g","Curcuma 1cc + huile 1cs"],
+        steps:[
+          {action:"Amandes torréfiées",detail:"150°C / 8 min. Secouer à mi-cuisson. Dorées et craquantes.",tip:""},
+          {action:"Graines de courge",detail:"160°C / 6 min. Légèrement soufflées. Fleur de sel à la sortie.",tip:""},
+          {action:"Tofu noisette croustillant",detail:"Couper le tofu en cubes de 2cm. Mélanger avec 1cs huile olive + 1cc curcuma + poivre. Étaler sur la grille. 180°C / 15 min. Retourner à mi-cuisson. Doit être doré et croustillant.",tip:"Résultat : protéine végétale pour 2 dîners de la semaine. Se réchauffe à la poêle 2 min."}
+        ],
+        results:["Amandes torréfiées → bocal","Graines courge → bocal","Tofu croustillant → frigo 3 jours"]
+      },
+      {
+        icon:"🍳", iconClass:"bsi-feux", title:"4 Feux — Céréales + Légumes", duration:"25 min",
+        parallel:"💡 3 casseroles simultanées + 1 poêle. Surveiller le sarrasin (absorbe toute l'eau).",
+        ingredients:["Lentilles vertes 300g","Quinoa 250g","Sarrasin 200g","Carottes 4 + curcuma","Épinards 600g + ail"],
+        steps:[
+          {action:"Lentilles vertes (cette semaine)",detail:"Rincer. 2× volume eau. Ébullition puis 25 min feu doux (plus longues que les lentilles corail). Égoutter, rincer eau froide. Elles gardent leur forme — c'est voulu.",tip:"Les lentilles vertes sont plus fermes : parfaites pour les salades du bureau."},
+          {action:"Quinoa — même procédé",detail:"Rincer, 2× eau, ébullition, 12 min feu doux, 5 min repos hors feu. Égrainer.",tip:""},
+          {action:"Sarrasin — même procédé",detail:"Rincer, 2× eau, ébullition, 20 min feu doux. Absorbe tout.",tip:""},
+          {action:"Carottes rôties au curcuma",detail:"Éplucher et couper 4 carottes en rondelles. Poêle avec 1cs huile + 1cc curcuma + pincée poivre. Cuire 15 min à feu moyen en remuant. Sel Santé à la fin.",tip:"Résultat : légume prêt pour 3 déjeuners. Riche en bêta-carotène + curcuma anti-inflam activé."}
+        ],
+        results:["Lentilles vertes → frigo 5 jours","Quinoa → frigo 5 jours","Sarrasin → frigo 5 jours","Carottes curcuma → frigo 3 jours"]
+      },
+      {
+        icon:"🥶", iconClass:"bsi-creami", title:"Ninja Creami — 2 nouvelles bases", duration:"10 min",
+        parallel:"",
+        ingredients:["Framboises 200g + zeste citron","Mangues 150g + gingembre 1cc"],
+        steps:[
+          {action:"Base framboises-citron",detail:"Mixer framboises + zeste d'1 citron. Plus parfumé que la semaine passée. Verser dans moule Ninja. Congeler à plat 24h.",tip:""},
+          {action:"Base mangue-gingembre",detail:"Mixer mangues décongelées + 1cc gingembre + facultatif 1cc miel. Verser dans moule. Congeler à plat.",tip:""}
+        ],
+        results:["2 sorbets pour la semaine","Semaine 2 : vous connaissez la routine !"]
+      },
+      {
+        icon:"🍵", iconClass:"bsi-infusion", title:"Infusion & Bocaux — 5 min", duration:"5 min",
+        parallel:"",
+        ingredients:["Gingembre Picard restant","Sel Santé si épuisé"],
+        steps:[
+          {action:"Recharger le bocal gingembre",detail:"Vider le reste de la boîte Picard dans le bocal. Si la boîte est vide, ouvrir une nouvelle.",tip:""},
+          {action:"Recharger le Sel Santé si besoin",detail:"Vérifier le niveau. Si à moitié vide : refaire le mélange (sel + curcuma + poivre + herbes).",tip:""}
+        ],
+        results:["Aromates rechargés pour la semaine"]
+      }
+    ]
+  },
+  {
+    date:"Samedi 25 avril · Session 3 — Vous êtes rodée !",
+    intro:"3ème session ! À ce stade vous avez un vrai rythme. Profitez-en pour essayer la recette de brunch spéciale de ce samedi : saumon mi-cuit gingembre-lin.",
+    sections:[
+      {
+        icon:"🔥", iconClass:"bsi-airfryer", title:"Air Fryer — Amandes, Courge, Saumon brunch", duration:"25 min",
+        parallel:"💡 Amandes + courge d'abord. Le saumon du brunch en dernier.",
+        ingredients:["Amandes 150g","Graines courge 100g","Saumon portions Picard 2","Gingembre 1cc + graines lin 1cs"],
+        steps:[
+          {action:"Amandes + Courge",detail:"Même procédé : amandes 150°C / 8 min, courge 160°C / 6 min. Routine acquise.",tip:""},
+          {action:"Saumon mi-cuit pour le brunch",detail:"Sortir 2 portions de saumon du congélateur 10 min avant. Badigeonner d'un peu d'huile + gingembre râpé. Air Fryer 170°C / 12 min. Le saumon doit rester légèrement rosé au centre.",tip:"C'est votre déjeuner brunch du jour ! Le cuire pendant le batch, manger après."}
+        ],
+        results:["Amandes + courge → bocaux","Saumon prêt pour le brunch → manger maintenant !"]
+      },
+      {
+        icon:"🍳", iconClass:"bsi-feux", title:"4 Feux — Légumineuses + Épinards + Courge", duration:"30 min",
+        parallel:"💡 Cette semaine : on ajoute une courge butternut pour le velouté du dimanche.",
+        ingredients:["Lentilles corail 300g","Quinoa 250g","Sarrasin 200g","Épinards 600g","Courge butternut 1/2"],
+        steps:[
+          {action:"Lentilles corail + Quinoa + Sarrasin",detail:"Même procédé que les semaines précédentes. Vous êtes rodée — lancez les 3 en même temps.",tip:"Vous avez le geste maintenant ! Maximum 25 min."},
+          {action:"Courge butternut pour le velouté",detail:"Couper la courge en gros cubes (pas besoin d'éplucher si bio). Cuire dans une casserole avec 400ml eau + gingembre 20 min. NE PAS mixer maintenant — laisser refroidir dans la casserole. Mixer le soir avant le dîner avec lait de coco.",tip:"Gain de temps : la courge attend au frigo jusqu'au soir."},
+          {action:"Épinards sautés ail",detail:"Poêle huile + ail Picard. Épinards 600g. Couvrir 3 min. Sel Santé. 3 portions.",tip:""}
+        ],
+        results:["3 céréales cuites → frigo","Courge cuite non mixée → frigo (mixer le soir)","Épinards → frigo 3 portions"]
+      },
+      {
+        icon:"🥶", iconClass:"bsi-creami", title:"Ninja Creami — 3 bases", duration:"15 min",
+        parallel:"",
+        ingredients:["Fruits rouges 200g","Mangues 150g + gingembre","Framboises 200g"],
+        steps:[
+          {action:"3 bases simultanées",detail:"Mixer les 3 bases séparément. Verser dans 3 moules Ninja. Congeler à plat 24h minimum.",tip:"Cette semaine vous avez 3 moules donc 3 sorbets différents pour la semaine !"}
+        ],
+        results:["3 sorbets pour 3 soirées différentes"]
+      },
+      {
+        icon:"🍵", iconClass:"bsi-sel", title:"Sel Santé + Aromates", duration:"5 min",
+        parallel:"",
+        ingredients:["Sel + curcuma + poivre + herbes Provence"],
+        steps:[
+          {action:"Recharger Sel Santé",detail:"Refaire un grand pot de Sel Santé si besoin : 4cs sel + 1cs curcuma + 1cc poivre + 2cs herbes. Mélanger. Fermer.",tip:"Conseil : faire le double de quantité pour avoir une réserve de 3 semaines."}
+        ],
+        results:["Sel Santé rechargé → 3 semaines"]
+      }
+    ]
+  },
+  {
+    date:"Samedi 2 mai · Session 4 — Nouveau stock !",
+    intro:"Nouveau stock La Fourche + Picard arrivé le 1er mai. C'est l'occasion de faire un grand batch de mai avec les nouveaux produits frais.",
+    sections:[
+      {
+        icon:"🔥", iconClass:"bsi-airfryer", title:"Air Fryer — Amandes, Courge, Tofu", duration:"25 min",
+        parallel:"💡 Nouveau stock : tofu frais à cuire en priorité.",
+        ingredients:["Amandes 150g (nouveau stock)","Graines courge 100g","Tofu noisette 200g","Curcuma + huile"],
+        steps:[
+          {action:"Amandes + Courge torréfiées",detail:"Routine acquise. 150°C / 8 min et 160°C / 6 min. Bocaux.",tip:""},
+          {action:"Tofu croustillant",detail:"Cubes 2cm + huile + curcuma + poivre. 180°C / 15 min. Retourner mi-cuisson.",tip:"Nouveau stock tofu = protéine fraîche pour 2 dîners de mai."}
+        ],
+        results:["Amandes + courge → bocaux","Tofu croustillant → frigo 3 jours"]
+      },
+      {
+        icon:"🍳", iconClass:"bsi-feux", title:"4 Feux — Grand batch mai", duration:"30 min",
+        parallel:"💡 Nouveau quinoa, nouveau sarrasin, nouvelles lentilles — même procédé.",
+        ingredients:["Lentilles corail 400g (double)","Quinoa 300g","Sarrasin 250g","Épinards 600g","Carottes curcuma 4"],
+        steps:[
+          {action:"Double quantité lentilles corail",detail:"Ce mois on double : 400g lentilles corail pour couvrir 2 semaines. Même procédé, casserole plus grande. 2× volume eau, 15 min, égoutter.",tip:"Gain de temps : une seule cuisson pour 2 semaines de déjeuners !"},
+          {action:"Quinoa + Sarrasin",detail:"Même procédé habituel. Vous êtes autonome !",tip:""},
+          {action:"Épinards sautés + Carottes curcuma",detail:"Épinards ail 600g. Et cette semaine : carottes rôties curcuma (4 carottes, 15 min poêle avec huile + curcuma).",tip:""}
+        ],
+        results:["Lentilles double → frigo 10 jours","Quinoa + sarrasin → frigo 5 jours","Épinards + carottes → frigo 3-4 jours"]
+      },
+      {
+        icon:"🥶", iconClass:"bsi-creami", title:"Ninja Creami — 3 bases mai", duration:"15 min",
+        parallel:"",
+        ingredients:["Fruits rouges 200g","Framboises 200g + citron","Mangues 200g"],
+        steps:[
+          {action:"3 bases mai",detail:"Fruits rouges / Framboises-citron / Mangues. Mixer, moules, congeler à plat.",tip:"Pensez à : écrire le nom sur chaque moule avec un post-it !"}
+        ],
+        results:["3 sorbets mai → congélateur"]
+      },
+      {
+        icon:"🍵", iconClass:"bsi-sel", title:"Sel Santé grand format", duration:"10 min",
+        parallel:"",
+        ingredients:["Sel 6cs + curcuma 2cs + poivre 1cs + herbes 3cs"],
+        steps:[
+          {action:"Grand pot Sel Santé mai",detail:"Doubler les proportions pour faire un pot qui dure 4-6 semaines. Mélanger dans un grand bocal.",tip:"Astuce : offrir un pot à quelqu'un de votre entourage SJSR !"}
+        ],
+        results:["Grand pot Sel Santé → 6 semaines"]
+      }
+    ]
+  },
+  {
+    date:"Samedi 9 mai · Session 5 — Routine installée !",
+    intro:"5ème session ! Vous avez une vraie routine de batch cooking maintenant. C'est du temps investi qui vous offre des soirées sereines sans SJSR.",
+    sections:[
+      {
+        icon:"🔥", iconClass:"bsi-airfryer", title:"Air Fryer", duration:"20 min",
+        parallel:"",
+        ingredients:["Amandes 150g","Graines courge 100g"],
+        steps:[
+          {action:"Routine complète",detail:"Amandes 150°C / 8 min + Courge 160°C / 6 min. Vous n'avez plus besoin d'instructions !",tip:"🌸 En 5 semaines vous avez créé une habitude durable. Bravo !"}
+        ],
+        results:["Amandes + courge → bocaux pour la semaine"]
+      },
+      {
+        icon:"🍳", iconClass:"bsi-feux", title:"4 Feux", duration:"25 min",
+        parallel:"",
+        ingredients:["Lentilles 300g","Quinoa 250g","Sarrasin 200g","Épinards 600g"],
+        steps:[
+          {action:"Batch céréales + légumes",detail:"Routine complète : 3 casseroles simultanées + 1 poêle épinards. 25 min. Vous gérez seule !",tip:"🌿 5 semaines de batch = 5 semaines de symptômes SJSR mieux gérés. Le fer et le magnésium font leur effet !"}
+        ],
+        results:["Toutes les bases de la semaine prêtes"]
+      },
+      {
+        icon:"🥶", iconClass:"bsi-creami", title:"Ninja Creami", duration:"10 min",
+        parallel:"",
+        ingredients:["2-3 bases fruits au choix"],
+        steps:[
+          {action:"Bases sorbets selon envie",detail:"Choisissez 2-3 fruits que vous avez en stock. Mixer, moules, congeler. Vous connaissez la routine !",tip:"Idées mai : fraises + menthe / pêche + gingembre / myrtilles nature."}
+        ],
+        results:["2-3 sorbets pour la semaine"]
+      },
+      {
+        icon:"🍵", iconClass:"bsi-infusion", title:"Bilan & Recharge", duration:"5 min",
+        parallel:"",
+        ingredients:["Gingembre + Sel Santé"],
+        steps:[
+          {action:"Recharger les indispensables",detail:"Bocal gingembre + Sel Santé si besoin. Vérifier les stocks La Fourche. Commander si nécessaire.",tip:"🌸 Bien joué ! 5 semaines de programme SJSR et TDAH respectées. Planning mai-juin bientôt disponible !"}
+        ],
+        results:["Aromates rechargés","Planning semaine prête !","🌸 Vous avez installé une vraie routine de bien-être"]
+      }
+    ]
+  }
+];
+
+let currentBatchWeek = 0;
+let batchStepsDone = {};
+
+function selectBatchWeek(idx, btn){
+  currentBatchWeek = idx;
+  document.querySelectorAll('.batch-week-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderBatchWeek(idx);
+}
+
+function renderBatchWeek(idx){
+  const week = BATCH_WEEKS[idx];
+  const key = 'batch_' + idx;
+  if(!batchStepsDone[key]) batchStepsDone[key] = {};
+  const done = batchStepsDone[key];
+  
+  let h = '';
+  
+  // Week intro
+  h += '<div style="background:rgba(212,168,67,0.07);border-radius:12px;padding:0.8rem 1rem;margin-bottom:1rem;border-left:3px solid var(--pistil)">';
+  h += '<div style="font-family:Cormorant Garamond,serif;font-size:0.95rem;font-weight:600;color:var(--text);margin-bottom:0.3rem">📅 ' + week.date + '</div>';
+  h += '<div style="font-size:0.73rem;color:var(--muted);line-height:1.6">' + week.intro + '</div></div>';
+  
+  // Calculate total steps
+  let totalSteps = 0;
+  let completedSteps = 0;
+  week.sections.forEach((sec,si) => {
+    sec.steps.forEach((step,sti) => {
+      totalSteps++;
+      const stepKey = si + '_' + sti;
+      if(done[stepKey]) completedSteps++;
+    });
+  });
+  
+  // Progress bar
+  const pct = totalSteps > 0 ? Math.round((completedSteps/totalSteps)*100) : 0;
+  h += '<div class="batch-progress"><div class="batch-progress-fill" style="width:' + pct + '%"></div></div>';
+  h += '<div class="batch-progress-text">' + completedSteps + ' / ' + totalSteps + ' étapes complétées · ' + pct + '%</div>';
+  
+  // Sections
+  week.sections.forEach((sec, si) => {
+    h += '<div class="batch-section">';
+    h += '<div class="batch-section-header">';
+    h += '<div class="batch-section-icon ' + sec.iconClass + '">' + sec.icon + '</div>';
+    h += '<div><div class="batch-section-title">' + sec.title + '</div></div>';
+    h += '<div class="batch-duration">⏱ ' + sec.duration + '</div>';
+    h += '</div>';
+    
+    // Parallel note
+    if(sec.parallel){
+      h += '<div class="batch-parallel-note">💡 ' + sec.parallel + '</div>';
+    }
+    
+    // Ingredients
+    if(sec.ingredients && sec.ingredients.length){
+      h += '<div class="batch-ingredient-list">';
+      sec.ingredients.forEach(ingr => {
+        h += '<span class="batch-ingr-tag highlight">🔸 ' + ingr + '</span>';
+      });
+      h += '</div>';
+    }
+    
+    // Steps
+    h += '<div class="batch-steps-list">';
+    sec.steps.forEach((step, sti) => {
+      const stepKey = si + '_' + sti;
+      const isCompleted = done[stepKey] || false;
+      h += '<div class="batch-step' + (isCompleted?' completed':'') + '" id="bstep_' + idx + '_' + si + '_' + sti + '">';
+      h += '<div class="batch-checkbox' + (isCompleted?' done':'') + '" onclick="toggleBatchStep(' + idx + ',' + si + ',' + sti + ',this);">' + (isCompleted?'✓':'') + '</div>';
+      h += '<div class="batch-step-content">';
+      h += '<div class="batch-step-action">' + step.action + '</div>';
+      h += '<div class="batch-step-detail">' + step.detail + '</div>';
+      if(step.tip) h += '<div class="batch-step-tip">💡 ' + step.tip + '</div>';
+      h += '</div></div>';
+    });
+    h += '</div>';
+    
+    // Results
+    if(sec.results && sec.results.length){
+      h += '<div class="batch-result-box">';
+      h += '<div class="batch-result-title">✅ Ce que vous aurez à la fin</div>';
+      sec.results.forEach(r => {
+        h += '<div class="batch-result-item"> ' + r + '</div>';
+      });
+      h += '</div>';
+    }
+    
+    h += '</div>'; // close batch-section
+  });
+  
+  document.getElementById('batch-content').innerHTML = h;
+}
+
+function toggleBatchStep(weekIdx, secIdx, stepIdx, checkbox){
+  const key = 'batch_' + weekIdx;
+  if(!batchStepsDone[key]) batchStepsDone[key] = {};
+  const stepKey = secIdx + '_' + stepIdx;
+  const isDone = !batchStepsDone[key][stepKey];
+  batchStepsDone[key][stepKey] = isDone;
+  
+  checkbox.classList.toggle('done', isDone);
+  checkbox.innerHTML = isDone ? '✓' : '';
+  const stepEl = checkbox.closest('.batch-step');
+  stepEl.classList.toggle('completed', isDone);
+  
+  // Save to localStorage
+  try { localStorage.setItem('batchDone', JSON.stringify(batchStepsDone)); } catch(e){}
+  
+  // Re-render progress only (avoid full re-render which resets)
+  const week = BATCH_WEEKS[weekIdx];
+  const done = batchStepsDone[key];
+  let total = 0, completed = 0;
+  week.sections.forEach((s,si) => s.steps.forEach((_,sti) => { total++; if(done[si+'_'+sti]) completed++; }));
+  const pct = total > 0 ? Math.round((completed/total)*100) : 0;
+  const pbar = document.querySelector('.batch-progress-fill');
+  if(pbar) pbar.style.width = pct + '%';
+  const ptxt = document.querySelector('.batch-progress-text');
+  if(ptxt) ptxt.textContent = completed + ' / ' + total + ' étapes complétées · ' + pct + '%';
+}
+
+
+// ══════════════════════════════════════
+// JOURNAL DE NUIT SJSR
+// ══════════════════════════════════════
+
+const PAIN_LABELS = {
+  0:"Aucune douleur", 1:"Très légère", 2:"Légère",
+  3:"Légère-modérée", 4:"Modérée", 5:"Modérée",
+  6:"Modérée-intense", 7:"Intense", 8:"Très intense",
+  9:"Sévère", 10:"Insupportable"
+};
+
+const FEELING_ICONS = {
+  exhausted:"😫", tired:"😔", ok:"😐",
+  good:"🙂", great:"😊", excellent:"🌟"
+};
+
+let sleepCurrentDate = new Date();
+let sleepQuality = 0;
+let sleepFeeling = "";
+let sleepData = {};
+
+// Load from localStorage
+try {
+  const saved = localStorage.getItem("sjsr_sleep");
+  if(saved) sleepData = JSON.parse(saved);
+} catch(e) {}
+
+function sleepDateKey(d) {
+  const dd = d || sleepCurrentDate;
+  return dd.getFullYear() + "-" + String(dd.getMonth()+1).padStart(2,"0") + "-" + String(dd.getDate()).padStart(2,"0");
+}
+
+function sleepDateLabel(d) {
+  const dd = d || sleepCurrentDate;
+  const days = ["Dimanche","Lundi","Mardi","Mercredi","Jeudi","Vendredi","Samedi"];
+  const months = ["janvier","février","mars","avril","mai","juin","juillet","août","septembre","octobre","novembre","décembre"];
+  return days[dd.getDay()] + " " + dd.getDate() + " " + months[dd.getMonth()] + " " + dd.getFullYear();
+}
+
+function sleepNavDate(delta) {
+  sleepCurrentDate = new Date(sleepCurrentDate.getTime() + delta * 86400000);
+  loadSleepEntry();
+  updateSleepStats();
+}
+
+function loadSleepEntry() {
+  const key = sleepDateKey();
+  const el = document.getElementById("sleepDateLabel");
+  if(el) el.textContent = sleepDateLabel();
+
+  const entry = sleepData[key] || {};
+  
+  // Set times
+  if(document.getElementById("slpBedtime")) {
+    document.getElementById("slpBedtime").value = entry.bedtime || "22:30";
+    document.getElementById("slpSleepTime").value = entry.sleepTime || "23:15";
+    document.getElementById("slpWakeTime").value = entry.wakeTime || "07:00";
+    autoCalcSleep();
+  }
+
+  // Stars
+  sleepQuality = entry.quality || 0;
+  updateStars();
+
+  // Feeling
+  sleepFeeling = entry.feeling || "";
+  updateFeelingBtns();
+
+  // Pain sliders
+  if(document.getElementById("painMorning")) {
+    document.getElementById("painMorning").value = entry.painMorning || 0;
+    document.getElementById("painDay").value = entry.painDay || 0;
+    updatePainDisplay("painMorning","painMorningDisplay");
+    updatePainDisplay("painDay","painDayDisplay");
+  }
+
+  // Notes
+  if(document.getElementById("sleepNotes"))
+    document.getElementById("sleepNotes").value = entry.notes || "";
+
+  // Saved indicator
+  const ind = document.getElementById("sleepSavedIndicator");
+  if(ind) ind.textContent = entry.savedAt ? "✓ Enregistrée le " + entry.savedAt : "";
+}
+
+function autoCalcSleep() {
+  const bed = document.getElementById("slpBedtime")?.value;
+  const sleep = document.getElementById("slpSleepTime")?.value;
+  const wake = document.getElementById("slpWakeTime")?.value;
+  if(!bed || !sleep || !wake) return;
+
+  function toMin(t) {
+    const [h,m] = t.split(":").map(Number);
+    return h * 60 + m;
+  }
+  function formatDuration(min) {
+    if(min < 0) min += 1440;
+    const h = Math.floor(min/60);
+    const m = min % 60;
+    return h + "h " + String(m).padStart(2,"0") + "min";
+  }
+
+  const bedMin = toMin(bed);
+  const sleepMin = toMin(sleep);
+  const wakeMin = toMin(wake);
+
+  let totalBed = wakeMin - bedMin;
+  if(totalBed < 0) totalBed += 1440;
+
+  let totalSleep = wakeMin - sleepMin;
+  if(totalSleep < 0) totalSleep += 1440;
+
+  let latency = sleepMin - bedMin;
+  if(latency < 0) latency += 1440;
+
+  const bedEl = document.getElementById("slpTotalBed");
+  const sleepEl = document.getElementById("slpTotalSleep");
+  const latEl = document.getElementById("slpLatency");
+
+  if(bedEl) bedEl.textContent = formatDuration(totalBed);
+  if(sleepEl) {
+    sleepEl.textContent = formatDuration(totalSleep);
+    sleepEl.className = "sleep-calc-value " + (totalSleep >= 420 ? "good" : totalSleep >= 300 ? "warning" : "bad");
+  }
+  if(latEl) {
+    latEl.textContent = formatDuration(latency);
+    latEl.className = "sleep-calc-value " + (latency <= 30 ? "good" : latency <= 60 ? "warning" : "bad");
+  }
+}
+
+function setSleepQuality(n) {
+  sleepQuality = n;
+  updateStars();
+}
+
+function updateStars() {
+  document.querySelectorAll(".sleep-star").forEach((s,i) => {
+    s.classList.toggle("active", i < sleepQuality);
+  });
+}
+
+function setSleepFeeling(f) {
+  sleepFeeling = f;
+  updateFeelingBtns();
+}
+
+function updateFeelingBtns() {
+  document.querySelectorAll(".sleep-feeling-btn").forEach(btn => {
+    const f = btn.getAttribute("onclick").match(/'([^']+)'/)?.[1];
+    btn.classList.toggle("selected", f === sleepFeeling);
+  });
+}
+
+function updatePainDisplay(sliderId, displayId) {
+  const val = parseInt(document.getElementById(sliderId)?.value || 0);
+  const el = document.getElementById(displayId);
+  if(!el) return;
+  el.textContent = val + " — " + (PAIN_LABELS[val] || "");
+  el.className = "pain-val-display p" + val;
+}
+
+function saveSleepEntry() {
+  const key = sleepDateKey();
+  const now = new Date();
+  const timeStr = String(now.getHours()).padStart(2,"0") + "h" + String(now.getMinutes()).padStart(2,"0");
+
+  sleepData[key] = {
+    bedtime: document.getElementById("slpBedtime")?.value,
+    sleepTime: document.getElementById("slpSleepTime")?.value,
+    wakeTime: document.getElementById("slpWakeTime")?.value,
+    quality: sleepQuality,
+    feeling: sleepFeeling,
+    painMorning: parseInt(document.getElementById("painMorning")?.value || 0),
+    painDay: parseInt(document.getElementById("painDay")?.value || 0),
+    notes: document.getElementById("sleepNotes")?.value || "",
+    savedAt: timeStr
+  };
+
+  try { localStorage.setItem("sjsr_sleep", JSON.stringify(sleepData)); } catch(e){}
+
+  const ind = document.getElementById("sleepSavedIndicator");
+  if(ind) ind.textContent = "✓ Enregistrée à " + timeStr;
+
+  // Flash save button
+  const btn = document.querySelector(".sleep-save-btn");
+  if(btn) {
+    btn.textContent = "✅ Nuit enregistrée !";
+    btn.style.background = "linear-gradient(135deg,#4a8a5a,#2a6a3a)";
+    setTimeout(() => {
+      btn.textContent = "💾 Enregistrer cette nuit";
+      btn.style.background = "";
+    }, 2000);
+  }
+
+  updateSleepStats();
+}
+
+function calcSleepHours(entry) {
+  if(!entry || !entry.sleepTime || !entry.wakeTime) return null;
+  function toMin(t){ const [h,m]=t.split(":").map(Number); return h*60+m; }
+  let d = toMin(entry.wakeTime) - toMin(entry.sleepTime);
+  if(d < 0) d += 1440;
+  return Math.round(d/6)/10; // one decimal hour
+}
+
+function updateSleepStats() {
+  // Build week selector (last 4 weeks)
+  const selEl = document.getElementById("sleepWeekSelector");
+  if(!selEl) return;
+
+  // Get all entries sorted
+  const allKeys = Object.keys(sleepData).sort().reverse();
+  if(allKeys.length === 0) {
+    selEl.innerHTML = '<div style="font-size:0.7rem;color:var(--muted);padding:0.5rem">Aucune nuit enregistrée.</div>';
+    document.getElementById("sleepHistoryList").innerHTML = "";
+    return;
+  }
+
+  // Show last 7 entries history
+  const histEl = document.getElementById("sleepHistoryList");
+  let histHTML = "";
+  const recent = allKeys.slice(0, 14);
+
+  // Compute stats on all entries
+  let totalHours = 0, countH = 0;
+  let totalQ = 0, countQ = 0;
+  let totalPM = 0, totalPD = 0, countP = 0;
+
+  recent.forEach(key => {
+    const e = sleepData[key];
+    const h = calcSleepHours(e);
+    const d = new Date(key + "T12:00:00");
+    const dayNames = ["Dim","Lun","Mar","Mer","Jeu","Ven","Sam"];
+    const dayLabel = dayNames[d.getDay()] + " " + d.getDate() + "/" + (d.getMonth()+1);
+
+    if(h !== null){ totalHours += h; countH++; }
+    if(e.quality){ totalQ += e.quality; countQ++; }
+    if(e.painMorning !== undefined){ totalPM += e.painMorning; totalPD += (e.painDay||0); countP++; }
+
+    const qualStars = e.quality ? "★".repeat(e.quality) + "☆".repeat(5-e.quality) : "—";
+    const feelIcon = FEELING_ICONS[e.feeling] || "—";
+    const hoursStr = h !== null ? h + "h" : "—";
+    const pmStr = e.painMorning !== undefined ? e.painMorning + "/10" : "—";
+    const barPct = h ? Math.min(100, (h/9)*100) : 0;
+    const barColor = h >= 7 ? "#6b9e78" : h >= 5 ? "#c8a050" : "#c04040";
+
+    histHTML += `<div class="sleep-history-row">
+      <div class="shr-date">${dayLabel}</div>
+      <div class="shr-hours" style="color:${h>=7?"#4a8a4a":h>=5?"#c47a2a":"#c04040"}">${hoursStr}</div>
+      <div class="shr-bar"><div class="shr-bar-fill" style="width:${barPct}%;background:${barColor}"></div></div>
+      <div class="shr-stars" style="font-size:0.62rem;color:#d4a843">${qualStars}</div>
+      <div class="shr-pain" style="font-size:0.62rem;color:${e.painMorning>=7?"#c04040":e.painMorning>=4?"#c47a2a":"#4a8a4a"}">${pmStr}</div>
+      <div class="shr-feeling">${feelIcon}</div>
+    </div>`;
+  });
+
+  histEl.innerHTML = histHTML;
+
+  // Update stat boxes
+  const avgH = countH ? (totalHours/countH).toFixed(1) + "h" : "—";
+  const avgQ = countQ ? (totalQ/countQ).toFixed(1) + "★" : "—";
+  const avgPM = countP ? (totalPM/countP).toFixed(1) + "/10" : "—";
+  const avgPD = countP ? (totalPD/countP).toFixed(1) + "/10" : "—";
+
+  if(document.getElementById("statAvgSleep")) {
+    document.getElementById("statAvgSleep").textContent = avgH;
+    document.getElementById("statAvgQuality").textContent = avgQ;
+    document.getElementById("statAvgPainM").textContent = avgPM;
+    document.getElementById("statAvgPainD").textContent = avgPD;
+  }
+}
+
 buildCalendar();
 buildShopping();
+// Load saved batch progress
+try{const saved=localStorage.getItem("batchDone");if(saved)batchStepsDone=JSON.parse(saved);}catch(e){}
 
 function installApp(){
   if(deferredPrompt){
@@ -2500,16 +3498,18 @@ function toggleAlarm(name,btn){
 
 // ── UPDATE VIEWS to include new ones ──
 function showView(v){
-  const allViews=['calendar','shopping','diner','journal','urgence','tips'];
+  const allViews=['calendar','batch','shopping','diner','journal','urgence','tips'];
   allViews.forEach(id=>{
     const el=document.getElementById('view-'+id);
     if(el) el.style.display=id===v?'block':'none';
   });
   document.querySelectorAll('.nav-tab').forEach((el,i)=>{
-    const map=['calendar','shopping','diner','journal','urgence'];
+    const map=['calendar','batch','shopping','diner','journal','urgence'];
     el.classList.toggle('active',map[i]===v);
   });
   if(v==='diner') buildDiners();
+  if(v==='batch'){ renderBatchWeek(currentBatchWeek); }
+  if(v==='journal'){ loadSleepEntry(); updateSleepStats(); autoCalcSleep(); }
   if(v==='journal'){setDateLabel();loadJournalHistory();updateTimerDisplay();}
 }
 
