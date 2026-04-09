@@ -544,6 +544,29 @@ input[type="range"].pain-range::-webkit-slider-thumb{
 .week-sel-btn{flex-shrink:0;background:#fff;border:1.5px solid rgba(58,40,32,0.1);border-radius:8px;padding:0.35rem 0.7rem;font-size:0.65rem;font-weight:700;cursor:pointer;white-space:nowrap}
 .week-sel-btn.active{background:var(--blossom-deep);border-color:var(--blossom-deep);color:#fff}
 
+
+/* ── CYCLES SOMMEIL ── */
+.sleep-cycle-block{background:rgba(44,37,66,0.04);border-radius:12px;padding:0.7rem;margin-bottom:0.6rem;border:1.5px solid rgba(58,40,32,0.08)}
+.sleep-cycle-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:0.5rem}
+.sleep-cycle-title{font-size:0.65rem;font-weight:700;color:var(--night);text-transform:uppercase;letter-spacing:0.08em}
+.sleep-cycle-delete{background:none;border:none;color:var(--muted);font-size:0.9rem;cursor:pointer;padding:0.2rem 0.4rem}
+.sleep-cycle-row{display:flex;gap:0.5rem;margin-bottom:0.4rem}
+.sleep-cycle-field{flex:1}
+.sleep-cycle-field label{display:block;font-size:0.58rem;color:var(--muted);margin-bottom:0.2rem;font-weight:600}
+.sleep-cycle-field input[type="time"]{width:100%;border:1.5px solid rgba(58,40,32,0.12);border-radius:8px;padding:0.4rem 0.5rem;font-size:0.8rem;font-weight:700;color:var(--text);background:#fafaf9;outline:none;font-family:inherit}
+.sleep-cycle-field input[type="time"]:focus{border-color:var(--blossom-deep)}
+.sleep-cycle-duration{text-align:center;font-size:0.7rem;font-weight:700;color:var(--leaf-dark);margin-top:0.2rem}
+.sleep-add-cycle-btn{width:100%;background:none;border:1.5px dashed rgba(58,40,32,0.2);border-radius:10px;padding:0.5rem;font-size:0.72rem;font-weight:700;color:var(--muted);cursor:pointer;margin-top:0.3rem}
+.sleep-add-cycle-btn:active{background:rgba(58,40,32,0.05)}
+
+/* ── OPTIMISATIONS MOBILE ── */
+.meal-card{border-radius:14px;margin-bottom:0.5rem}
+.ingr-list{display:flex;flex-wrap:wrap;gap:0.3rem;margin:0.4rem 0}
+.ingr{font-size:0.68rem;background:rgba(107,158,120,0.1);border-radius:6px;padding:0.2rem 0.4rem;line-height:1.4}
+.ntag{font-size:0.55rem;padding:0.15rem 0.4rem;border-radius:4px;font-weight:700}
+.conseil-box{border-radius:10px;padding:0.5rem 0.7rem;margin-top:0.4rem;font-size:0.68rem;line-height:1.5}
+
+
 .sect-title{font-size:0.57rem;text-transform:uppercase;letter-spacing:0.12em;color:var(--muted);font-weight:700;margin:0.75rem 1rem 0.35rem}
 
 /* ── RECETTE DÉTAIL ── */
@@ -577,88 +600,6 @@ input[type="range"].pain-range::-webkit-slider-thumb{
   border-radius:2rem;padding:0.15rem 0.55rem;
   font-size:0.6rem;font-weight:700;margin-bottom:0.4rem;
 }
-
-/* ── BOUTON RECETTE ── */
-.recipe-btn{
-  display:inline-flex;align-items:center;gap:0.35rem;
-  margin-top:0.5rem;
-  background:linear-gradient(135deg,rgba(90,138,90,0.12),rgba(212,168,67,0.08));
-  border:1.5px solid rgba(90,138,90,0.25);
-  border-radius:2rem;padding:0.3rem 0.75rem;
-  font-size:0.67rem;font-weight:700;color:var(--leaf-dark);
-  cursor:pointer;transition:all 0.18s;
-}
-.recipe-btn:active{transform:scale(0.95);background:rgba(90,138,90,0.2)}
-
-/* ── MODAL RECETTE ── */
-.recipe-overlay{
-  position:fixed;inset:0;
-  background:rgba(58,32,48,0.55);
-  backdrop-filter:blur(4px);
-  z-index:300;
-  display:flex;align-items:flex-end;
-  opacity:0;pointer-events:none;transition:opacity 0.25s;
-}
-.recipe-overlay.open{opacity:1;pointer-events:all}
-.recipe-modal{
-  background:var(--bg);
-  border-radius:22px 22px 0 0;
-  max-height:88vh;width:100%;
-  overflow-y:auto;
-  transform:translateY(100%);
-  transition:transform 0.3s cubic-bezier(0.32,0,0.67,1);
-  box-shadow:0 -8px 40px rgba(58,32,48,0.25);
-}
-.recipe-overlay.open .recipe-modal{transform:translateY(0)}
-.recipe-modal-handle{width:36px;height:4px;background:rgba(58,40,32,0.12);border-radius:2px;margin:10px auto 0}
-.recipe-modal-banner{height:8px;margin-top:10px;border-radius:0}
-.recipe-modal-body{padding:14px 18px 44px}
-.recipe-modal-saison{font-size:0.6rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:3px}
-.recipe-modal-titre{font-family:'Cormorant Garamond',serif;font-size:1.55rem;font-weight:600;line-height:1.2;margin-bottom:8px;color:var(--text)}
-.recipe-modal-meta{display:flex;gap:10px;font-size:0.68rem;color:var(--muted);margin-bottom:12px;flex-wrap:wrap}
-.recipe-modal-ntags{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:14px}
-.rntag{border-radius:2rem;padding:3px 9px;font-size:0.62rem;font-weight:700}
-.rntag-fer{background:rgba(155,112,96,0.12);color:var(--bark)}
-.rntag-ca{background:rgba(90,138,90,0.1);color:var(--leaf-dark)}
-.rntag-mg{background:rgba(168,200,154,0.2);color:#3a6a3a}
-.rntag-om{background:rgba(212,168,67,0.12);color:#8a6800}
-.rntag-dp{background:rgba(124,92,191,0.1);color:var(--tdah)}
-.recipe-modal-stitle{font-size:0.6rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--leaf-dark);font-weight:700;margin-bottom:7px;padding-bottom:4px;border-bottom:1px solid rgba(90,138,90,0.12)}
-.recipe-modal-ingr{list-style:none;margin-bottom:16px}
-.recipe-modal-ingr li{font-size:0.8rem;padding:5px 0;border-bottom:1px solid rgba(58,40,32,0.05);display:flex;align-items:flex-start;gap:5px;line-height:1.3}
-.recipe-modal-ingr li::before{content:'·';color:var(--leaf-mid);font-size:1rem;flex-shrink:0}
-.recipe-modal-steps{list-style:none;margin-bottom:16px;counter-reset:steps}
-.recipe-modal-steps li{font-size:0.8rem;padding:7px 0 7px 32px;border-bottom:1px solid rgba(58,40,32,0.05);position:relative;line-height:1.45;counter-increment:steps}
-.recipe-modal-steps li::before{content:counter(steps);position:absolute;left:0;top:7px;width:20px;height:20px;background:var(--leaf-mid);color:#fff;border-radius:50%;font-size:0.6rem;font-weight:700;display:flex;align-items:center;justify-content:center}
-.recipe-modal-sjsr{background:rgba(90,138,90,0.07);border-left:2.5px solid var(--leaf-mid);border-radius:0 10px 10px 0;padding:10px 12px;margin-bottom:12px}
-.recipe-modal-sjsr .sl{font-size:0.58rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--leaf-dark);font-weight:700;margin-bottom:4px}
-.recipe-modal-sjsr p{font-size:0.76rem;line-height:1.45;color:#3a5a45}
-.recipe-modal-ajust{background:rgba(212,168,67,0.07);border-left:2.5px solid var(--pistil);border-radius:0 10px 10px 0;padding:10px 12px;margin-bottom:18px}
-.recipe-modal-ajust .sl{font-size:0.58rem;text-transform:uppercase;letter-spacing:0.1em;color:#8a6800;font-weight:700;margin-bottom:4px}
-.recipe-modal-ajust p{font-size:0.76rem;line-height:1.45;color:#6b5020}
-.recipe-modal-close{display:block;width:100%;padding:12px;background:linear-gradient(135deg,var(--blossom-deep),#a04060);color:#fff;border:none;border-radius:12px;font-family:'Nunito',sans-serif;font-size:0.88rem;font-weight:700;cursor:pointer;letter-spacing:0.03em}
-
-/* ── COURSES DYNAMIQUES ── */
-.shop-gen-header{
-  background:linear-gradient(135deg,rgba(90,138,90,0.08),rgba(212,168,67,0.05));
-  border:1px solid rgba(90,138,90,0.15);
-  border-radius:14px;padding:12px 14px;
-  margin-bottom:14px;
-}
-.shop-gen-title{font-size:0.65rem;text-transform:uppercase;letter-spacing:0.1em;font-weight:700;color:var(--leaf-dark);margin-bottom:5px}
-.shop-gen-sub{font-size:0.72rem;color:var(--muted);line-height:1.5}
-.shop-recettes-used{margin-bottom:14px}
-.shop-recette-chip{display:inline-flex;align-items:center;gap:4px;background:#fff;border:1.5px solid rgba(90,138,90,0.2);border-radius:2rem;padding:3px 10px;font-size:0.65rem;color:var(--leaf-dark);font-weight:600;margin:2px}
-.shop-cat-title{font-size:0.6rem;text-transform:uppercase;letter-spacing:0.1em;font-weight:700;color:var(--muted);margin:10px 0 6px;padding-top:8px;border-top:1px solid rgba(58,40,32,0.06)}
-.shop-item-dyn{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid rgba(58,40,32,0.05)}
-.shop-check-dyn{width:20px;height:20px;border-radius:6px;border:2px solid rgba(90,138,90,0.3);background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:0.7rem;color:var(--leaf-dark);flex-shrink:0;transition:all 0.15s}
-.shop-check-dyn.checked{background:var(--leaf-mid);border-color:var(--leaf-mid);color:#fff}
-.shop-item-dyn.done .shop-item-name-dyn{text-decoration:line-through;opacity:0.4}
-.shop-item-name-dyn{font-size:0.8rem;flex:1;line-height:1.3}
-.shop-item-note-dyn{font-size:0.62rem;color:var(--muted);display:block}
-.shop-recettes-btn{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
-.shop-r-toggle{background:#fff;border:1.5px solid rgba(90,138,90,0.2);border-radius:2rem;padding:4px 10px;font-size:0.65rem;color:var(--leaf-dark);cursor:pointer;font-weight:600;transition:all 0.15s}
-.shop-r-toggle.active{background:var(--leaf-mid);color:#fff;border-color:var(--leaf-mid)}
 
 /* ── JOURNAL ── */
 .journal-section{padding:0.8rem 1rem;position:relative;z-index:1}
@@ -776,7 +717,7 @@ input[type="range"].pain-range::-webkit-slider-thumb{
   <div class="budget-bar">
     <span class="budget-label">🌿 Budget</span>
     <div class="budget-track"><div class="budget-fill" id="budgetFill" style="width:100%"></div></div>
-    <span class="budget-amount" id="budgetAmount"><span>249€</span> / investissement initial</span>
+    <span class="budget-amount" id="budgetAmount"><span>Courses 10 avril</span> / Budget mensuel</span>
   </div>
 </div>
 
@@ -811,10 +752,7 @@ input[type="range"].pain-range::-webkit-slider-thumb{
   <div class="calendar-section">
     <div class="cal-month-header">
       <h2>🌸 Avril 2026</h2>
-      <div style="display:flex;gap:6px;align-items:center">
-        <span class="cal-budget-badge">200€ · Budget du mois</span>
-        <button onclick="openRecettesLibrary()" style="background:linear-gradient(135deg,var(--leaf-mid),var(--leaf-dark));color:#fff;border:none;border-radius:2rem;padding:0.25rem 0.7rem;font-family:'Nunito',sans-serif;font-size:0.62rem;font-weight:700;cursor:pointer;letter-spacing:0.03em">📖 Recettes</button>
-      </div>
+      <span class="cal-budget-badge">200€ · Budget du mois</span>
     </div>
     <div class="cal-weekdays">
       <div class="cal-wd">Lun</div><div class="cal-wd">Mar</div><div class="cal-wd">Mer</div>
@@ -848,41 +786,25 @@ input[type="range"].pain-range::-webkit-slider-thumb{
 <!-- SHOPPING VIEW -->
 <div id="view-shopping" style="display:none">
   <div class="shop-section">
-
-    <!-- Onglets Courses -->
-    <div style="display:flex;gap:6px;margin-bottom:12px">
-      <div id="shop-tab-recettes" class="nav-tab active" style="flex:1;border-radius:10px;background:linear-gradient(135deg,var(--blossom-deep),#904868);color:#fff;box-shadow:0 2px 10px rgba(196,92,120,0.3)" onclick="switchShopTab('recettes')">📖 Par recettes</div>
-      <div id="shop-tab-stock" class="nav-tab" style="flex:1;border-radius:10px" onclick="switchShopTab('stock')">🏪 Stock fixe</div>
-    </div>
-
-    <!-- Liste dynamique par recettes -->
-    <div id="shop-view-recettes">
-      <div id="shop-dynamic"></div>
-    </div>
-
-    <!-- Stock fixe (liste originale) -->
-    <div id="shop-view-stock" style="display:none">
-      <div class="shop-week">
-        <div class="shop-week-header">
-          <span class="shop-week-title">🛒 Semaine 1 · 10–14 avril</span>
-          <span class="shop-week-budget">~139€ semaine 1</span>
-        </div>
-        <div class="shop-source-block"><div class="shop-source-title">🌿 La Fourche · bio & sec · ~95€ · stock 5 semaines</div><div id="sl-fourche"></div></div>
-        <div class="shop-source-block"><div class="shop-source-title">❄️ Picard · surgelés · ~130€ · stock 5 semaines</div><div id="sl-picard"></div></div>
-        <div class="shop-source-block"><div class="shop-source-title">🥬 Bene Bono / Marché · frais · ~20-28€ · chaque semaine</div><div id="sl-beno"></div></div>
+    <div class="shop-week">
+      <div class="shop-week-header">
+        <span class="shop-week-title">🛒 Semaine 1 · 10–14 avril</span>
+        <span class="shop-week-budget">~139€ semaine 1</span>
       </div>
-      <div class="shop-week">
-        <div class="shop-week-header">
-          <span class="shop-week-title">🌸 Semaine 2 · 17–30 avril</span>
-          <span class="shop-week-budget">~20-28€/sem (Bene Bono seul)</span>
-        </div>
-        <div style="padding:0.75rem 1rem 0.9rem;font-size:0.76rem;color:var(--muted);font-style:italic;line-height:1.7">
-          🌱 Liste semaine 2 générée après validation de la semaine 1.<br>
-          Budget restant : <strong style="color:var(--leaf-dark)">~70 à 95€</strong>
-        </div>
+      <div class="shop-source-block"><div class="shop-source-title">🌿 La Fourche · bio & sec · ~95€ · stock 5 semaines</div><div id="sl-fourche"></div></div>
+      <div class="shop-source-block"><div class="shop-source-title">❄️ Picard · surgelés · ~130€ · stock 5 semaines</div><div id="sl-picard"></div></div>
+      <div class="shop-source-block"><div class="shop-source-title">🥬 Bene Bono / Marché · frais · ~20-28€ · chaque semaine</div><div id="sl-beno"></div></div>
+    </div>
+    <div class="shop-week">
+      <div class="shop-week-header">
+        <span class="shop-week-title">🌸 Semaine 2 · 17–30 avril</span>
+        <span class="shop-week-budget">~20-28€/sem (Bene Bono seul)</span>
+      </div>
+      <div style="padding:0.75rem 1rem 0.9rem;font-size:0.76rem;color:var(--muted);font-style:italic;line-height:1.7">
+        🌱 Liste semaine 2 générée après validation de la semaine 1.<br>
+        Budget restant : <strong style="color:var(--leaf-dark)">~70 à 95€</strong>
       </div>
     </div>
-
   </div>
 </div>
 
@@ -1030,7 +952,7 @@ input[type="range"].pain-range::-webkit-slider-thumb{
       <div class="timer-title">🍵 Timer Infusion / Lait d'Or</div>
       <div class="timer-sub">Appuyez sur Démarrer quand vous versez l'eau</div>
       <div class="timer-countdown" id="timerCount">8:00</div>
-      <div class="timer-step" id="timerStep">🌸 Versez l\'eau à 80°C et appuyez sur Démarrer</div>
+      <div class="timer-step" id="timerStep">🌸 Versez l'eau à 80°C et appuyez sur Démarrer</div>
       <div class="timer-controls">
         <button class="timer-btn" id="timerBtn" onclick="toggleTimer()">▶ Démarrer</button>
         <button class="timer-btn timer-btn-sec" onclick="resetTimer()">↺ Reset</button>
@@ -1048,52 +970,34 @@ input[type="range"].pain-range::-webkit-slider-thumb{
     <div class="sleep-date-nav">
       <button class="sleep-nav-btn" onclick="sleepNavDate(-1)">‹</button>
       <div>
-        <div class="sleep-date-label" id="sleepDateLabel">Lundi 6 avril 2026</div>
+        <div class="sleep-date-label" id="sleepDateLabel">Jeudi 9 avril 2026</div>
         <div style="font-size:0.58rem;color:var(--muted);text-align:center" id="sleepSavedIndicator"></div>
       </div>
       <button class="sleep-nav-btn" onclick="sleepNavDate(1)">›</button>
     </div>
 
-    <!-- Heures -->
+    <!-- CYCLES DE SOMMEIL -->
     <div class="sleep-section">
-      <div class="sleep-section-label">⏰ Horaires</div>
-      <div class="sleep-time-row">
-        <div class="sleep-time-field">
-          <label>Couché à</label>
-          <input type="time" id="slpBedtime" value="22:30" onchange="autoCalcSleep()">
-        </div>
-        <div class="sleep-time-field">
-          <label>Endormi(e) vers</label>
-          <input type="time" id="slpSleepTime" value="23:15" onchange="autoCalcSleep()">
-        </div>
-        <div class="sleep-time-field">
-          <label>Réveil à</label>
-          <input type="time" id="slpWakeTime" value="07:00" onchange="autoCalcSleep()">
-        </div>
+      <div class="sleep-section-label">🔄 Cycles de sommeil — ajoutez autant que nécessaire</div>
+      <div id="sleepCyclesContainer"></div>
+      <button class="sleep-add-cycle-btn" onclick="addSleepCycle()">+ Ajouter un cycle</button>
+      <div class="sleep-calc" style="margin-top:0.5rem">
+        <div><div class="sleep-calc-label">😴 Sommeil total cumulé</div></div>
+        <div class="sleep-calc-value" id="slpTotalCumul">—</div>
       </div>
       <div class="sleep-calc">
-        <div>
-          <div class="sleep-calc-label">⏱ Temps au lit</div>
-        </div>
-        <div class="sleep-calc-value" id="slpTotalBed">8h 30min</div>
+        <div><div class="sleep-calc-label">🛏 Temps total au lit</div></div>
+        <div class="sleep-calc-value" id="slpTotalLit">—</div>
       </div>
       <div class="sleep-calc">
-        <div>
-          <div class="sleep-calc-label">😴 Sommeil réel</div>
-        </div>
-        <div class="sleep-calc-value" id="slpTotalSleep">7h 45min</div>
-      </div>
-      <div class="sleep-calc">
-        <div>
-          <div class="sleep-calc-label">⏳ Endormissement</div>
-        </div>
-        <div class="sleep-calc-value" id="slpLatency">45min</div>
+        <div><div class="sleep-calc-label">🔢 Nombre de levers</div></div>
+        <div class="sleep-calc-value" id="slpNbLevers">—</div>
       </div>
     </div>
 
     <!-- Qualité du sommeil -->
     <div class="sleep-section">
-      <div class="sleep-section-label">⭐ Qualité du sommeil</div>
+      <div class="sleep-section-label">⭐ Qualité globale de la nuit</div>
       <div class="sleep-stars" id="sleepQualityStars">
         <span class="sleep-star" onclick="setSleepQuality(1)">★</span>
         <span class="sleep-star" onclick="setSleepQuality(2)">★</span>
@@ -1102,13 +1006,13 @@ input[type="range"].pain-range::-webkit-slider-thumb{
         <span class="sleep-star" onclick="setSleepQuality(5)">★</span>
       </div>
       <div class="sleep-quality-labels">
-        <span>Très mauvais</span><span>Moyen</span><span>Excellent</span>
+        <span>Très mauvaise</span><span>Moyenne</span><span>Excellente</span>
       </div>
     </div>
 
-    <!-- Réveil -->
+    <!-- Réveil final -->
     <div class="sleep-section">
-      <div class="sleep-section-label">🌅 Comment je me sens au réveil</div>
+      <div class="sleep-section-label">🌅 Comment je me sens au réveil final</div>
       <div class="sleep-feeling-grid" id="sleepFeelingGrid">
         <div class="sleep-feeling-btn" onclick="setSleepFeeling('exhausted')">
           <span class="sfb-icon">😫</span><span class="sfb-label">Épuisée</span>
@@ -1133,72 +1037,45 @@ input[type="range"].pain-range::-webkit-slider-thumb{
 
     <!-- Douleurs réveil -->
     <div class="sleep-section">
-      <div class="sleep-section-label">🦵 Douleurs SJSR au réveil (0-10)</div>
+      <div class="sleep-section-label">🦵 Douleurs SJSR / Impatiences au réveil (0-10)</div>
       <div class="pain-val-display p0" id="painMorningDisplay">0 — Aucune douleur</div>
-      <div class="pain-slider-wrap">
-        <input type="range" class="pain-range" id="painMorning" min="0" max="10" value="0"
-          oninput="updatePainDisplay('painMorning','painMorningDisplay')">
-      </div>
-      <div class="pain-slider-labels">
-        <span>0 · Aucune</span><span>5 · Modérée</span><span>10 · Insupportable</span>
-      </div>
+      <input type="range" class="pain-range" id="painMorning" min="0" max="10" value="0"
+        oninput="updatePainDisplay('painMorning','painMorningDisplay')">
+      <div class="pain-slider-labels"><span>0 · Aucune</span><span>5 · Modérée</span><span>10 · Insupportable</span></div>
     </div>
 
     <!-- Douleurs journée -->
     <div class="sleep-section">
-      <div class="sleep-section-label">🌞 Douleurs SJSR dans la journée (0-10)</div>
+      <div class="sleep-section-label">🌞 Douleurs / Impatiences dans la journée (0-10)</div>
       <div class="pain-val-display p0" id="painDayDisplay">0 — Aucune douleur</div>
-      <div class="pain-slider-wrap">
-        <input type="range" class="pain-range" id="painDay" min="0" max="10" value="0"
-          oninput="updatePainDisplay('painDay','painDayDisplay')">
-      </div>
-      <div class="pain-slider-labels">
-        <span>0 · Aucune</span><span>5 · Modérée</span><span>10 · Insupportable</span>
-      </div>
+      <input type="range" class="pain-range" id="painDay" min="0" max="10" value="0"
+        oninput="updatePainDisplay('painDay','painDayDisplay')">
+      <div class="pain-slider-labels"><span>0 · Aucune</span><span>5 · Modérée</span><span>10 · Insupportable</span></div>
     </div>
 
-    <!-- Notes libres -->
+    <!-- Notes -->
     <div class="sleep-section">
       <div class="sleep-section-label">📝 Notes — Symptômes · Déclencheurs · Observations</div>
       <textarea class="sleep-notes-field" id="sleepNotes"
-        placeholder="Ex: Jambes agitées vers 23h · Levée 2 fois · Dîner tardif hier..."></textarea>
+        placeholder="Ex: Impatiences vers 23h · Levée 3 fois · Crampes · Dîner tardif · Stress..."></textarea>
     </div>
 
     <button class="sleep-save-btn" onclick="saveSleepEntry()">💾 Enregistrer cette nuit</button>
   </div>
 
-  <!-- Statistiques hebdomadaires -->
+  <!-- Statistiques -->
   <div class="sleep-stats-card">
-    <div class="sleep-stats-title">📊 Statistiques</div>
-
-    <!-- Sélecteur semaine -->
-    <div class="week-selector" id="sleepWeekSelector"></div>
-
-    <!-- Stats chiffrées -->
+    <div class="sleep-stats-title">📊 Statistiques — 14 dernières nuits</div>
     <div class="stats-grid" id="sleepStatsGrid">
-      <div class="stat-box">
-        <div class="stat-box-val" id="statAvgSleep">—</div>
-        <div class="stat-box-label">Sommeil moyen</div>
-      </div>
-      <div class="stat-box">
-        <div class="stat-box-val" id="statAvgQuality">—</div>
-        <div class="stat-box-label">Qualité moyenne</div>
-      </div>
-      <div class="stat-box">
-        <div class="stat-box-val" id="statAvgPainM">—</div>
-        <div class="stat-box-label">Douleur réveil moy.</div>
-      </div>
-      <div class="stat-box">
-        <div class="stat-box-val" id="statAvgPainD">—</div>
-        <div class="stat-box-label">Douleur journée moy.</div>
-      </div>
+      <div class="stat-box"><div class="stat-box-val" id="statAvgSleep">—</div><div class="stat-box-label">Sommeil moyen</div></div>
+      <div class="stat-box"><div class="stat-box-val" id="statAvgQuality">—</div><div class="stat-box-label">Qualité moyenne</div></div>
+      <div class="stat-box"><div class="stat-box-val" id="statAvgPainM">—</div><div class="stat-box-label">Douleur réveil moy.</div></div>
+      <div class="stat-box"><div class="stat-box-val" id="statAvgLevers">—</div><div class="stat-box-label">Levers moy./nuit</div></div>
     </div>
-
-    <!-- Historique des nuits -->
     <div id="sleepHistoryList" style="margin-top:0.5rem"></div>
   </div>
 
-  <!-- Rappels médicaments -->
+  <!-- Médicaments -->
   <div class="journal-section">
     <div class="sect-title">💊 Rappels médicaments</div>
     <div class="alarm-list">
@@ -1284,46 +1161,6 @@ input[type="range"].pain-range::-webkit-slider-thumb{
   <button class="imp-panel-close" onclick="closeImpulse()">✕</button>
   <div id="impContent"></div>
 </div>
-
-<!-- ── MODAL RECETTE INDIVIDUELLE ── -->
-<div class="recipe-overlay" id="recetteOverlay">
-  <div class="recipe-modal">
-    <div class="recipe-modal-handle"></div>
-    <div class="recipe-modal-banner" id="recetteBanner"></div>
-    <div class="recipe-modal-body" id="recetteBody"></div>
-  </div>
-</div>
-
-<!-- ── MODAL BIBLIOTHÈQUE RECETTES ── -->
-<div class="recipe-overlay" id="recettesLibOverlay" onclick="if(event.target===this)closeRecettesLibrary()">
-  <div class="recipe-modal" style="max-height:92vh">
-    <div class="recipe-modal-handle"></div>
-    <div style="padding:12px 16px 0">
-      <div style="font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:600;color:var(--text);margin-bottom:4px">📖 Bibliothèque de recettes</div>
-      <div style="font-size:0.65rem;color:var(--muted);margin-bottom:10px">35 recettes · Sans gluten · Sans lait animal · SJSR/TDAH</div>
-      <!-- Filtres saison -->
-      <div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:8px" id="libSaisonFilters">
-        <div class="shop-r-toggle active" data-saison="toutes" onclick="filterLib(this,'saison')">Toutes</div>
-        <div class="shop-r-toggle" data-saison="printemps" onclick="filterLib(this,'saison')">🌸 Printemps</div>
-        <div class="shop-r-toggle" data-saison="ete" onclick="filterLib(this,'saison')">☀️ Été</div>
-        <div class="shop-r-toggle" data-saison="automne" onclick="filterLib(this,'saison')">🍂 Automne</div>
-        <div class="shop-r-toggle" data-saison="hiver" onclick="filterLib(this,'saison')">❄️ Hiver</div>
-      </div>
-      <!-- Filtres catégorie -->
-      <div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:12px" id="libCatFilters">
-        <div class="shop-r-toggle active" data-cat="toutes" onclick="filterLib(this,'cat')">Tout</div>
-        <div class="shop-r-toggle" data-cat="entree" onclick="filterLib(this,'cat')">Entrée</div>
-        <div class="shop-r-toggle" data-cat="plat" onclick="filterLib(this,'cat')">Plat</div>
-        <div class="shop-r-toggle" data-cat="soupe" onclick="filterLib(this,'cat')">Soupe</div>
-        <div class="shop-r-toggle" data-cat="dessert" onclick="filterLib(this,'cat')">Dessert</div>
-        <div class="shop-r-toggle" data-cat="sauce" onclick="filterLib(this,'cat')">Sauce</div>
-      </div>
-    </div>
-    <div id="libGrid" style="padding:0 14px 40px;display:grid;grid-template-columns:1fr 1fr;gap:9px;overflow-y:auto;max-height:calc(92vh - 180px)"></div>
-  </div>
-</div>
-
-
 
 <script>
 // ── INFUSIONS ──
@@ -1521,65 +1358,76 @@ const MENUS = {
        conseil:{type:"sjsr",text:"🌿 Tapioca = glucide lent doux. Parfait pour calmer les jambes avant de dormir."}}
     ],infusion:INF},
 
-  '9':{name:"Jeudi 9 avril",mode:"pm-f",modeLabel:"🌴 Vacances · Dernier jour créatif !",nextMeal:"Demain livraison 🎉 · Pancakes + chocolat violet",livraison:false,batch:false,birthday:false,
+  '9':{name:"Jeudi 9 avril",mode:"pm-f",modeLabel:"🌿 Vacances · Dernier jour · Porridge millet !",nextMeal:"Porridge millet-banane-coco ce matin 🌸",livraison:false,batch:false,birthday:false,
     meals:[
-      {ic:"☀️",cl:"ic-mat",lbl:"Brunch · Dernier jour !",time:"Levez-vous à votre rythme 🌸",
-       title:"Pancakes sarrasin · Levure de bière · Graines de lin · Infusion 7x7 💊",
-       ingr:[{t:"Farine sarrasin 80g"},{t:"Levure de bière 1cs dans la pâte"},{t:"Graines de lin 1cs"},{t:"Eau 150ml"},{t:"Arôme fleur d'oranger"},{t:"💊 Tramadol LP 50mg + Lyrica 325mg"}],
-       tags:[["MAG","nt-mag"],["FER","nt-fer"],["DOPA","nt-dopa"]],
-       steps:["Mélanger farine + levure de bière + eau + fleur d'oranger","Laisser reposer 5 min — la pâte gonfle légèrement","Cuire 3-4 pancakes à la poêle 2 min chaque côté","Dresser en pile, parsemer graines de lin","Photographier — vous méritez ces pancakes 📸","Médicaments avec ce repas 💊"],
-       cookTime:"15 min",
-       conseil:{type:"tdah",text:"🧠 Dernier jour de vacances · Demain livraison + vrais menus · Vous avez géré cette semaine seule avec style 🌸"}},
+      {ic:"☀️",cl:"ic-mat",lbl:"Brunch · Vacances",time:"Levez-vous à votre rythme 🌸",
+       title:"Porridge millet · Banane · Coco râpée · Gingembre frais · Infusion 7x7 💊",
+       ingr:[{t:"Flocons de millet 5cs"},{t:"Lait d'avoine 200ml"},{t:"1 banane écrasée"},{t:"Coco râpée 1cs"},{t:"Gingembre frais râpé 1cc"},{t:"Infusion 7x7 Jentschura"},{t:"💊 Tramadol LP 50mg + Lyrica 325mg"}],
+       tags:[["MAG","nt-mag"],["FER","nt-fer"],["DOPA","nt-dopa"],["ALK","nt-alk"]],
+       steps:["Chauffer lait d'avoine sans bouillir","Verser flocons de millet, remuer 5 min feu doux","Ajouter banane écrasée + coco râpée","Râper un peu de gingembre frais dessus","Préparer infusion 7x7 en parallèle","Dresser dans un joli bol — parsemer graines de courge","Médicaments avec ce repas 💊"],
+       cookTime:"8 min",
+       conseil:{type:"sjsr",text:"🌿 Millet = magnésium + silice. Banane = potassium + sérotonine. Gingembre frais = anti-inflammatoire immédiat pour les jambes."}},
       {ic:"🥗",cl:"ic-mid",lbl:"Déjeuner · Maison",time:"13h – 14h30",
-       title:"Bol Nori · Riz · Haricots rouges · Levure de bière",
-       ingr:[{t:"Feuilles nori Tanoshi coupées en lanières"},{t:"Riz cuit 100g"},{t:"Haricots rouges Daucy chauffés"},{t:"Levure de bière 2cs"},{t:"Graines de lin + curcuma + poivre"}],
-       tags:[["FER","nt-fer"],["MAG","nt-mag"],["DOPA","nt-dopa"]],
-       steps:["Chauffer haricots rouges avec curcuma + poivre 3 min","Disposer riz dans un bol","Haricots rouges dessus","Lanières de nori tout autour — effet algue sushi","Levure de bière + graines de lin en finition","Citron si vous avez"],
-       cookTime:"5 min",
-       conseil:{type:"sjsr",text:"🌿 Lanières de nori + haricots rouges + levure de bière = triple dose de fer naturel. Anti-SJSR max !"}},
-      {ic:"🍊",cl:"ic-gou",lbl:"Goûter · Célébration",time:"16h – 17h",
-       title:"Chocolat chaud Van Houten · Ube powder · Surprise violette !",
-       ingr:[{t:"2cc cacao Van Houten"},{t:"1 petite pincée Ube Powder"},{t:"200ml eau chaude"},{t:"Galettes de riz"},{t:"Arôme fleur d'oranger"}],
-       tags:[["MAG","nt-mag"],["FUN","nt-fun"]],
-       steps:["Mélanger cacao + ube powder dans la tasse","Verser eau chaude en fouettant","L'ube donne une couleur violet-brun unique 💜","Quelques gouttes fleur d'oranger","Savourer avec galettes de riz — dernier goûter débrouille !"],
-       cookTime:"3 min",
-       conseil:{type:"tdah",text:"🧠 Chocolat violet maison ! Vous avez transformé une semaine sans budget en semaine créative. Bravo 🌸"}},
-      {ic:"🌙",cl:"ic-din",lbl:"Dîner · Avant le grand restock ! 💊",time:"19h – 20h max",
-       title:"💊 Médicaments AVANT · Haricots rouges · Petits pois · Galette sarrasin",
-       ingr:[{t:"💊 Tramadol LP 100mg + Lyrica 375mg AVANT"},{t:"Boîte haricots rouges"},{t:"Petits pois surgelés"},{t:"1 grande galette sarrasin"},{t:"Levure de bière + herbes"}],
-       tags:[["FER","nt-fer"],["ALK","nt-alk"],["MAG","nt-mag"]],
-       steps:["Médicaments AVANT 💊","Petits pois + haricots rouges : casserole 5 min avec herbes","Grande galette sarrasin : poêle 3 min","Garnir la galette généreusement","Parsemer levure de bière","Plier et déguster — dernier repas débrouille, le plus beau !"],
-       cookTime:"10 min",
-       conseil:{type:"prep",text:"🌸 Demain : La Fourche + Picard + Bene Bono. Une semaine difficile traversée avec créativité et dignité. Bravo Ketty !"}},
-      {ic:"📺",cl:"ic-sna",lbl:"Soirée · Célébration",time:"20h – 21h",
-       fun:"🌸 Infusion 7x7 · Dernière soirée débrouille — demain tout change ! 🎉",
-       ingr:[{t:"Infusion 7x7 Jentschura 1cc"},{t:"Eau 80°C · infuser 5 min"}],
+       title:"Bowl lentilles corail · Carottes curcuma · Épinards · Gingembre",
+       ingr:[{t:"Lentilles corail 100g"},{t:"Carottes en rondelles"},{t:"Épinards jeunes pousses"},{t:"Gingembre frais râpé 1cc"},{t:"Curcuma frais râpé 1cc"},{t:"Graines de courge torréfiées"},{t:"Citron + sel"}],
+       tags:[["FER","nt-fer"],["MAG","nt-mag"],["VIT-C","nt-vitc"]],
+       steps:["Lentilles corail : 3x volume eau + gingembre + curcuma, 12 min","Carottes vapeur ou poêlée 8 min","Épinards frais : juste wilter 2 min à la poêle","Dresser : lentilles au centre, carottes + épinards autour","Graines de courge torréfiées dessus","Citron pressé sur tout — active le fer"],
+       cookTime:"15 min",
+       conseil:{type:"sjsr",text:"🌿 Lentilles corail + curcuma frais + gingembre = combo anti-inflammatoire puissant. Le citron triple l'absorption du fer."}},
+      {ic:"🍊",cl:"ic-gou",lbl:"Goûter · Douceur",time:"16h – 17h",
+       title:"Bol tapioca · Cacao · Caramel Monin · Coco râpée",
+       ingr:[{t:"Tapioca Tipiak 4cs"},{t:"200ml eau"},{t:"1cc cacao Van Houten"},{t:"Sirop Monin caramel sugar free"},{t:"Coco râpée 1cs"}],
        tags:[["ALK","nt-alk"],["FUN","nt-fun"]],
-       conseil:{type:"bday",text:"🌸 Vous avez géré cette semaine seule, avec rien, et avec STYLE. C'est de la force pure."}}
+       steps:["Chauffer eau + tapioca 10 min en remuant — perles deviennent translucides","Ajouter cacao hors du feu","Verser dans joli verre","Filet de sirop Monin caramel","Parsemer coco râpée"],
+       cookTime:"12 min",
+       conseil:{type:"tdah",text:"🧠 Votre tapioca caramel signature 🌸 Réconfortant et sans sucre raffiné."}},
+      {ic:"🌙",cl:"ic-din",lbl:"Dîner · Sommeil 💊",time:"19h – 20h max",
+       title:"💊 Médicaments AVANT · Velouté lentilles vertes · Fenouil · Gingembre",
+       ingr:[{t:"💊 Tramadol LP 100mg + Lyrica 375mg AVANT"},{t:"Lentilles vertes 80g"},{t:"Fenouil 1/2 coupé"},{t:"Gingembre frais 2cm râpé"},{t:"Curcuma frais 1cc"},{t:"Lait d'avoine 100ml"},{t:"Sel + poivre"}],
+       tags:[["FER","nt-fer"],["ALK","nt-alk"],["MAG","nt-mag"]],
+       steps:["Médicaments AVANT 💊","Cuire lentilles vertes + fenouil + gingembre + curcuma 20 min","Mixer avec lait d'avoine — texture veloutée","Assaisonner sel + poivre","Parsemer graines de courge","Servir chaud dans un beau bol"],
+       cookTime:"20 min",
+       conseil:{type:"sjsr",text:"🌿 Fenouil = anti-spasmodique naturel pour les jambes. Velouté chaud avant le sommeil = idéal SJSR."}},
+      {ic:"📺",cl:"ic-sna",lbl:"Soirée · Kdrama",time:"20h – 21h",
+       fun:"🌸 MatiMalt chaud · Coco râpée · Soirée canapé",
+       ingr:[{t:"2cs MatiMalt Favrichon"},{t:"200ml eau chaude"},{t:"Coco râpée 1cc"},{t:"Quelques amandes"}],
+       tags:[["ALK","nt-alk"],["FUN","nt-fun"]],
+       conseil:{type:"sjsr",text:"🌿 MatiMalt = chicorée + seigle + orge sans caféine. Parfait pour la soirée sans perturber le sommeil."}}
     ],infusion:INF},
 
-  '10':{name:"Vendredi 10 avril",mode:"pm-l",modeLabel:"📦 Livraison — Tout arrive !",nextMeal:"Déjeuner dans ~4h · Préparer la boîte ce matin",livraison:true,batch:false,birthday:false,
+  '10':{name:"Vendredi 10 avril",mode:"pm-f",modeLabel:"🎉 Jour du salaire · Courses !",nextMeal:"Pancakes sarrasin-banane-kiwi ce matin 🥞",livraison:false,batch:false,birthday:false,
     meals:[
-      {ic:"☀️",cl:"ic-mat",lbl:"Petit-déjeuner",time:"7h – 9h",title:"Chia pudding · Fruits rouges Picard",
-       ingr:[{t:"Graines de chia 3cs"},{t:"Lait de millet 200ml"},{t:"Fruits rouges Picard"},{t:"1 datte Medjool"}],
+      {ic:"☀️",cl:"ic-mat",lbl:"Petit-déjeuner · Jour du salaire 🎉",time:"7h – 9h",
+       title:"Pancakes sarrasin · Banane · Kiwi · Gingembre · Infusion 7x7 💊",
+       ingr:[{t:"Farine de sarrasin 80g"},{t:"Lait d'avoine 150ml"},{t:"1 banane écrasée dans la pâte"},{t:"Gingembre frais râpé"},{t:"Graines de lin 1cs"},{t:"1 kiwi tranché à côté"},{t:"💊 Tramadol LP 50mg + Lyrica 325mg"}],
        tags:[["MAG","nt-mag"],["FER","nt-fer"],["DOPA","nt-dopa"]],
-       conseil:{type:"tdah",text:"🧠 Préparer la boîte déjeuner maintenant pendant que vous y pensez — 5 min, ça évite d'oublier !"}},
-      {ic:"🥗",cl:"ic-mid",lbl:"Déjeuner · Maison",time:"12h30 – 14h",title:"Lentilles corail · Thon · Persil",
-       ingr:[{t:"Lentilles corail 150g"},{t:"Thon au naturel"},{t:"Persil Picard"},{t:"Vinaigre de cidre"},{t:"Huile colza"}],
-       tags:[["FER","nt-fer"],["VIT-C","nt-vitc"],["MAG","nt-mag"],["DOPA","nt-dopa"]],
-       conseil:{type:"sjsr",text:"🌿 Lentilles + vinaigre de cidre = fer ×3. Thon = oméga-3 boosteur de dopamine."}},
-      {ic:"🍊",cl:"ic-gou",lbl:"Goûter · Snack Dopamine",time:"16h – 17h ⚠️ max",title:"6 amandes · 1 carré chocolat 85%",
-       ingr:[{t:"6 amandes"},{t:"1 carré chocolat 85% Togo"}],
-       tags:[["MAG","nt-mag"],["DOPA","nt-dopa"],["TDAH","nt-tdah"]],
-       conseil:{type:"tdah",text:"🧠 C'est votre snack dopamine de l'après-midi. Après 17h → eau ou infusion seulement."}},
-      {ic:"🌙",cl:"ic-din",lbl:"Dîner léger",time:"19h – 20h max",title:"Cabillaud Air Fryer · Légumes frais · Gingembre",
-       ingr:[{t:"1 portion cabillaud Picard"},{t:"Légumes frais Bene Bono",fr:true},{t:"Gingembre Picard"},{t:"Persillade Picard"},{t:"Huile olive"}],
-       tags:[["ALK","nt-alk"],["MAG","nt-mag"]],
-       conseil:{type:"prep",text:"🌸 Air Fryer 180°C / 12 min. Légumes vapeur 8 min. Simple et reposant."}},
-      {ic:"📺",cl:"ic-sna",lbl:"Snack TV Anti-SJSR",time:"Soirée",fun:"🌸 Graines de courge torréfiées Air Fryer",
-       ingr:[{t:"Graines de courge 30g"},{t:"Fleur de sel · 160°C / 6 min"}],
-       tags:[["MAG","nt-mag"],["DOPA","nt-dopa"],["FUN","nt-fun"]],
-       conseil:{type:"tdah",text:"🧠 Ce soir : préparer 2 bases Ninja Creami → congeler. Faites-le avant de vous installer devant la TV !"}}
+       steps:["Mixer farine sarrasin + lait d'avoine + banane écrasée + gingembre","Pâte lisse, reposer 5 min","Poêle antiadhésive légèrement huilée, feu moyen","Pancakes 2 min chaque côté","Dresser avec kiwi tranché et graines de lin","Médicaments 💊"],
+       cookTime:"15 min",
+       conseil:{type:"tdah",text:"🧠 Jour du salaire ! Petit-déj de victoire avant les courses. Vous avez géré cette semaine seule avec style 🌸"}},
+      {ic:"🥗",cl:"ic-mid",lbl:"Déjeuner · Maison",time:"13h – 14h30",
+       title:"Salade riz 3 couleurs · Lentilles vertes · Carottes · Épinards",
+       ingr:[{t:"Mélange 3 riz 100g cuit"},{t:"Lentilles vertes cuites 100g"},{t:"Carottes râpées fraîches"},{t:"Épinards jeunes pousses"},{t:"Graines de courge torréfiées"},{t:"Gingembre frais + citron + huile"},{t:"Amandes effilées"}],
+       tags:[["FER","nt-fer"],["MAG","nt-mag"],["VIT-C","nt-vitc"]],
+       steps:["Cuire riz 3 couleurs 15 min","Cuire lentilles vertes 20 min","Râper carottes fraîches","Dresser en bowl : riz + lentilles + carottes + épinards","Sauce : gingembre râpé + citron + huile + sel","Graines de courge + amandes en finition"],
+       cookTime:"20 min",
+       conseil:{type:"sjsr",text:"🌿 Bowl complet : glucides lents + protéines végétales + légumes crus. Anti-inflammatoire et rassasiant."}},
+      {ic:"🍊",cl:"ic-gou",lbl:"Goûter · Avant courses",time:"16h – 17h",
+       title:"Amandes · Dattes · Pomme · MatiMalt",
+       ingr:[{t:"8 amandes"},{t:"2 dattes Medjool"},{t:"1 pomme coupée"},{t:"MatiMalt chaud"}],
+       tags:[["MAG","nt-mag"],["DOPA","nt-dopa"]],
+       conseil:{type:"tdah",text:"🧠 Goûter avant les courses — ne jamais faire ses courses le ventre vide ! TDAH + faim = achats impulsifs."}},
+      {ic:"🌙",cl:"ic-din",lbl:"Dîner · Après courses 💊",time:"19h – 20h max",
+       title:"💊 Médicaments AVANT · Soupe lentilles corail · Épinards · Coco",
+       ingr:[{t:"💊 Tramadol LP 100mg + Lyrica 375mg AVANT"},{t:"Lentilles corail 100g"},{t:"Épinards jeunes pousses"},{t:"Lait de coco 100ml (si acheté)"},{t:"Gingembre frais + curcuma frais"},{t:"Coco râpée en finition"}],
+       tags:[["FER","nt-fer"],["ALK","nt-alk"],["MAG","nt-mag"]],
+       steps:["Médicaments AVANT 💊","Cuire lentilles corail 12 min avec gingembre + curcuma","Ajouter épinards 2 min avant la fin","Ajouter lait de coco, remuer","Parsemer coco râpée","Citron pressé"],
+       cookTime:"15 min",
+       conseil:{type:"prep",text:"🌸 Soupe dorée au curcuma après une journée de courses. Vous méritez ce réconfort."}},
+      {ic:"📺",cl:"ic-sna",lbl:"Soirée",time:"20h – 21h",
+       fun:"🌸 Infusion camomille-lavande · Bonne nuit bien méritée",
+       ingr:[{t:"1 sachet camomille-lavande Éléphant"},{t:"Eau chaude"}],
+       tags:[["ALK","nt-alk"]],
+       conseil:{type:"sjsr",text:"🌿 Camomille + lavande = relaxation musculaire. Après les courses et la journée chargée — bonne nuit Ketty."}}
     ],infusion:INF},
 
   '11':{name:"Samedi 11 avril",mode:"pm-b",modeLabel:"⏱ Brunch + Batch Cooking",nextMeal:"Brunch tardif puis batch cet après-midi",livraison:false,batch:true,birthday:false,
@@ -2406,129 +2254,104 @@ const MENUS = {
 // ── SHOPPING ──
 const SHOP_DATA={
 
-  // ── LA FOURCHE · Bio & Sec · ~100€ ──
+  // ── LA FOURCHE · Bio & Sec · Commande mensuelle ~10 avril ──
   fourche:[
-    // 🐟 Protéines marines
-    {n:"🐟 Sardines huile olive bio × 12",p:"38,28€",u:"Déjeuners × 5 semaines"},
-    {n:"🐟 Maquereau huile olive bio × 8",p:"26,80€",u:"Déjeuners alternés × 5 sem"},
-    {n:"🐟 Thon albacore au naturel × 4",p:"13,40€",u:"Salade thon-avocat + déjeuners"},
-    // 🫘 Légumineuses
-    {n:"🫘 Lentilles corail bio 1kg",p:"3,40€",u:"Batch hebdo + veloutés dîner"},
-    {n:"🫘 Lentilles vertes bio 500g",p:"2,20€",u:"Déjeuners sem. 2 & 3"},
-    {n:"🫘 Pois chiches au naturel bio × 3",p:"8,97€",u:"Déjeuners bureau × 5 sem"},
-    {n:"🫘 Haricots rouges bio 425g × 2",p:"7,38€",u:"Déjeuners sem. 3 & 5"},
-    {n:"🫘 Pois cassés bio 500g",p:"1,90€",u:"Soupes dîner sem. 3 & 4"},
-    {n:"🧈 Tofu noisette ail des ours × 2",p:"5,98€",u:"Dîners lundi sem. 2 & 4"},
-    // 🌾 Céréales
-    {n:"🌾 Sarrasin décortiqué bio 1kg",p:"3,90€",u:"Batch hebdo — petit-déj quotidien"},
-    {n:"🌾 Flocons de sarrasin bio 500g",p:"2,80€",u:"Porridges matin"},
-    {n:"🌾 Quinoa duo bio 500g × 2",p:"7,98€",u:"Batch hebdo + brunchs"},
-    {n:"🌾 Polenta de maïs bio 500g",p:"2,50€",u:"Dîner agneau-polenta sem. 4"},
-    {n:"🌾 Farine de riz bio 500g",p:"2,10€",u:"Moelleux fraises-noisettes dim. 26 avr"},
-    // 🌱 Graines
-    {n:"🌱 Graines de chia bio 500g",p:"3,65€",u:"Chia pudding petit-déj × 5 sem"},
-    {n:"🌱 Graines de courge bio 250g × 2",p:"7,02€",u:"Batch torréfaction + snacks + veloutés"},
-    {n:"🌱 Graines de lin bio 250g",p:"2,20€",u:"Brunchs + déjeuners oméga-3"},
-    // 🥜 Oléagineux
-    {n:"🥜 Amandes décortiquées bio 500g × 2",p:"15,00€",u:"Batch + goûters + energy balls — usage quotidien"},
-    {n:"🥜 Noisettes décortiquées bio 200g",p:"4,50€",u:"Porridges + moelleux pêches"},
-    {n:"🥜 Pistaches bio non salées 150g",p:"5,99€",u:"Goûters + dîner agneau-polenta"},
-    {n:"🥜 Noix de Grenoble bio 200g",p:"4,80€",u:"Déjeuners sem. 4 & 5 — oméga-3"},
-    {n:"🌴 Dattes Medjool bio 500g",p:"7,99€",u:"Energy balls + goûters + brunchs"},
-    {n:"🥜 Purée d'amande bio 250g",p:"5,50€",u:"Chia pudding sem. 1 & 2"},
-    {n:"🌿 Coco râpée bio 200g",p:"2,40€",u:"Energy balls"},
-    {n:"🍫 Cacao brut en poudre bio 200g",p:"4,50€",u:"Energy balls × 5 sem + mousse choc"},
-    // 🍫 Chocolats
-    {n:"🍫 Chocolat noir 85% Togo bio × 3",p:"11,61€",u:"Goûters quotidiens + mousse chocolat"},
-    {n:"🍫 Chocolat noir 80% fleur de sel × 2",p:"5,98€",u:"Goûters sem. 4 & 5"},
-    {n:"🍫 Chocolat noir 92% Fairafric × 2",p:"6,90€",u:"Goûters sem. 2 & 3"},
+    // 🐟 Protéines marines — PRIORITÉ car manquantes
+    {n:"🐟 Sardines huile olive bio × 12",p:"~38€",u:"Déjeuners lun·jeu·sam × 4 semaines — fer + oméga-3"},
+    {n:"🐟 Maquereau huile olive bio × 8",p:"~27€",u:"Déjeuners alternés × 4 semaines"},
+    {n:"🐟 Thon albacore naturel × 4",p:"~13€",u:"Déjeuners salade thon-avocat"},
+    // 🫘 Légumineuses — stock partiel, compléter
+    {n:"🫘 Lentilles corail bio 1kg",p:"~3,40€",u:"Batch hebdo + veloutés — stock à compléter"},
+    {n:"🫘 Pois chiches naturel bio × 3",p:"~9€",u:"Déjeuners bureau × 4 semaines"},
+    {n:"🫘 Pois cassés bio 500g",p:"~1,90€",u:"Soupes dîner semaines 3 & 4"},
+    {n:"🧈 Tofu noisette ail des ours × 2",p:"~6€",u:"Dîners lundi semaines 2 & 4"},
+    // 🌾 Céréales — compléter stock
+    {n:"🌾 Sarrasin décortiqué bio 1kg",p:"~3,90€",u:"Batch hebdo — petit-déj quotidien"},
+    {n:"🌾 Quinoa duo bio 500g × 2",p:"~8€",u:"Batch + brunchs week-end"},
+    {n:"🌾 Flocons de sarrasin bio 500g",p:"~2,80€",u:"Porridges matin"},
+    // 🌱 Graines — stock partiel
+    {n:"🌱 Graines de chia bio 500g",p:"~3,65€",u:"Chia pudding petit-déj quotidien"},
+    {n:"🌱 Graines de lin bio 250g",p:"~2,20€",u:"Brunchs + déjeuners — oméga-3"},
+    // 🥜 Oléagineux — stock partiel
+    {n:"🥜 Amandes décortiquées bio 500g",p:"~7,50€",u:"Batch torréfaction + goûters quotidiens"},
+    {n:"🌴 Dattes Medjool bio 500g",p:"~8€",u:"Energy balls + goûters — stock à compléter"},
+    {n:"🥜 Purée d'amande bio 250g",p:"~5,50€",u:"Chia pudding sem. 1 & 2"},
+    // 🍫 Chocolat
+    {n:"🍫 Chocolat noir 85% Togo bio × 3",p:"~11,61€",u:"Goûter quotidien — dopamine naturelle"},
+    {n:"🍫 Chocolat noir 92% Fairafric × 2",p:"~6,90€",u:"Goûters sem. 2 & 3"},
+    {n:"🍫 Cacao brut en poudre bio 200g",p:"~4,50€",u:"Energy balls + porridges + tapioca"},
     // 🫒 Huiles & Condiments
-    {n:"🫒 Huile d'olive vierge extra bio 1L",p:"9,75€",u:"Cuisson quotidienne"},
-    {n:"🌿 Huile de colza vierge bio 1L",p:"4,09€",u:"Déjeuners bureau — oméga-3 cru"},
-    {n:"🌿 Huile de lin bio 250ml",p:"4,50€",u:"Salades sardines/maquereau"},
-    {n:"🍎 Vinaigre de cidre bio 1L",p:"2,98€",u:"Légumineuses bureau — absorption fer ×3"},
-    {n:"🥛 Lait de millet bio 6×200ml",p:"8,00€",u:"Petit-déj + veloutés + Lait d'Or"},
-    {n:"🥥 Lait de coco Masala bio × 3",p:"4,47€",u:"Veloutés dîner × 5 sem"},
-    {n:"🌿 Tahini crème sésame bio 250g",p:"4,20€",u:"Caviar aubergines brunchs sam."},
-    {n:"🍯 Miel bio liquide 250g",p:"3,50€",u:"Fruits rôtis snacks TV + brunch moelleux"},
-    // 🧂 Sel Santé maison
-    {n:"🧂 Sel de mer fin bio 500g",p:"1,80€",u:"Sel Santé batch hebdo"},
-    {n:"🌿 Curcuma bio en poudre 50g",p:"2,50€",u:"Sel Santé + carottes + tofu"},
-    {n:"🌿 Poivre noir moulu bio 50g",p:"2,20€",u:"Sel Santé + active curcuma"},
-    {n:"🌿 Herbes de Provence bio 20g × 2",p:"3,80€",u:"Sel Santé + papillotes"},
-    {n:"🌿 Cannelle bio en poudre 30g",p:"2,10€",u:"Porridges + veloutés courge"},
-    {n:"🌿 Cardamome bio en poudre 20g",p:"2,80€",u:"Anniversaire + Lait d'Or"},
-    {n:"🌿 Piment doux bio 20g",p:"1,80€",u:"Mousse chocolat anniversaire"},
-    {n:"🌿 Vanille en poudre bio 10g",p:"3,50€",u:"Compotées pommes snack TV"},
-    {n:"🌿 Sésame bio 200g",p:"2,90€",u:"Brunchs caviar aubergines"},
+    {n:"🫒 Huile d'olive vierge extra bio 1L",p:"~9,75€",u:"Cuisson quotidienne"},
+    {n:"🌿 Huile de colza vierge bio 1L",p:"~4,09€",u:"Déjeuners crus — oméga-3"},
+    {n:"🍎 Vinaigre de cidre bio 1L",p:"~2,98€",u:"Légumineuses bureau — absorption fer ×3"},
+    {n:"🥛 Lait de millet bio 6×200ml",p:"~8€",u:"Petit-déj + veloutés + Lait d'Or"},
+    {n:"🥥 Lait de coco bio × 3",p:"~4,47€",u:"Veloutés dîner + soupe lentilles coco"},
+    {n:"🌿 Tahini crème sésame bio 250g",p:"~4,20€",u:"Brunchs caviar aubergines"},
+    {n:"🍯 Miel bio liquide 250g",p:"~3,50€",u:"Fruits rôtis + infusions + porridges"},
+    // 🧂 Épices — Sel Santé maison
+    {n:"🧂 Sel de mer fin bio 500g",p:"~1,80€",u:"Sel Santé batch hebdo"},
+    {n:"🌿 Curcuma bio poudre 50g",p:"~2,50€",u:"Sel Santé + complément curcuma frais"},
+    {n:"🌿 Poivre noir moulu bio 50g",p:"~2,20€",u:"Sel Santé + active curcuma"},
+    {n:"🌿 Herbes de Provence bio 20g × 2",p:"~3,80€",u:"Sel Santé + papillotes"},
+    {n:"🌿 Cannelle bio 30g",p:"~2,10€",u:"Porridges millet + compotées pommes"},
+    {n:"🌿 Gingembre poudre bio 30g",p:"~2,50€",u:"Complément gingembre frais — dîners + infusions"},
+    {n:"🌿 Sésame bio 200g",p:"~2,90€",u:"Brunchs + energy balls"},
   ],
 
-  // ── PICARD · Surgelés · ~135€ ──
+  // ── INTERMARCHÉ / PICARD · Surgelés · ~80€/mois ──
   picard:[
-    // 🍓 Fruits Ninja Creami + petit-déj
-    {n:"🍓 Cocktail fruits rouges bio 450g × 2",p:"13,98€",u:"Bases Ninja Creami + brunchs"},
-    {n:"🍓 Framboises entières bio 450g × 2",p:"19,98€",u:"Bases Ninja Creami + porridges"},
-    {n:"🥭 Mangues en morceaux bio 450g × 2",p:"10,60€",u:"Bases Ninja Creami + porridges"},
-    {n:"🍊 Salade fruits bio 600g",p:"7,49€",u:"Petit-déj sem. 1 & 5"},
-    {n:"🍒 Framboises bio 450g",p:"8,50€",u:"Mousse choc anniversaire + goûters"},
+    // 🐟 Poissons — PRIORITÉ car zéro stock
+    {n:"🐟 Portions cabillaud MSC surgelé × 8",p:"~16€",u:"Dîners papillotes × 4 semaines"},
+    {n:"🐟 Filets colin lieu MSC × 4",p:"~9€",u:"Dîners alternés × 2 semaines"},
+    {n:"🐟 Saumon mi-cuit portions × 4",p:"~12€",u:"Brunchs sam + dîners saumon-patate douce"},
+    {n:"🦐 Crevettes décortiquées ASC 200g × 2",p:"~17€",u:"Dîners sem. 3 & 5"},
+    // 🍗 Viandes blanches
+    {n:"🍗 Filets de poulet bio × 4",p:"~9,50€",u:"Bowl quinoa-poulet-avocat déjeuners"},
+    {n:"🦃 Escalopes de dinde × 4",p:"~7,90€",u:"Dîners dinde-légumes rôtis"},
+    // 🥚 Œufs — urgent
+    {n:"🥚 Œufs plein air Label Rouge × 12",p:"~4,50€",u:"Brunchs + galettes complètes + mousse"},
+    // 🍓 Fruits surgelés
+    {n:"🍓 Fruits rouges mélange bio 450g × 2",p:"~14€",u:"Bases Ninja Creami + porridges"},
+    {n:"🍓 Framboises entières bio 450g × 2",p:"~20€",u:"Porridges + desserts"},
+    {n:"🥭 Mangues morceaux bio 450g",p:"~5,30€",u:"Bases Ninja Creami"},
     // 🥬 Légumes
-    {n:"🥬 Épinards en branches bio 600g × 3",p:"8,70€",u:"Batch sautés ail hebdo"},
-    {n:"🫘 Haricots verts extra-fins 1kg",p:"2,69€",u:"Dîner cabillaud anniversaire 14 avr"},
-    {n:"🥦 Brocolis 1kg",p:"3,60€",u:"Dîner saumon-patate douce + tofu"},
-    {n:"🥕 Carottes en rondelles 600g",p:"2,20€",u:"Batch carottes curcuma sem. 2"},
-    {n:"🥬 Poireaux émincés 600g",p:"2,50€",u:"Papillotes dîners sem. 2 & 5"},
-    // 🐟 Poissons
-    {n:"🐟 6 portions cabillaud MSC 600g × 2",p:"35,98€",u:"Dîners papillotes + anniversaire"},
-    {n:"🐟 Filets colin lieu MSC 500g × 2",p:"17,98€",u:"Dîners papillotes alternance"},
-    {n:"🐟 Saumon mi-cuit portions 300g",p:"9,50€",u:"Brunchs sam. + dîners saumon-patate douce"},
-    {n:"🦐 Crevettes décortiquées ASC 200g",p:"8,50€",u:"Dîners sem. 3 & 5"},
-    // 🍗 Viandes blanches (Picard)
-    {n:"🍗 Filets de poulet bio 4×120g",p:"9,50€",u:"Déjeuners bowl quinoa-poulet × 4 sem"},
-    {n:"🦃 Escalopes de dinde × 4",p:"7,90€",u:"Dîners dinde-légumes rôtis sem. 3 & 5"},
-    {n:"🥩 Agneau confit portions 200g",p:"8,50€",u:"Dîner agneau-polenta sem. 4"},
+    {n:"🥬 Épinards branches bio 600g × 3",p:"~8,70€",u:"Batch sautés ail hebdo"},
+    {n:"🥦 Brocolis surgelés 1kg",p:"~3,60€",u:"Dîners saumon-patate douce + tofu"},
+    {n:"🥬 Poireaux émincés 600g",p:"~2,50€",u:"Papillotes dîner sem. 2 & 4"},
     // 🌿 Aromates
-    {n:"🫚 Gingembre coupé 75g × 2",p:"4,00€",u:"Infusions quotidiennes + dîners"},
-    {n:"🧄 Ail coupé 100g",p:"2,99€",u:"Épinards batch + dîners"},
-    {n:"🧅 Échalote coupée 100g",p:"2,85€",u:"Dîner colin sem. 4"},
-    {n:"🌿 Persil plat coupé 250g",p:"2,25€",u:"Déjeuners bureau quotidiens — dopamine"},
-    {n:"🌿 Basilic coupé bio 50g × 2",p:"4,80€",u:"Déjeuners + dîners + brunchs"},
-    {n:"🌿 Thym coupé 50g",p:"2,00€",u:"Papillotes + fruits rôtis"},
-    {n:"🌿 Sauge coupée 30g",p:"2,00€",u:"Poulet-patate douce + agneau"},
-    {n:"🌿 Romarin coupé 30g",p:"2,00€",u:"Fraises poêlées snack TV"},
+    {n:"🫚 Gingembre coupé 75g × 2",p:"~4€",u:"Complément gingembre frais — dîners"},
+    {n:"🧄 Ail coupé 100g",p:"~3€",u:"Épinards batch + tous les dîners"},
+    {n:"🌿 Persil plat coupé 250g",p:"~2,25€",u:"Déjeuners bureau quotidiens — dopamine"},
+    {n:"🌿 Basilic coupé bio 50g × 2",p:"~4,80€",u:"Déjeuners + dîners + brunchs"},
+    {n:"🌿 Thym coupé 50g",p:"~2€",u:"Papillotes + fruits rôtis"},
+    {n:"🌿 Sauge coupée 30g",p:"~2€",u:"Poulet-patate douce + agneau"},
   ],
 
   // ── BENE BONO / MARCHÉ · Frais · ~25-30€/semaine ──
   beno:[
     // Essentiels chaque semaine
-    {n:"🍋 Citrons bio × 6 — SYSTÉMATIQUES",p:"~2€",u:"Sur tout : lentilles, poisson, salades, dîners"},
-    {n:"🥚 Œufs bio × 6",p:"~2,50€",u:"Brunchs week-end + mousse chocolat anniversaire"},
-    {n:"🍯 Miel bio (si pas La Fourche)",p:"~3€",u:"Fruits rôtis snack TV — abricots, poires, fraises"},
-    // Légumes frais par usage
-    {n:"🥑 Avocats × 3",p:"marché",u:"Bowl quinoa-poulet-avocat (lun. sem. 1,2,4,5) + salade thon"},
-    {n:"🍆 Aubergines × 2",p:"marché",u:"Caviar aubergines-tahini brunchs sam. 11, 25 avr, 9 mai"},
-    {n:"🍅 Tomates fraîches × 4",p:"marché",u:"Brunch salade pois chiches-basilic dim."},
-    {n:"🫑 Poivrons rouges × 3",p:"marché",u:"Déjeuners bureau sem. 1, 3 & 5 — vit C + fer"},
-    {n:"🥕 Carottes fraîches × 4",p:"marché",u:"Batch carottes curcuma + déjeuner poulet"},
-    {n:"🍠 Patates douces × 4",p:"marché",u:"Dîners saumon-patate douce (sem.2,4) + poulet"},
-    {n:"🥒 Courgettes × 4",p:"marché",u:"Saison fin avril · papillotes + brandade"},{n:"🌱 Oignons nouveaux × 1 botte",p:"marché",u:"Saison avril · déjeuners + dîners"},
-    {n:"🌿 Fenouil × 2",p:"marché",u:"Papillotes dîner sem. 2 & 4"},
-    {n:"🎃 Brocoli frais × 2 + Épinards frais 300g",p:"marché",u:"Veloutés dîner dim. sem. 2, 3 & 4"},
-    {n:"🌰 Petits pois frais ou surgelés 500g",p:"marché",u:"Veloutés brocoli-petits pois"},
-    {n:"🥗 Betteraves cuites × 3",p:"marché",u:"Déjeuners sardines-betteraves (sem.2,3,5)"},
-    {n:"🧅 Carottes nouvelles × 4",p:"marché",u:"Velouté carottes-gingembre dîner sem. 3 & 5"},
-    // Fruits frais par usage
-    {n:"🍐 Poires × 4",p:"marché",u:"Fruits rôtis snack TV + velouté carottes nouvelles"},
-    {n:"🍑 Fraises × 500g + Rhubarbe si dispo",p:"marché",u:"Fruits rôtis + moelleux pêches dim. 26 avr"},
-    {n:"🥝 Kiwis × 3",p:"marché",u:"Petit-déj vit C++ sem. 2"},
-    {n:"🍎 Pommes × 4",p:"marché",u:"Compotées snack TV sem. 4 & 5"},
-    {n:"🍑 Fraises × 500g (saison fin avril)",p:"marché",u:"Snack TV fraises poêlées romarin sem. 2,3,4"},
+    {n:"🍋 Citrons bio × 6 — SYSTÉMATIQUES",p:"~2,50€",u:"Sur tout : lentilles, poisson, salades, dîners"},
+    {n:"🥑 Avocats × 3",p:"~4€",u:"Bowl quinoa-poulet-avocat + salade thon"},
+    // Légumes frais saison avril-mai
+    {n:"🌱 Asperges vertes × 1 botte",p:"~4€",u:"Saison avril · vapeur 8 min · anti-SJSR"},
+    {n:"🥕 Carottes nouvelles × 4",p:"~2€",u:"Batch carottes curcuma + déjeuners"},
+    {n:"🍠 Patates douces × 3",p:"~3€",u:"Dîners saumon-patate douce"},
+    {n:"🥒 Courgettes × 4",p:"~3€",u:"Papillotes + brandade"},
+    {n:"🌿 Fenouil × 2",p:"~3€",u:"Velouté fenouil-lentilles dîner"},
+    {n:"🥬 Épinards frais 200g",p:"~2,50€",u:"Déjeuners + dîners crus"},
+    {n:"🧅 Oignons nouveaux",p:"~1,50€",u:"Saison avril · déjeuners + dîners"},
+    {n:"🥗 Betteraves cuites × 3",p:"~3€",u:"Déjeuners sardines-betteraves"},
+    // Fruits saison
+    {n:"🍎 Pommes × 4",p:"~3€",u:"Compotées snack TV + porridges"},
+    {n:"🍋 Kiwis × 4",p:"~3€",u:"Petit-déj vit C++ · saison avril"},
+    {n:"🍌 Bananes × 1 régime",p:"~2€",u:"Porridges millet-banane quotidiens"},
+    {n:"🍓 Fraises × 500g dès fin avril",p:"~4€",u:"Saison fin avril · petit-déj + snacks"},
     // Herbes fraîches
-    {n:"🌿 Persil plat frais",p:"marché",u:"TOUS les déjeuners bureau — dopamine + fer"},
-    {n:"🌿 Basilic frais",p:"marché",u:"Brunchs dominicaux + dîners basilic"},
-    {n:"🌿 Sauge fraîche",p:"marché",u:"Poulet-patate douce sem. 3"},
-    {n:"🌿 Thym frais",p:"marché",u:"Fruits rôtis abricots + poires"},
-    {n:"🌿 Romarin frais",p:"marché",u:"Fraises poêlées snack TV"},
-    {n:"🌿 Menthe fraîche",p:"marché",u:"Soupe pois cassés-menthe dîner sem. 3"},
+    {n:"🌿 Persil plat frais",p:"~1,50€",u:"TOUS les déjeuners — dopamine + fer"},
+    {n:"🌿 Basilic frais",p:"~1,50€",u:"Brunchs + dîners"},
+    {n:"🌿 Menthe fraîche",p:"~1,50€",u:"Infusions + soupe pois cassés"},
+    {n:"🫚 Gingembre frais × 1 gros morceau",p:"~3€",u:"Infusions quotidiennes + tous les plats"},
+    {n:"🌿 Curcuma frais × 2",p:"~3€",u:"Anti-inflammatoire — tous les dîners"},
   ]
 };
 
@@ -3088,28 +2911,24 @@ function toggleBatchStep(weekIdx, secIdx, stepIdx, checkbox){
 }
 
 
+
 // ══════════════════════════════════════
-// JOURNAL DE NUIT SJSR
+// JOURNAL DE NUIT SJSR — MULTI-CYCLES
 // ══════════════════════════════════════
 
 const PAIN_LABELS = {
-  0:"Aucune douleur", 1:"Très légère", 2:"Légère",
-  3:"Légère-modérée", 4:"Modérée", 5:"Modérée",
-  6:"Modérée-intense", 7:"Intense", 8:"Très intense",
-  9:"Sévère", 10:"Insupportable"
+  0:"Aucune douleur",1:"Très légère",2:"Légère",3:"Légère-modérée",
+  4:"Modérée",5:"Modérée",6:"Modérée-intense",7:"Intense",
+  8:"Très intense",9:"Sévère",10:"Insupportable"
 };
-
-const FEELING_ICONS = {
-  exhausted:"😫", tired:"😔", ok:"😐",
-  good:"🙂", great:"😊", excellent:"🌟"
-};
+const FEELING_ICONS = {exhausted:"😫",tired:"😔",ok:"😐",good:"🙂",great:"😊",excellent:"🌟"};
 
 let sleepCurrentDate = new Date();
 let sleepQuality = 0;
 let sleepFeeling = "";
 let sleepData = {};
+let sleepCycles = [{bedtime:"22:30",wakeTime:"07:00"}];
 
-// Load from localStorage
 try {
   const saved = localStorage.getItem("sjsr_sleep");
   if(saved) sleepData = JSON.parse(saved);
@@ -3117,246 +2936,285 @@ try {
 
 function sleepDateKey(d) {
   const dd = d || sleepCurrentDate;
-  return dd.getFullYear() + "-" + String(dd.getMonth()+1).padStart(2,"0") + "-" + String(dd.getDate()).padStart(2,"0");
+  return dd.getFullYear()+"-"+String(dd.getMonth()+1).padStart(2,"0")+"-"+String(dd.getDate()).padStart(2,"0");
 }
 
 function sleepDateLabel(d) {
   const dd = d || sleepCurrentDate;
-  const days = ["Dimanche","Lundi","Mardi","Mercredi","Jeudi","Vendredi","Samedi"];
-  const months = ["janvier","février","mars","avril","mai","juin","juillet","août","septembre","octobre","novembre","décembre"];
-  return days[dd.getDay()] + " " + dd.getDate() + " " + months[dd.getMonth()] + " " + dd.getFullYear();
+  const days=["Dimanche","Lundi","Mardi","Mercredi","Jeudi","Vendredi","Samedi"];
+  const months=["janvier","février","mars","avril","mai","juin","juillet","août","septembre","octobre","novembre","décembre"];
+  return days[dd.getDay()]+" "+dd.getDate()+" "+months[dd.getMonth()]+" "+dd.getFullYear();
 }
 
 function sleepNavDate(delta) {
-  sleepCurrentDate = new Date(sleepCurrentDate.getTime() + delta * 86400000);
+  sleepCurrentDate = new Date(sleepCurrentDate.getTime()+delta*86400000);
   loadSleepEntry();
   updateSleepStats();
+}
+
+function toMin(t) {
+  if(!t) return 0;
+  const [h,m]=t.split(":").map(Number);
+  return h*60+m;
+}
+
+function formatDuration(min) {
+  if(min<0) min+=1440;
+  if(min<0) min=0;
+  const h=Math.floor(min/60);
+  const m=min%60;
+  return h+"h"+String(m).padStart(2,"0");
+}
+
+function calcCycleDuration(bedtime, wakeTime) {
+  let d = toMin(wakeTime) - toMin(bedtime);
+  if(d<0) d+=1440;
+  return d;
+}
+
+function renderCycles() {
+  const container = document.getElementById("sleepCyclesContainer");
+  if(!container) return;
+  container.innerHTML = "";
+  
+  sleepCycles.forEach((cycle, i) => {
+    const div = document.createElement("div");
+    div.className = "sleep-cycle-block";
+    const dur = cycle.bedtime && cycle.wakeTime ? calcCycleDuration(cycle.bedtime, cycle.wakeTime) : 0;
+    const durStr = dur > 0 ? formatDuration(dur) : "—";
+    const isGood = dur >= 60;
+    
+    div.innerHTML = `
+      <div class="sleep-cycle-header">
+        <div class="sleep-cycle-title">🌙 Cycle ${i+1}${i===0?" · Premier coucher":i===sleepCycles.length-1?" · Dernier réveil":" · Recouché"}</div>
+        ${sleepCycles.length>1?`<button class="sleep-cycle-delete" onclick="removeCycle(${i})">✕</button>`:""}
+      </div>
+      <div class="sleep-cycle-row">
+        <div class="sleep-cycle-field">
+          <label>${i===0?"Couché à":"Recouché à"}</label>
+          <input type="time" value="${cycle.bedtime||""}" onchange="updateCycle(${i},'bedtime',this.value)">
+        </div>
+        <div class="sleep-cycle-field">
+          <label>Levé à</label>
+          <input type="time" value="${cycle.wakeTime||""}" onchange="updateCycle(${i},'wakeTime',this.value)">
+        </div>
+      </div>
+      <div class="sleep-cycle-duration" style="color:${isGood?'var(--leaf-dark)':'#c47a2a'}">
+        ⏱ ${durStr} de sommeil${i===0?"":" ce cycle"}
+      </div>
+    `;
+    container.appendChild(div);
+  });
+  
+  updateCumulStats();
+}
+
+function updateCycle(i, field, value) {
+  sleepCycles[i][field] = value;
+  renderCycles();
+}
+
+function addSleepCycle() {
+  const lastCycle = sleepCycles[sleepCycles.length-1];
+  sleepCycles.push({bedtime: lastCycle.wakeTime||"", wakeTime:""});
+  renderCycles();
+}
+
+function removeCycle(i) {
+  if(sleepCycles.length<=1) return;
+  sleepCycles.splice(i,1);
+  renderCycles();
+}
+
+function updateCumulStats() {
+  let totalSleep = 0;
+  let totalLit = 0;
+  
+  sleepCycles.forEach(cycle => {
+    if(cycle.bedtime && cycle.wakeTime) {
+      const dur = calcCycleDuration(cycle.bedtime, cycle.wakeTime);
+      if(dur > 0 && dur < 720) { // max 12h par cycle
+        totalSleep += dur;
+        totalLit += dur;
+      }
+    }
+  });
+  
+  const nbLevers = Math.max(0, sleepCycles.length - 1);
+  
+  const cumul = document.getElementById("slpTotalCumul");
+  const lit = document.getElementById("slpTotalLit");
+  const levers = document.getElementById("slpNbLevers");
+  
+  if(cumul) {
+    cumul.textContent = totalSleep>0 ? formatDuration(totalSleep) : "—";
+    cumul.className = "sleep-calc-value "+(totalSleep>=420?"good":totalSleep>=300?"warning":"bad");
+  }
+  if(lit) lit.textContent = totalLit>0 ? formatDuration(totalLit) : "—";
+  if(levers) {
+    levers.textContent = nbLevers+"x";
+    levers.className = "sleep-calc-value "+(nbLevers<=1?"good":nbLevers<=3?"warning":"bad");
+  }
 }
 
 function loadSleepEntry() {
   const key = sleepDateKey();
   const el = document.getElementById("sleepDateLabel");
   if(el) el.textContent = sleepDateLabel();
-
+  
   const entry = sleepData[key] || {};
   
-  // Set times
-  if(document.getElementById("slpBedtime")) {
-    document.getElementById("slpBedtime").value = entry.bedtime || "22:30";
-    document.getElementById("slpSleepTime").value = entry.sleepTime || "23:15";
-    document.getElementById("slpWakeTime").value = entry.wakeTime || "07:00";
-    autoCalcSleep();
-  }
-
+  // Load cycles
+  sleepCycles = entry.cycles || [{bedtime:"22:30",wakeTime:"07:00"}];
+  renderCycles();
+  
   // Stars
   sleepQuality = entry.quality || 0;
   updateStars();
-
+  
   // Feeling
   sleepFeeling = entry.feeling || "";
   updateFeelingBtns();
-
-  // Pain sliders
+  
+  // Pain
   if(document.getElementById("painMorning")) {
-    document.getElementById("painMorning").value = entry.painMorning || 0;
-    document.getElementById("painDay").value = entry.painDay || 0;
+    document.getElementById("painMorning").value = entry.painMorning||0;
+    document.getElementById("painDay").value = entry.painDay||0;
     updatePainDisplay("painMorning","painMorningDisplay");
     updatePainDisplay("painDay","painDayDisplay");
   }
-
+  
   // Notes
   if(document.getElementById("sleepNotes"))
-    document.getElementById("sleepNotes").value = entry.notes || "";
-
-  // Saved indicator
+    document.getElementById("sleepNotes").value = entry.notes||"";
+  
   const ind = document.getElementById("sleepSavedIndicator");
-  if(ind) ind.textContent = entry.savedAt ? "✓ Enregistrée le " + entry.savedAt : "";
+  if(ind) ind.textContent = entry.savedAt?"✓ Enregistrée à "+entry.savedAt:"";
 }
 
-function autoCalcSleep() {
-  const bed = document.getElementById("slpBedtime")?.value;
-  const sleep = document.getElementById("slpSleepTime")?.value;
-  const wake = document.getElementById("slpWakeTime")?.value;
-  if(!bed || !sleep || !wake) return;
-
-  function toMin(t) {
-    const [h,m] = t.split(":").map(Number);
-    return h * 60 + m;
-  }
-  function formatDuration(min) {
-    if(min < 0) min += 1440;
-    const h = Math.floor(min/60);
-    const m = min % 60;
-    return h + "h " + String(m).padStart(2,"0") + "min";
-  }
-
-  const bedMin = toMin(bed);
-  const sleepMin = toMin(sleep);
-  const wakeMin = toMin(wake);
-
-  let totalBed = wakeMin - bedMin;
-  if(totalBed < 0) totalBed += 1440;
-
-  let totalSleep = wakeMin - sleepMin;
-  if(totalSleep < 0) totalSleep += 1440;
-
-  let latency = sleepMin - bedMin;
-  if(latency < 0) latency += 1440;
-
-  const bedEl = document.getElementById("slpTotalBed");
-  const sleepEl = document.getElementById("slpTotalSleep");
-  const latEl = document.getElementById("slpLatency");
-
-  if(bedEl) bedEl.textContent = formatDuration(totalBed);
-  if(sleepEl) {
-    sleepEl.textContent = formatDuration(totalSleep);
-    sleepEl.className = "sleep-calc-value " + (totalSleep >= 420 ? "good" : totalSleep >= 300 ? "warning" : "bad");
-  }
-  if(latEl) {
-    latEl.textContent = formatDuration(latency);
-    latEl.className = "sleep-calc-value " + (latency <= 30 ? "good" : latency <= 60 ? "warning" : "bad");
-  }
-}
-
-function setSleepQuality(n) {
-  sleepQuality = n;
-  updateStars();
-}
+function setSleepQuality(n) { sleepQuality=n; updateStars(); }
 
 function updateStars() {
-  document.querySelectorAll(".sleep-star").forEach((s,i) => {
-    s.classList.toggle("active", i < sleepQuality);
+  document.querySelectorAll(".sleep-star").forEach((s,i)=>{
+    s.classList.toggle("active",i<sleepQuality);
   });
 }
 
-function setSleepFeeling(f) {
-  sleepFeeling = f;
-  updateFeelingBtns();
-}
+function setSleepFeeling(f) { sleepFeeling=f; updateFeelingBtns(); }
 
 function updateFeelingBtns() {
-  document.querySelectorAll(".sleep-feeling-btn").forEach(btn => {
-    const f = btn.getAttribute("onclick").match(/'([^']+)'/)?.[1];
-    btn.classList.toggle("selected", f === sleepFeeling);
+  document.querySelectorAll(".sleep-feeling-btn").forEach(btn=>{
+    const f=btn.getAttribute("onclick").match(/'([^']+)'/)?.[1];
+    btn.classList.toggle("selected",f===sleepFeeling);
   });
 }
 
-function updatePainDisplay(sliderId, displayId) {
-  const val = parseInt(document.getElementById(sliderId)?.value || 0);
-  const el = document.getElementById(displayId);
+function updatePainDisplay(sliderId,displayId) {
+  const val=parseInt(document.getElementById(sliderId)?.value||0);
+  const el=document.getElementById(displayId);
   if(!el) return;
-  el.textContent = val + " — " + (PAIN_LABELS[val] || "");
-  el.className = "pain-val-display p" + val;
+  el.textContent=val+" — "+(PAIN_LABELS[val]||"");
+  el.className="pain-val-display p"+val;
 }
 
 function saveSleepEntry() {
-  const key = sleepDateKey();
-  const now = new Date();
-  const timeStr = String(now.getHours()).padStart(2,"0") + "h" + String(now.getMinutes()).padStart(2,"0");
-
-  sleepData[key] = {
-    bedtime: document.getElementById("slpBedtime")?.value,
-    sleepTime: document.getElementById("slpSleepTime")?.value,
-    wakeTime: document.getElementById("slpWakeTime")?.value,
+  const key=sleepDateKey();
+  const now=new Date();
+  const timeStr=String(now.getHours()).padStart(2,"0")+"h"+String(now.getMinutes()).padStart(2,"0");
+  
+  // Calc total sleep for stats
+  let totalMin = 0;
+  sleepCycles.forEach(c=>{
+    if(c.bedtime&&c.wakeTime){
+      const d=calcCycleDuration(c.bedtime,c.wakeTime);
+      if(d>0&&d<720) totalMin+=d;
+    }
+  });
+  
+  sleepData[key]={
+    cycles: sleepCycles,
+    totalMin: totalMin,
+    nbLevers: Math.max(0,sleepCycles.length-1),
     quality: sleepQuality,
     feeling: sleepFeeling,
-    painMorning: parseInt(document.getElementById("painMorning")?.value || 0),
-    painDay: parseInt(document.getElementById("painDay")?.value || 0),
-    notes: document.getElementById("sleepNotes")?.value || "",
+    painMorning: parseInt(document.getElementById("painMorning")?.value||0),
+    painDay: parseInt(document.getElementById("painDay")?.value||0),
+    notes: document.getElementById("sleepNotes")?.value||"",
     savedAt: timeStr
   };
-
-  try { localStorage.setItem("sjsr_sleep", JSON.stringify(sleepData)); } catch(e){}
-
-  const ind = document.getElementById("sleepSavedIndicator");
-  if(ind) ind.textContent = "✓ Enregistrée à " + timeStr;
-
-  // Flash save button
-  const btn = document.querySelector(".sleep-save-btn");
-  if(btn) {
-    btn.textContent = "✅ Nuit enregistrée !";
-    btn.style.background = "linear-gradient(135deg,#4a8a5a,#2a6a3a)";
-    setTimeout(() => {
-      btn.textContent = "💾 Enregistrer cette nuit";
-      btn.style.background = "";
-    }, 2000);
+  
+  try { localStorage.setItem("sjsr_sleep",JSON.stringify(sleepData)); } catch(e){}
+  
+  const ind=document.getElementById("sleepSavedIndicator");
+  if(ind) ind.textContent="✓ Enregistrée à "+timeStr;
+  
+  const btn=document.querySelector(".sleep-save-btn");
+  if(btn){
+    btn.textContent="✅ Nuit enregistrée !";
+    btn.style.background="linear-gradient(135deg,#4a8a5a,#2a6a3a)";
+    setTimeout(()=>{btn.textContent="💾 Enregistrer cette nuit";btn.style.background="";},2000);
   }
-
+  
   updateSleepStats();
 }
 
-function calcSleepHours(entry) {
-  if(!entry || !entry.sleepTime || !entry.wakeTime) return null;
-  function toMin(t){ const [h,m]=t.split(":").map(Number); return h*60+m; }
-  let d = toMin(entry.wakeTime) - toMin(entry.sleepTime);
-  if(d < 0) d += 1440;
-  return Math.round(d/6)/10; // one decimal hour
-}
-
 function updateSleepStats() {
-  // Build week selector (last 4 weeks)
-  const selEl = document.getElementById("sleepWeekSelector");
-  if(!selEl) return;
-
-  // Get all entries sorted
-  const allKeys = Object.keys(sleepData).sort().reverse();
-  if(allKeys.length === 0) {
-    selEl.innerHTML = '<div style="font-size:0.7rem;color:var(--muted);padding:0.5rem">Aucune nuit enregistrée.</div>';
-    document.getElementById("sleepHistoryList").innerHTML = "";
+  const histEl=document.getElementById("sleepHistoryList");
+  if(!histEl) return;
+  
+  const allKeys=Object.keys(sleepData).sort().reverse();
+  if(allKeys.length===0){
+    histEl.innerHTML='<div style="font-size:0.7rem;color:var(--muted);padding:0.5rem">Aucune nuit enregistrée.</div>';
     return;
   }
-
-  // Show last 7 entries history
-  const histEl = document.getElementById("sleepHistoryList");
-  let histHTML = "";
-  const recent = allKeys.slice(0, 14);
-
-  // Compute stats on all entries
-  let totalHours = 0, countH = 0;
-  let totalQ = 0, countQ = 0;
-  let totalPM = 0, totalPD = 0, countP = 0;
-
-  recent.forEach(key => {
-    const e = sleepData[key];
-    const h = calcSleepHours(e);
-    const d = new Date(key + "T12:00:00");
-    const dayNames = ["Dim","Lun","Mar","Mer","Jeu","Ven","Sam"];
-    const dayLabel = dayNames[d.getDay()] + " " + d.getDate() + "/" + (d.getMonth()+1);
-
-    if(h !== null){ totalHours += h; countH++; }
-    if(e.quality){ totalQ += e.quality; countQ++; }
-    if(e.painMorning !== undefined){ totalPM += e.painMorning; totalPD += (e.painDay||0); countP++; }
-
-    const qualStars = e.quality ? "★".repeat(e.quality) + "☆".repeat(5-e.quality) : "—";
-    const feelIcon = FEELING_ICONS[e.feeling] || "—";
-    const hoursStr = h !== null ? h + "h" : "—";
-    const pmStr = e.painMorning !== undefined ? e.painMorning + "/10" : "—";
-    const barPct = h ? Math.min(100, (h/9)*100) : 0;
-    const barColor = h >= 7 ? "#6b9e78" : h >= 5 ? "#c8a050" : "#c04040";
-
-    histHTML += `<div class="sleep-history-row">
+  
+  let histHTML="";
+  let totH=0,cntH=0,totQ=0,cntQ=0,totPM=0,totPD=0,totL=0,cntP=0;
+  
+  allKeys.slice(0,14).forEach(key=>{
+    const e=sleepData[key];
+    const totalMin=e.totalMin||0;
+    const h=totalMin>0?Math.round(totalMin/6)/10:null;
+    const d=new Date(key+"T12:00:00");
+    const dayNames=["Dim","Lun","Mar","Mer","Jeu","Ven","Sam"];
+    const dayLabel=dayNames[d.getDay()]+" "+d.getDate()+"/"+(d.getMonth()+1);
+    const nbLevers=e.nbLevers||0;
+    
+    if(h!==null){totH+=h;cntH++;}
+    if(e.quality){totQ+=e.quality;cntQ++;}
+    if(e.painMorning!==undefined){totPM+=e.painMorning;totPD+=(e.painDay||0);totL+=nbLevers;cntP++;}
+    
+    const qualStars=e.quality?"★".repeat(e.quality)+"☆".repeat(5-e.quality):"—";
+    const feelIcon=FEELING_ICONS[e.feeling]||"—";
+    const hoursStr=h!==null?h+"h":"—";
+    const pmStr=e.painMorning!==undefined?e.painMorning+"/10":"—";
+    const leversStr=nbLevers+"x";
+    const barPct=h?Math.min(100,(h/9)*100):0;
+    const barColor=h>=7?"#6b9e78":h>=5?"#c8a050":"#c04040";
+    
+    histHTML+=`<div class="sleep-history-row">
       <div class="shr-date">${dayLabel}</div>
       <div class="shr-hours" style="color:${h>=7?"#4a8a4a":h>=5?"#c47a2a":"#c04040"}">${hoursStr}</div>
       <div class="shr-bar"><div class="shr-bar-fill" style="width:${barPct}%;background:${barColor}"></div></div>
       <div class="shr-stars" style="font-size:0.62rem;color:#d4a843">${qualStars}</div>
       <div class="shr-pain" style="font-size:0.62rem;color:${e.painMorning>=7?"#c04040":e.painMorning>=4?"#c47a2a":"#4a8a4a"}">${pmStr}</div>
+      <div style="font-size:0.6rem;color:var(--muted);width:20px">${leversStr}</div>
       <div class="shr-feeling">${feelIcon}</div>
     </div>`;
   });
-
-  histEl.innerHTML = histHTML;
-
-  // Update stat boxes
-  const avgH = countH ? (totalHours/countH).toFixed(1) + "h" : "—";
-  const avgQ = countQ ? (totalQ/countQ).toFixed(1) + "★" : "—";
-  const avgPM = countP ? (totalPM/countP).toFixed(1) + "/10" : "—";
-  const avgPD = countP ? (totalPD/countP).toFixed(1) + "/10" : "—";
-
-  if(document.getElementById("statAvgSleep")) {
-    document.getElementById("statAvgSleep").textContent = avgH;
-    document.getElementById("statAvgQuality").textContent = avgQ;
-    document.getElementById("statAvgPainM").textContent = avgPM;
-    document.getElementById("statAvgPainD").textContent = avgPD;
+  
+  histEl.innerHTML=histHTML;
+  
+  const avgH=cntH?(totH/cntH).toFixed(1)+"h":"—";
+  const avgQ=cntQ?(totQ/cntQ).toFixed(1)+"★":"—";
+  const avgPM=cntP?(totPM/cntP).toFixed(1)+"/10":"—";
+  const avgL=cntP?(totL/cntP).toFixed(1)+"x":"—";
+  
+  if(document.getElementById("statAvgSleep")){
+    document.getElementById("statAvgSleep").textContent=avgH;
+    document.getElementById("statAvgQuality").textContent=avgQ;
+    document.getElementById("statAvgPainM").textContent=avgPM;
+    document.getElementById("statAvgLevers").textContent=avgL;
   }
 }
 
@@ -3553,9 +3411,8 @@ function showView(v){
   });
   if(v==='diner') buildDiners();
   if(v==='batch'){ renderBatchWeek(currentBatchWeek); }
-  if(v==='journal'){ loadSleepEntry(); updateSleepStats(); autoCalcSleep(); }
+  if(v==='journal'){ loadSleepEntry(); updateSleepStats(); renderCycles(); }
   if(v==='journal'){setDateLabel();loadJournalHistory();updateTimerDisplay();}
-  if(v==='shopping'){ buildShoppingDynamic(); buildShopping(); }
 }
 
 // Hide tips view initially (merged into conseils accessible via journal)
@@ -3590,572 +3447,6 @@ window.addEventListener('beforeinstallprompt', (e) => {
 window.addEventListener('appinstalled', () => {
   document.getElementById('install-banner').style.display = 'none';
 });
-
-// ══════════════════════════════════════════
-// ── BASE RECETTES SJSR/TDAH ──
-// ══════════════════════════════════════════
-const RECETTES_DB = [
-  {id:"R01",nom:"Verrines de carottes au cumin",saison:"printemps",cat:"entree",portions:6,prep:20,cuis:15,
-   ingr:["1 kg de carottes","1 oignon","15 cl de crème de riz","Huile d'olive","Cumin","Sel Santé, poivre"],
-   etapes:["Éplucher et couper les carottes en rondelles.","Émincer l'oignon, faire revenir dans l'huile d'olive.","Ajouter carottes, cumin, Sel Santé et poivre.","Cuire à feu doux 15 minutes.","Mixer et ajouter la crème de riz progressivement.","Verser dans des verrines. Ajouter un filet de citron."],
-   sjsr:"Carottes riches en bêta-carotène (antioxydant), cumin anti-inflammatoire. Apport indirect en fer végétal.",
-   ajust:"Citron ajouté pour améliorer l'absorption du fer. Sel Santé.",
-   fer:true,ca:false,mg:false,om:false,dp:true},
-  {id:"R02",nom:"Galettes de pomme de terre",saison:"printemps",cat:"entree",portions:6,prep:20,cuis:15,
-   ingr:["8 pommes de terre","1 gros oignon","3 œufs","3 cs farine de pois chiche","Sel Santé, poivre","Huile d'olive"],
-   etapes:["Éplucher et râper les pommes de terre.","Émincer l'oignon.","Mélanger : pommes de terre, oignon, œufs, farine, Sel Santé, poivre.","Chauffer l'huile d'olive dans une poêle.","Déposer des cuillerées, aplatir. Cuire jusqu'à dorure.","Servir tiède avec salade verte et filet de citron."],
-   sjsr:"Index glycémique modéré grâce à la farine de pois chiche. Potassium des pommes de terre. Économique et satiétant.",
-   ajust:"Farine de pois chiche préférée à la farine de riz (plus de protéines + fer). Cuisson huile d'olive.",
-   fer:true,ca:false,mg:false,om:false,dp:false},
-  {id:"R03",nom:"Flan d'aubergines",saison:"printemps",cat:"entree",portions:10,prep:10,cuis:30,
-   ingr:["700 g d'aubergines","60 g de flocons de riz","4 œufs","2 gousses d'ail","Herbes de Provence","Sel Santé, poivre"],
-   etapes:["Préchauffer le four à 180°C.","Cuire les aubergines en dés à la vapeur.","Battre les œufs. Ajouter Sel Santé, poivre, ail écrasé, herbes de Provence.","Ajouter flocons de riz puis aubergines. Mélanger.","Verser dans un moule à cake huilé.","Enfourner 30 minutes. Servir avec salade verte."],
-   sjsr:"Aubergines riches en nasunine (neuroprotecteur). Œufs = choline (mémoire). Préparable la veille.",
-   ajust:"Sel Santé. Idéal préparé la veille pour limiter la charge cognitive.",
-   fer:false,ca:false,mg:false,om:false,dp:true},
-  {id:"R04",nom:"Risotto de quinoa au brocoli",saison:"printemps",cat:"plat",portions:4,prep:15,cuis:50,
-   ingr:["1 brocoli","1 oignon","200 g de quinoa","Eau","Huile d'olive","Sel Santé, poivre","Persil frais"],
-   etapes:["Faire dorer l'oignon dans l'huile d'olive. Verser le quinoa.","Cuire 1 minute et couvrir d'eau.","Cuire à feu doux 10 min en ajoutant de l'eau au fur et à mesure.","Couper le brocoli en bouquets.","Ajouter le brocoli et cuire encore 10 minutes à couvert.","Parsemer de persil frais avant de servir."],
-   sjsr:"Quinoa = protéine complète + magnésium. Brocoli = sulforaphane (neuroprotecteur), vitamine C. Persil = fer + dopamine.",
-   ajust:"Eau simple (pas de bouillon industriel). Persil frais en fin de cuisson.",
-   fer:true,ca:true,mg:true,om:false,dp:true},
-  {id:"R05",nom:"Steak végétal aux lentilles",saison:"printemps",cat:"plat",portions:8,prep:20,cuis:10,
-   ingr:["200 g de lentilles vertes (trempées la veille)","1 oignon","1 gousse d'ail","50 g farine de riz complet","2 cs graines de lin moulues","Herbes de Provence","Curcuma + poivre noir","Sel Santé"],
-   etapes:["Tremper les lentilles la veille avec 1 cc bicarbonate. Rincer et cuire.","Hacher l'oignon et l'ail.","Mélanger tout avec le lin moulu, la farine, le Sel Santé, le curcuma.","Mixer jusqu'à pâte homogène.","Former des steaks de 2 cm dans une poêle huilée.","Cuire à feu vif sur chaque face."],
-   sjsr:"Lentilles = fer + protéines + fibres. Lin = oméga-3 végétaux. Curcuma + poivre = anti-inflammatoire puissant.",
-   ajust:"Trempage la veille au bicarbonate. Lin moulu (meilleure absorption oméga-3).",
-   fer:true,ca:false,mg:true,om:true,dp:false},
-  {id:"R06",nom:"Poêlée de légumes au curry",saison:"printemps",cat:"plat",portions:4,prep:15,cuis:20,
-   ingr:["1 oignon","4 carottes","4 courgettes","6 pommes de terre","1 aubergine","Champignons de Paris","Huile d'olive","Curry","Sel Santé","200 g lentilles vertes cuites"],
-   etapes:["Faire revenir l'oignon émincé.","Ajouter pommes de terre en dés et carottes.","5 minutes après, ajouter courgettes, aubergine et champignons.","Assaisonner avec Sel Santé et curry. Couvrir.","Mijoter à feu doux 20 minutes.","Ajouter les lentilles cuites à part."],
-   sjsr:"Curry = curcuma + poivre = anti-inflammatoire. Repas léger, faible charge mentale. Lentilles = fer + protéines.",
-   ajust:"Lentilles cuites à part ajoutées en fin. Sel Santé obligatoire.",
-   fer:true,ca:false,mg:false,om:false,dp:false},
-  {id:"R07",nom:"Quiche sans pâte aux épinards",saison:"printemps",cat:"plat",portions:8,prep:10,cuis:20,
-   ingr:["6 œufs","250 ml lait de riz","2 cs farine de sarrasin","Épinards frais ou carottes râpées","Herbes de Provence ou curry","Sel Santé, poivre"],
-   etapes:["Battre les œufs dans un saladier.","Ajouter progressivement le lait de riz.","Incorporer la farine de sarrasin, Sel Santé et poivre.","Ajouter les légumes et les herbes.","Verser dans un plat huilé.","Enfourner à 180°C pendant 20 minutes."],
-   sjsr:"Œufs = tryptophane (sérotonine) + choline. Sarrasin = rutine + magnésium. Rapide, modulable, faible charge mentale.",
-   ajust:"Farine de sarrasin préférée pour liant et nutriments. Légumes de printemps : épinards, carottes râpées.",
-   fer:true,ca:false,mg:true,om:false,dp:true},
-  {id:"R08",nom:"Soupe courgette-pourpier",saison:"printemps",cat:"soupe",portions:4,prep:10,cuis:15,
-   ingr:["1 kg de courgettes","1 grosse poignée de pourpier","1 oignon","15 feuilles de basilic frais","Huile d'olive","Sel Santé, poivre","1 cs graines de lin moulues","Eau"],
-   etapes:["Faire revenir l'oignon dans l'huile d'olive.","Ajouter la courgette en cubes et le pourpier lavé.","Cuire quelques minutes puis couvrir d'eau. Assaisonner.","Cuire encore quelques minutes.","Ajouter le basilic en fin de cuisson et mixer.","Ajouter les graines de lin moulues après mixage."],
-   sjsr:"Pourpier = oméga-3 végétaux. Basilic = magnésium + dopamine. Lin moulu = oméga-3 supplémentaires.",
-   ajust:"Lin moulu ajouté après mixage (préserve les oméga-3). Sel Santé.",
-   fer:true,ca:false,mg:true,om:true,dp:true},
-  {id:"R09",nom:"Velouté aux fanes de radis",saison:"printemps",cat:"soupe",portions:4,prep:15,cuis:25,
-   ingr:["Fanes d'une botte de radis","4 pommes de terre moyennes","1 gousse d'ail","1 oignon","Huile d'olive","Sel Santé, poivre","Persil frais","750 ml d'eau"],
-   etapes:["Émincer l'oignon, faire revenir dans l'huile d'olive.","Laver et émincer les fanes. Les ajouter avec l'ail.","Cuire 2 minutes puis ajouter les pommes de terre en cubes. Assaisonner.","Couvrir d'eau. Cuire 10 minutes.","Mixer et ajouter le persil frais avant de servir."],
-   sjsr:"Fanes de radis = chlorophylle, fer, calcium. Pommes de terre = potassium, vitamine B6 (dopamine/sérotonine). Anti-gaspillage.",
-   ajust:"Persil frais après mixage pour le fer et la dopamine. Sel Santé.",
-   fer:true,ca:true,mg:false,om:false,dp:true},
-  {id:"R10",nom:"Gâteau poires-quinoa",saison:"printemps",cat:"dessert",portions:8,prep:15,cuis:20,
-   ingr:["4 poires mûres","60 g flocons de quinoa","50 g sucre complet","4 œufs","1 carré chocolat 85% (optionnel)"],
-   etapes:["Peler et couper les poires en dés. Disposer au fond d'un plat huilé.","Mélanger les œufs, les flocons de quinoa et le sucre.","Verser sur les poires.","Enfourner 20 minutes à 180°C.","Râper du chocolat sur le dessus si souhaité."],
-   sjsr:"Flocons de quinoa = magnésium + protéines. Poires = fibres douces. Sucre complet = IG plus bas. Chocolat 85% = magnésium.",
-   ajust:"Sucre réduit à 50g. Chocolat 85% préféré. Sans farine.",
-   fer:false,ca:false,mg:true,om:false,dp:true},
-  {id:"R11",nom:"Fondant au chocolat noir",saison:"printemps",cat:"dessert",portions:10,prep:10,cuis:15,
-   ingr:["70 g farine de riz","1 tablette chocolat noir ≥ 70% certifié sans gluten","60 g sucre complet","4 œufs","½ cc bicarbonate de sodium","1 cs huile d'olive bio"],
-   etapes:["Préchauffer le four à 180°C.","Battre les œufs. Ajouter sucre, farine et bicarbonate.","Faire fondre le chocolat à feu très doux.","Verser le chocolat fondu dans le mélange. Remuer jusqu'à pâte lisse.","Ajouter l'huile d'olive.","Verser dans un plat huilé. Enfourner 15 minutes."],
-   sjsr:"Chocolat ≥ 70% = théobromine, magnésium, flavonoïdes. Peu d'ingrédients = charge cognitive faible. Préparable à l'avance.",
-   ajust:"Chocolat certifié sans gluten obligatoire. Sucre réduit à 60g.",
-   fer:true,ca:false,mg:true,om:false,dp:true},
-  {id:"R12",nom:"Galettes au pourpier",saison:"ete",cat:"entree",portions:6,prep:10,cuis:10,
-   ingr:["200 g farine de riz complet","200 g de pourpier","3 œufs","40 cl d'eau","1 cc bicarbonate de sodium","Sel Santé, poivre","Huile d'olive"],
-   etapes:["Laver et couper finement le pourpier.","Battre les œufs. Ajouter farine, bicarbonate, pourpier, Sel Santé et poivre.","Faire chauffer l'huile dans une poêle.","Former de petites boules, les aplatir et cuire dans l'huile.","Servir avec salade de pourpier et citron."],
-   sjsr:"Pourpier = oméga-3 végétaux. Recette rapide 20 min. Citron = vitamine C.",
-   ajust:"Sel Santé. Citron pour l'absorption du fer.",
-   fer:true,ca:false,mg:false,om:true,dp:false},
-  {id:"R13",nom:"Panisse à l'ail",saison:"ete",cat:"entree",portions:6,prep:75,cuis:10,
-   ingr:["250 g farine de pois chiches","4 cs huile d'olive + huile pour cuisson","1 gousse d'ail","60 cl d'eau","Sel Santé, poivre"],
-   etapes:["Placer la farine de pois chiche dans une casserole.","Verser l'eau salée bouillante sur la farine en mélangeant.","Ajouter l'ail, Sel Santé et poivre. Remuer à feu doux jusqu'à épaississement.","Verser l'huile d'olive et continuer à remuer.","Verser dans un moule huilé. Réfrigérer 1h.","Couper en tranches et faire dorer à la poêle."],
-   sjsr:"Pois chiche = fer + protéines + zinc. Recette marseillaise simple. Bonne densité nutritive et économique.",
-   ajust:"Servir avec sauce au pourpier pour les oméga-3. Sel Santé.",
-   fer:true,ca:false,mg:false,om:false,dp:false},
-  {id:"R14",nom:"Salade de riz et lentilles",saison:"ete",cat:"plat",portions:6,prep:20,cuis:20,
-   ingr:["240 g de riz long","4 tomates","1 concombre","2 poignées lentilles vertes","1 oignon","Huile d'olive","Graines de courge","Basilic ou menthe frais","Jus de citron","Sel Santé, poivre"],
-   etapes:["Cuire les lentilles avec l'oignon. Refroidir.","Cuire le riz dans l'eau salée. Refroidir en rinçant. Huiler.","Laver et couper les légumes. Mélanger au riz.","Ajouter lentilles, graines de courge et herbes.","Assaisonner : huile d'olive + jus de citron + Sel Santé.","Servir bien frais."],
-   sjsr:"Riz + lentilles = protéines complètes + fer. Basilic/menthe = dopamine. Graines de courge = zinc + magnésium.",
-   ajust:"Vinaigrette citron + huile d'olive. Sel Santé.",
-   fer:true,ca:false,mg:true,om:false,dp:true},
-  {id:"R15",nom:"Pizzolenta aux légumes",saison:"ete",cat:"plat",portions:6,prep:10,cuis:20,
-   ingr:["Polenta certifiée sans gluten (1 bol)","3x le volume d'eau salée","Coulis de tomate maison","Légumes grillés de saison","Olives noires","Herbes fraîches","Huile d'olive","Sel Santé, poivre"],
-   etapes:["Porter l'eau salée à ébullition. Verser la polenta en remuant.","Cuire à feu moyen jusqu'à épaississement.","Étaler sur une plaque huilée (1 cm d'épaisseur).","Déposer quelques cuillerées de coulis de tomate.","Garnir de légumes, olives et herbes.","Enfourner à 180°C puis passer sous le grill."],
-   sjsr:"Polenta = énergie progressive. Base à garnir selon disponibilités = faible charge décisionnelle (TDAH). Repas ludique.",
-   ajust:"Polenta certifiée sans gluten. Coulis maison sans additifs.",
-   fer:false,ca:false,mg:false,om:false,dp:true},
-  {id:"R16",nom:"Lasagnes chou vert végétariennes",saison:"ete",cat:"plat",portions:6,prep:40,cuis:15,
-   ingr:["1 chou vert","60 g riz complet (cru)","200 ml coulis de tomate maison","2 pommes de terre","Légumes de saison","1 oignon","2 gousses d'ail","Huile d'olive","Muscade, Sel Santé, poivre"],
-   etapes:["Effeuiller le chou. Blanchir 5 minutes.","Cuire le riz complet séparément.","Faire revenir l'oignon avec pommes de terre et légumes. Ajouter l'ail.","Ajouter coulis de tomate et riz. Mélanger.","Alterner couches de chou et couches de farce dans un plat huilé.","Terminer par une couche de chou. Enfourner 15 min à 180°C."],
-   sjsr:"Chou vert = vitamines K, C, calcium. Riz complet = énergie longue durée. Se congèle par portions.",
-   ajust:"Coulis maison sans additifs. Préparation en grande quantité recommandée.",
-   fer:false,ca:true,mg:false,om:false,dp:false},
-  {id:"R17",nom:"Steak riz-courge-gingembre",saison:"ete",cat:"plat",portions:4,prep:45,cuis:15,
-   ingr:["250 g riz complet","1 morceau de courge","1 gros oignon","50 g graines de sésame grillées","1-2 cs tamari sans gluten","Gingembre moulu","Sel Santé, poivre","Huile d'olive"],
-   etapes:["Cuire le riz complet. Mixer avec 1 cs d'huile pour obtenir une pâte.","Couper la courge en lamelles. Hacher l'oignon.","Mélanger : courge, oignon, sésame, tamari, gingembre, Sel Santé.","Ajouter la pâte de riz. Pétrir à la main.","Former des steaks et aplatir sur une plaque huilée.","Enfourner 15 minutes à 200°C."],
-   sjsr:"Gingembre = anti-inflammatoire, circulation (SJSR). Riz complet = magnésium. Sésame = calcium.",
-   ajust:"Tamari sans gluten certifié obligatoire. Steaks pas trop gros pour tenir.",
-   fer:false,ca:true,mg:true,om:false,dp:false},
-  {id:"R18",nom:"Gaspacho",saison:"ete",cat:"soupe",portions:4,prep:30,cuis:0,
-   ingr:["7 tomates","1 poivron rouge","1 poivron jaune","½ concombre","1 gousse d'ail","1 oignon","Jus d'1 citron","Basilic frais","2 cs vinaigre de cidre","2 cs huile d'olive","Sel Santé, poivre"],
-   etapes:["Laver, épépiner et éplucher les légumes.","Mixer tous les ingrédients ensemble.","Diluer en ajoutant de l'eau petit à petit.","Ajouter le vinaigre, l'huile d'olive et le jus de citron.","Ajouter le basilic, Sel Santé et poivre.","Réfrigérer 2 heures avant de servir."],
-   sjsr:"Tomates = lycopène. Poivrons = vitamine C (absorption du fer). Citron systématique. Zéro cuisson = idéal fatigue.",
-   ajust:"Sel Santé. Huile d'olive de qualité. Vinaigre de cidre préféré.",
-   fer:false,ca:false,mg:false,om:false,dp:true},
-  {id:"R19",nom:"Soupe froide melon-fraises",saison:"ete",cat:"soupe",portions:4,prep:10,cuis:0,
-   ingr:["250 g de fraises","½ melon","1 cs huile d'olive","Feuilles de basilic frais","Sel Santé, poivre"],
-   etapes:["Couper le melon en cubes. Laver les fraises.","Mixer les fruits ensemble.","Ajouter l'huile d'olive, le basilic, Sel Santé et poivre.","Réfrigérer 1 à 2 heures avant de servir."],
-   sjsr:"Melon = potassium, hydratation. Fraises = vitamine C, antioxydants. Basilic = dopamine. Anti-inflammatoire naturel.",
-   ajust:"Basilic frais pour la dimension dopamine.",
-   fer:false,ca:false,mg:false,om:false,dp:true},
-  {id:"R20",nom:"Mousse chocolat-poires caramélisées",saison:"ete",cat:"dessert",portions:8,prep:20,cuis:10,
-   ingr:["1 tablette chocolat noir ≥ 70% sans gluten","6 œufs","5 poires mûres","2 cs sucre complet","1 pincée de sel","Feuilles de menthe"],
-   etapes:["Séparer les blancs des jaunes.","Monter les blancs en neige avec une pincée de sel.","Faire fondre le chocolat à feu très doux.","Mélanger chocolat fondu et jaunes battus.","Incorporer délicatement les blancs en neige.","Faire un caramel avec le sucre et l'eau. Ajouter les poires en dés. Cuire 2-3 min.","Verser les poires dans des verrines, puis la mousse. Décorer de menthe."],
-   sjsr:"Chocolat noir = magnésium + flavonoïdes. Recette festive, présentation soignée. Poires = fibres douces.",
-   ajust:"Sucre complet pour le caramel. Chocolat ≥ 70% sans gluten.",
-   fer:true,ca:false,mg:true,om:false,dp:true},
-  {id:"R21",nom:"Gratin quinoa-courge-lentilles",saison:"automne",cat:"plat",portions:8,prep:30,cuis:30,
-   ingr:["240 g de quinoa","240 g lentilles vertes","1 quartier de courge","25 cl crème de riz","1 oignon","1 gousse d'ail","Huile d'olive","1 cc cumin","Sel Santé, poivre"],
-   etapes:["Faire revenir l'oignon dans l'huile d'olive.","Ajouter la courge en dés avec l'ail et le cumin. Cuire jusqu'à tendre.","Précuire les lentilles (rester craquantes).","Précuire le quinoa dans 1,5x son volume d'eau.","Mélanger tout dans un plat allant au four avec la crème de riz.","Enfourner à 180°C pendant 30 minutes."],
-   sjsr:"Quinoa (magnésium), lentilles (fer), courge (bêta-carotène). Plat complet = charge mentale minimale.",
-   ajust:"Crème de riz à la place de la crème animale. Pas de fromage râpé.",
-   fer:true,ca:false,mg:true,om:false,dp:false},
-  {id:"R22",nom:"Poêlée de potimarron au gingembre",saison:"automne",cat:"plat",portions:6,prep:15,cuis:30,
-   ingr:["1 potimarron (peau comestible)","1 oignon","Huile d'olive","1-2 cs tamari sans gluten","Gingembre moulu","Sel Santé, poivre","200 g lentilles vertes cuites","Riz complet"],
-   etapes:["Rincer le potimarron et couper en gros cubes (avec la peau).","Émincer l'oignon et le faire revenir.","Ajouter les cubes de potimarron, tamari, gingembre, Sel Santé et poivre.","Revenir à feu vif 2 minutes puis mijoter à feu doux.","Cuire jusqu'à ce que les cubes soient à peine craquants.","Servir avec riz complet et lentilles."],
-   sjsr:"Potimarron = bêta-carotène, potassium, fibres. Gingembre = anti-inflammatoire, circulation (SJSR).",
-   ajust:"Tamari sans gluten certifié. Peau du potimarron comestible, ne pas éplucher.",
-   fer:true,ca:false,mg:true,om:false,dp:false},
-  {id:"R23",nom:"Gnocchis de pomme de terre au curcuma",saison:"automne",cat:"plat",portions:4,prep:15,cuis:35,
-   ingr:["1 kg pommes de terre bio","300 g farine de riz complet","2 jaunes d'œufs","1 cc curcuma","Poivre noir","Sel Santé"],
-   etapes:["Cuire les pommes de terre 30 min. Éplucher et réduire en purée.","Former un puits avec la farine. Ajouter jaunes, Sel Santé, curcuma, poivre et purée.","Pétrir jusqu'à pâte homogène.","Former des boudins et couper en tronçons de 1 cm.","Plonger dans l'eau bouillante. Retirer dès qu'ils remontent.","Servir avec bolognaise végétarienne."],
-   sjsr:"Curcuma + poivre = anti-inflammatoire. Potassium et vitamine B6 des pommes de terre. Plat réconfortant.",
-   ajust:"Curcuma + poivre dans la pâte. Éviter les pommes de terre nouvelles. Tronçons petits.",
-   fer:false,ca:false,mg:false,om:false,dp:true},
-  {id:"R24",nom:"Gratin de blettes et pommes de terre",saison:"automne",cat:"plat",portions:6,prep:15,cuis:20,
-   ingr:["1 gros bouquet de blettes","6 pommes de terre","1 oignon","Ail","Huile d'olive","Sel Santé, poivre","Béchamel sans gluten (recette R28)"],
-   etapes:["Couper les blettes en petites tranches. Faire revenir avec l'oignon.","Précuire les pommes de terre à la vapeur (pas complètement).","Préparer la béchamel sans gluten.","Disposer blettes, pommes de terre en cubes, ail haché et béchamel dans un plat huilé.","Assaisonner. Enfourner à 180°C jusqu'à dorure."],
-   sjsr:"Blettes = fer, magnésium, calcium. Béchamel sans lactose = confort sans inflammation.",
-   ajust:"Béchamel farine de riz complet + lait de riz. Muscade anti-inflammatoire. Pas de fromage râpé.",
-   fer:true,ca:true,mg:true,om:false,dp:false},
-  {id:"R25",nom:"Soupe de courge au gingembre",saison:"automne",cat:"soupe",portions:6,prep:10,cuis:30,
-   ingr:["1 kg de courge","3 pommes de terre","1 oignon","1 gousse d'ail","Gingembre moulu ou noix de muscade","Huile d'olive","Sel Santé, poivre","Graines de courge grillées"],
-   etapes:["Éplucher et couper courge et pommes de terre en gros dés.","Faire revenir l'oignon et l'ail dans l'huile d'olive. Assaisonner.","Ajouter les cubes. Faire dorer 2 minutes.","Recouvrir d'eau. Cuire 30 minutes après ébullition.","Mixer. Parsemer de graines de courge en garniture."],
-   sjsr:"Courge = bêta-carotène, fibres. Gingembre = anti-inflammatoire. Graines de courge = zinc + magnésium.",
-   ajust:"Graines de courge ajoutées après (non cuites = préserve zinc et magnésium).",
-   fer:false,ca:false,mg:true,om:false,dp:false},
-  {id:"R26",nom:"Gâteau pommes-coings",saison:"automne",cat:"dessert",portions:10,prep:20,cuis:20,
-   ingr:["150 g sucre complet","3 œufs","½ cc bicarbonate de sodium","30 ml huile d'olive","150 g farine de riz complet","2 pommes","1 coing","2 cs compote pommes-coings (optionnel)"],
-   etapes:["Préchauffer le four à 180°C.","Battre les œufs et le sucre énergiquement.","Ajouter farine, bicarbonate puis huile d'olive.","Incorporer la compote si disponible.","Éplucher et couper pommes et coing en petits dés. Ajouter à la préparation.","Verser dans un plat huilé. Enfourner 20 minutes."],
-   sjsr:"Coing = pectine (fibres solubles, microbiote). Pommes = quercétine (anti-inflammatoire). Peu d'ingrédients.",
-   ajust:"Sucre réduit à 150g. Cannelle possible pour la régulation glycémique.",
-   fer:false,ca:false,mg:false,om:false,dp:true},
-  {id:"R27",nom:"Crumble aux fruits de saison",saison:"automne",cat:"dessert",portions:6,prep:10,cuis:20,
-   ingr:["10 cs farine de riz complet","12 cs sucre complet","10 cs purée d'amandes blanches","5 cs huile d'olive","Fruits de saison (pommes, poires, coings)","1 cc cannelle"],
-   etapes:["Mélanger la farine et le sucre.","Ajouter la purée d'amandes et mélanger.","Verser l'huile d'olive progressivement. Mélanger à la main jusqu'à pâte sablonneuse.","Disposer les fruits coupés dans un plat huilé.","Recouvrir de la préparation sableuse.","Enfourner 20 minutes à 180°C."],
-   sjsr:"Purée d'amandes = magnésium + vitamine E. Simple, modulable. Cannelle = régulation glycémique.",
-   ajust:"Cannelle ajoutée. Sucre réduit à 12 cs.",
-   fer:false,ca:false,mg:true,om:false,dp:true},
-  {id:"R28",nom:"Béchamel sans gluten et sans lactose",saison:"toutes",cat:"sauce",portions:6,prep:5,cuis:10,
-   ingr:["4 cs farine de riz complet","40 cl lait de riz","Huile d'olive","Noix de muscade","Sel Santé, poivre"],
-   etapes:["Faire tiédir un filet d'huile d'olive dans une casserole.","Ajouter la farine en pluie à feu doux en mélangeant (roux).","Incorporer le lait de riz par très petites quantités en remuant.","Assaisonner avec Sel Santé, poivre et muscade.","Continuer jusqu'à la consistance souhaitée."],
-   sjsr:"Base indispensable pour gratins et lasagnes. Sans lactose = sans inflammation. Muscade = anti-inflammatoire doux.",
-   ajust:"Farine de riz complet obligatoire. Lait de riz non sucré.",
-   fer:false,ca:false,mg:false,om:false,dp:false},
-  {id:"R29",nom:"Bolognaise végétarienne aux lentilles",saison:"toutes",cat:"sauce",portions:6,prep:15,cuis:30,
-   ingr:["2 oignons","4 tomates fraîches ou coulis maison","100 g lentilles vertes","150 g carottes","1 branche de thym","1 feuille de laurier","Graines de tournesol","Huile d'olive","Sel Santé, poivre"],
-   etapes:["Cuire les lentilles séparément.","Râper les carottes. Émincer les oignons.","Faire revenir les oignons dans l'huile d'olive. Ajouter les carottes.","Ajouter les tomates, thym et laurier. Assaisonner.","Mijoter 30 minutes à feu doux. Ajouter les lentilles.","Parsemer de graines de tournesol hors du feu."],
-   sjsr:"Lentilles = fer + protéines. Tomates = lycopène. Graines de tournesol = zinc, vitamine E.",
-   ajust:"Coulis maison sans additifs. Graines de tournesol hors feu pour les nutriments.",
-   fer:true,ca:false,mg:false,om:false,dp:false},
-  {id:"R30",nom:"Sauce au pourpier",saison:"ete",cat:"sauce",portions:4,prep:10,cuis:10,
-   ingr:["200 g de pourpier","1 cs huile d'olive","1 yaourt de coco ou crème de riz","1 oignon","Sel Santé, poivre","Graines de sésame"],
-   etapes:["Faire revenir l'oignon dans l'huile d'olive.","Ajouter le pourpier et assaisonner.","Laisser cuire quelques minutes.","Ajouter le yaourt de coco ou la crème de riz.","Mixer puis ajouter les graines de sésame."],
-   sjsr:"Pourpier = source rare d'oméga-3 végétaux. Sésame = calcium. Sauce légère, idéale sur poisson vapeur.",
-   ajust:"Yaourt de coco ou crème de riz (pas de yaourt animal). Sel Santé.",
-   fer:false,ca:true,mg:false,om:true,dp:false},
-  {id:"R31",nom:"Risotto aux feuilles de betterave",saison:"hiver",cat:"plat",portions:6,prep:15,cuis:40,
-   ingr:["Feuilles de betterave","5 cs huile d'olive","1 gousse d'ail","1 litre d'eau ou bouillon maison","1 échalote","1 feuille de laurier","175 g de riz","2 cs levure nutritionnelle","Sel Santé, poivre"],
-   etapes:["Hacher finement les feuilles de betterave.","Faire revenir l'ail. Ajouter les feuilles de betterave 4 min. Réserver.","Dans une sauteuse, faire revenir l'échalote avec le laurier.","Verser le riz cru. Mélanger 2-3 minutes.","Couvrir de bouillon progressivement jusqu'à absorption. Remuer régulièrement.","Ajouter levure nutritionnelle et feuilles de betterave. Cuire 2 min. Assaisonner."],
-   sjsr:"Feuilles de betterave = fer, acide folique, nitrates (oxygénation cérébrale). Très bénéfique SJSR. Levure nutritionnelle = umami + vitamines B.",
-   ajust:"Parmesan remplacé par levure nutritionnelle. Bouillon maison sans glutamate.",
-   fer:true,ca:false,mg:false,om:false,dp:false},
-  {id:"R32",nom:"Cake citron-poudre d'amandes",saison:"hiver",cat:"dessert",portions:10,prep:10,cuis:20,
-   ingr:["100 g farine de riz complet","Jus de 2 citrons bio + zeste d'1 citron","4 œufs","100 g poudre d'amandes","150 g sucre complet","1 pincée bicarbonate de sodium"],
-   etapes:["Presser les citrons. Zester un citron bio.","Battre les œufs avec le jus et le zeste de citron.","Ajouter bicarbonate, poudre d'amandes et sucre complet.","Incorporer la farine de riz.","Verser dans un moule à cake huilé.","Enfourner 20 minutes à 180°C."],
-   sjsr:"Citron = vitamine C (absorption du fer). Poudre d'amandes = magnésium + vitamine E (IG bas de 20). Anti-déprime hivernale.",
-   ajust:"Citron bio pour le zeste. Sucre réduit à 150g.",
-   fer:false,ca:false,mg:true,om:false,dp:true},
-  {id:"R33",nom:"Quinoa au lait d'amande à la vanille",saison:"hiver",cat:"dessert",portions:6,prep:10,cuis:15,
-   ingr:["200 g de quinoa","500 ml lait d'amande non sucré","1 gousse de vanille","2 cs sucre complet"],
-   etapes:["Porter le quinoa à ébullition dans l'eau. Cuire 5 minutes.","Égoutter et rincer le quinoa.","Dans une casserole : lait d'amande, quinoa cuit, gousse de vanille fendue.","Cuire à feu moyen jusqu'à absorption du lait en remuant.","Ajouter le sucre complet. Mélanger.","Servir tiède le soir."],
-   sjsr:"Quinoa = magnésium + protéines. Lait d'amande = calcium. Vanille = anxiolytique léger. Idéal le soir (SJSR).",
-   ajust:"Sucre réduit à 2 cs. Lait d'amande non sucré. Servir tiède le soir.",
-   fer:false,ca:true,mg:true,om:false,dp:true},
-  {id:"R34",nom:"Sablés sarrasin-amandes",saison:"hiver",cat:"dessert",portions:20,prep:10,cuis:15,
-   ingr:["150 g farine de sarrasin","100 g fécule de maïs","½ cc bicarbonate de sodium","80 g sucre complet","150 g purée d'amandes","2 cs huile d'olive","2 œufs","Zeste de citron (optionnel)"],
-   etapes:["Préchauffer le four à 180°C.","Mélanger farine de sarrasin, sucre, bicarbonate et fécule de maïs.","Ajouter la purée d'amandes et mélanger (pâte sableuse).","Incorporer les œufs puis l'huile d'olive.","Étaler sur 5 mm et découper à l'emporte-pièce.","Enfourner 15 minutes en surveillant."],
-   sjsr:"Sarrasin = rutine (anti-inflammatoire vasculaire) + magnésium. Purée d'amandes = vitamine E + magnésium. Batch dominical.",
-   ajust:"Sucre réduit à 80g. Zeste de citron possible. Surveiller la cuisson.",
-   fer:true,ca:false,mg:true,om:false,dp:false},
-  {id:"R35",nom:"Potage vert poireaux-épinards",saison:"hiver",cat:"soupe",portions:4,prep:20,cuis:15,
-   ingr:["2 poireaux","200 g épinards surgelés","200 g petits pois","3 pommes de terre","Huile d'olive","Sel Santé, poivre","Persil frais"],
-   etapes:["Faire revenir les poireaux émincés et les épinards dans l'huile d'olive.","Ajouter les petits pois et les pommes de terre en dés.","Couvrir d'eau. Assaisonner. Cuire 15 minutes.","Mixer et parsemer de persil frais avant de servir."],
-   sjsr:"Poireaux = prébiotiques (microbiote). Petits pois = protéines + vitamine B1. Épinards = fer, calcium. Chlorophylle + fer.",
-   ajust:"Épinards surgelés remplacent le pourpier en hiver. Persil frais après mixage.",
-   fer:true,ca:true,mg:false,om:false,dp:true}
-];
-
-// ── COULEURS SAISON ──
-const SAISON_STYLE = {
-  printemps:'linear-gradient(90deg,#7aab8a,#a8d5b5)',
-  ete:'linear-gradient(90deg,#c9a84c,#e8c97a)',
-  automne:'linear-gradient(90deg,#8b5e3c,#c68642)',
-  hiver:'linear-gradient(90deg,#6b8fa8,#a0c4d8)',
-  toutes:'linear-gradient(90deg,#888,#aaa)'
-};
-const SAISON_LABEL = {
-  printemps:'🌸 Printemps', ete:'☀️ Été', automne:'🍂 Automne', hiver:'❄️ Hiver', toutes:'🌿 Toutes saisons'
-};
-const CAT_LABEL = {
-  entree:'Entrée', plat:'Plat principal', soupe:'Soupe', dessert:'Dessert/Goûter', sauce:'Sauce'
-};
-
-// ── LIEN REPAS ↔ RECETTE ──
-// Table de correspondance : mot-clé dans le titre du repas → id recette
-const MEAL_RECIPE_MAP = [
-  {kw:['quinoa','brocoli'], id:'R04'},
-  {kw:['lentilles','légumineuses','steak vég'], id:'R05'},
-  {kw:['curry','poêlée légumes'], id:'R06'},
-  {kw:['quiche'], id:'R07'},
-  {kw:['courgette','pourpier'], id:'R08'},
-  {kw:['fanes','radis'], id:'R09'},
-  {kw:['chia','pudding'], id:null},
-  {kw:['pancakes','sarrasin'], id:null},
-  {kw:['salade de riz'], id:'R14'},
-  {kw:['potimarron'], id:'R22'},
-  {kw:['courge','gingembre','soupe'], id:'R25'},
-  {kw:['gaspacho'], id:'R18'},
-  {kw:['bolognaise'], id:'R29'},
-  {kw:['béchamel'], id:'R28'},
-  {kw:['risotto','betterave'], id:'R31'},
-  {kw:['fondant','chocolat'], id:'R11'},
-  {kw:['gratin','blettes'], id:'R24'},
-  {kw:['gratin','quinoa'], id:'R21'},
-  {kw:['pizzolenta','polenta'], id:'R15'},
-  {kw:['panisse'], id:'R13'},
-  {kw:['gnocchis'], id:'R23'},
-];
-
-function findRecetteForMeal(mealTitle) {
-  if (!mealTitle) return null;
-  const t = mealTitle.toLowerCase();
-  for (const map of MEAL_RECIPE_MAP) {
-    if (map.id && map.kw.some(k => t.includes(k.toLowerCase()))) {
-      return RECETTES_DB.find(r => r.id === map.id) || null;
-    }
-  }
-  return null;
-}
-
-// ── MODAL RECETTE ──
-function openRecetteModal(id) {
-  const r = RECETTES_DB.find(x => x.id === id);
-  if (!r) return;
-  const overlay = document.getElementById('recetteOverlay');
-  const banner = document.getElementById('recetteBanner');
-  const body = document.getElementById('recetteBody');
-  banner.style.background = SAISON_STYLE[r.saison] || SAISON_STYLE.toutes;
-  const temps = (r.prep + r.cuis) + ' min';
-  const ntags = [
-    r.fer  ? '<span class="rntag rntag-fer">🔴 Fer</span>' : '',
-    r.ca   ? '<span class="rntag rntag-ca">🔵 Calcium</span>' : '',
-    r.mg   ? '<span class="rntag rntag-mg">🟢 Magnésium</span>' : '',
-    r.om   ? '<span class="rntag rntag-om">🟡 Oméga-3</span>' : '',
-    r.dp   ? '<span class="rntag rntag-dp">🟣 Dopamine</span>' : '',
-  ].join('');
-  body.innerHTML = `
-    <div class="recipe-modal-saison">${SAISON_LABEL[r.saison] || ''} · ${CAT_LABEL[r.cat] || r.cat}</div>
-    <div class="recipe-modal-titre">${r.nom}</div>
-    <div class="recipe-modal-meta">
-      <span>⏱ ${r.prep} min préparation</span>
-      ${r.cuis > 0 ? `<span>🔥 ${r.cuis} min cuisson</span>` : ''}
-      <span>👤 ${r.portions} portions</span>
-    </div>
-    ${ntags ? `<div class="recipe-modal-ntags">${ntags}</div>` : ''}
-    <div class="recipe-modal-stitle">Ingrédients</div>
-    <ul class="recipe-modal-ingr">${r.ingr.map(i => `<li>${i}</li>`).join('')}</ul>
-    <div class="recipe-modal-stitle">Préparation</div>
-    <ol class="recipe-modal-steps">${r.etapes.map(e => `<li>${e}</li>`).join('')}</ol>
-    <div class="recipe-modal-sjsr">
-      <div class="sl">🧠 Bénéfices SJSR / TDAH</div>
-      <p>${r.sjsr}</p>
-    </div>
-    <div class="recipe-modal-ajust">
-      <div class="sl">✏️ Ajustements Sérénité</div>
-      <p>${r.ajust}</p>
-    </div>
-    <button class="recipe-modal-close" onclick="closeRecetteModal()">Fermer</button>
-  `;
-  overlay.classList.add('open');
-  document.body.style.overflow = 'hidden';
-}
-
-function closeRecetteModal() {
-  document.getElementById('recetteOverlay').classList.remove('open');
-  document.body.style.overflow = '';
-}
-
-const _roEl = document.getElementById('recetteOverlay');
-if (_roEl) _roEl.addEventListener('click', function(e) {
-  if (e.target === this) closeRecetteModal();
-});
-
-// ── COURSES DYNAMIQUES ──
-// Récupère les ingrédients de toutes les recettes actives (à adapter selon le mois)
-// Pour l'instant on génère depuis les 35 recettes avec possibilité de filtre par saison
-
-const SAISON_COURANTE = 'printemps'; // À changer selon le mois
-
-// Catégories de courses
-const SHOP_CATEGORIES = {
-  "Legumes et fruits": ["carotte","courgette","aubergine","blette","potimarron","betterave","radis","tomate","concombre","poivron","poireau","brocoli","chou","courge","pomme","poire","fraise","melon","citron","oignon","ail","fanes"],
-  "Legumineuses et cereales": ["lentille","pois chiche","quinoa","riz","sarrasin","polenta","farine","flocon","fecule"],
-  "Proteines et oeufs": ["oeuf","tofu","sardine","poisson","maquereau"],
-  "Laits vegetaux": ["lait de riz","lait amande","lait coco","creme de riz","yaourt coco"],
-  "Huiles et condiments": ["huile","tamari","vinaigre","moutarde"],
-  "Epices et aromates": ["cumin","curry","curcuma","gingembre","cannelle","muscade","basilic","thym","laurier","herbes","persil","menthe","sel","poivre"],
-  "Oleagineux et graines": ["amande","noix","courge","lin","sesame","tournesol","puree"],
-  "Sucre et boulange": ["sucre","chocolat","cacao","datte","miel","vanille","bicarbonate"],
-};
-let activeRecetteFilters = new Set();
-let shopDynItems = {};
-
-function buildShoppingDynamic() {
-  const shopDiv = document.getElementById('shop-dynamic');
-  if (!shopDiv) return;
-
-  // Recettes de la saison actuelle + toutes saisons
-  const recettes = RECETTES_DB.filter(r => r.saison === SAISON_COURANTE || r.saison === 'toutes');
-
-  // Init filtres actifs
-  if (activeRecetteFilters.size === 0) {
-    recettes.slice(0, 5).forEach(r => activeRecetteFilters.add(r.id));
-  }
-
-  // Construire liste ingrédients depuis recettes sélectionnées
-  const allIngr = new Set();
-  recettes.filter(r => activeRecetteFilters.has(r.id)).forEach(r => {
-    r.ingr.forEach(ing => {
-      const clean = ing.toLowerCase().replace(/\d+[\s]*(g|ml|cl|cs|cc|kg|l)\s*/gi,'').replace(/[,·×\(\)]/g,'').trim();
-      if (clean.length > 2) allIngr.add(ing);
-    });
-  });
-
-  // Catégoriser
-  const cats = {};
-  Object.keys(SHOP_CATEGORIES).forEach(c => cats[c] = []);
-  const nonCateg = [];
-
-  allIngr.forEach(ing => {
-    const low = ing.toLowerCase();
-    let placed = false;
-    for (const [cat, kws] of Object.entries(SHOP_CATEGORIES)) {
-      if (kws.some(k => low.includes(k))) {
-        cats[cat].push(ing);
-        placed = true;
-        break;
-      }
-    }
-    if (!placed) nonCateg.push(ing);
-  });
-  if (nonCateg.length) cats['Autres'] = nonCateg;
-
-  // Charger états cochés depuis localStorage
-  const CHECKED_KEY = 'serenite_shop_checked';
-  const checked = JSON.parse(localStorage.getItem(CHECKED_KEY) || '{}');
-
-  // Rendu
-  let h = `
-    <div class="shop-gen-header">
-      <div class="shop-gen-title">🛒 Liste générée depuis vos recettes</div>
-      <div class="shop-gen-sub">Cochez les recettes que vous souhaitez préparer cette semaine — la liste s'adapte automatiquement.</div>
-    </div>
-    <div class="shop-recettes-btn">
-  `;
-
-  recettes.forEach(r => {
-    const on = activeRecetteFilters.has(r.id);
-    h += `<div class="shop-r-toggle ${on ? 'active' : ''}" onclick="toggleRecetteFilter('${r.id}')">${r.nom}</div>`;
-  });
-  h += `</div>`;
-
-  let hasItems = false;
-  for (const [cat, items] of Object.entries(cats)) {
-    if (!items.length) continue;
-    hasItems = true;
-    h += `<div class="shop-cat-title">${cat}</div>`;
-    items.forEach((ing, i) => {
-      const key = ing.replace(/\s/g,'_').toLowerCase();
-      const isChecked = checked[key];
-      h += `
-        <div class="shop-item-dyn${isChecked ? ' done' : ''}" id="sdyn-${key}">
-          <div class="shop-check-dyn${isChecked ? ' checked' : ''}" onclick="tCheckDyn('${key}')">${isChecked ? '✓' : ''}</div>
-          <div><span class="shop-item-name-dyn">${ing}</span></div>
-        </div>
-      `;
-    });
-  }
-
-  if (!hasItems) {
-    h += `<div style="padding:1.5rem;text-align:center;color:var(--muted);font-size:0.8rem">Sélectionne au moins une recette ci-dessus pour générer la liste.</div>`;
-  }
-
-  shopDiv.innerHTML = h;
-}
-
-function toggleRecetteFilter(id) {
-  if (activeRecetteFilters.has(id)) {
-    activeRecetteFilters.delete(id);
-  } else {
-    activeRecetteFilters.add(id);
-  }
-  buildShoppingDynamic();
-}
-
-function tCheckDyn(key) {
-  const CHECKED_KEY = 'serenite_shop_checked';
-  const checked = JSON.parse(localStorage.getItem(CHECKED_KEY) || '{}');
-  checked[key] = !checked[key];
-  localStorage.setItem(CHECKED_KEY, JSON.stringify(checked));
-  const row = document.getElementById('sdyn-' + key);
-  const btn = row ? row.querySelector('.shop-check-dyn') : null;
-  if (row) row.classList.toggle('done', checked[key]);
-  if (btn) {
-    btn.classList.toggle('checked', checked[key]);
-    btn.textContent = checked[key] ? '✓' : '';
-  }
-}
-
-// Patcher openDay pour ajouter le bouton recette sur chaque repas
-const _origOpenDay = openDay;
-// Patcher le rendu des meal-cards pour ajouter le bouton recette
-// Intercepter après openDay via MutationObserver sur panelContent
-const panelContent = document.getElementById('panelContent');
-if (panelContent) {
-  const observer = new MutationObserver(() => {
-    // Chercher tous les meal-title et voir si une recette correspond
-    panelContent.querySelectorAll('.meal-title').forEach(el => {
-      if (el.dataset.recetteLinked) return;
-      el.dataset.recetteLinked = '1';
-      const titre = el.textContent;
-      const recette = findRecetteForMeal(titre);
-      if (recette) {
-        const btn = document.createElement('div');
-        btn.className = 'recipe-btn';
-        btn.innerHTML = `📖 Voir la recette complète`;
-        btn.onclick = (e) => { e.stopPropagation(); openRecetteModal(recette.id); };
-        el.parentNode.insertBefore(btn, el.nextSibling);
-      }
-    });
-  });
-  observer.observe(panelContent, { childList: true, subtree: true });
-}
-
-// Initialiser les courses dynamiques au chargement
-document.addEventListener('DOMContentLoaded', () => {
-  const shopDynDiv = document.getElementById('shop-dynamic');
-  if (shopDynDiv) buildShoppingDynamic();
-});
-
-// Aussi builder quand on clique sur l'onglet Courses
-const origShowView = showView;
-
-function switchShopTab(tab) {
-  document.getElementById('shop-view-recettes').style.display = tab === 'recettes' ? 'block' : 'none';
-  document.getElementById('shop-view-stock').style.display = tab === 'stock' ? 'block' : 'none';
-  document.getElementById('shop-tab-recettes').classList.toggle('active', tab === 'recettes');
-  document.getElementById('shop-tab-stock').classList.toggle('active', tab === 'stock');
-  if (tab === 'recettes') {
-    document.getElementById('shop-tab-recettes').style.cssText = 'flex:1;border-radius:10px;background:linear-gradient(135deg,var(--blossom-deep),#904868);color:#fff;box-shadow:0 2px 10px rgba(196,92,120,0.3)';
-    document.getElementById('shop-tab-stock').style.cssText = 'flex:1;border-radius:10px';
-  } else {
-    document.getElementById('shop-tab-stock').style.cssText = 'flex:1;border-radius:10px;background:linear-gradient(135deg,var(--blossom-deep),#904868);color:#fff;box-shadow:0 2px 10px rgba(196,92,120,0.3)';
-    document.getElementById('shop-tab-recettes').style.cssText = 'flex:1;border-radius:10px';
-  }
-}
-
-// ── BIBLIOTHÈQUE RECETTES ──
-let libSaisonFilter = 'toutes';
-let libCatFilter = 'toutes';
-
-function openRecettesLibrary() {
-  renderLibGrid();
-  document.getElementById('recettesLibOverlay').classList.add('open');
-  document.body.style.overflow = 'hidden';
-}
-
-function closeRecettesLibrary() {
-  document.getElementById('recettesLibOverlay').classList.remove('open');
-  document.body.style.overflow = '';
-}
-
-function filterLib(el, type) {
-  if (type === 'saison') {
-    document.querySelectorAll('#libSaisonFilters .shop-r-toggle').forEach(b => b.classList.remove('active'));
-    el.classList.add('active');
-    libSaisonFilter = el.dataset.saison;
-  } else {
-    document.querySelectorAll('#libCatFilters .shop-r-toggle').forEach(b => b.classList.remove('active'));
-    el.classList.add('active');
-    libCatFilter = el.dataset.cat;
-  }
-  renderLibGrid();
-}
-
-function renderLibGrid() {
-  const grid = document.getElementById('libGrid');
-  if (!grid) return;
-  const filtered = RECETTES_DB.filter(r => {
-    const sOk = libSaisonFilter === 'toutes' || r.saison === libSaisonFilter;
-    const cOk = libCatFilter === 'toutes' || r.cat === libCatFilter;
-    return sOk && cOk;
-  });
-  const BANNER = {
-    printemps:'linear-gradient(90deg,#7aab8a,#a8d5b5)',
-    ete:'linear-gradient(90deg,#c9a84c,#e8c97a)',
-    automne:'linear-gradient(90deg,#8b5e3c,#c68642)',
-    hiver:'linear-gradient(90deg,#6b8fa8,#a0c4d8)',
-    toutes:'linear-gradient(90deg,#888,#aaa)'
-  };
-  const CAT = {entree:'Entrée',plat:'Plat',soupe:'Soupe',dessert:'Dessert',sauce:'Sauce'};
-  if (!filtered.length) {
-    grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:2rem;color:var(--muted);font-size:0.8rem">Aucune recette pour ces critères.</div>';
-    return;
-  }
-  grid.innerHTML = filtered.map((r,i) => {
-    const ndots = [
-      r.fer ? '<span style="background:rgba(155,112,96,0.15);color:var(--bark);border-radius:2rem;padding:1px 5px;font-size:0.55rem;font-weight:700">Fer</span>' : '',
-      r.mg  ? '<span style="background:rgba(90,138,90,0.12);color:var(--leaf-dark);border-radius:2rem;padding:1px 5px;font-size:0.55rem;font-weight:700">Mg</span>' : '',
-      r.ca  ? '<span style="background:rgba(107,143,168,0.15);color:#2471a3;border-radius:2rem;padding:1px 5px;font-size:0.55rem;font-weight:700">Ca</span>' : '',
-      r.om  ? '<span style="background:rgba(212,168,67,0.15);color:#8a6800;border-radius:2rem;padding:1px 5px;font-size:0.55rem;font-weight:700">Ω3</span>' : '',
-      r.dp  ? '<span style="background:rgba(124,92,191,0.1);color:var(--tdah);border-radius:2rem;padding:1px 5px;font-size:0.55rem;font-weight:700">Dopa</span>' : '',
-    ].join('');
-    return `
-      <div onclick="openRecetteModal('${r.id}')" style="background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 2px 10px rgba(58,40,32,0.07);cursor:pointer;animation:fadeUp 0.25s ${i*0.03}s both">
-        <div style="height:5px;background:${BANNER[r.saison] || BANNER.toutes}"></div>
-        <div style="padding:9px 10px 10px">
-          <div style="font-size:0.58rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:2px">${CAT[r.cat] || r.cat}</div>
-          <div style="font-family:'Cormorant Garamond',serif;font-size:0.95rem;font-weight:600;line-height:1.2;margin-bottom:5px;color:var(--text)">${r.nom}</div>
-          <div style="font-size:0.62rem;color:var(--muted);margin-bottom:5px">⏱ ${r.prep+r.cuis} min · 👤 ${r.portions}</div>
-          <div style="display:flex;flex-wrap:wrap;gap:3px">${ndots}</div>
-        </div>
-      </div>
-    `;
-  }).join('');
-}
 </script>
-
 </body>
 </html>
