@@ -575,6 +575,50 @@ input[type="range"].pain-range::-webkit-slider-thumb{
 .diner-card{background:#fff;border-radius:12px;padding:0.8rem;margin-bottom:0.5rem;box-shadow:0 2px 8px rgba(58,40,32,0.06);cursor:pointer;transition:all 0.15s}
 .diner-card:active{transform:scale(0.98)}
 
+
+/* ── STATISTIQUES MENSUELLES ── */
+.stats-monthly-card{background:#fff;border-radius:16px;margin:0.8rem 1rem;box-shadow:0 2px 14px rgba(58,40,32,0.07);overflow:hidden}
+.stats-monthly-header{padding:0.85rem 1rem 0.5rem;display:flex;align-items:center;justify-content:space-between}
+.stats-monthly-title{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:600;color:var(--text)}
+.month-nav{display:flex;align-items:center;gap:0.5rem}
+.month-nav-btn{background:none;border:1.5px solid rgba(58,40,32,0.1);border-radius:8px;padding:0.3rem 0.6rem;font-size:0.75rem;cursor:pointer;color:var(--muted)}
+.month-nav-btn.active{background:var(--blossom-deep);border-color:var(--blossom-deep);color:#fff}
+
+.chart-container{padding:0.5rem 1rem 0.8rem;position:relative}
+.chart-canvas-wrap{position:relative;height:140px;margin-bottom:0.8rem}
+canvas.sleep-chart{width:100%;height:140px}
+
+.chart-legend{display:flex;gap:0.8rem;flex-wrap:wrap;margin-bottom:0.6rem}
+.legend-item{display:flex;align-items:center;gap:0.3rem;font-size:0.6rem;color:var(--muted);font-weight:600}
+.legend-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+
+.monthly-stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0.5rem;padding:0 1rem 0.8rem}
+.mstat-box{background:linear-gradient(135deg,rgba(107,158,120,0.07),rgba(212,168,67,0.05));border-radius:10px;padding:0.6rem;text-align:center}
+.mstat-val{font-size:1.1rem;font-weight:700;font-family:'Cormorant Garamond',serif;color:var(--text)}
+.mstat-val.good{color:var(--leaf-dark)}
+.mstat-val.warning{color:#c47a2a}
+.mstat-val.bad{color:#c04040}
+.mstat-label{font-size:0.55rem;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:0.05em;margin-top:0.1rem}
+
+.compare-section{padding:0 1rem 0.8rem}
+.compare-title{font-size:0.6rem;text-transform:uppercase;letter-spacing:0.1em;font-weight:700;color:var(--muted);margin-bottom:0.5rem}
+.compare-row{display:flex;align-items:center;gap:0.5rem;margin-bottom:0.4rem}
+.compare-label{font-size:0.62rem;color:var(--text);font-weight:600;width:80px;flex-shrink:0}
+.compare-bars{flex:1;display:flex;gap:0.3rem;align-items:center}
+.compare-bar-wrap{flex:1}
+.compare-bar{height:8px;border-radius:4px;transition:width 0.4s}
+.compare-bar.sleep{background:linear-gradient(90deg,var(--leaf-mid),var(--leaf-dark))}
+.compare-bar.pain{background:linear-gradient(90deg,#f4a43a,#c04040)}
+.compare-val{font-size:0.6rem;font-weight:700;color:var(--muted);width:30px;flex-shrink:0}
+.compare-arrow{font-size:0.7rem;flex-shrink:0}
+.compare-arrow.better{color:var(--leaf-dark)}
+.compare-arrow.worse{color:#c04040}
+.compare-arrow.same{color:var(--muted)}
+
+.chart-tabs{display:flex;gap:0.3rem;padding:0 1rem 0.5rem;overflow-x:auto}
+.chart-tab{flex-shrink:0;background:rgba(58,40,32,0.05);border:none;border-radius:8px;padding:0.3rem 0.7rem;font-size:0.62rem;font-weight:700;cursor:pointer;color:var(--muted)}
+.chart-tab.active{background:var(--night);color:#fff}
+
 .sect-title{font-size:0.57rem;text-transform:uppercase;letter-spacing:0.12em;color:var(--muted);font-weight:700;margin:0.75rem 1rem 0.35rem}
 
 /* ── RECETTE DÉTAIL ── */
@@ -1085,15 +1129,71 @@ input[type="range"].pain-range::-webkit-slider-thumb{
   </div>
 
   <!-- Statistiques -->
+  <!-- Statistiques hebdo + mensuelles -->
   <div class="sleep-stats-card">
-    <div class="sleep-stats-title">📊 Statistiques — 14 dernières nuits</div>
-    <div class="stats-grid" id="sleepStatsGrid">
-      <div class="stat-box"><div class="stat-box-val" id="statAvgSleep">—</div><div class="stat-box-label">Sommeil moyen</div></div>
-      <div class="stat-box"><div class="stat-box-val" id="statAvgQuality">—</div><div class="stat-box-label">Qualité moyenne</div></div>
-      <div class="stat-box"><div class="stat-box-val" id="statAvgPainM">—</div><div class="stat-box-label">Douleur réveil moy.</div></div>
-      <div class="stat-box"><div class="stat-box-val" id="statAvgLevers">—</div><div class="stat-box-label">Levers moy./nuit</div></div>
+    <div class="sleep-stats-title">📊 Statistiques</div>
+
+    <!-- Onglets -->
+    <div class="chart-tabs">
+      <button class="chart-tab active" onclick="switchStatsTab('hebdo',this)">14 nuits</button>
+      <button class="chart-tab" onclick="switchStatsTab('mensuel',this)">Mensuel</button>
+      <button class="chart-tab" onclick="switchStatsTab('comparatif',this)">Comparatif</button>
     </div>
-    <div id="sleepHistoryList" style="margin-top:0.5rem"></div>
+
+    <!-- TAB: 14 nuits -->
+    <div id="stats-tab-hebdo">
+      <div class="stats-grid" id="sleepStatsGrid">
+        <div class="stat-box"><div class="stat-box-val" id="statAvgSleep">—</div><div class="stat-box-label">Sommeil moyen</div></div>
+        <div class="stat-box"><div class="stat-box-val" id="statAvgQuality">—</div><div class="stat-box-label">Qualité moyenne</div></div>
+        <div class="stat-box"><div class="stat-box-val" id="statAvgPainM">—</div><div class="stat-box-label">Douleur réveil moy.</div></div>
+        <div class="stat-box"><div class="stat-box-val" id="statAvgLevers">—</div><div class="stat-box-label">Levers moy./nuit</div></div>
+      </div>
+      <div id="sleepHistoryList" style="margin:0 1rem 0.5rem"></div>
+    </div>
+
+    <!-- TAB: Graphiques mensuels -->
+    <div id="stats-tab-mensuel" style="display:none">
+      <div style="padding:0 1rem 0.4rem;display:flex;align-items:center;justify-content:space-between">
+        <button class="sleep-nav-btn" onclick="chartNavMonth(-1)">‹</button>
+        <div style="font-size:0.75rem;font-weight:700;color:var(--text)" id="chartMonthLabel">Avril 2026</div>
+        <button class="sleep-nav-btn" onclick="chartNavMonth(1)">›</button>
+      </div>
+
+      <!-- Sélecteur de métrique -->
+      <div style="display:flex;gap:0.3rem;padding:0 1rem 0.5rem;overflow-x:auto">
+        <button class="chart-tab active" onclick="switchMetric('sleep',this)">😴 Sommeil</button>
+        <button class="chart-tab" onclick="switchMetric('pain',this)">🦵 Douleur</button>
+        <button class="chart-tab" onclick="switchMetric('quality',this)">⭐ Qualité</button>
+        <button class="chart-tab" onclick="switchMetric('levers',this)">🔢 Levers</button>
+      </div>
+
+      <!-- Canvas graphique -->
+      <div class="chart-container">
+        <div class="chart-canvas-wrap">
+          <canvas id="sleepChartCanvas" height="140"></canvas>
+        </div>
+        <div class="chart-legend" id="chartLegend"></div>
+      </div>
+
+      <!-- Stats du mois -->
+      <div class="monthly-stats-grid" id="monthlyStatsGrid">
+        <div class="mstat-box"><div class="mstat-val" id="mstatAvg">—</div><div class="mstat-label">Moy. mois</div></div>
+        <div class="mstat-box"><div class="mstat-val" id="mstatBest">—</div><div class="mstat-label">Meilleure nuit</div></div>
+        <div class="mstat-box"><div class="mstat-val" id="mstatWorst">—</div><div class="mstat-label">Pire nuit</div></div>
+        <div class="mstat-box"><div class="mstat-val" id="mstatNights">—</div><div class="mstat-label">Nuits enreg.</div></div>
+        <div class="mstat-box"><div class="mstat-val" id="mstatGoodNights">—</div><div class="mstat-label">Nuits ≥7h</div></div>
+        <div class="mstat-box"><div class="mstat-val" id="mstatPainAvg">—</div><div class="mstat-label">Douleur moy.</div></div>
+      </div>
+    </div>
+
+    <!-- TAB: Comparatif mois par mois -->
+    <div id="stats-tab-comparatif" style="display:none">
+      <div class="compare-section" id="compareSection">
+        <div style="font-size:0.7rem;color:var(--muted);text-align:center;padding:1rem">
+          Revenez après avoir enregistré au moins 2 mois de données 🌸
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- Médicaments -->
@@ -3239,6 +3339,359 @@ function updateSleepStats() {
   }
 }
 
+
+// ══════════════════════════════════════
+// GRAPHIQUES & STATS MENSUELLES
+// ══════════════════════════════════════
+
+let chartCurrentYear = new Date().getFullYear();
+let chartCurrentMonth = new Date().getMonth(); // 0-based
+let currentMetric = 'sleep';
+let currentStatsTab = 'hebdo';
+
+const MONTH_NAMES = ["Janvier","Février","Mars","Avril","Mai","Juin",
+  "Juillet","Août","Septembre","Octobre","Novembre","Décembre"];
+
+function switchStatsTab(tab, btn) {
+  currentStatsTab = tab;
+  ['hebdo','mensuel','comparatif'].forEach(t => {
+    const el = document.getElementById('stats-tab-'+t);
+    if(el) el.style.display = t===tab ? 'block' : 'none';
+  });
+  document.querySelectorAll('.chart-tabs .chart-tab').forEach(b => b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  
+  if(tab === 'mensuel') renderMonthlyChart();
+  if(tab === 'comparatif') renderComparatif();
+}
+
+function switchMetric(metric, btn) {
+  currentMetric = metric;
+  document.querySelectorAll('#stats-tab-mensuel .chart-tab').forEach(b => b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  renderMonthlyChart();
+}
+
+function chartNavMonth(delta) {
+  chartCurrentMonth += delta;
+  if(chartCurrentMonth < 0) { chartCurrentMonth = 11; chartCurrentYear--; }
+  if(chartCurrentMonth > 11) { chartCurrentMonth = 0; chartCurrentYear++; }
+  const label = document.getElementById('chartMonthLabel');
+  if(label) label.textContent = MONTH_NAMES[chartCurrentMonth] + ' ' + chartCurrentYear;
+  renderMonthlyChart();
+}
+
+function getMonthData(year, month) {
+  // Get all entries for a given month
+  const entries = [];
+  const daysInMonth = new Date(year, month+1, 0).getDate();
+  
+  for(let d = 1; d <= daysInMonth; d++) {
+    const key = year + '-' + String(month+1).padStart(2,'0') + '-' + String(d).padStart(2,'0');
+    const entry = sleepData[key] || null;
+    entries.push({ day: d, key, entry });
+  }
+  return entries;
+}
+
+function getMetricValue(entry, metric) {
+  if(!entry) return null;
+  switch(metric) {
+    case 'sleep': 
+      if(!entry.totalMin) return null;
+      return Math.round(entry.totalMin / 6) / 10; // hours with 1 decimal
+    case 'pain': return entry.painMorning !== undefined ? entry.painMorning : null;
+    case 'quality': return entry.quality || null;
+    case 'levers': return entry.nbLevers !== undefined ? entry.nbLevers : null;
+    default: return null;
+  }
+}
+
+function getMetricConfig(metric) {
+  switch(metric) {
+    case 'sleep': return { label:'Heures de sommeil', color:'#6b9e78', max:10, unit:'h', goodMin:7, warnMin:5 };
+    case 'pain': return { label:'Douleur au réveil /10', color:'#e07840', max:10, unit:'/10', goodMax:3, warnMax:6 };
+    case 'quality': return { label:'Qualité ★', color:'#d4a843', max:5, unit:'★', goodMin:4, warnMin:2 };
+    case 'levers': return { label:'Levers nocturnes', color:'#a98de0', max:6, unit:'x', goodMax:1, warnMax:3 };
+  }
+}
+
+function renderMonthlyChart() {
+  const canvas = document.getElementById('sleepChartCanvas');
+  if(!canvas) return;
+  
+  const ctx = canvas.getContext('2d');
+  const data = getMonthData(chartCurrentYear, chartCurrentMonth);
+  const cfg = getMetricConfig(currentMetric);
+  
+  // Canvas dimensions
+  const W = canvas.parentElement.offsetWidth || 300;
+  const H = 140;
+  canvas.width = W;
+  canvas.height = H;
+  
+  const padL = 32, padR = 12, padT = 14, padB = 28;
+  const chartW = W - padL - padR;
+  const chartH = H - padT - padB;
+  
+  ctx.clearRect(0, 0, W, H);
+  
+  // Background
+  ctx.fillStyle = '#fafaf9';
+  ctx.fillRect(0, 0, W, H);
+  
+  // Grid lines
+  ctx.strokeStyle = 'rgba(58,40,32,0.06)';
+  ctx.lineWidth = 1;
+  const gridLines = 5;
+  for(let i = 0; i <= gridLines; i++) {
+    const y = padT + (chartH / gridLines) * i;
+    ctx.beginPath();
+    ctx.moveTo(padL, y);
+    ctx.lineTo(padL + chartW, y);
+    ctx.stroke();
+    
+    // Y labels
+    const val = cfg.max - (cfg.max / gridLines) * i;
+    ctx.fillStyle = 'rgba(58,40,32,0.4)';
+    ctx.font = '9px Nunito,sans-serif';
+    ctx.textAlign = 'right';
+    ctx.fillText(val % 1 === 0 ? val : val.toFixed(1), padL - 3, y + 3);
+  }
+  
+  // Collect valid points
+  const points = [];
+  data.forEach((d, i) => {
+    const val = getMetricValue(d.entry, currentMetric);
+    if(val !== null) {
+      const x = padL + (i / (data.length - 1)) * chartW;
+      const y = padT + chartH - (Math.min(val, cfg.max) / cfg.max) * chartH;
+      points.push({ x, y, val, day: d.day, hasData: true });
+    } else {
+      const x = padL + (i / (data.length - 1)) * chartW;
+      points.push({ x, y: null, val: null, day: d.day, hasData: false });
+    }
+  });
+  
+  // Good threshold line
+  if(cfg.goodMin !== undefined) {
+    const threshY = padT + chartH - (cfg.goodMin / cfg.max) * chartH;
+    ctx.strokeStyle = 'rgba(107,158,120,0.4)';
+    ctx.lineWidth = 1;
+    ctx.setLineDash([4,3]);
+    ctx.beginPath(); ctx.moveTo(padL, threshY); ctx.lineTo(padL + chartW, threshY); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.fillStyle = 'rgba(107,158,120,0.6)';
+    ctx.font = '8px Nunito,sans-serif';
+    ctx.textAlign = 'left';
+    ctx.fillText(cfg.goodMin + cfg.unit, padL + 2, threshY - 2);
+  }
+  
+  // Draw line
+  ctx.strokeStyle = cfg.color;
+  ctx.lineWidth = 2;
+  ctx.lineJoin = 'round';
+  ctx.beginPath();
+  let firstPoint = true;
+  points.forEach(p => {
+    if(p.hasData) {
+      if(firstPoint) { ctx.moveTo(p.x, p.y); firstPoint = false; }
+      else ctx.lineTo(p.x, p.y);
+    } else {
+      firstPoint = true;
+    }
+  });
+  ctx.stroke();
+  
+  // Fill under line
+  ctx.globalAlpha = 0.08;
+  ctx.fillStyle = cfg.color;
+  let areaStarted = false;
+  ctx.beginPath();
+  points.forEach(p => {
+    if(p.hasData) {
+      if(!areaStarted) { ctx.moveTo(p.x, padT + chartH); ctx.lineTo(p.x, p.y); areaStarted = true; }
+      else ctx.lineTo(p.x, p.y);
+    } else if(areaStarted) {
+      ctx.lineTo(p.x, padT + chartH); ctx.closePath(); ctx.fill();
+      ctx.beginPath(); areaStarted = false;
+    }
+  });
+  if(areaStarted) { ctx.lineTo(points[points.length-1].x, padT + chartH); ctx.closePath(); ctx.fill(); }
+  ctx.globalAlpha = 1;
+  
+  // Dots
+  points.forEach(p => {
+    if(!p.hasData) return;
+    let dotColor = cfg.color;
+    if(cfg.goodMin && p.val >= cfg.goodMin) dotColor = '#6b9e78';
+    else if(cfg.goodMax !== undefined && p.val <= cfg.goodMax) dotColor = '#6b9e78';
+    else if(cfg.warnMin && p.val >= cfg.warnMin) dotColor = '#c8a050';
+    else if(cfg.warnMax !== undefined && p.val <= cfg.warnMax) dotColor = '#c8a050';
+    else dotColor = '#c04040';
+    
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, 3, 0, Math.PI*2);
+    ctx.fillStyle = dotColor;
+    ctx.fill();
+    ctx.strokeStyle = '#fff';
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+  });
+  
+  // X axis labels (every 5 days)
+  ctx.fillStyle = 'rgba(58,40,32,0.45)';
+  ctx.font = '8px Nunito,sans-serif';
+  ctx.textAlign = 'center';
+  points.forEach(p => {
+    if(p.day % 5 === 0 || p.day === 1) {
+      ctx.fillText(p.day, p.x, H - 6);
+    }
+  });
+  
+  // Update monthly stats
+  updateMonthlyStats(data);
+  
+  // Legend
+  const legend = document.getElementById('chartLegend');
+  if(legend) {
+    legend.innerHTML = `
+      <div class="legend-item"><div class="legend-dot" style="background:#6b9e78"></div>Bon</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#c8a050"></div>Moyen</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#c04040"></div>Difficile</div>
+      <div class="legend-item"><div class="legend-dot" style="background:rgba(107,158,120,0.4)"></div>Seuil cible</div>
+    `;
+  }
+}
+
+function updateMonthlyStats(data) {
+  const values = [];
+  const pains = [];
+  let goodNights = 0;
+  
+  data.forEach(d => {
+    if(!d.entry) return;
+    const sleep = getMetricValue(d.entry, 'sleep');
+    const pain = getMetricValue(d.entry, 'pain');
+    if(sleep !== null) {
+      values.push(sleep);
+      if(sleep >= 7) goodNights++;
+    }
+    if(pain !== null) pains.push(pain);
+  });
+  
+  const n = values.length;
+  if(n === 0) {
+    ['mstatAvg','mstatBest','mstatWorst','mstatNights','mstatGoodNights','mstatPainAvg'].forEach(id => {
+      const el = document.getElementById(id);
+      if(el) el.textContent = '—';
+    });
+    return;
+  }
+  
+  const avg = (values.reduce((a,b)=>a+b,0)/n).toFixed(1);
+  const best = Math.max(...values).toFixed(1);
+  const worst = Math.min(...values).toFixed(1);
+  const painAvg = pains.length ? (pains.reduce((a,b)=>a+b,0)/pains.length).toFixed(1) : '—';
+  
+  const setEl = (id, val, cls) => {
+    const el = document.getElementById(id);
+    if(el) { el.textContent = val; if(cls) el.className = 'mstat-val ' + cls; }
+  };
+  
+  setEl('mstatAvg', avg+'h', parseFloat(avg)>=7?'good':parseFloat(avg)>=5?'warning':'bad');
+  setEl('mstatBest', best+'h', 'good');
+  setEl('mstatWorst', worst+'h', parseFloat(worst)>=7?'good':'bad');
+  setEl('mstatNights', n+' nuits', '');
+  setEl('mstatGoodNights', goodNights+' nuits', goodNights >= n*0.7?'good':'warning');
+  setEl('mstatPainAvg', pains.length ? painAvg+'/10' : '—', pains.length && parseFloat(painAvg)<=3?'good':parseFloat(painAvg)<=6?'warning':'bad');
+}
+
+function renderComparatif() {
+  const section = document.getElementById('compareSection');
+  if(!section) return;
+  
+  // Get data for last 6 months
+  const now = new Date();
+  const months = [];
+  for(let i = 5; i >= 0; i--) {
+    const d = new Date(now.getFullYear(), now.getMonth()-i, 1);
+    const data = getMonthData(d.getFullYear(), d.getMonth());
+    const sleepVals = [], painVals = [], qualVals = [];
+    data.forEach(day => {
+      if(!day.entry) return;
+      const s = getMetricValue(day.entry,'sleep');
+      const p = getMetricValue(day.entry,'pain');
+      const q = getMetricValue(day.entry,'quality');
+      if(s!==null) sleepVals.push(s);
+      if(p!==null) painVals.push(p);
+      if(q!==null) qualVals.push(q);
+    });
+    if(sleepVals.length > 0) {
+      months.push({
+        label: MONTH_NAMES[d.getMonth()].slice(0,3)+' '+d.getFullYear(),
+        avgSleep: sleepVals.reduce((a,b)=>a+b,0)/sleepVals.length,
+        avgPain: painVals.length ? painVals.reduce((a,b)=>a+b,0)/painVals.length : null,
+        avgQual: qualVals.length ? qualVals.reduce((a,b)=>a+b,0)/qualVals.length : null,
+        n: sleepVals.length
+      });
+    }
+  }
+  
+  if(months.length < 1) {
+    section.innerHTML = '<div style="font-size:0.7rem;color:var(--muted);text-align:center;padding:1.5rem">Continuez à enregistrer vos nuits — le comparatif apparaîtra après votre premier mois complet 🌸</div>';
+    return;
+  }
+  
+  const maxSleep = Math.max(...months.map(m=>m.avgSleep), 9);
+  const maxPain = 10;
+  
+  let html = '<div class="compare-title">📊 Comparatif mensuel</div>';
+  
+  months.forEach((m, i) => {
+    const prevM = i > 0 ? months[i-1] : null;
+    const sleepW = Math.round((m.avgSleep/maxSleep)*100);
+    const painW = m.avgPain !== null ? Math.round((m.avgPain/maxPain)*100) : 0;
+    
+    let sleepArrow = '', painArrow = '';
+    if(prevM) {
+      const sleepDiff = m.avgSleep - prevM.avgSleep;
+      const painDiff = m.avgPain !== null && prevM.avgPain !== null ? m.avgPain - prevM.avgPain : 0;
+      sleepArrow = sleepDiff > 0.2 ? '<span class="compare-arrow better">↑</span>' : 
+                   sleepDiff < -0.2 ? '<span class="compare-arrow worse">↓</span>' : 
+                   '<span class="compare-arrow same">→</span>';
+      painArrow = painDiff < -0.5 ? '<span class="compare-arrow better">↓ mieux</span>' :
+                  painDiff > 0.5 ? '<span class="compare-arrow worse">↑</span>' :
+                  '<span class="compare-arrow same">→</span>';
+    }
+    
+    html += `<div style="margin-bottom:0.7rem;padding:0.6rem;background:rgba(58,40,32,0.03);border-radius:10px">
+      <div style="display:flex;justify-content:space-between;margin-bottom:0.4rem">
+        <div style="font-size:0.68rem;font-weight:700;color:var(--text)">${m.label}</div>
+        <div style="font-size:0.6rem;color:var(--muted)">${m.n} nuits</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-label">😴 Sommeil</div>
+        <div class="compare-bars">
+          <div class="compare-bar-wrap"><div class="compare-bar sleep" style="width:${sleepW}%"></div></div>
+        </div>
+        <div class="compare-val">${m.avgSleep.toFixed(1)}h</div>
+        ${sleepArrow}
+      </div>
+      ${m.avgPain !== null ? `<div class="compare-row">
+        <div class="compare-label">🦵 Douleur</div>
+        <div class="compare-bars">
+          <div class="compare-bar-wrap"><div class="compare-bar pain" style="width:${painW}%"></div></div>
+        </div>
+        <div class="compare-val">${m.avgPain.toFixed(1)}/10</div>
+        ${painArrow}
+      </div>` : ''}
+    </div>`;
+  });
+  
+  section.innerHTML = html;
+}
+
 buildCalendar();
 buildShopping();
 // Load saved batch progress
@@ -3523,7 +3976,7 @@ function showView(v){
   });
   if(v==='diner') buildDiners();
   if(v==='batch'){ renderBatchWeek(currentBatchWeek); }
-  if(v==='journal'){ loadSleepEntry(); updateSleepStats(); renderCycles(); }
+  if(v==='journal'){ loadSleepEntry(); updateSleepStats(); renderCycles(); setTimeout(()=>{if(currentStatsTab==='mensuel')renderMonthlyChart();if(currentStatsTab==='comparatif')renderComparatif();},100); }
   if(v==='journal'){setDateLabel();loadJournalHistory();updateTimerDisplay();}
 }
 
