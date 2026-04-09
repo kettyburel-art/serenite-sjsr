@@ -567,6 +567,14 @@ input[type="range"].pain-range::-webkit-slider-thumb{
 .conseil-box{border-radius:10px;padding:0.5rem 0.7rem;margin-top:0.4rem;font-size:0.68rem;line-height:1.5}
 
 
+
+.diner-filter{flex-shrink:0;background:#fff;border:1.5px solid rgba(58,40,32,0.1);border-radius:8px;padding:0.35rem 0.8rem;font-size:0.65rem;font-weight:700;cursor:pointer;white-space:nowrap;color:var(--muted)}
+.diner-filter.active{background:var(--blossom-deep);border-color:var(--blossom-deep);color:#fff}
+.diner-filter-time{flex-shrink:0;background:#fff;border:1.5px solid rgba(107,158,120,0.2);border-radius:8px;padding:0.3rem 0.7rem;font-size:0.62rem;font-weight:700;cursor:pointer;white-space:nowrap;color:var(--leaf-dark)}
+.diner-filter-time.active{background:var(--leaf-mid);border-color:var(--leaf-mid);color:#fff}
+.diner-card{background:#fff;border-radius:12px;padding:0.8rem;margin-bottom:0.5rem;box-shadow:0 2px 8px rgba(58,40,32,0.06);cursor:pointer;transition:all 0.15s}
+.diner-card:active{transform:scale(0.98)}
+
 .sect-title{font-size:0.57rem;text-transform:uppercase;letter-spacing:0.12em;color:var(--muted);font-weight:700;margin:0.75rem 1rem 0.35rem}
 
 /* ── RECETTE DÉTAIL ── */
@@ -931,19 +939,32 @@ input[type="range"].pain-range::-webkit-slider-thumb{
 
 <!-- DÎNER RAPIDE VIEW -->
 <div id="view-diner" style="display:none">
-  <div class="diner-section">
-    <div style="font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:600;color:var(--text);margin-bottom:0.6rem">🍽 Ce soir, j'ai envie de…</div>
-    <div class="diner-mood-row">
-      <div class="mood-btn active" onclick="filterDiner('tous',this)"><span class="mood-icon">✨</span>Tout voir</div>
-      <div class="mood-btn" onclick="filterDiner('rapide',this)"><span class="mood-icon">⚡</span>Rapide</div>
-      <div class="mood-btn" onclick="filterDiner('chaud',this)"><span class="mood-icon">🍲</span>Chaud</div>
-      <div class="mood-btn" onclick="filterDiner('leger',this)"><span class="mood-icon">🌿</span>Léger</div>
-    </div>
-    <div id="diner-list"></div>
+  <div class="diner-header" style="padding:0.8rem 1rem 0.4rem">
+    <div style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:600;color:var(--text)">🍽 Recettes rapides</div>
+    <div style="font-size:0.62rem;color:var(--muted);margin-top:0.15rem">50 recettes sans gluten · sans lactose · anti-SJSR</div>
   </div>
+
+  <!-- Filtres catégories -->
+  <div style="display:flex;gap:0.4rem;padding:0 1rem 0.6rem;overflow-x:auto;scrollbar-width:none">
+    <button class="diner-filter active" onclick="filterDiners('all',this)">Tout</button>
+    <button class="diner-filter" onclick="filterDiners('entree',this)">🥗 Entrées</button>
+    <button class="diner-filter" onclick="filterDiners('plat',this)">🍲 Plats</button>
+    <button class="diner-filter" onclick="filterDiners('soupe',this)">🥣 Soupes</button>
+    <button class="diner-filter" onclick="filterDiners('dessert',this)">🍰 Desserts</button>
+    <button class="diner-filter" onclick="filterDiners('base',this)">📋 Bases</button>
+  </div>
+
+  <!-- Filtres temps -->
+  <div style="display:flex;gap:0.4rem;padding:0 1rem 0.8rem;overflow-x:auto;scrollbar-width:none">
+    <button class="diner-filter-time active" onclick="filterDinerTime(0,this)">⏱ Tous</button>
+    <button class="diner-filter-time" onclick="filterDinerTime(15,this)">≤ 15 min</button>
+    <button class="diner-filter-time" onclick="filterDinerTime(25,this)">≤ 25 min</button>
+    <button class="diner-filter-time" onclick="filterDinerTime(45,this)">≤ 45 min</button>
+  </div>
+
+  <div id="diner-list" style="padding:0 1rem 1rem"></div>
 </div>
 
-<!-- JOURNAL VIEW -->
 <div id="view-journal" style="display:none">
 
   <!-- Timer Infusion -->
@@ -3232,27 +3253,118 @@ function installApp(){
 
 // ── DÎNER RAPIDE ──
 const DINERS = [
-  {cat:'rapide',time:'10 min',name:'Sardines · Haricots verts · Persillade',ingr:'1 boîte sardines · haricots verts Picard micro-ondes 5min · persillade Picard',tags:['FER','DOPA','ALK']},
-  {cat:'rapide',time:'8 min',name:'Chia bowl salé · Thon · Légumes',ingr:'Chia pudding non sucré · thon au naturel · légumes Bene Bono râpés · vinaigre cidre',tags:['FER','MAG','VIT-C']},
-  {cat:'chaud',time:'15 min',name:'Velouté brocolis express · Lait de coco',ingr:'Brocolis Picard · lait de coco Masala · gingembre · curcuma · mixer',tags:['ALK','MAG']},
-  {cat:'chaud',time:'12 min',name:'Cabillaud Air Fryer · Épinards ail',ingr:'1 portion cabillaud · épinards Picard · ail Picard · gingembre · huile olive',tags:['ALK','DOPA','MAG']},
-  {cat:'leger',time:'5 min',name:'Plateau froid · Maquereau · Quinoa · Salade',ingr:'Maquereau boîte · quinoa batch froid · mélange salade Picard · vinaigre cidre',tags:['FER','DOPA','MAG']},
-  {cat:'leger',time:'5 min',name:'Tofu noisette froid · Légumes frais · Basilic',ingr:'Tofu noisette · légumes Bene Bono · basilic Picard · huile colza · vinaigre cidre',tags:['ALK','MAG']},
+  // ══ ENTRÉES & ACCOMPAGNEMENTS ══
+  {cat:'entree',time:'10 min',name:"Verrines carottes cumin",ingr:"Carottes · Oignon · Crème de riz · Cumin",steps:"Cuire carottes+oignon. Mixer avec crème riz + cumin. Servir en verrines.",tags:['vegan','rapide']},
+  {cat:'entree',time:'15 min',name:"Purée petits pois citron",ingr:"650g petits pois · ½ citron confit · 20cl lait millet",steps:"Cuire petits pois 10 min eau bouillante. Mixer avec lait millet + citron confit haché.",tags:['vegan','sjsr']},
+  {cat:'entree',time:'10 min',name:"Gaspacho frais",ingr:"Tomates · Poivrons · Concombre · Huile olive",steps:"Mixer tous les légumes crus avec huile olive + sel. Servir bien frais.",tags:['vegan','rapide','ete']},
+  {cat:'entree',time:'45 min',name:"Flan d'aubergines",ingr:"500g aubergines · 1 oignon · 1 ail · 4 œufs · 4cs flocons riz · herbes",steps:"Cuire aubergines vapeur. Revenir oignon+ail. Mélanger tout + oeufs battus. Four th.6 / 40-50 min.",tags:['veggie','four']},
+  {cat:'entree',time:'20 min',name:"Panisse (farine pois chiches)",ingr:"250g farine pois chiches · 1L eau · 2cs huile olive · 1 ail · sel",steps:"Bouillir eau+huile+ail+sel. Verser farine en pluie en remuant. Pâte épaissit. Verser en plat, refroidir, couper, poêler.",tags:['vegan','original']},
+  {cat:'entree',time:'30 min',name:"Quiche aux fanes de carottes",ingr:"Fanes carottes · 3 œufs · 200ml lait avoine · 1 oignon",steps:"Hacher fanes + revenir oignon. Mélanger œufs + lait + fanes. Cuire sans pâte au four 180°C / 30 min.",tags:['veggie','four','zéro-déchet']},
+  {cat:'entree',time:'15 min',name:"Galettes au pourpier",ingr:"1 botte pourpier · 2 œufs · Farine riz · Bicarbonate",steps:"Hacher pourpier. Mélanger œufs + farine. Petites galettes à la poêle 3 min chaque côté.",tags:['veggie','rapide']},
+  {cat:'entree',time:'20 min',name:"Galettes de pomme de terre",ingr:"Pommes de terre râpées · 2 œufs · 1 oignon · Farine riz",steps:"Râper pommes de terre, essorer. Mélanger avec œufs + oignon + farine. Poêle huilée 4 min chaque côté.",tags:['veggie','réconfort']},
+  // ══ PLATS PRINCIPAUX ══
+  {cat:'plat',time:'20 min',name:"Steak végétal aux lentilles",ingr:"Lentilles ou pois chiches cuits · Farine riz · Épices curcuma-cumin",steps:"Écraser légumineuses. Mélanger farine + épices. Former des steaks. Dorer poêle 4 min chaque côté.",tags:['vegan','proteine','sjsr']},
+  {cat:'plat',time:'25 min',name:"Risotto de quinoa au brocoli",ingr:"Quinoa · Bouillon légumes · Brocoli · Ail · Oignon",steps:"Revenir oignon + quinoa. Ajouter bouillon louche après louche comme risotto. Incorporer brocoli 5 min avant fin.",tags:['vegan','complet']},
+  {cat:'plat',time:'30 min',name:"Gratin quinoa-courge-lentilles",ingr:"Quinoa cuit · Courge dés · Lentilles · Bouillon",steps:"Mélanger quinoa + lentilles + courge dans plat. Couvrir bouillon. Four 180°C / 25 min.",tags:['vegan','four','batch']},
+  {cat:'plat',time:'20 min',name:"Pizzolenta (pizza polenta)",ingr:"Polenta 200g · Eau 600ml · Sauce tomate · Légumes variés · Herbes",steps:"Cuire polenta 5 min en remuant. Verser en plat, laisser refroidir. Garnir tomate + légumes. Four 180°C / 15 min.",tags:['vegan','original','sjsr']},
+  {cat:'plat',time:'25 min',name:"Lasagnes de chou vert",ingr:"Feuilles chou vert · Sauce tomate · Riz cuit · Ail · Herbes",steps:"Blanchir feuilles de chou 3 min. Alterner couches chou/tomate/riz dans plat. Four 180°C / 20 min.",tags:['vegan','four','original']},
+  {cat:'plat',time:'35 min',name:"Risotto aux feuilles de betterave",ingr:"Riz rond · Feuilles betterave · Bouillon légumes · Oignon",steps:"Revenir oignon + riz. Ajouter bouillon louche par louche. Incorporer feuilles betterave hachées à mi-cuisson.",tags:['vegan','zéro-déchet','original']},
+  {cat:'plat',time:'15 min',name:"Bolognaise de tofu",ingr:"Tofu ferme émietté · Sauce tomate · Ail · Oignon · Origan",steps:"Revenir tofu + oignons 5 min. Ajouter tomate + origan. Mijoter 15 min. Servir sur riz ou quinoa.",tags:['vegan','proteine','rapide']},
+  {cat:'plat',time:'20 min',name:"Bolognaise végétarienne lentilles",ingr:"Lentilles corail · Carottes · Oignons · Coulis tomate · Ail · Origan",steps:"Revenir oignon + carotte. Ajouter lentilles + coulis tomate + eau. Mijoter 20 min. Sur riz ou galette.",tags:['vegan','proteine','sjsr','batch']},
+  {cat:'plat',time:'15 min',name:"Poêlée potimarron romarin",ingr:"Potimarron · Ail · Romarin · Huile olive",steps:"Couper potimarron en dés (garder peau si bio). Poêle avec ail + romarin. Sauter 12 min jusqu'à tendreté.",tags:['vegan','rapide','automne']},
+  {cat:'plat',time:'25 min',name:"Poêlée fèves et brocolis",ingr:"Fèves fraîches · Brocoli · Ail · Huile olive · Citron",steps:"Blanchir fèves 5 min. Brocoli à la vapeur 8 min. Poêler ensemble avec ail 5 min. Citron en finition.",tags:['vegan','saison','sjsr']},
+  {cat:'plat',time:'15 min',name:"Quiche sans pâte",ingr:"4 œufs · 200ml lait avoine · 1cs amidon maïs · Légumes variés · Sel herbes",steps:"Revenir légumes. Fouetter œufs + lait + amidon + sel. Verser sur légumes dans plat huilé. Four 180°C / 25 min.",tags:['veggie','rapide','four']},
+  {cat:'plat',time:'30 min',name:"Gnocchis de pomme de terre",ingr:"500g pommes de terre · 100g farine riz · 1 œuf · Sel",steps:"Cuire pommes de terre vapeur. Écraser. Mélanger farine + œuf. Former gnocchis. Pocher 3 min eau bouillante. Poêler 2 min.",tags:['veggie','original','réconfort']},
+  {cat:'plat',time:'30 min',name:"Cake aux courgettes",ingr:"200g farine riz · 2cs farine pois chiches · 3 œufs · 10cl lait riz · Courgettes râpées · Levure",steps:"Revenir courgettes râpées. Mélanger farines + œufs + lait. Ajouter courgettes. Four 180°C / 45 min.",tags:['veggie','four','batch']},
+  {cat:'plat',time:'25 min',name:"Galettes sarrasin complètes",ingr:"330g farine sarrasin · 750ml eau · 1 œuf · Sel",steps:"Mélanger tout, repos 2h. Poêle très chaude légèrement huilée. Galettes fines 2 min chaque côté. Garnir selon envie.",tags:['veggie','base','sjsr']},
+  {cat:'plat',time:'15 min',name:"Salade de riz aux légumes",ingr:"Riz complet cuit · Légumes saison · Vinaigrette colza-citron",steps:"Riz refroidi + légumes coupés + vinaigrette. Parsemer graines de courge. Peut se préparer la veille.",tags:['vegan','rapide','batch']},
+  {cat:'plat',time:'45 min',name:"Gratin blettes pommes de terre",ingr:"Blettes · Pommes de terre · 2cs farine riz · 250ml lait avoine · Huile · Muscade",steps:"Cuire blettes + pdt séparément. Faire béchamel sans gluten. Alterner couches dans plat. Four 180°C / 20 min.",tags:['veggie','four','réconfort']},
+  {cat:'plat',time:'60 min',name:"Pain sans gluten maison",ingr:"500g farine sans gluten · 30g levure fraîche · 400ml eau tiède · 1cc sel · 2cs huile",steps:"Délayer levure. Mélanger farine+sel, ajouter levure+huile. Pétrir 4 min. Lever 30 min. Four 210°C/15min puis 190°C/20min.",tags:['vegan','base','batch']},
+  // ══ SOUPES & SAUCES ══
+  {cat:'soupe',time:'20 min',name:"Velouté fanes de radis",ingr:"Fanes de radis · Pommes de terre · Oignon · Bouillon légumes",steps:"Revenir oignon. Ajouter fanes + pdt + bouillon. Cuire 15 min. Mixer. Sel + poivre.",tags:['vegan','zéro-déchet','rapide']},
+  {cat:'soupe',time:'15 min',name:"Soupe courgette-pourpier",ingr:"Courgettes · Pourpier · Oignon · Bouillon",steps:"Cuire courgettes + pourpier + oignon 10 min. Mixer. Assaisonner.",tags:['vegan','rapide','ete']},
+  {cat:'soupe',time:'20 min',name:"Soupe de courge au lait coco",ingr:"Potiron ou courge · Oignon · Lait de coco · Gingembre · Curcuma",steps:"Cuire courge + oignon + gingembre 15 min. Mixer avec lait coco. Assaisonner. Graines de courge en finition.",tags:['vegan','sjsr','réconfort']},
+  {cat:'soupe',time:'10 min',name:"Béchamel sans gluten ni lactose",ingr:"2cs amidon maïs · 250ml lait riz ou avoine · 2cs huile olive · Muscade",steps:"Délayer amidon dans lait froid. Chauffer doucement en remuant jusqu'à épaississement. Ajouter huile + muscade.",tags:['vegan','base','sauce']},
+  {cat:'soupe',time:'5 min',name:"Mayonnaise vegan sans oeuf",ingr:"1 part lait soja · 2 parts huile · Moutarde · Citron · Sel",steps:"Mettre tous les ingrédients dans un verre. Mixer au mixeur plongeant depuis le bas sans bouger jusqu'à émulsion.",tags:['vegan','sauce','rapide']},
+  {cat:'soupe',time:'10 min',name:"Sauce pourpier façon pesto",ingr:"Pourpier · Huile olive · Ail · Sel · Citron",steps:"Mixer pourpier + ail + huile + citron + sel. Texture pesto. Sur pâtes de riz, galettes ou légumes.",tags:['vegan','sauce','original']},
+  // ══ DESSERTS & GOÛTERS ══
+  {cat:'dessert',time:'35 min',name:"Gâteau chocolat moelleux",ingr:"200g chocolat noir · 100g margarine végétale · 100g sucre · 4 œufs · 50g farine riz",steps:"Fondre chocolat+margarine. Ajouter sucre + jaunes + farine. Monter blancs en neige, incorporer. Four 180°C / 25 min.",tags:['veggie','dessert','sjsr']},
+  {cat:'dessert',time:'20 min',name:"Mousse chocolat aux poires",ingr:"1 tablette chocolat noir · 6 œufs · 5 poires · 2cs sucre · Eau",steps:"Mousse : chocolat fondu + jaunes + blancs en neige. Caraméliser poires en dés avec sucre. Dresser en verrines.",tags:['veggie','dessert','élégant']},
+  {cat:'dessert',time:'20 min',name:"Cookies sarrasin-chocolat",ingr:"150g farine riz · 50g farine sarrasin · 100g pépites chocolat · 1 œuf · 50g sucre · 50g huile",steps:"Mélanger tout. Former boules sur plaque. Four 180°C / 12-15 min. Laisser refroidir avant de croquer.",tags:['veggie','goûter','batch']},
+  {cat:'dessert',time:'45 min',name:"Cake au citron",ingr:"150g farine riz · 3 œufs · 100g sucre · Jus + zestes 2 citrons · 5cl huile",steps:"Fouetter œufs + sucre. Ajouter jus + zestes + huile + farine. Four 160°C / 40 min.",tags:['veggie','dessert','frais']},
+  {cat:'dessert',time:'25 min',name:"Sablés au sarrasin",ingr:"100g farine sarrasin · 100g farine riz · 100g margarine végétale · 80g sucre",steps:"Sabler les ingrédients du bout des doigts. Boule, étaler, découper. Four 170°C / 15 min.",tags:['vegan','goûter','batch']},
+  {cat:'dessert',time:'20 min',name:"Quinoa au lait d'amande vanillé",ingr:"Quinoa · Lait amande · Vanille · Miel · Cannelle",steps:"Cuire quinoa dans lait amande + vanille + miel. Servir chaud ou froid. Cannelle en finition.",tags:['vegan','dessert','sjsr']},
+  {cat:'dessert',time:'45 min',name:"Gâteau poires flocons quinoa",ingr:"3 poires · 100g flocons quinoa · 100g farine riz · 3 œufs · 50g sucre · 5cl huile",steps:"Mixer poires. Mélanger flocons + farine + œufs + sucre + huile + poires. Four 180°C / 35 min.",tags:['veggie','dessert','fruit']},
+  {cat:'dessert',time:'30 min',name:"Crumble fruits de saison",ingr:"Fruits saison · 100g farine riz · 50g farine amande · 80g margarine · 60g sucre",steps:"Couper fruits dans plat. Sabler farine + margarine + sucre du bout des doigts. Parsemer. Four 180°C / 25 min.",tags:['veggie','dessert','saison']},
+  {cat:'dessert',time:'20 min',name:"Glace citron vegan",ingr:"Jus de 4 citrons · 400ml lait coco · 3cs sirop érable",steps:"Mélanger tout. Congeler 1h. Mixer. Recongeler. Mixer à nouveau avant service.",tags:['vegan','dessert','été']},
+  {cat:'dessert',time:'25 min',name:"Fondant chocolat express",ingr:"200g chocolat noir · 4 œufs · 3cs huile · 2cs sucre",steps:"Fondre chocolat. Mélanger œufs + huile + sucre + chocolat. Four 180°C / 12 min seulement (cœur coulant).",tags:['veggie','dessert','express']},
+  {cat:'dessert',time:'45 min',name:"Pancakes sarrasin-châtaigne",ingr:"200g farine sarrasin · 100g farine châtaigne · 3 œufs · 500ml lait avoine",steps:"Mélanger tout, repos 30 min. Poêle chaude. Pancakes épais 3 min chaque côté. Servir avec miel.",tags:['veggie','brunch','réconfort']},
+  {cat:'dessert',time:'40 min',name:"Montecao (sablés huile-cannelle)",ingr:"200g farine riz · 80ml huile olive · 60g sucre glace · Cannelle",steps:"Mélanger farine + sucre + cannelle. Ajouter huile. Pétrir. Former petites boules. Four 150°C / 20 min.",tags:['vegan','biscuit','espagnol']},
+  {cat:'dessert',time:'50 min',name:"Gâteau pommes et coings",ingr:"3 pommes · 2 coings · 150g farine riz · 3 œufs · 80g sucre · 5cl huile",steps:"Cuire coings 20 min eau sucrée. Couper fruits. Mélanger farine + œufs + sucre + huile + fruits. Four 175°C / 40 min.",tags:['veggie','dessert','automne']},
+  {cat:'dessert',time:'20 min',name:"Tarte fine tomates vertes",ingr:"Galette sarrasin ou pâte riz · Tomates vertes · Oignons · Herbes · Huile",steps:"Étaler galette sarrasin. Poser rondelles tomates vertes + oignons. Huile + herbes. Four 200°C / 15 min.",tags:['vegan','original','été']},
+  // ══ BASES INDISPENSABLES ══
+  {cat:'base',time:'5 min',name:"Pâte à crêpes sarrasin-riz",ingr:"160g farine riz · 90g farine sarrasin · 4 œufs · 500ml lait avoine · Sel",steps:"Mélanger farines + sel. Ajouter œufs. Verser lait progressivement en fouettant. Repos 1h. Crêpes à la poêle.",tags:['veggie','base','brunch']},
+  {cat:'base',time:'15 min',name:"Pâte à pizza sans gluten",ingr:"200g farine riz · 50g amidon maïs · 7g levure sèche · 150ml eau tiède · 2cs huile · Sel",steps:"Mélanger farines + levure + sel. Ajouter eau + huile. Pétrir 5 min. Repos 30 min. Étaler fin. Garnir. Four 220°C / 12 min.",tags:['veggie','base','original']},
 ];
 
 function buildDiners(){
-  const c=document.getElementById('diner-list');
-  if(!c)return;
-  const colors={'FER':'rgba(155,112,96,0.12)','DOPA':'rgba(224,120,64,0.12)','ALK':'rgba(168,200,154,0.2)','MAG':'rgba(90,138,90,0.12)','VIT-C':'rgba(212,168,67,0.12)'};
-  c.innerHTML=DINERS.map(d=>`
-    <div class="diner-card" data-cat="${d.cat}">
-      <div class="diner-time-badge">⏱ ${d.time}</div>
-      <div class="diner-info">
-        <div class="diner-name">${d.name}</div>
-        <div class="diner-ingr">${d.ingr}</div>
-        <div class="diner-tags">${d.tags.map(t=>`<span class="diner-tag">${t}</span>`).join('')}</div>
+  filterDiners('all', document.querySelector('.diner-filter'));
+}
+
+let activeCat='all';
+let activeTime=0;
+
+function filterDiners(cat, btn){
+  activeCat=cat;
+  document.querySelectorAll('.diner-filter').forEach(b=>b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  renderDinerList();
+}
+
+function filterDinerTime(maxMin, btn){
+  activeTime=maxMin;
+  document.querySelectorAll('.diner-filter-time').forEach(b=>b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  renderDinerList();
+}
+
+function renderDinerList(){
+  const el=document.getElementById('diner-list');
+  if(!el) return;
+  
+  let filtered = DINERS.filter(d=>{
+    if(activeCat!=='all' && d.cat!==activeCat) return false;
+    if(activeTime>0){
+      const mins=parseInt(d.time);
+      if(mins>activeTime) return false;
+    }
+    return true;
+  });
+  
+  if(filtered.length===0){
+    el.innerHTML='<div style="text-align:center;color:var(--muted);font-size:0.75rem;padding:2rem">Aucune recette pour ces filtres</div>';
+    return;
+  }
+  
+  el.innerHTML=filtered.map((d,i)=>{
+    const catEmoji={entree:'🥗',plat:'🍲',soupe:'🥣',dessert:'🍰',base:'📋'}[d.cat]||'🍽';
+    const tagHTML=(d.tags||[]).map(t=>`<span style="font-size:0.55rem;background:rgba(107,158,120,0.15);border-radius:4px;padding:0.1rem 0.35rem;color:var(--leaf-dark)">${t}</span>`).join(' ');
+    return `<div class="diner-card" onclick="toggleRecipe(${i})">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.3rem">
+        <div style="font-size:0.8rem;font-weight:700;color:var(--text)">${catEmoji} ${d.name}</div>
+        <div style="font-size:0.65rem;color:var(--muted);white-space:nowrap;margin-left:0.5rem">⏱ ${d.time}</div>
       </div>
-    </div>`).join('');
+      <div style="font-size:0.65rem;color:var(--muted);margin-bottom:0.4rem;font-style:italic">${d.ingr}</div>
+      <div style="display:flex;gap:0.3rem;flex-wrap:wrap;margin-bottom:0.4rem">${tagHTML}</div>
+      <div id="recipe-steps-${i}" style="display:none;font-size:0.68rem;color:var(--text);background:rgba(107,158,120,0.06);border-radius:8px;padding:0.6rem;margin-top:0.4rem;line-height:1.6">${d.steps}</div>
+    </div>`;
+  }).join('');
+}
+
+function toggleRecipe(i){
+  const el=document.getElementById('recipe-steps-'+i);
+  if(!el) return;
+  el.style.display=el.style.display==='none'?'block':'none';
 }
 
 function filterDiner(cat,btn){
