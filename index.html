@@ -874,7 +874,6 @@ canvas.sleep-chart{width:100%;height:140px}
 <!-- TIPS VIEW -->
 <div <div id="view-batch" style="display:none">
   <div class="batch-view">
-
     <div class="batch-hero">
       <h2>⏱ Mes Sessions Batch Cooking</h2>
       <p>Chaque samedi · 1h30 · Tout préparer pour la semaine<br>
@@ -882,6 +881,13 @@ canvas.sleep-chart{width:100%;height:140px}
       <div class="batch-time-total">⏱ 1h30 au total · Semaine tranquille garantie</div>
     </div>
 
+    <!-- Progression globale -->
+    <div style="margin:0 1rem 0.6rem;background:rgba(58,40,32,0.08);border-radius:8px;height:8px;overflow:hidden">
+      <div id="batchProgress" style="height:100%;background:linear-gradient(90deg,var(--leaf-mid),var(--leaf-dark));border-radius:8px;transition:width 0.3s;width:0%"></div>
+    </div>
+    <div style="text-align:center;font-size:0.62rem;color:var(--muted);margin-bottom:0.6rem" id="batchProgressText">0/0 étapes</div>
+
+    <!-- Sélecteur de session -->
     <div class="batch-week-selector">
       <div class="batch-week-btn active" onclick="selectBatchWeek(0,this)">
         <div class="bwb-date">Sam 11 avr</div>
@@ -905,10 +911,12 @@ canvas.sleep-chart{width:100%;height:140px}
       </div>
     </div>
 
-    <div id="batch-content"></div>
+    <!-- Étapes du batch -->
+    <div id="batchStepsList" style="padding:0 1rem 1rem"></div>
 
   </div>
 </div>
+
 
 <div id="view-tips" style="display:none">
   <div class="tips-section">
@@ -2489,39 +2497,124 @@ const SHOP_DATA={
 
 // ── DÎNERS ──
 const DINERS=[
-  {cat:'entree',time:'10 min',name:"Verrines carottes cumin",ingr:"Carottes · Oignon · Crème riz · Cumin",steps:"Cuire carottes+oignon. Mixer avec crème riz + cumin.",tags:['vegan','rapide']},
-  {cat:'entree',time:'10 min',name:"Gaspacho frais",ingr:"Tomates · Poivrons · Concombre · Huile olive",steps:"Mixer tous les légumes crus à froid. Servir frais.",tags:['vegan','rapide']},
-  {cat:'entree',time:'20 min',name:"Galettes de pomme de terre",ingr:"Pommes de terre râpées · 2 oeufs · Oignon · Farine riz",steps:"Râper pdt, essorer. Mélanger oeufs + oignon + farine. Poêle 4 min chaque côté.",tags:['veggie']},
-  {cat:'plat',time:'20 min',name:"Steak végétal lentilles",ingr:"Lentilles cuites · Farine riz · Curcuma · Cumin",steps:"Écraser lentilles. Mélanger farine + épices. Former steaks. Dorer poêle 4 min.",tags:['vegan','proteine','sjsr']},
-  {cat:'plat',time:'25 min',name:"Risotto quinoa",ingr:"Quinoa · Bouillon légumes · Ail · Oignon · Herbes",steps:"Revenir oignon + quinoa. Ajouter bouillon louche par louche. Herbes en fin.",tags:['vegan','complet']},
-  {cat:'plat',time:'15 min',name:"Bolognaise tofu",ingr:"Tofu émietté · Sauce tomate · Ail · Oignon · Origan",steps:"Revenir tofu + oignons 5 min. Ajouter tomate + origan. Mijoter 15 min.",tags:['vegan','proteine']},
-  {cat:'plat',time:'20 min',name:"Bolognaise lentilles",ingr:"Lentilles corail · Carottes · Oignons · Coulis tomate",steps:"Revenir oignon + carotte. Ajouter lentilles + coulis. Mijoter 20 min.",tags:['vegan','proteine','sjsr']},
-  {cat:'plat',time:'20 min',name:"Galettes sarrasin",ingr:"330g farine sarrasin · 750ml eau · 1 oeuf · Sel",steps:"Mélanger tout, repos 2h. Poêle chaude. Galettes fines 2 min chaque côté.",tags:['veggie','sjsr']},
-  {cat:'plat',time:'15 min',name:"Salade riz légumes",ingr:"Riz complet cuit · Légumes saison · Vinaigrette colza-citron",steps:"Riz refroidi + légumes + vinaigrette. Graines courge dessus.",tags:['vegan','rapide']},
-  {cat:'plat',time:'15 min',name:"Quiche sans pâte",ingr:"4 oeufs · 200ml lait avoine · Amidon maïs · Légumes",steps:"Revenir légumes. Fouetter oeufs + lait + amidon. Four 180°C 25 min.",tags:['veggie']},
-  {cat:'plat',time:'10 min',name:"Bowl crevettes-mangue-quinoa",ingr:"Crevettes · Mangue · Quinoa · Sauce soja · Sésame",steps:"Crevettes poêle 3 min. Quinoa chaud. Mangue dés. Sauce soja + sésame.",tags:['sjsr','proteine']},
-  {cat:'plat',time:'10 min',name:"Sardines avocat laitue",ingr:"Sardines boîte · Laitue · Avocat · Graines courge · Citron",steps:"Assembler tout. Citron + colza. Graines courge dessus.",tags:['sjsr','rapide','proteine']},
-  {cat:'plat',time:'15 min',name:"Tofu doré curcuma",ingr:"Tofu nature · Curcuma · Sauce soja · Riz · Légumes",steps:"Tofu dés + curcuma poêle 5 min. Riz chaud + légumes + sauce soja.",tags:['vegan','sjsr']},
-  {cat:'plat',time:'10 min',name:"Thon-haricots rouges",ingr:"Thon naturel · Haricots rouges · Cébette · Citron",steps:"Égoutter thon + haricots. Cébette + citron + huile. Graines lin dessus.",tags:['sjsr','rapide']},
-  {cat:'plat',time:'10 min',name:"Maquereau lentilles carottes",ingr:"Maquereau boîte · Lentilles vertes batch · Carottes curcuma · Citron",steps:"Émietter maquereau sur lentilles + carottes du batch. Citron pressé.",tags:['sjsr','rapide']},
-  {cat:'plat',time:'8 min',name:"Ratatouille quinoa sardines",ingr:"Ratatouille Cassegrain · Quinoa batch · Sardines boîte · Herbes",steps:"Chauffer ratatouille 5 min. Quinoa chaud. Sardines dessus. Herbes.",tags:['express','rapide']},
-  {cat:'soupe',time:'20 min',name:"Soupe courge lait coco",ingr:"Potiron · Oignon · Lait coco · Gingembre · Curcuma",steps:"Cuire courge + oignon + gingembre 15 min. Mixer avec lait coco.",tags:['vegan','sjsr']},
-  {cat:'soupe',time:'15 min',name:"Soupe lentilles corail coco",ingr:"Lentilles corail · Lait coco · Gingembre · Curcuma · Citron",steps:"Cuire lentilles + gingembre + curcuma 12 min. Ajouter lait coco. Citron.",tags:['vegan','sjsr','rapide']},
-  {cat:'soupe',time:'20 min',name:"Velouté fenouil lentilles",ingr:"Fenouil · Lentilles vertes · Lait avoine · Gingembre",steps:"Cuire fenouil + lentilles 20 min. Mixer avec lait avoine.",tags:['vegan','sjsr']},
-  {cat:'soupe',time:'10 min',name:"Béchamel sans gluten",ingr:"2cs amidon maïs · 250ml lait avoine · 2cs huile olive · Muscade",steps:"Délayer amidon dans lait froid. Chauffer doucement en remuant.",tags:['vegan','base']},
-  {cat:'dessert',time:'35 min',name:"Gâteau chocolat moelleux",ingr:"200g chocolat noir · Margarine végétale · 4 oeufs · Farine riz",steps:"Fondre chocolat+margarine. Ajouter oeufs + farine. Blancs neige. Four 180°C 25 min.",tags:['veggie','dessert']},
-  {cat:'dessert',time:'20 min',name:"Cookies sarrasin chocolat",ingr:"150g farine riz · 50g sarrasin · Pépites chocolat · 1 oeuf · Huile",steps:"Mélanger tout. Former boules. Four 180°C 12-15 min.",tags:['veggie','goûter']},
-  {cat:'dessert',time:'45 min',name:"Cake citron",ingr:"150g farine riz · 3 oeufs · Sucre · Jus + zestes 2 citrons · Huile",steps:"Fouetter oeufs + sucre. Ajouter jus + zestes + huile + farine. Four 160°C 40 min.",tags:['veggie','dessert']},
-  {cat:'dessert',time:'20 min',name:"Quinoa lait amande vanillé",ingr:"Quinoa · Lait amande · Vanille · Miel · Cannelle",steps:"Cuire quinoa dans lait amande + vanille + miel. Cannelle en finition.",tags:['vegan','dessert','sjsr']},
-  {cat:'dessert',time:'30 min',name:"Crumble fruits saison",ingr:"Fruits saison · Farine riz · Farine amande · Margarine",steps:"Fruits dans plat. Sabler farine + margarine + sucre. Four 180°C 25 min.",tags:['veggie','dessert']},
-  {cat:'dessert',time:'20 min',name:"Fondant chocolat express",ingr:"200g chocolat noir · 4 oeufs · Huile · Sucre",steps:"Fondre chocolat. Mélanger oeufs + huile + sucre + chocolat. Four 180°C 12 min seulement.",tags:['veggie','dessert']},
-  {cat:'dessert',time:'12 min',name:"Bol tapioca cacao caramel",ingr:"Tapioca 4cs · Eau 200ml · Cacao · Sirop Monin caramel · Coco râpée",steps:"Tapioca + eau 10 min en remuant. Cacao hors feu. Caramel + coco dessus.",tags:['sjsr','soirée']},
-  {cat:'dessert',time:'5 min',name:"Smoothie bowl mangue fruits rouges",ingr:"Mangues 150g · Fruits rouges 100g · Millet drink · Miel · Graines lin",steps:"Mixer mangues + fruits rouges + millet drink. Miel + graines + coco dessus.",tags:['sjsr','antioxydant']},
-  {cat:'dessert',time:'8 min',name:"Chocolat chaud caramel",ingr:"2cc cacao Van Houten · 200ml eau chaude · Sirop Monin caramel · Psyllium",steps:"Mélanger cacao + eau chaude. Sirop caramel. Psyllium pour satiété.",tags:['sjsr','soirée']},
-  {cat:'base',time:'5 min',name:"Pâte à crêpes sarrasin",ingr:"160g farine riz · 90g farine sarrasin · 4 oeufs · 500ml lait avoine",steps:"Mélanger farines + sel. Ajouter oeufs. Verser lait progressivement. Repos 1h.",tags:['veggie','base']},
-  {cat:'base',time:'60 min',name:"Pain sans gluten maison",ingr:"500g farine sans gluten · 30g levure fraîche · 400ml eau tiède · Sel",steps:"Délayer levure. Mélanger farine+sel+levure+huile. Pétrir 4 min. Lever 30 min. Four 210°C 15min.",tags:['vegan','base']},
+  // ══ ENTRÉES ══
+  {cat:'entree',time:'10 min',name:"Verrines carottes cumin",
+   ingr:"3 carottes · 1 oignon · 10cl crème de riz · 1cc cumin · sel",
+   steps:"1. Éplucher et couper carottes en rondelles, oignon en quartiers.\n2. Faire cuire 15 min eau bouillante salée jusqu'à tendreté.\n3. Égoutter. Mixer avec crème de riz + cumin.\n4. Goûter et rectifier sel. Verser dans verrines.\n5. Servir chaud ou froid — se conserve 3 jours au frigo.",
+   tags:['vegan','rapide']},
+  {cat:'entree',time:'10 min',name:"Gaspacho frais",
+   ingr:"4 tomates mûres · 1 poivron rouge · 1/2 concombre · 2cs huile olive · sel · citron",
+   steps:"1. Laver tous les légumes. Couper grossièrement (pas besoin d'éplucher).\n2. Tout mettre dans le mixeur ou blender.\n3. Ajouter huile olive + jus de citron + sel.\n4. Mixer 1 min à pleine puissance jusqu'à texture lisse.\n5. Goûter. Mettre au frigo minimum 30 min avant de servir — c'est bien meilleur froid.",
+   tags:['vegan','rapide']},
+  {cat:'entree',time:'20 min',name:"Galettes de pomme de terre",
+   ingr:"3 pommes de terre moyennes · 2 oeufs · 1 oignon · 2cs farine de riz · sel · huile",
+   steps:"1. Éplucher pommes de terre. Les râper avec une râpe grossière dans un torchon propre.\n2. Tordre le torchon au-dessus de l'évier pour bien essorer toute l'eau (étape clé pour que les galettes soient croustillantes).\n3. Dans un saladier : mélanger pdt essorée + oignon haché + oeufs battus + farine + sel.\n4. Former des galettes avec les mains (comme des petits hamburgers plats).\n5. Chauffer 1cs huile dans poêle feu moyen-vif. Cuire 4 min chaque côté jusqu'à bien dorées.",
+   tags:['veggie']},
+  // ══ PLATS ══
+  {cat:'plat',time:'20 min',name:"Steak végétal lentilles",
+   ingr:"200g lentilles corail cuites (batch) · 3cs farine de riz · 1cc curcuma · 1cc cumin · sel · huile",
+   steps:"1. Prendre les lentilles corail du batch (déjà cuites).\n2. Les écraser dans un bol avec une fourchette — pas trop fin, garder un peu de texture.\n3. Ajouter farine de riz + curcuma + cumin + sel. Mélanger.\n4. Former 4 galettes avec les mains mouillées (ça colle moins).\n5. Chauffer 1cs huile dans poêle feu moyen. Cuire 4 min chaque côté sans bouger — ils doivent dorer et se solidifier. Retourner délicatement avec une spatule large.",
+   tags:['vegan','proteine','sjsr']},
+  {cat:'plat',time:'25 min',name:"Risotto quinoa",
+   ingr:"150g quinoa rouge · 400ml bouillon légumes chaud · 1 oignon · 2 gousses ail · herbes · sel",
+   steps:"1. Faire chauffer le bouillon dans une casserole à part — le garder chaud pendant toute la cuisson.\n2. Dans grande poêle : faire revenir oignon haché dans 1cs huile 3 min.\n3. Ajouter quinoa rincé + ail écrasé. Remuer 1 min pour nacrer.\n4. Ajouter 1 louche de bouillon chaud. Remuer jusqu'à absorption.\n5. Recommencer louche par louche (4-5 louches) pendant 15 min.\n6. Le quinoa doit être tendre et le risotto onctueux. Herbes en finition.",
+   tags:['vegan','complet']},
+  {cat:'plat',time:'15 min',name:"Bolognaise lentilles",
+   ingr:"150g lentilles corail · 1 carotte · 1 oignon · 400ml coulis tomate · ail · origan · sel",
+   steps:"1. Hacher finement oignon, carotte, ail.\n2. Faire revenir dans 1cs huile 5 min — ils doivent ramollir et dorer légèrement.\n3. Ajouter lentilles corail rincées + coulis tomate + 200ml eau + origan + sel.\n4. Mijoter 20 min feu moyen en remuant souvent. Les lentilles corail vont fondre et épaissir la sauce — c'est ça qui remplace la viande.\n5. Servir sur riz, quinoa ou galette sarrasin. Se congèle très bien.",
+   tags:['vegan','proteine','sjsr']},
+  {cat:'plat',time:'20 min',name:"Galettes sarrasin",
+   ingr:"200g farine sarrasin · 500ml eau · 1 oeuf · 1cc sel · huile pour la poêle",
+   steps:"1. Dans un grand bol : mélanger farine + sel + oeuf. Ajouter l'eau progressivement en fouettant pour éviter les grumeaux.\n2. La pâte doit être fluide comme de la crème liquide. Laisser reposer 30 min minimum (1h c'est mieux).\n3. Chauffer une poêle antiadhésive à feu vif. Huiler légèrement avec un papier essuie-tout.\n4. Verser une petite louche de pâte. Incliner rapidement la poêle en cercle pour étaler.\n5. Cuire 2 min — les bords se décollent. Retourner. Cuire 1 min. Garnir selon envie.",
+   tags:['veggie','sjsr']},
+  {cat:'plat',time:'15 min',name:"Salade riz légumes",
+   ingr:"120g riz 3 couleurs cuit (batch) · légumes variés au choix · 2cs huile de colza · 1cs vinaigre cidre · sel",
+   steps:"1. Sortir le riz du frigo 10 min avant (il est meilleur à température ambiante dans une salade).\n2. Couper les légumes que vous avez : radis en rondelles, cébette ciselée, carottes râpées...\n3. Vinaigrette : mélanger huile colza + vinaigre cidre + sel dans le fond du bol.\n4. Ajouter riz + légumes. Mélanger délicatement.\n5. Parsemer graines de courge ou mix graines La Fourche. Se prépare la veille — encore meilleur le lendemain.",
+   tags:['vegan','rapide']},
+  {cat:'plat',time:'15 min',name:"Quiche sans pâte",
+   ingr:"4 oeufs · 200ml lait avoine · 1cs bombée amidon de maïs · légumes au choix · sel · herbes",
+   steps:"1. Préchauffer four 180°C.\n2. Faire revenir les légumes (épinards, poireaux, champignons...) dans une poêle 5 min.\n3. Dans un bol : fouetter oeufs + lait avoine + amidon de maïs + sel + herbes. L'amidon remplace la farine et tient la quiche.\n4. Huiler un plat allant au four. Répartir les légumes. Verser l'appareil dessus.\n5. Cuire 25-30 min. La quiche est prête quand elle ne tremble plus au centre. Laisser tiédir 5 min avant de couper.",
+   tags:['veggie']},
+  {cat:'plat',time:'10 min',name:"Bowl crevettes-mangue-quinoa",
+   ingr:"150g crevettes cuites surgelées · 1 sachet mangue décongelée · 120g quinoa batch · 1cs sauce soja · 1cs sésame",
+   steps:"1. La veille au soir : sortir crevettes + mangue du congélateur, mettre au frigo.\n2. Au moment de préparer : crevettes dans une poêle chaude 3 min à feu vif — juste réchauffer.\n3. Quinoa du batch : réchauffer 1 min au micro-ondes avec 1cs eau ou dans casserole.\n4. Couper mangue en dés.\n5. Dresser dans un beau bol : quinoa en base, crevettes d'un côté, mangue de l'autre. Sauce soja + sésame + gingembre du bocal. Photographiez — c'est beau !",
+   tags:['sjsr','proteine']},
+  {cat:'plat',time:'10 min',name:"Sardines avocat laitue",
+   ingr:"1 boîte sardines huile olive · 1/2 avocat · laitue · graines courge · citron · huile colza",
+   steps:"1. Laver et essuyer la laitue. La déchirer en grandes feuilles dans le fond du bol.\n2. Ouvrir la boîte de sardines. Les égoutter légèrement (garder un peu d'huile — elle est bonne !).\n3. Trancher l'avocat : couper en deux, retirer noyau, faire des tranches dans la peau puis récupérer avec une cuillère.\n4. Disposer sardines + avocat sur la laitue.\n5. Citron pressé + huile colza + sel. Graines de courge torréfiées dessus. Cette salade se prépare en 5 min au bureau avec les ingrédients en boîte.",
+   tags:['sjsr','rapide','proteine']},
+  {cat:'plat',time:'15 min',name:"Tofu doré curcuma",
+   ingr:"125g tofu nature · 1cc curcuma poudre · 1cs sauce soja · 1cs huile · riz ou quinoa batch",
+   steps:"1. Sortir le tofu de son emballage. L'éponger avec du papier absorbant — moins il est humide, plus il dorera bien.\n2. Couper en dés de 2cm.\n3. Dans un bol : mélanger curcuma + sauce soja + 1cc gingembre du bocal. Y mettre les dés de tofu. Mélanger.\n4. Chauffer huile dans poêle feu vif. Ajouter tofu mariné. NE PAS TOUCHER pendant 3 min — laisser dorer d'un côté.\n5. Retourner délicatement. Dorer 2 min l'autre côté. Servir sur riz ou quinoa batch.",
+   tags:['vegan','sjsr']},
+  {cat:'plat',time:'10 min',name:"Thon-haricots rouges",
+   ingr:"1 boîte thon naturel · 1 boîte haricots rouges · cébette · citron · huile colza · sel",
+   steps:"1. Égoutter et rincer les haricots rouges (important pour enlever le liquide de conservation).\n2. Égoutter le thon.\n3. Ciseler finement la cébette (couper en petits ronds avec des ciseaux — plus rapide).\n4. Dans le bol repas : mélanger thon émietté + haricots rouges + cébette.\n5. Arroser citron + huile colza + sel. Ajouter graines de lin. Mélanger. Prêt en 5 min, aucune cuisson.",
+   tags:['sjsr','rapide']},
+  {cat:'plat',time:'10 min',name:"Maquereau lentilles carottes",
+   ingr:"1 boîte maquereau · 100g lentilles vertes batch · carottes curcuma batch · citron",
+   steps:"1. Tout vient du batch — réchauffer lentilles + carottes ensemble dans une casserole 3 min avec 2cs eau.\n2. Ouvrir la boîte de maquereau. L'émietter à la fourchette dans le bol.\n3. Disposer lentilles + carottes autour.\n4. Citron pressé sur tout.\n5. Graines de courge + sel Santé. Ce repas ne prend que 5 min quand le batch est fait.",
+   tags:['sjsr','rapide']},
+  {cat:'plat',time:'8 min',name:"Ratatouille quinoa sardines",
+   ingr:"1 boîte ratatouille Cassegrain · 100g quinoa batch · 1 boîte sardines · herbes Provence",
+   steps:"1. Ouvrir la boîte de ratatouille. La verser dans une casserole. Chauffer 5 min feu moyen.\n2. Réchauffer le quinoa batch au micro-ondes ou dans une petite casserole.\n3. Ouvrir les sardines. Les égoutter.\n4. Dresser : quinoa dans le fond du bol, ratatouille chaude dessus, sardines posées sur le tout.\n5. Herbes de Provence + filet d'huile. Repas de dépannage express — toujours délicieux.",
+   tags:['express','rapide']},
+  // ══ SOUPES ══
+  {cat:'soupe',time:'20 min',name:"Soupe courge lait coco",
+   ingr:"500g potiron ou butternut · 1 oignon · 200ml lait coco · 1cc gingembre frais · 1cc curcuma · sel",
+   steps:"1. Éplucher et couper le potiron en gros dés (200g-300g — pas besoin d'être précis).\n2. Faire revenir oignon haché dans casserole avec 1cs huile 3 min.\n3. Ajouter dés de potiron + gingembre frais râpé + curcuma + sel + 300ml eau. Couvrir.\n4. Cuire 15 min jusqu'à ce que le potiron soit tendre (un couteau rentre facilement).\n5. Hors feu : ajouter lait coco. Mixer avec mixeur plongeant jusqu'à texture veloutée. Goûter et rectifier sel. Graines de courge dessus.",
+   tags:['vegan','sjsr']},
+  {cat:'soupe',time:'15 min',name:"Soupe lentilles corail coco",
+   ingr:"150g lentilles corail · 200ml lait coco · 1cc gingembre frais · 1cc curcuma · 1 citron · sel",
+   steps:"1. Rincer les lentilles corail. Les mettre dans casserole avec 500ml eau + gingembre râpé + curcuma.\n2. Porter à ébullition, baisser feu. Cuire 12 min en remuant souvent (elles collent).\n3. Elles doivent être complètement fondues — c'est voulu pour une soupe crémeuse.\n4. Ajouter lait coco hors feu. Remuer.\n5. Presser le citron dedans au dernier moment — ça réveille tous les arômes et triple l'absorption du fer. Servir chaud.",
+   tags:['vegan','sjsr','rapide']},
+  {cat:'soupe',time:'20 min',name:"Velouté fenouil lentilles",
+   ingr:"1 fenouil · 100g lentilles vertes batch · 200ml lait avoine · 1cc gingembre · sel",
+   steps:"1. Couper le fenouil : enlever les tiges dures du haut (garder les feuilles vertes pour décorer), couper le bulbe en tranches.\n2. Faire revenir fenouil dans casserole avec 1cs huile 5 min — il doit ramollir et légèrement dorer.\n3. Ajouter lentilles vertes du batch + 300ml eau + gingembre + sel. Cuire 10 min.\n4. Ajouter lait avoine. Mixer avec mixeur plongeant. Texture doit être lisse et veloutée.\n5. Décorer avec les feuilles vertes du fenouil. Goût anisé doux très reposant — parfait le soir.",
+   tags:['vegan','sjsr']},
+  {cat:'soupe',time:'10 min',name:"Béchamel sans gluten",
+   ingr:"2cs amidon de maïs · 250ml lait avoine · 2cs huile olive · pincée muscade · sel",
+   steps:"1. IMPORTANT : délayer l'amidon dans le lait FROID d'abord (jamais dans du chaud — ça ferait des grumeaux).\n2. Mettre dans petite casserole à feu moyen-doux. Fouetter en continu.\n3. La sauce va épaissir progressivement en 4-5 min. Ne pas s'arrêter de fouetter.\n4. Quand la consistance est crémeuse comme une béchamel normale, retirer du feu.\n5. Ajouter huile olive + muscade + sel. Utiliser immédiatement ou couvrir avec du film alimentaire au contact pour éviter la croûte.",
+   tags:['vegan','base']},
+  {cat:'soupe',time:'5 min',name:"Mayonnaise vegan sans oeuf",
+   ingr:"60ml lait de soja froid · 120ml huile neutre (colza) · 1cc moutarde · 1cs jus de citron · sel",
+   steps:"1. CLÉS DU SUCCÈS : le lait de soja doit être FROID et l'huile à température ambiante.\n2. Mettre tous les ingrédients dans un verre étroit (pas trop large).\n3. Plonger le mixeur plongeant tout au fond du verre. Appuyer et NE PAS BOUGER pendant 10 secondes.\n4. Quand le bas commence à émulsionner (devenir blanc et épais), remonter très lentement.\n5. L'émulsion se forme. Goûter, rectifier citron + sel. Se conserve 5 jours au frigo.",
+   tags:['vegan','sauce']},
+  // ══ DESSERTS ══
+  {cat:'dessert',time:'35 min',name:"Gâteau chocolat moelleux",
+   ingr:"200g chocolat noir 85% · 100g margarine végétale · 100g sucre · 4 oeufs · 50g farine de riz",
+   steps:"1. Préchauffer four 180°C. Beurrer un moule avec margarine.\n2. Faire fondre chocolat + margarine au bain-marie (casserole d'eau bouillante + bol dessus) ou micro-ondes 2 min par étapes de 30 sec.\n3. Hors feu : ajouter sucre. Puis ajouter les jaunes d'oeufs un par un. Ajouter farine de riz. Mélanger.\n4. Monter les blancs en neige ferme avec une pincée de sel. Les incorporer délicatement avec une spatule en mouvements circulaires — ne pas casser les blancs.\n5. Verser dans moule. Four 25 min. Vérifier avec un couteau : il doit sortir légèrement humide (pas cru, pas sec).",
+   tags:['veggie','dessert']},
+  {cat:'dessert',time:'20 min',name:"Cookies sarrasin chocolat",
+   ingr:"100g farine de riz · 50g farine sarrasin · 80g pépites chocolat · 1 oeuf · 50g sucre · 50g huile neutre",
+   steps:"1. Préchauffer four 180°C. Recouvrir une plaque de papier cuisson.\n2. Dans un bol : mélanger farines + sucre. Faire un puits au centre.\n3. Ajouter oeuf battu + huile. Mélanger à la fourchette jusqu'à pâte homogène.\n4. Ajouter pépites de chocolat. Mélanger.\n5. Former des boules de la taille d'une noix entre vos mains. Les poser sur la plaque. Les aplatir légèrement. Cuire 12-15 min. Ils semblent mous à la sortie — c'est normal, ils durcissent en refroidissant !",
+   tags:['veggie','goûter']},
+  {cat:'dessert',time:'45 min',name:"Cake citron",
+   ingr:"150g farine de riz · 3 oeufs · 100g sucre · jus + zestes 2 citrons · 5cl huile d'olive douce",
+   steps:"1. Préchauffer four 160°C. Beurrer un moule à cake.\n2. Zester les citrons avant de les presser (plus facile dans cet ordre). Réserver le jus.\n3. Fouetter vigoureusement oeufs + sucre 3 min jusqu'à blanchiment (le mélange doit doubler de volume).\n4. Ajouter huile + jus citron + zestes. Mélanger.\n5. Incorporer farine de riz tamisée délicatement à la spatule.\n6. Verser dans moule. Four 40 min. Tester cuisson : couteau propre = cuit. Laisser refroidir 10 min avant de démouler.",
+   tags:['veggie','dessert']},
+  {cat:'dessert',time:'12 min',name:"Bol tapioca cacao caramel",
+   ingr:"4cs tapioca Tipiak · 200ml eau · 1cc cacao Van Houten · sirop Monin caramel · 1cs coco râpée",
+   steps:"1. Verser tapioca + eau dans petite casserole. Feu moyen.\n2. Remuer CONSTAMMENT — les perles collent si on s'arrête.\n3. En 8-10 min, les perles vont devenir translucides (de blanches elles deviennent transparentes). C'est le signal que c'est prêt.\n4. Retirer du feu. Ajouter cacao en poudre. Remuer — la couleur devient chocolatée.\n5. Verser dans un joli verre. Filet de sirop Monin caramel. Parsemer coco râpée. Servir tiède.",
+   tags:['sjsr','soirée']},
+  {cat:'dessert',time:'5 min',name:"Smoothie bowl mangue fruits rouges",
+   ingr:"150g mangues surgelées (décongelées) · 100g fruits rouges surgelés · 100ml millet drink · 1cc miel · graines lin · coco râpée",
+   steps:"1. Décongeler mangues + fruits rouges la veille au frigo OU les mettre 10 min dans un bol d'eau froide.\n2. Égoutter légèrement.\n3. Mixer mangues + fruits rouges + millet drink. La texture doit être épaisse comme une glace — si trop liquide, ajouter moins de boisson. Si trop épais, ajouter un peu plus.\n4. Verser dans un bol. Lisser la surface avec une cuillère.\n5. Décorer : miel en filet, graines de lin, coco râpée. Photographier avant de manger — c'est beau et vous méritez ce moment 📸",
+   tags:['sjsr','antioxydant']},
+  {cat:'dessert',time:'8 min',name:"Chocolat chaud caramel",
+   ingr:"2cc cacao Van Houten · 200ml eau chaude (pas bouillante) · sirop Monin caramel sugar free · 1cc psyllium blond",
+   steps:"1. Faire chauffer l'eau à 80°C (pas bouillante — trop chaud détruit les arômes du cacao).\n2. Dans votre tasse : mettre le cacao en poudre + psyllium.\n3. Verser un peu d'eau chaude en premier et remuer vigoureusement pour dissoudre — évite les grumeaux.\n4. Compléter avec le reste de l'eau chaude. Remuer.\n5. Ajouter sirop Monin caramel selon votre goût (commencer par 1cc). Le psyllium donne une légère onctuosité et aide le transit. Boire tranquillement — c'est votre rituel du soir.",
+   tags:['sjsr','soirée']},
+  // ══ BASES ══
+  {cat:'base',time:'5 min',name:"Pâte à crêpes sarrasin",
+   ingr:"160g farine de riz · 90g farine sarrasin · 4 oeufs · 500ml lait avoine · 1cc sel",
+   steps:"1. Dans un grand saladier : mélanger les deux farines + sel.\n2. Faire un puits. Casser les oeufs dedans. Commencer à mélanger depuis le centre.\n3. Ajouter le lait avoine progressivement en fouettant — aller chercher la farine depuis les bords vers le centre pour éviter les grumeaux.\n4. La pâte doit être fluide et sans grumeaux. Reposer 1h minimum (toute une nuit c'est encore mieux — elles seront plus légères).\n5. Cuisson : poêle très chaude légèrement huilée. Crêpe fine 2 min côté 1, 1 min côté 2.",
+   tags:['veggie','base']},
+  {cat:'base',time:'60 min',name:"Pain sans gluten maison",
+   ingr:"500g mix farine sans gluten · 30g levure fraîche · 400ml eau tiède (35°C) · 1cc sel · 2cs huile olive",
+   steps:"1. Délayer la levure fraîche dans 100ml d'eau tiède (pas chaude — tue la levure). Attendre 5 min qu'elle commence à buller.\n2. Dans grand bol : farine + sel. Faire un puits. Ajouter mélange levure + reste d'eau + huile.\n3. Pétrir 4 min à la main ou avec crochet pétrisseur. La pâte sans gluten est plus collante que la pâte normale — c'est normal.\n4. Former une boule. Couvrir d'un linge humide. Laisser lever 45 min dans un endroit chaud (four éteint avec lumière allumée).\n5. Façonner en pain. Four 210°C 15 min puis baisser à 190°C 20 min. Taper le dessous — ça sonne creux = cuit.",
+   tags:['vegan','base']},
 ];
-
 // ── PLACARD OFFICE ──
 const PLACARD_OFFICE=[
   {id:"p001",cat:"poisson",nom:"Pavés saumon surgelés",qte:"× 4 portions",priorite:1,note:"Dîner 1x/semaine"},
@@ -2682,11 +2775,100 @@ function showView(v){
 
 let batchStepsDone={};let currentBatchWeek='w1';
 const BATCH_WEEKS={
-  w1:{label:'Batch 11 avril',steps:[{id:'b1',action:'Quinoa rouge 300g',detail:'12 min'},{id:'b2',action:'Riz 3 couleurs 300g',detail:'15 min'},{id:'b3',action:'Lentilles corail + gingembre + curcuma',detail:'12 min'},{id:'b4',action:'Lentilles vertes 200g',detail:'20 min'},{id:'b5',action:'Épinards frais + ail',detail:'5 min'},{id:'b6',action:'Carottes curcuma',detail:'10 min'},{id:'b7',action:'Graines de courge torréfier',detail:'Four 160°C 8 min'},{id:'b8',action:'Bocal gingembre frais + huile olive',detail:'1 semaine'}]},
-  w2:{label:'Batch 18 avril',steps:[{id:'c1',action:'Quinoa rouge 300g',detail:'12 min'},{id:'c2',action:'Lentilles corail + gingembre + curcuma',detail:'12 min'},{id:'c3',action:'Riz 3 couleurs 300g',detail:'15 min'},{id:'c4',action:'Carottes curcuma',detail:'10 min'},{id:'c5',action:'Graines de courge torréfier',detail:'8 min'},{id:'c6',action:'Renouveler bocal gingembre',detail:'Râper + huile'}]},
-  w3:{label:'Batch 25 avril',steps:[{id:'d1',action:'Quinoa rouge 300g',detail:'12 min'},{id:'d2',action:'Lentilles corail 200g',detail:'12 min'},{id:'d3',action:'Riz 3 couleurs 200g',detail:'15 min'},{id:'d4',action:'Graines de courge torréfier',detail:'8 min'},{id:'d5',action:'Bocal gingembre final',detail:'Dernier batch du mois'}]},
+  w1:{label:"Batch 11 avril \u00b7 Semaine 1",steps:[
+    {id:"b1",action:"Quinoa rouge \u00b7 300g",detail:"12 min \u00b7 Casserole 1",
+     tip:"Rincer le quinoa sous l\u2019eau froide 30 sec. Mettre dans casserole avec 600ml eau + pin\u00e9ce sel. Porter \u00e0 \u00e9bullition, baisser feu, couvrir 12 min. \u00c9grainer \u00e0 la fourchette. Laisser refroidir. Mettre en bo\u00eete herm\u00e9tique."},
+    {id:"b2",action:"Riz 3 couleurs \u00b7 300g",detail:"15 min \u00b7 Casserole 2",
+     tip:"Rincer le riz. 600ml eau. Porter \u00e0 \u00e9bullition, feu doux, couvrir 15 min. \u00c9grainer. Le riz 3 couleurs est plus ferme que le riz blanc \u2014 c\u2019est normal et voulu."},
+    {id:"b3",action:"Lentilles corail \u00b7 250g + gingembre + curcuma",detail:"12 min \u00b7 Casserole 3",
+     tip:"Pas besoin de tremper. Rincer. 750ml eau + 1cc gingembre poudre + 1cc curcuma. Feu moyen 12 min en remuant souvent (elles collent facilement). Elles doivent \u00eatre fondantes et dor\u00e9es. Ajouter sel. R\u00e9server."},
+    {id:"b4",action:"Lentilles vertes \u00b7 200g",detail:"20 min \u00b7 Casserole 4",
+     tip:"Rincer. 600ml eau froide. Porter \u00e0 \u00e9bullition, feu moyen 18-20 min. Elles doivent rester enti\u00e8res (pas en pur\u00e9e). Saler EN FIN de cuisson seulement \u2014 si on sale au d\u00e9but elles durcissent. \u00c9goutter. Laisser refroidir."},
+    {id:"b5",action:"\u00c9pinards frais saut\u00e9s \u00e0 l\u2019ail",detail:"5 min \u00b7 Po\u00eale 1",
+     tip:"\u00c9craser 1 gousse ail avec le plat du couteau. Chauffer 1cs huile olive po\u00eale feu vif. Ajouter ail 30 sec. Ajouter tous les \u00e9pinards d\u2019un coup \u2014 ils r\u00e9duisent \u00e9norm\u00e9ment, c\u2019est normal ! Remuer 2-3 min jusqu\u2019\u00e0 ce qu\u2019ils soient juste fondus mais encore verts. Sel + poivre."},
+    {id:"b6",action:"Carottes curcuma",detail:"10 min \u00b7 Po\u00eale 2",
+     tip:"\u00c9plucher et couper en rondelles de 5mm. Chauffer 1cs huile po\u00eale feu moyen. Ajouter carottes + 1cc curcuma + sel. Remuer. Couvrir 8 min. V\u00e9rifier avec la pointe d\u2019un couteau \u2014 \u00e7a doit rentrer facilement."},
+    {id:"b7",action:"Graines de courge \u00b7 torr\u00e9fier",detail:"8 min \u00b7 Four 160\u00b0C",
+     tip:"Pr\u00e9chauffer four 160\u00b0C. \u00c9taler les graines sur une plaque en une couche. Enfourner 8 min. Elles doivent \u00eatre l\u00e9g\u00e8rement dor\u00e9es et sentir la noisette. ATTENTION elles br\u00fblent vite \u2014 surveiller d\u00e8s 6 min."},
+    {id:"b8",action:"Bocal gingembre frais + huile olive",detail:"5 min \u00b7 Conservation 1 semaine",
+     tip:"\u00c9plucher le gingembre avec une petite cuill\u00e8re (plus facile que le couteau). R\u00e2per finement. Mettre dans un petit bocal propre. Couvrir d\u2019huile d\u2019olive. Fermer. Se conserve 7-10 jours au frigo. Utiliser 1cc par repas."},
+  ]},
+  w2:{label:"Batch 18 avril \u00b7 Semaine 2",steps:[
+    {id:"c1",action:"Quinoa rouge \u00b7 300g",detail:"12 min \u00b7 Casserole 1",
+     tip:"M\u00eame m\u00e9thode que semaine 1. Si vous avez le bocal de gingembre du batch 1, ajouter 1cc dans l\u2019eau de cuisson \u2014 \u00e7a parfume d\u00e9licatement."},
+    {id:"c2",action:"Lentilles corail \u00b7 250g + curcuma + gingembre",detail:"12 min \u00b7 Casserole 2",
+     tip:"Utiliser le gingembre du bocal. 750ml eau + 1cc curcuma + 1cs gingembre. Surveiller et remuer \u2014 les lentilles corail gonflent vite. Texture finale : \u00e9paisse comme une pur\u00e9e souple. Parfait pour les vel\u00e9outs et les bols."},
+    {id:"c3",action:"Riz 3 couleurs \u00b7 300g",detail:"15 min \u00b7 Casserole 3",
+     tip:"Rincer. 600ml eau. 15 min couvert. Cette semaine vous pouvez ajouter une feuille de laurier dans l\u2019eau \u2014 \u00e7a donne un l\u00e9ger go\u00fbt qui parfume tous les bols."},
+    {id:"c4",action:"Carottes curcuma",detail:"10 min \u00b7 Po\u00eale",
+     tip:"M\u00eame m\u00e9thode. Apr\u00e8s la cuisson, ajouter 1cc vinaigre de cidre et remuer \u2014 \u00e7a active le curcuma et triple l\u2019absorption du fer. Go\u00fbt l\u00e9g\u00e8rement acidul\u00e9 tr\u00e8s agr\u00e9able."},
+    {id:"c5",action:"Graines torr\u00e9fier",detail:"8 min \u00b7 Four 160\u00b0C",
+     tip:"M\u00e9langer graines de courge + mix graines La Fourche sur la plaque. Four 160\u00b0C 8 min. Les petites graines brunissent plus vite \u2014 sortir d\u00e8s coloration dor\u00e9e."},
+    {id:"c6",action:"Bocal gingembre frais \u00b7 renouveler",detail:"5 min",
+     tip:"Le bocal de la semaine 1 est probablement \u00e9puis\u00e9. En refaire un frais avec le gingembre La Fourche."},
+  ]},
+  w3:{label:"Batch 25 avril \u00b7 Semaine 3 avec La Fourche",steps:[
+    {id:"d1",action:"Quinoa rouge \u00b7 300g",detail:"12 min \u00b7 Casserole 1",
+     tip:"Habituel. Cette semaine go\u00fbtez le quinoa nature avant d\u2019assaisonner \u2014 vous remarquerez un go\u00fbt de noisette prononc\u00e9. C\u2019est normal et bon signe."},
+    {id:"d2",action:"Sarrasin d\u00e9cortiqu\u00e9 La Fourche \u00b7 200g",detail:"15 min \u00b7 Casserole 2",
+     tip:"NOUVEAU GRAIN ! Rincer le sarrasin. 400ml eau + pin\u00e9ce sel. \u00c9bullition, feu doux, couvrir 12-15 min. Les grains doivent \u00eatre tendres mais pas en bouillie. \u00c9grainer \u00e0 la fourchette. Il a un go\u00fbt de noisette terreuse \u2014 parfait en bowl."},
+    {id:"d3",action:"Lentilles corail \u00b7 200g + gingembre La Fourche",detail:"12 min \u00b7 Casserole 3",
+     tip:"Utiliser le gingembre frais La Fourche r\u00e2p\u00e9 directement dans l\u2019eau de cuisson. Le gingembre frais donne beaucoup plus de puissance anti-inflammatoire que la poudre."},
+    {id:"d4",action:"Patates douces La Fourche \u00b7 3 pi\u00e8ces \u00b7 r\u00f4tir",detail:"20-25 min \u00b7 Four 200\u00b0C",
+     tip:"NOUVEAU ! Pr\u00e9chauffer four 200\u00b0C. Laver les patates douces (inutile d\u2019\u00e9plucher si bio). Couper en d\u00e9s de 2cm. Plaque avec 1cs huile + sel + paprika. M\u00e9langer avec les mains. \u00c9taler en une couche. R\u00f4tir 20-25 min jusqu\u2019\u00e0 bords caramel\u00eas\u00e9s. Se conservent 4 jours au frigo."},
+    {id:"d5",action:"Mix graines + graines de courge \u00b7 torr\u00e9fier",detail:"8 min \u00b7 Four 160\u00b0C",
+     tip:"Pendant que les patates douces r\u00f4tissent \u2014 mettre les graines sur une autre plaque \u00e0 160\u00b0C en m\u00eame temps. Surveiller les deux. Sortir les graines \u00e0 8 min, les patates \u00e0 20-25 min."},
+    {id:"d6",action:"Bocal gingembre La Fourche \u00b7 renouveler",detail:"5 min",
+     tip:"Le gingembre frais La Fourche est premium \u2014 bien le r\u00e2per finement et couvrir d\u2019huile. Vous aurez du gingembre de qualit\u00e9 sup\u00e9rieure pour 10 jours de repas."},
+  ]},
+  w4:{label:"Batch 2 mai \u00b7 Semaine 1 mai",steps:[
+    {id:"e1",action:"Quinoa rouge \u00b7 300g",detail:"12 min \u00b7 Casserole 1",
+     tip:"Vous \u00eates maintenant experte du quinoa ! Essayez de le laisser 2 min de plus \u00e0 couvert hors feu \u2014 il sera encore plus gonfl\u00e9 et a\u00e9rien."},
+    {id:"e2",action:"Lentilles corail \u00b7 250g + curcuma + gingembre frais",detail:"12 min \u00b7 Casserole 2",
+     tip:"Avec le gingembre frais du bocal batch semaine 3. La couleur dor\u00e9e lentilles + curcuma est magnifique \u2014 plus c\u2019est dor\u00e9, plus c\u2019est riche en curcumine."},
+    {id:"e3",action:"Riz 3 couleurs \u00b7 200g",detail:"15 min \u00b7 Casserole 3",
+     tip:"Quantit\u00e9 r\u00e9duite cette semaine. Pour varier, remplacer la moiti\u00e9 par du sarrasin d\u00e9cortiqu\u00e9 La Fourche."},
+    {id:"e4",action:"Sarrasin d\u00e9cortiqu\u00e9 La Fourche \u00b7 150g",detail:"15 min \u00b7 Casserole 4",
+     tip:"Vous connaissez maintenant. 300ml eau, feu doux, 12-15 min. Si vous aimez plus ferme : 12 min. Plus fondant : 15 min. Go\u00fbtez \u00e0 mi-cuisson pour ajuster."},
+    {id:"e5",action:"Patates douces La Fourche \u00b7 r\u00f4tir",detail:"20-25 min \u00b7 Four 200\u00b0C",
+     tip:"M\u00eame m\u00e9thode que batch 3. Cette fois essayez d\u2019ajouter 1cc miel bio sur les d\u00e9s avant d\u2019enfourner \u2014 les bords vont l\u00e9g\u00e8rement caramel\u00eas\u00e9s."},
+    {id:"e6",action:"Graines torr\u00e9fier \u00b7 bocal gingembre renouveler",detail:"8 min + 5 min",
+     tip:"Graines au four pendant les patates. Nouveau bocal gingembre. Vous avez une routine \u2014 la cuisine va vite maintenant !"},
+  ]},
+  w5:{label:"Batch 9 mai \u00b7 Dernier avant renouvellement",steps:[
+    {id:"f1",action:"Quinoa rouge \u00b7 250g",detail:"12 min \u00b7 Casserole 1",
+     tip:"Quantit\u00e9 r\u00e9duite \u2014 on finit les stocks avant les courses du 10. 5 semaines de batch cooking accompli \u2014 bravo Ketty !"},
+    {id:"f2",action:"Lentilles corail \u00b7 200g + gingembre frais",detail:"12 min \u00b7 Casserole 2",
+     tip:"Utiliser les derni\u00e8res lentilles. Finir le bocal de gingembre. Ces lentilles couvriront les d\u00eeners jusqu\u2019au 10."},
+    {id:"f3",action:"Riz 3 couleurs \u00b7 200g",detail:"15 min \u00b7 Casserole 3",
+     tip:"Finir le stock. S\u2019il en reste moins de 200g, compl\u00e9ter avec du sarrasin d\u00e9cortiqu\u00e9 La Fourche."},
+    {id:"f4",action:"Renouveler bocal gingembre frais",detail:"5 min \u00b7 Dernier bocal",
+     tip:"Dernier bocal avant les courses. Si le gingembre frais est \u00e9puis\u00e9, utiliser 1cc gingembre poudre La Fourche dans chaque plat."},
+    {id:"f5",action:"Inventaire Placard Office \u00b7 Pr\u00e9parer commande du 10",detail:"15 min \u00b7 Onglet Placard",
+     tip:"IMPORTANT : ouvrir l\u2019onglet Placard Office dans l\u2019appli. D\u00e9cocher tout ce qui est \u00e9puis\u00e9. Appuyer sur G\u00e9n\u00e9rer liste manquants. Vous aurez votre liste de courses pr\u00eate !"},
+  ]},
 };
-function renderBatchWeek(week){const w=BATCH_WEEKS[week];if(!w)return;const el=document.getElementById('batchStepsList');if(!el)return;el.innerHTML=w.steps.map(s=>`<div class="batch-step${batchStepsDone[s.id]?' done':''}" onclick="toggleBatchStep('${s.id}')"><div class="batch-check">${batchStepsDone[s.id]?'✅':'⬜'}</div><div><div class="batch-action">${s.action}</div><div class="batch-detail">${s.detail}</div></div></div>`).join('');updateBatchProgress();}
+function renderBatchWeek(week){
+  const w=BATCH_WEEKS[week];if(!w)return;
+  const el=document.getElementById('batchStepsList');if(!el)return;
+  el.innerHTML='<div style="font-size:0.7rem;font-weight:700;color:var(--text);margin:0 0 0.8rem">'+w.label+'</div>'+
+  w.steps.map((s,i)=>{
+    const done=batchStepsDone[s.id];
+    return `<div class="batch-step${done?' done':''}" onclick="toggleBatchStep('${s.id}')">
+      <div style="display:flex;align-items:flex-start;gap:0.6rem">
+        <div class="batch-check" style="flex-shrink:0;font-size:1.1rem;margin-top:0.1rem">${done?'✅':'⬜'}</div>
+        <div style="flex:1">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.2rem">
+            <div class="batch-action" style="${done?'text-decoration:line-through;color:var(--muted)':''}">${s.action}</div>
+            <div style="font-size:0.6rem;color:var(--blossom-deep);font-weight:700;flex-shrink:0;margin-left:0.5rem">${s.detail}</div>
+          </div>
+          <div style="font-size:0.67rem;color:var(--muted);line-height:1.5;background:rgba(107,158,120,0.06);border-radius:8px;padding:0.5rem;margin-top:0.3rem">${s.tip}</div>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+  updateBatchProgress();
+}
 function toggleBatchStep(id){batchStepsDone[id]=!batchStepsDone[id];try{localStorage.setItem("batchDone",JSON.stringify(batchStepsDone));}catch(e){}renderBatchWeek(currentBatchWeek);}
 function updateBatchProgress(){const w=BATCH_WEEKS[currentBatchWeek];if(!w)return;const done=w.steps.filter(s=>batchStepsDone[s.id]).length;const total=w.steps.length;const el=document.getElementById('batchProgress');if(el)el.style.width=Math.round((done/total)*100)+'%';const txt=document.getElementById('batchProgressText');if(txt)txt.textContent=done+'/'+total+' étapes';}
 
