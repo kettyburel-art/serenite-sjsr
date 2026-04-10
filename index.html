@@ -1122,10 +1122,10 @@ canvas.sleep-chart{width:100%;height:140px}
     <div class="sleep-section">
       <div class="sleep-section-label">📝 Notes — Symptômes · Déclencheurs · Observations</div>
       <textarea class="sleep-notes-field" id="sleepNotes"
-        placeholder="Ex: Impatiences vers 23h · Levée 3 fois · Crampes · Dîner tardif · Stress..."></textarea>
+        placeholder="Ex: Impatiences vers 23h · Levée 3 fois · Crampes · Dîner tardif · Stress..." onblur="autoSaveSleep()" oninput="autoSaveSleep()"></textarea>
     </div>
 
-    <button class="sleep-save-btn" onclick="saveSleepEntry()">💾 Enregistrer cette nuit</button>
+    <button class="sleep-save-btn" onclick="saveSleepEntry()">✓ Confirmer la saisie de cette nuit</button>
   </div>
 
   <!-- Statistiques -->
@@ -3130,21 +3130,55 @@ function renderCycles() {
   updateCumulStats();
 }
 
+function autoSaveSleep() {
+  // Sauvegarde silencieuse sans animation
+  const key = sleepDateKey();
+  let totalMin = 0;
+  sleepCycles.forEach(c => {
+    if(c.bedtime && c.wakeTime) {
+      const d = calcCycleDuration(c.bedtime, c.wakeTime);
+      if(d > 0 && d < 720) totalMin += d;
+    }
+  });
+  const pmEl = document.getElementById("painMorning");
+  const pdEl = document.getElementById("painDay");
+  const notesEl = document.getElementById("sleepNotes");
+  sleepData[key] = {
+    cycles: sleepCycles,
+    totalMin: totalMin,
+    nbLevers: Math.max(0, sleepCycles.length - 1),
+    quality: sleepQuality,
+    feeling: sleepFeeling,
+    painMorning: pmEl ? parseInt(pmEl.value || 0) : 0,
+    painDay: pdEl ? parseInt(pdEl.value || 0) : 0,
+    notes: notesEl ? notesEl.value || "" : "",
+    savedAt: sleepData[key]?.savedAt || ""
+  };
+  try { localStorage.setItem("sjsr_sleep", JSON.stringify(sleepData)); } catch(e) {}
+  // Indicateur discret
+  const ind = document.getElementById("sleepSavedIndicator");
+  if(ind) ind.textContent = "✓ Sauvegardé automatiquement";
+  updateSleepStats();
+}
+
 function updateCycle(i, field, value) {
   sleepCycles[i][field] = value;
   renderCycles();
+  autoSaveSleep();
 }
 
 function addSleepCycle() {
   const lastCycle = sleepCycles[sleepCycles.length-1];
   sleepCycles.push({bedtime: lastCycle.wakeTime||"", wakeTime:""});
   renderCycles();
+  autoSaveSleep();
 }
 
 function removeCycle(i) {
   if(sleepCycles.length<=1) return;
   sleepCycles.splice(i,1);
   renderCycles();
+  autoSaveSleep();
 }
 
 function updateCumulStats() {
@@ -3213,7 +3247,7 @@ function loadSleepEntry() {
   if(ind) ind.textContent = entry.savedAt?"✓ Enregistrée à "+entry.savedAt:"";
 }
 
-function setSleepQuality(n) { sleepQuality=n; updateStars(); }
+function setSleepQuality(n) { sleepQuality=n; updateStars(); autoSaveSleep(); }
 
 function updateStars() {
   document.querySelectorAll(".sleep-star").forEach((s,i)=>{
@@ -3221,7 +3255,7 @@ function updateStars() {
   });
 }
 
-function setSleepFeeling(f) { sleepFeeling=f; updateFeelingBtns(); }
+function setSleepFeeling(f) { sleepFeeling=f; updateFeelingBtns(); autoSaveSleep(); }
 
 function updateFeelingBtns() {
   document.querySelectorAll(".sleep-feeling-btn").forEach(btn=>{
@@ -3236,6 +3270,7 @@ function updatePainDisplay(sliderId,displayId) {
   if(!el) return;
   el.textContent=val+" — "+(PAIN_LABELS[val]||"");
   el.className="pain-val-display p"+val;
+  autoSaveSleep();
 }
 
 function saveSleepEntry() {
