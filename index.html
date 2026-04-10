@@ -619,6 +619,16 @@ canvas.sleep-chart{width:100%;height:140px}
 .chart-tab{flex-shrink:0;background:rgba(58,40,32,0.05);border:none;border-radius:8px;padding:0.3rem 0.7rem;font-size:0.62rem;font-weight:700;cursor:pointer;color:var(--muted)}
 .chart-tab.active{background:var(--night);color:#fff}
 
+
+/* ── PLACARD OFFICE ── */
+.placard-item{display:flex;align-items:flex-start;gap:0.6rem;padding:0.6rem 0.5rem;border-bottom:1px solid rgba(58,40,32,0.06);cursor:pointer;border-radius:8px;transition:background 0.15s}
+.placard-item:active{background:rgba(107,158,120,0.08)}
+.placard-item.in-stock{opacity:0.5}
+.placard-item.in-stock .placard-nom{text-decoration:line-through;color:var(--muted)}
+.placard-check{font-size:1.1rem;flex-shrink:0;margin-top:0.05rem}
+.placard-nom{font-size:0.72rem;font-weight:700;color:var(--text);line-height:1.3}
+.placard-qte{font-size:0.6rem;color:var(--muted);margin-top:0.1rem;line-height:1.4}
+
 .sect-title{font-size:0.57rem;text-transform:uppercase;letter-spacing:0.12em;color:var(--muted);font-weight:700;margin:0.75rem 1rem 0.35rem}
 
 /* ── RECETTE DÉTAIL ── */
@@ -769,7 +779,7 @@ canvas.sleep-chart{width:100%;height:140px}
   <div class="budget-bar">
     <span class="budget-label">🌿 Budget</span>
     <div class="budget-track"><div class="budget-fill" id="budgetFill" style="width:100%"></div></div>
-    <span class="budget-amount" id="budgetAmount"><span>Courses 10 avril</span> / Budget mensuel</span>
+    <span class="budget-amount" id="budgetAmount"><span>177€ dépensés</span> / Courses 10 avril ✅</span>
   </div>
 </div>
 
@@ -1283,6 +1293,55 @@ canvas.sleep-chart{width:100%;height:140px}
   <div id="impContent"></div>
 </div>
 
+<div id="view-placard" style="display:none">
+
+  <div style="padding:0.8rem 1rem 0.4rem">
+    <div style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:600;color:var(--text)">🗄️ Placard Office</div>
+    <div style="font-size:0.62rem;color:var(--muted);margin-top:0.15rem">Stock idéal pour 1 mois · Anti-SJSR & TDAH · Cochez ce que vous avez</div>
+  </div>
+
+  <!-- Barre de progression globale -->
+  <div style="margin:0 1rem 0.8rem;background:rgba(58,40,32,0.08);border-radius:8px;height:8px;overflow:hidden">
+    <div id="placardProgressBar" style="height:100%;background:linear-gradient(90deg,var(--leaf-mid),var(--leaf-dark));border-radius:8px;transition:width 0.4s;width:0%"></div>
+  </div>
+  <div style="text-align:center;font-size:0.65rem;color:var(--muted);margin-bottom:0.8rem" id="placardProgressText">0 / 0 articles en stock</div>
+
+  <!-- Filtres catégories -->
+  <div style="display:flex;gap:0.4rem;padding:0 1rem 0.8rem;overflow-x:auto;scrollbar-width:none">
+    <button class="diner-filter active" onclick="filterPlacard('all',this)">Tout</button>
+    <button class="diner-filter" onclick="filterPlacard('poisson',this)">🐟 Poisson</button>
+    <button class="diner-filter" onclick="filterPlacard('proteines',this)">🥚 Protéines</button>
+    <button class="diner-filter" onclick="filterPlacard('cereales',this)">🌾 Céréales</button>
+    <button class="diner-filter" onclick="filterPlacard('legumineuses',this)">🫘 Légumineuses</button>
+    <button class="diner-filter" onclick="filterPlacard('fruits',this)">🍓 Fruits surgelés</button>
+    <button class="diner-filter" onclick="filterPlacard('legumes',this)">🥬 Légumes</button>
+    <button class="diner-filter" onclick="filterPlacard('lait',this)">🥛 Lait végétal</button>
+    <button class="diner-filter" onclick="filterPlacard('sec',this)">🌰 Épicerie sèche</button>
+    <button class="diner-filter" onclick="filterPlacard('sucre',this)">🍫 Épicerie sucrée</button>
+    <button class="diner-filter" onclick="filterPlacard('farine',this)">🌾 Farines</button>
+    <button class="diner-filter" onclick="filterPlacard('epices',this)">🧂 Épices</button>
+    <button class="diner-filter" onclick="filterPlacard('conserves',this)">🥫 Conserves</button>
+    <button class="diner-filter" onclick="filterPlacard('infusions',this)">🍵 Infusions</button>
+  </div>
+
+  <!-- Boutons action -->
+  <div style="display:flex;gap:0.5rem;padding:0 1rem 0.8rem">
+    <button onclick="generateShoppingList()" style="flex:1;background:var(--blossom-deep);color:#fff;border:none;border-radius:10px;padding:0.6rem;font-size:0.7rem;font-weight:700;cursor:pointer">🛒 Générer liste manquants</button>
+    <button onclick="resetPlacard()" style="background:rgba(58,40,32,0.08);color:var(--muted);border:none;border-radius:10px;padding:0.6rem 0.8rem;font-size:0.7rem;cursor:pointer">↺ Reset</button>
+  </div>
+
+  <!-- Liste générée -->
+  <div id="placardShoppingList" style="display:none;margin:0 1rem 0.8rem;background:linear-gradient(135deg,rgba(107,158,120,0.1),rgba(212,168,67,0.05));border-radius:12px;padding:0.8rem">
+    <div style="font-size:0.65rem;font-weight:700;color:var(--text);margin-bottom:0.5rem">🛒 À acheter ce mois-ci :</div>
+    <div id="placardShoppingContent"></div>
+    <button onclick="document.getElementById('placardShoppingList').style.display='none'" style="margin-top:0.5rem;background:none;border:1px solid rgba(58,40,32,0.15);border-radius:8px;padding:0.3rem 0.8rem;font-size:0.62rem;color:var(--muted);cursor:pointer">Fermer</button>
+  </div>
+
+  <!-- Articles du placard -->
+  <div id="placardList" style="padding:0 1rem 4rem"></div>
+
+</div>
+
 <script>
 // ── INFUSIONS ──
 const INF={nom:"Infusion Lune Dorée 🌸",recette:"1cc gingembre · ½cc curcuma · pincée poivre noir · eau 80°C · 8 min",note:"Entre 20h et 21h, sans sucre. Tous les soirs."};
@@ -1551,554 +1610,607 @@ const MENUS = {
        conseil:{type:"sjsr",text:"🌿 Camomille + lavande = relaxation musculaire. Après les courses et la journée chargée — bonne nuit Ketty."}}
     ],infusion:INF},
 
-  '11':{name:"Samedi 11 avril",mode:"pm-b",modeLabel:"⏱ Brunch + Batch Cooking",nextMeal:"Brunch tardif puis batch cet après-midi",livraison:false,batch:true,birthday:false,
+  '11':{name:"Samedi 11 avril",mode:"pm-f",modeLabel:"⏱ Batch Cooking + Vrais repas !",nextMeal:"Batch + brunch mangue-coco + saumon ce soir 🌸",livraison:true,batch:false,birthday:false,
     meals:[
-      {ic:"🌅",cl:"ic-mat",lbl:"Brunch · 11h – 13h",time:"11h – 13h · Prenez le temps !",
-       title:"Grand Brunch Batch Day · Salade de la Mer · Œufs · Légumes frais",
-       ingr:[{t:"Sardines ou maquereau 1 boîte"},{t:"2 œufs bio pochés ou mollets"},{t:"Légumes frais Bene Bono",fr:true},{t:"Quinoa froid (batch)"},{t:"Persil plat + citron"},{t:"Sel Santé + graines de courge + lin"}],steps:["Oeufs mollets : eau bouillante 6 min, refroidir, écaler","Quinoa froid en base dans grande assiette","Ajouter légumes frais + poisson émietté","Poser oeufs coupés en deux","Citron + huile colza + Sel Santé + persil haché"],cookTime:"10 min",
-       tags:[["FER","nt-fer"],["MAG","nt-mag"],["DOPA","nt-dopa"],["VIT-C","nt-vitc"]],
-       conseil:{type:"tdah",text:"🧠 Brunch = petit-déj + déjeuner en un. Batch cooking cet après-midi — ventre plein, on est efficace !"}},
-      {ic:"⏱",cl:"ic-mid",lbl:"Après-midi · Batch Cooking",time:"14h – 15h30",
-       title:"Session Batch Cooking · 1h30 · Tout préparer pour la semaine",
-       ingr:[{t:"🔥 Air Fryer : amandes 8min · courge 6min · tofu 15min"},{t:"🍳 Feux : lentilles + quinoa + sarrasin simultanément"},{t:"🥬 Poêle : épinards sautés ail → 3 portions dîners"},{t:"🥶 Ninja Creami : 2-3 bases fruits à congeler"},{t:"🍵 Gingembre : trancher tout → bocal hermétique"}],
-       tags:[["MAG","nt-mag"],["FER","nt-fer"]],
-       conseil:{type:"prep",text:"🌸 Ordre idéal : lancer casseroles → Air Fryer en parallèle → Ninja Creami en dernier. 1h30 = semaine tranquille !"}},
-      {ic:"🍊",cl:"ic-gou",lbl:"Goûter · Snack Dopamine",time:"16h30 ⚠️ avant 17h",
-       title:"Energy ball · Datte + Amande + Cacao + Chocolat 85%",
-       ingr:[{t:"Energy ball (dattes+amandes+cacao brut)"},{t:"1 carré chocolat 85%"}],
-       tags:[["MAG","nt-mag"],["DOPA","nt-dopa"],["TDAH","nt-tdah"]],conseil:null},
-      {ic:"🌙",cl:"ic-din",lbl:"Dîner léger · Sommeil 💊",time:"19h – 20h max",
-       title:"💊 Médicaments AVANT · Papillote légère colin · Fenouil · Citron",
-       ingr:[{t:"💊 Tramadol LP 100mg + Lyrica 375mg AVANT"},{t:"1 portion colin lieu Picard"},{t:"Fenouil ou courgettes"},{t:"Gingembre Picard"},{t:"Jus de citron + Sel Santé + thym"}],
-       tags:[["ALK","nt-alk"],["MAG","nt-mag"]],
-       conseil:{type:"prep",text:"🌸 Four 180°C / 20 min en papillote. Digestion légère = bonne nuit SJSR."}},
-      {ic:"📺",cl:"ic-sna",lbl:"Snack TV",time:"Soirée",
-       fun:"🌸 Sorbet Ninja Creami Framboises (base de vendredi)",
-       ingr:[{t:"Base framboises congelée"},{t:"Traiter 1 min au Creami !"}],
-       tags:[["ALK","nt-alk"],["FUN","nt-fun"]],conseil:null}
-    ],infusion:INF},
-
-  '12':{name:"Dimanche 12 avril",mode:"pm-f",modeLabel:"🌿 Brunch du dimanche",nextMeal:"Préparer chia pudding ce soir pour demain",livraison:false,batch:false,birthday:false,
-    meals:[
-      {ic:"🌅",cl:"ic-mat",lbl:"Brunch · 11h – 13h",time:"11h – 13h · Douceur dominicale",
-       title:"Brunch dominical · Plateau gourmand anti-SJSR",
-       ingr:[{t:"Porridge sarrasin (batch) 100g"},{t:"Fruits rouges Picard décongelés"},{t:"2 œufs bio (mollets ou brouillés)"},{t:"Tofu noisette poêlé (batch)"},{t:"Graines de chia + graines de courge"},{t:"1 datte Medjool + amandes"},{t:"Lait de millet chaud"}],
+      {ic:"☀️",cl:"ic-mat",lbl:"Brunch · Samedi",time:"9h – 11h",
+       title:"Bol mangue-coco · Flocons sarrasin · Graines de lin · Infusion 7x7 💊",
+       ingr:[{t:"Flocons de sarrasin bio 5cs"},{t:"Mangues surgelées décongelées"},{t:"Lait millet ou crème coco 1cs"},{t:"Graines de lin 1cs"},{t:"Miel bio 1cc"},{t:"Infusion 7x7 Jentschura"},{t:"💊 Tramadol LP 50mg + Lyrica 325mg"}],
        tags:[["MAG","nt-mag"],["FER","nt-fer"],["DOPA","nt-dopa"]],
-       conseil:{type:"tdah",text:"🧠 Brunch sans stress — tout est préparé du batch de samedi. Profitez de votre matinée 🌸"}},
-      {ic:"🌿",cl:"ic-mid",lbl:"Après-midi · Balade & repos",time:"14h – 18h",
-       title:"Temps libre · Balade · Plantes · Sam 🐕",
-       ingr:[{t:"Hydratation : eau + tisane gingembre"},{t:"Energy ball si petite faim"},{t:"Pas de grignotage sucré"}],
-       tags:[["ALK","nt-alk"]],
-       conseil:{type:"sjsr",text:"🌿 Une balade de 20-30 min améliore la circulation et réduit les symptômes SJSR nocturnes."}},
-      {ic:"🍊",cl:"ic-gou",lbl:"Goûter · Snack Dopamine",time:"16h30 ⚠️ avant 17h",
-       title:"Fraises poêlées au miel & thym · Amandes",
-       ingr:[{t:"Abricots ou pêches rôtis au four"},{t:"Filet de miel + thym"},{t:"8 amandes"},{t:"Four 170°C / 15 min"}],
-       tags:[["MAG","nt-mag"],["ALK","nt-alk"],["FUN","nt-fun"]],conseil:null},
-      {ic:"🌙",cl:"ic-din",lbl:"Dîner léger · Sommeil 💊",time:"19h – 20h max",
-       title:"💊 Médicaments AVANT · Velouté courge-lait de coco · Graines de courge",
-       ingr:[{t:"💊 Tramadol LP 100mg + Lyrica 375mg AVANT"},{t:"Brocoli frais ou brocoli"},{t:"Lait de coco 200ml"},{t:"Gingembre + curcuma + poivre"},{t:"Graines de courge torréfiées (batch)"}],
-       tags:[["ALK","nt-alk"],["MAG","nt-mag"]],
-       conseil:{type:"prep",text:"🌸 Velouté doux et soyeux. Preparer le chia pudding de demain matin MAINTENANT (2 min)."}},
-      {ic:"📺",cl:"ic-sna",lbl:"Snack TV",time:"Soirée",
-       fun:"🌸 Sorbet Ninja Creami Mangue-Gingembre",
-       ingr:[{t:"Base mangue-gingembre (batch samedi)"},{t:"Traiter 1 min au Creami"}],
-       tags:[["ALK","nt-alk"],["FUN","nt-fun"]],conseil:null}
-    ],infusion:INF},
-
-'13':{name:"Lundi 13 avril",mode:"pm-f",modeLabel:"🌿 Légumes frais",nextMeal:"Boîte déjeuner à préparer ce matin",livraison:false,batch:false,birthday:false,
-    meals:[
-      {ic:"☀️",cl:"ic-mat",lbl:"Petit-déjeuner",time:"7h – 9h",title:"Chia pudding prêt · Cocktail fruits rouges",
-       ingr:[{t:"Chia pudding (préparé dimanche soir)"},{t:"Cocktail fruits rouges Picard"}],
-       tags:[["MAG","nt-mag"],["DOPA","nt-dopa"]],
-       conseil:{type:"tdah",text:"🧠 0 décision ce matin — tout est prêt. Maintenant préparez aussi votre boîte déjeuner !"}},
-      {ic:"🥗",cl:"ic-mid",lbl:"Déjeuner · Maison",time:"12h30 – 14h",title:"Pois chiches curcuma · Maquereau · Légumes frais",
-       ingr:[{t:"Pois chiches 150g"},{t:"Maquereau 1 boîte"},{t:"Légumes frais Bene Bono",fr:true},{t:"Curcuma + poivre + huile"},{t:"Vinaigre de cidre"}],
-       tags:[["FER","nt-fer"],["MAG","nt-mag"],["DOPA","nt-dopa"]],
-       conseil:{type:"sjsr",text:"🌿 Maquereau = oméga-3 DHA, précurseur dopamine n°1 de votre panier."}},
-      {ic:"🍊",cl:"ic-gou",lbl:"Goûter · Snack Dopamine",time:"16h – 17h max",title:"Amandes · Datte · Chocolat 85%",
-       ingr:[{t:"8 amandes"},{t:"1 datte Medjool"},{t:"1 carré chocolat 85%"}],
-       tags:[["MAG","nt-mag"],["DOPA","nt-dopa"],["TDAH","nt-tdah"]],conseil:null},
-      {ic:"🌙",cl:"ic-din",lbl:"Dîner léger",time:"19h – 20h max",title:"Crevettes ail-thym · Épinards · Gingembre",
-       ingr:[{t:"Crevettes Picard 100g"},{t:"Épinards Picard 200g"},{t:"Ail + Thym Picard"},{t:"Gingembre Picard"},{t:"Huile olive"}],
-       tags:[["ALK","nt-alk"],["MAG","nt-mag"]],
-       conseil:{type:"prep",text:"🌸 Poêle 5 min feu vif. Filet de vinaigre de cidre à la fin."}},
-      {ic:"📺",cl:"ic-sna",lbl:"Snack TV",time:"Soirée",fun:"🌸 Sorbet Ninja Creami Fruits Rouges",
-       ingr:[{t:"Base à congeler CE SOIR"},{t:"Traiter 1 min au Creami demain"}],
+       steps:["Décongeler mangues la veille au frigo ou 10 min eau chaude","Chauffer flocons sarrasin + lait millet 5 min","Dresser : flocons au fond, mangues dessus","Filet de crème coco + miel + graines de lin","Infusion 7x7 à côté — c'est beau et tropical 🌸"],
+       cookTime:"10 min",
+       conseil:{type:"sjsr",text:"🌿 Mangue = vitamine C + fer. Sarrasin = magnésium. Crème coco = acides gras anti-inflammatoires. Trio parfait."}},
+      {ic:"⏱",cl:"ic-bat",lbl:"Batch Cooking · 2h",time:"11h – 13h",
+       title:"Batch du samedi — Stock semaine complète",
+       ingr:[{t:"Quinoa rouge 300g à cuire"},{t:"Riz 3 couleurs 300g à cuire"},{t:"Lentilles corail 250g à cuire"},{t:"Lentilles vertes 200g à cuire"},{t:"Gingembre + curcuma frais : bocal dans huile"},{t:"Carottes curcuma à préparer"},{t:"Epinards à sauter ail"},{t:"Graines de courge à torréfier"}],
+       tags:[["MAG","nt-mag"],["FER","nt-fer"],["TDAH","nt-tdah"]],
+       steps:["Casserole 1 : quinoa rouge 12 min","Casserole 2 : riz 3 couleurs 15 min","Casserole 3 : lentilles corail + gingembre + curcuma 12 min","Casserole 4 : lentilles vertes 20 min","Poêle 1 : épinards + ail 5 min","Poêle 2 : carottes curcuma 10 min","Four 160°C : graines de courge torréfier 8 min","Bocal gingembre : râper + couvrir huile olive"],
+       cookTime:"2h en parallèle",
+       conseil:{type:"tdah",text:"🧠 Batch = liberté toute la semaine. Cuisiner une fois, manger 5 jours sans effort. TDAH-friendly !"}},
+      {ic:"🥗",cl:"ic-mid",lbl:"Déjeuner",time:"13h30 – 14h30",
+       title:"Salade laitue · Thon · Avocats · Cébette · Graines de courge",
+       ingr:[{t:"Cœur de laitue"},{t:"Thon Auchan au naturel 1 boîte"},{t:"1 avocat tranché"},{t:"Cébette ciselée"},{t:"Graines de courge torréfiées (batch)"},{t:"Citron + huile olive + sel"}],
+       tags:[["FER","nt-fer"],["MAG","nt-mag"],["VIT-C","nt-vitc"]],
+       steps:["Laver et essorer laitue","Égoutter thon","Trancher avocat","Ciseler cébette","Dresser : laitue base, thon + avocat dessus","Cébette + graines de courge","Vinaigrette citron-huile olive"],
+       cookTime:"5 min",
+       conseil:{type:"sjsr",text:"🌿 Salade retour Instagram ! Thon + avocat + cébette = présentation soignée et nutritive. Photographiez-la 📸"}},
+      {ic:"🍊",cl:"ic-gou",lbl:"Goûter",time:"16h – 17h",
+       title:"Smoothie mangue-fruits rouges · Miel · Graines de lin",
+       ingr:[{t:"Mangues surgelées 100g"},{t:"Mélange fruits rouges 100g"},{t:"Millet drink 150ml"},{t:"1cc miel bio"},{t:"Graines de lin 1cs"}],
+       tags:[["VIT-C","nt-vitc"],["DOPA","nt-dopa"],["FUN","nt-fun"]],
+       steps:["Mixer mangues + fruits rouges + millet drink","Ajouter miel","Verser dans joli verre","Parsemer graines de lin dessus","Couleur magnifique — photographiez ! 📸"],
+       cookTime:"3 min",
+       conseil:{type:"tdah",text:"🧠 Premier smoothie avec votre nouveau stock. Belle couleur rose-orange naturelle."}},
+      {ic:"🌙",cl:"ic-din",lbl:"Dîner · Sommeil 💊",time:"19h – 20h max",
+       title:"💊 Médicaments AVANT · Pavé saumon · Carottes curcuma · Épinards",
+       ingr:[{t:"💊 Tramadol LP 100mg + Lyrica 375mg AVANT"},{t:"1 pavé saumon Norvège surgelé"},{t:"Carottes curcuma (batch)"},{t:"Épinards sautés ail (batch)"},{t:"Citron + graines de lin"}],
+       tags:[["FER","nt-fer"],["ALK","nt-alk"],["MAG","nt-mag"]],
+       steps:["Médicaments AVANT 💊","Saumon Air Fryer 170°C / 15 min ou poêle 5 min chaque côté","Carottes + épinards : réchauffer du batch 5 min","Dresser : saumon au centre, carottes d'un côté, épinards de l'autre","Citron pressé + graines de lin sur le saumon"],
+       cookTime:"15 min",
+       conseil:{type:"sjsr",text:"🌿 Pavé saumon Norvège = DHA + EPA oméga-3 premium. Le meilleur investissement anti-SJSR de vos courses."}},
+      {ic:"📺",cl:"ic-sna",lbl:"Soirée",time:"20h – 21h",
+       fun:"🌸 Cerises + carré chocolat bio alter eco · Soirée kdrama",
+       ingr:[{t:"Cerises Auchan surgelées décongelées"},{t:"1 carré chocolat bio alter eco"},{t:"Infusion camomille-lavande"}],
        tags:[["ALK","nt-alk"],["FUN","nt-fun"]],
-       conseil:{type:"tdah",text:"🧠 Congeler la base maintenant → sorbet prêt pour demain anniversaire 🎂"}}
+       conseil:{type:"sjsr",text:"🌿 Cerises = mélatonine naturelle. Chocolat noir = magnésium + dopamine. Parfait avant de dormir."}}
     ],infusion:INF},
 
-  '14':{name:"Mardi 14 avril 🎂",mode:"pm-bday",modeLabel:"🎂 Joyeux Anniversaire !",nextMeal:"Votre jour — savourez chaque repas",livraison:false,batch:false,birthday:true,
+  '12':{name:"Dimanche 12 avril",mode:"pm-f",modeLabel:"🌸 Pancakes fruits rouges · Crevettes",nextMeal:"Pancakes sarrasin fruits rouges ce matin 🥞",livraison:true,batch:false,birthday:false,
     meals:[
-      {ic:"☀️",cl:"ic-bday",lbl:"Petit-déjeuner d'anniversaire",time:"7h – 9h",title:"Bol Royal d'anniversaire · Quinoa · Mangue · Dattes · Noisettes · Cannelle",
-       ingr:[{t:"Quinoa cuit 100g",bd:true},{t:"Mangues Picard 150g",bd:true},{t:"3 dattes Medjool",bd:true},{t:"Noisettes concassées 20g",bd:true},{t:"Graines de chia 2cs"},{t:"Lait de millet chaud"},{t:"Cannelle + pincée cardamome"}],
-       tags:[["MAG","nt-mag"],["FER","nt-fer"],["DOPA","nt-dopa"],["FUN","nt-bday"]],
-       conseil:{type:"bday",text:"🎂 Ce matin vous méritez un petit-déj de reine. Prenez le temps de le savourer — c'est votre jour !"}},
-      {ic:"🥗",cl:"ic-bday",lbl:"Déjeuner festif",time:"12h – 14h",title:"Plateau festif · Maquereau · Quinoa · Salade fruits exotiques",
-       ingr:[{t:"Maquereau 2 boîtes",bd:true},{t:"Quinoa froid 150g"},{t:"Salade fruits Picard",bd:true},{t:"Persillade Picard"},{t:"Vinaigre de cidre + huile olive"}],
-       tags:[["FER","nt-fer"],["MAG","nt-mag"],["DOPA","nt-dopa"],["FUN","nt-bday"]],
-       conseil:{type:"bday",text:"🎂 Vraie pause déjeuner aujourd'hui — pas de boîte bureau, vous dégustez !"}},
-      {ic:"🍫",cl:"ic-bday",lbl:"Goûter d'anniversaire",time:"16h – 17h",title:"Dégustation 3 chocolats noirs · Dattes Medjool",
-       ingr:[{t:"Chocolat 85% Togo",bd:true},{t:"Chocolat 80% fleur de sel",bd:true},{t:"Chocolat 92% Fairafric",bd:true},{t:"3 dattes Medjool",bd:true},{t:"Amandes 20g"}],
-       tags:[["MAG","nt-mag"],["DOPA","nt-dopa"],["FUN","nt-bday"]],
-       conseil:{type:"bday",text:"🎂 Dégustation comme une box de luxe. 3 chocolats bio d'exception — c'est votre fête !"}},
-      {ic:"🌙",cl:"ic-bday",lbl:"Dîner d'anniversaire",time:"19h – 20h",title:"Cabillaud en croûte d'amandes dorées · Haricots verts",
-       ingr:[{t:"2 portions cabillaud Picard",bd:true},{t:"Haricots verts Picard 300g"},{t:"Amandes effilées 30g",bd:true},{t:"Gingembre + curcuma"},{t:"Huile olive + basilic Picard"}],steps:["Préchauffer Air Fryer 180°C","Mélanger amandes effilées + curcuma + Sel Santé","Appuyer cabillaud côté chair dans les amandes","Air Fryer 15 min, croûte dorée croustillante","Haricots verts micro-ondes 5 min couvercle"],cookTime:"20 min · Air Fryer",
-       tags:[["ALK","nt-alk"],["MAG","nt-mag"],["DOPA","nt-dopa"],["FUN","nt-bday"]],
-       conseil:{type:"bday",text:"🎂 Appuyer les amandes sur le cabillaud → Air Fryer 180°C / 15 min → croûte dorée !"}},
-      {ic:"🎂",cl:"ic-bday",lbl:"Dessert d'anniversaire",time:"Soirée",fun:"🌸🎂 Mousse Chocolat 85% · Cerises · Piment · Sorbet Creami",
-       ingr:[{t:"Chocolat noir 85% fondu",bd:true},{t:"Blancs d'oeufs en neige (3)",bd:true},{t:"Cerises ou fruits rouges Picard",bd:true},{t:"Pincée de piment doux (circulation)",bd:true},{t:"Sorbet Ninja Creami fruits rouges",bd:true},{t:"Amandes effilées torréfiées"}],
-       tags:[["ALK","nt-alk"],["DOPA","nt-dopa"],["FUN","nt-bday"]],
-       steps:["Faire fondre 100g chocolat 85% au bain-marie","Laisser tiedir 5 min (ne pas cuire les blancs)","Monter 3 blancs en neige ferme avec pincee de sel","Incorporer chocolat aux blancs en soulevant delicatement","Ajouter piment doux + cerises coupees en deux","Verser dans verrines, refrigerer 2h minimum","Sortir sorbet Creami 5 min avant et dresser a cote"],cookTime:"20 min + 2h frigo",conseil:{type:"bday",text:"🎂 Napper le sorbet de chocolat chaud fondu → effet coulant festif !"}}
+      {ic:"☀️",cl:"ic-mat",lbl:"Brunch · Dimanche",time:"Levez-vous à votre rythme",
+       title:"Pancakes sarrasin · Fruits rouges · Miel · Infusion 7x7 💊",
+       ingr:[{t:"Farine sarrasin 80g"},{t:"Millet drink 150ml"},{t:"1 œuf"},{t:"Pincée sel"},{t:"Mélange fruits rouges surgelés décongelés"},{t:"Miel bio 1cc"},{t:"💊 Tramadol LP 50mg + Lyrica 325mg"}],
+       tags:[["MAG","nt-mag"],["FER","nt-fer"],["DOPA","nt-dopa"]],
+       steps:["Mélanger farine sarrasin + millet drink + œuf + sel","Poêle antiadhésive 3 min chaque côté","Décongeler fruits rouges 10 min","Dresser : pancakes en pile, fruits rouges dessus, filet de miel","Photographiez — c'est votre moment 📸"],
+       cookTime:"15 min",
+       conseil:{type:"tdah",text:"🧠 Dimanche = brunch Instagram. Vous avez tout pour faire de belles photos comme avant. C'est votre moment 🌸"}},
+      {ic:"🥗",cl:"ic-mid",lbl:"Déjeuner · Maison",time:"13h – 14h30",
+       title:"Bowl quinoa · Tofu mariné citron · Carottes · Épinards · Cébette",
+       ingr:[{t:"Quinoa rouge (batch) 120g"},{t:"Tofu mariné citron confit (Têtes Vertes)"},{t:"Carottes curcuma (batch)"},{t:"Épinards sautés (batch)"},{t:"Cébette ciselée"},{t:"Sauce soja + citron + huile colza"}],
+       tags:[["FER","nt-fer"],["MAG","nt-mag"],["DOPA","nt-dopa"]],
+       steps:["Couper tofu mariné en dés ou tranches","Poêler tofu 3 min pour le réchauffer","Disposer quinoa dans bol","Tofu + carottes + épinards en 3 zones","Cébette + sauce soja + citron"],
+       cookTime:"8 min",
+       conseil:{type:"sjsr",text:"🌿 Tofu mariné citron confit = protéine + probiotique naturel + vitamine C. Magnifique dans un bowl."}},
+      {ic:"🍊",cl:"ic-gou",lbl:"Goûter",time:"16h – 17h",
+       title:"Bol cerises · Amandes · MatiMalt chaud",
+       ingr:[{t:"Cerises surgelées décongelées"},{t:"8 amandes"},{t:"MatiMalt Favrichon chaud"},{t:"Miel 1cc"}],
+       tags:[["MAG","nt-mag"],["DOPA","nt-dopa"]],conseil:null},
+      {ic:"🌙",cl:"ic-din",lbl:"Dîner · Sommeil 💊",time:"19h – 20h max",
+       title:"💊 Médicaments AVANT · Crevettes sautées · Riz 3 couleurs · Cébette",
+       ingr:[{t:"💊 Tramadol LP 100mg + Lyrica 375mg AVANT"},{t:"Crevettes cuites 150g"},{t:"Riz 3 couleurs (batch) 120g"},{t:"Cébette ciselée"},{t:"Sauce soja + gingembre frais + citron"},{t:"Graines de sésame"}],
+       tags:[["FER","nt-fer"],["ALK","nt-alk"],["MAG","nt-mag"]],
+       steps:["Médicaments AVANT 💊","Décongeler crevettes 5 min eau froide","Poêler crevettes + gingembre râpé 3 min","Riz chaud du batch","Dresser : riz moulé, crevettes autour, cébette, sauce soja","Graines de sésame en finition — effet restaurant !"],
+       cookTime:"10 min",
+       conseil:{type:"prep",text:"🌸 Crevettes + riz 3 couleurs + sauce soja = dîner façon restaurant asiatique. Simple et élégant."}},
+      {ic:"📺",cl:"ic-sna",lbl:"Soirée",time:"20h – 21h",
+       fun:"🌸 Infusion 7x7 alcalinisante · Bonne nuit",
+       ingr:[{t:"Infusion 7x7 Jentschura 1cc"},{t:"Eau 80°C"}],
+       tags:[["ALK","nt-alk"]],conseil:null}
+    ],infusion:INF},
+
+  '13':{name:"Lundi 13 avril",mode:"pm-f",modeLabel:"💼 Reprise · Boîte sardines-avocat",nextMeal:"Boîte bureau prête du soir · millet-mangue matin",livraison:true,batch:false,birthday:false,
+    meals:[
+      {ic:"☀️",cl:"ic-mat",lbl:"Petit-déjeuner · Reprise 💊",time:"7h – 8h",
+       title:"Bol millet-mangue · Graines de lin · Infusion 7x7 💊",
+       ingr:[{t:"Flocons de millet 5cs"},{t:"Millet drink 200ml"},{t:"Mangues surgelées 80g"},{t:"Graines de lin 1cs"},{t:"💊 Tramadol LP 50mg + Lyrica 325mg"}],
+       tags:[["MAG","nt-mag"],["FER","nt-fer"],["DOPA","nt-dopa"]],
+       conseil:{type:"tdah",text:"🧠 Reprise après vacances — le batch de samedi rend ce matin facile. 5 min et c'est prêt."}},
+      {ic:"🥗",cl:"ic-mid",lbl:"Déjeuner Bureau",time:"12h – 13h30",
+       title:"Boîte bureau · Sardines · Laitue · Avocats · Graines de courge",
+       ingr:[{t:"Sardines Connétable 1 boîte"},{t:"Cœur de laitue"},{t:"1/2 avocat"},{t:"Graines de courge (batch)"},{t:"Citron + huile colza + sel"},{t:"Galette de riz"}],
+       tags:[["FER","nt-fer"],["MAG","nt-mag"],["VIT-C","nt-vitc"]],
+       steps:["Préparer la veille au soir","Sardines + salade + avocat en boîte hermétique","Graines de courge dans petit sachet","Citron + huile en petite fiole","Au bureau : assembler et déguster"],
+       cookTime:"5 min veille",
+       conseil:{type:"sjsr",text:"🌿 Sardines = oméga-3 + fer + B12. Avocat = graisses saines. Graines de courge = magnésium. Repas anti-SJSR parfait."}},
+      {ic:"🍊",cl:"ic-gou",lbl:"Goûter · Avant 17h",time:"avant 17h",
+       title:"Amandes · Dattes · Cerises · Chocolat bio",
+       ingr:[{t:"8 amandes"},{t:"2 dattes"},{t:"Cerises décongelées"},{t:"1 carré chocolat bio alter eco"}],
+       tags:[["MAG","nt-mag"],["DOPA","nt-dopa"]],conseil:null},
+      {ic:"🌙",cl:"ic-din",lbl:"Dîner · Sommeil 💊",time:"19h – 20h max",
+       title:"💊 Médicaments AVANT · Tofu soyeux · Lentilles corail coco · Épinards",
+       ingr:[{t:"💊 Tramadol LP 100mg + Lyrica 375mg AVANT"},{t:"Tofu soyeux nature 400g (Têtes Vertes)"},{t:"Lentilles corail (batch) 120g"},{t:"Crème coco VietCoco 2cs"},{t:"Épinards sautés (batch)"},{t:"Gingembre + curcuma + citron"}],
+       tags:[["FER","nt-fer"],["ALK","nt-alk"],["MAG","nt-mag"]],
+       steps:["Médicaments AVANT 💊","Lentilles + crème coco : chauffer 5 min — texture veloutée","Tofu soyeux : servir tel quel ou poêler 3 min","Épinards du batch","Dresser : lentilles coco au fond, tofu dessus, épinards côté","Citron + gingembre râpé en finition"],
+       cookTime:"8 min",
+       conseil:{type:"sjsr",text:"🌿 Tofu soyeux + lentilles coco = protéines douces + magnésium. Digestion légère — idéal avant le sommeil."}},
+      {ic:"📺",cl:"ic-sna",lbl:"Soirée",time:"20h – 21h",
+       fun:"🌸 Smoothie fruits rouges · Miel · Graines de lin",
+       ingr:[{t:"Fruits rouges surgelés 100g"},{t:"Millet drink 150ml"},{t:"1cc miel bio"},{t:"Graines de lin"}],
+       tags:[["VIT-C","nt-vitc"],["FUN","nt-fun"]],conseil:null}
+    ],infusion:INF},
+
+  '14':{name:"Mardi 14 avril — Joyeux Anniversaire ! 🎂",mode:"pm-f",modeLabel:"🎂 Anniversaire Ketty !",nextMeal:"Brunch pancakes fruits rouges - votre jour spécial 🌸",livraison:false,batch:false,birthday:true,
+    meals:[
+      {ic:"🎂",cl:"ic-mat",lbl:"🌸 Joyeux Anniversaire Ketty !",time:"Votre jour spécial",
+       title:"Brunch anniversaire · Pancakes sarrasin · Fruits rouges · Miel · Chocolat bio",
+       ingr:[{t:"Farine sarrasin 80g"},{t:"1 oeuf bio"},{t:"Lait avoine 150ml"},{t:"Mélange fruits rouges décongelés"},{t:"Miel bio Auchan"},{t:"1 carré chocolat bio alter eco"},{t:"💊 Tramadol LP 50mg + Lyrica 325mg"}],
+       tags:[["MAG","nt-mag"],["FER","nt-fer"],["DOPA","nt-dopa"]],
+       steps:["Mélanger sarrasin + lait avoine + oeuf","Cuire pancakes 3 min chaque côté","Dresser avec fruits rouges + miel + chocolat râpé","Prenez une photo — vous méritez ce moment 📸"],
+       cookTime:"15 min",
+       conseil:{type:"bday",text:"🎂 Joyeux anniversaire Ketty ! Votre corps se soigne, vos nuits s'améliorent, vous avancez. Célébrez ça aujourd'hui 🌸"}},
+      {ic:"🥗",cl:"ic-mid",lbl:"Déjeuner Anniversaire",time:"13h – 14h30",
+       title:"Salade laitue · Saumon · Avocats · Cébette · Graines de courge",
+       ingr:[{t:"Cœur de laitue"},{t:"Pavé saumon cuit et émietté"},{t:"1 avocat tranché"},{t:"Cébette ciselée"},{t:"Graines de courge torréfiées"},{t:"Citron + huile olive + miel"}],
+       tags:[["FER","nt-fer"],["MAG","nt-mag"],["VIT-C","nt-vitc"]],conseil:{type:"bday",text:"🎂 Repas d'anniversaire élégant et anti-SJSR. Saumon + avocat + miel = trio luxueux."}},
+      {ic:"🍊",cl:"ic-gou",lbl:"Goûter anniversaire",time:"16h – 17h",
+       title:"Smoothie bowl mangue-fruits rouges · Coco · Miel",
+       ingr:[{t:"Mangues surgelées 150g"},{t:"Fruits rouges 100g"},{t:"Crème coco 2cs"},{t:"Miel bio 1cc"},{t:"Coco râpée + amandes effilées dessus"}],
+       tags:[["VIT-C","nt-vitc"],["FUN","nt-fun"],["DOPA","nt-dopa"]],
+       conseil:{type:"bday",text:"🌸 Votre smoothie bowl d'anniversaire — couleur tropical, textures variées. Photographiez !"}},
+      {ic:"🌙",cl:"ic-din",lbl:"Dîner Anniversaire 💊",time:"19h – 20h max",
+       title:"💊 Médicaments AVANT · Pavé saumon · Haricots verts · Carottes",
+       ingr:[{t:"💊 Tramadol LP 100mg + Lyrica 375mg AVANT"},{t:"1 pavé saumon Norvège"},{t:"Haricots verts Auchan"},{t:"Carottes curcuma (batch)"},{t:"Citron + herbes + miel"}],
+       tags:[["FER","nt-fer"],["ALK","nt-alk"]],
+       steps:["Médicaments AVANT 💊","Saumon poêle 5 min chaque côté","Haricots verts casserole 5 min","Carottes du batch","Dresser avec soin — repas d'anniversaire !","Citron + filet de miel sur le saumon"],
+       cookTime:"15 min",
+       conseil:{type:"bday",text:"🎂 Dîner d'anniversaire anti-SJSR. Vous fêtez et prenez soin de vous en même temps. C'est ça la vraie sagesse."}},
+      {ic:"📺",cl:"ic-sna",lbl:"Soirée anniversaire",time:"20h – 21h",
+       fun:"🌸 Mousse cerises-chocolat · Votre dessert d'anniversaire !",
+       ingr:[{t:"Cerises surgelées décongelées 150g"},{t:"2 carrés chocolat bio alter eco fondus"},{t:"Miel bio 1cc"},{t:"Infusion camomille-lavande"}],
+       tags:[["ALK","nt-alk"],["FUN","nt-fun"]],
+       conseil:{type:"bday",text:"🎂 Joyeux anniversaire Ketty 🌸 Vous avancez chaque jour. Bravo pour tout ce que vous construisez."}}
     ],infusion:INF_BDAY},
 
-  // AVRIL 15-30
-
-
-  // ── 15 avril — Mercredi post-anniversaire ──
-  '15':{name:"Mercredi 15 avril",mode:"pm-f",modeLabel:"🌿 Récup post-anniversaire",nextMeal:"Médicaments avec le petit-déj 💊",livraison:false,batch:false,birthday:false,
+  '15':{name:"Mercredi 15 avril",mode:"pm-f",modeLabel:"💼 Reprise semaine",nextMeal:"Maquereau-quinoa bureau · crevettes ce soir",livraison:false,batch:false,birthday:false,
     meals:[
-      {ic:"☀️",cl:"ic-mat",lbl:"Petit-déjeuner 💊",time:"7h – 9h",
-       title:"Porridge sarrasin · Myrtilles · Graines de courge",
-       ingr:[{t:"Flocons de sarrasin 80g"},{t:"Lait de millet chaud"},{t:"Myrtilles (antioxydants)"},{t:"Graines de courge (fer++)"},{t:"💊 Tramadol LP 50mg + Lyrica 325mg"}],
-       tags:[["MAG","nt-mag"],["FER","nt-fer"],["DOPA","nt-dopa"]],
-       conseil:{type:"sjsr",text:"🌿 Journée douce post-anniversaire. Repas anti-inflammatoires pour récupérer."}},
-      {ic:"🥗",cl:"ic-mid",lbl:"Déjeuner",time:"12h – 13h30",
-       title:"Bowl quinoa · Poulet grillé · Avocat · Carottes",
-       ingr:[{t:"Quinoa (batch) 120g"},{t:"Blanc de poulet grillé 120g"},{t:"Demi-avocat en tranches"},{t:"Carottes râpées"},{t:"Persil haché + citron + Sel Santé"},{t:"Huile d'olive + graines de lin"}],
-       tags:[["FER","nt-fer"],["MAG","nt-mag"],["DOPA","nt-dopa"],["VIT-C","nt-vitc"]],
-       conseil:{type:"sjsr",text:"🌿 Avocat + huile olive = graisses saines anti-inflammatoires. Poulet = protéine légère et digeste."}},
+
+      {ic:"☀️",cl:"ic-mat",lbl:"Petit-déjeuner 💊",time:"7h – 8h",
+       title:"Porridge sarrasin · Mangue · Graines de lin · Infusion 7x7 💊",
+       ingr:[{t:"Flocons sarrasin bio 5cs"},{t:"Lait avoine 200ml"},{t:"Mangues surgelées 80g"},{t:"Graines de lin 1cs"},{t:"💊 Tramadol LP 50mg + Lyrica 325mg"}],
+       tags:[["MAG","nt-mag"],["FER","nt-fer"]],conseil:{type:"tdah",text:"🧠 Batch prêt — 5 min ce matin. Flocons + mangue + graines de lin."}},
+      {ic:"🥗",cl:"ic-mid",lbl:"Déjeuner Bureau",time:"12h – 13h30",
+       title:"Bowl quinoa · Maquereau émietté · Radis · Cébette · Avocats",
+       ingr:[{t:"Quinoa rouge (batch) 120g"},{t:"Filet de maquereau Auchan 1 portion"},{t:"Radis tranchés"},{t:"Cébette ciselée"},{t:"Vinaigrette citron-colza"},{t:"Graines de courge"}],
+       tags:[["FER","nt-fer"],["MAG","nt-mag"]],conseil:{type:"sjsr",text:"🌿 Maquereau = oméga-3 DHA. Quinoa = protéine complète. Radis = vitamine C + croquant."}},
       {ic:"🍊",cl:"ic-gou",lbl:"Goûter",time:"avant 17h",
-       title:"Amandes · Carré chocolat 85% · Datte",
-       ingr:[{t:"8 amandes"},{t:"1 carré chocolat 85%"},{t:"1 datte Medjool"}],
+       title:"Amandes · Dattes · Cerises · MatiMalt",
+       ingr:[{t:"8 amandes"},{t:"2 dattes Medjool"},{t:"Cerises décongelées"},{t:"MatiMalt chaud"}],
        tags:[["MAG","nt-mag"],["DOPA","nt-dopa"]],conseil:null},
-      {ic:"🌙",cl:"ic-din",lbl:"Dîner léger 💊",time:"19h – 20h max",
-       title:"💊 Médicaments AVANT · Saumon au four · Purée patate douce · Brocoli",
-       ingr:[{t:"💊 Tramadol LP 100mg + Lyrica 375mg AVANT"},{t:"Saumon mi-cuit Picard 150g"},{t:"Patate douce 200g"},{t:"Brocolis Picard 150g"},{t:"Graines de lin + huile olive + Sel Santé"}],
-       tags:[["ALK","nt-alk"],["MAG","nt-mag"]],
-       conseil:{type:"prep",text:"🌸 Velouté ultra léger. Cuire 15 min, mixer avec basilic frais."}},
-      {ic:"📺",cl:"ic-sna",lbl:"Snack TV",time:"Soirée",
-       fun:"🌸 Sorbet Ninja Creami Fruits Rouges",
-       ingr:[{t:"Base fruits rouges congelée"},{t:"Traiter 1 min au Creami"}],
-       tags:[["ALK","nt-alk"],["FUN","nt-fun"]],steps:["Prendre médicaments AVANT de cuisiner 💊","Patate douce : cuire à la vapeur 20 min puis écraser avec huile olive","Brocolis vapeur 8 min","Saumon Air Fryer 170°C / 12 min ou four 180°C / 15 min","Parsemer graines de lin sur le saumon","Dresser : purée + brocolis + saumon côte à côte"],cookTime:"20 min · Four ou Air Fryer",conseil:null}
-    ],infusion:INF},
-
-  // ── 16 avril — Jeudi ──
-  '16':{name:"Jeudi 16 avril",mode:"pm-f",modeLabel:"🌿 Légumes frais",nextMeal:"💊 Médicaments ce matin",livraison:false,batch:false,birthday:false,
-    meals:[
-      {ic:"☀️",cl:"ic-mat",lbl:"Petit-déjeuner 💊",time:"7h – 9h",
-       title:"Chia pudding · Lait de millet · Framboises · Noisettes",
-       ingr:[{t:"Graines de chia 3cs"},{t:"Lait de millet 200ml"},{t:"Framboises Picard"},{t:"Noisettes concassées"},{t:"💊 Tramadol LP 50mg + Lyrica 325mg"}],
-       tags:[["MAG","nt-mag"],["FER","nt-fer"]],
-       conseil:{type:"prep",text:"🌸 Préparé hier soir → 0 effort ce matin."}},
-      {ic:"🥗",cl:"ic-mid",lbl:"Déjeuner",time:"12h – 13h30",
-       title:"Pois chiches · Carottes curcuma · Brocolis · Persil",
-       ingr:[{t:"Pois chiches 150g"},{t:"Carottes rôties au curcuma"},{t:"Brocolis vapeur"},{t:"Persil plat frais"},{t:"Sel Santé + citron + huile colza"}],
-       tags:[["FER","nt-fer"],["MAG","nt-mag"],["VIT-C","nt-vitc"]],
-       conseil:{type:"sjsr",text:"🌿 Curcuma + poivre + huile sur carottes = anti-inflammatoire activé à la chaleur."}},
-      {ic:"🍊",cl:"ic-gou",lbl:"Goûter",time:"avant 17h",
-       title:"Energy ball · Datte + Amande + Cacao",
-       ingr:[{t:"2 dattes Medjool"},{t:"8 amandes"},{t:"1cc cacao brut"}],
-       tags:[["MAG","nt-mag"],["DOPA","nt-dopa"],["TDAH","nt-tdah"]],conseil:null},
-      {ic:"🌙",cl:"ic-din",lbl:"Dîner léger 💊",time:"19h – 20h max",
-       title:"💊 Médicaments AVANT · Papillote colin · Poireaux · Gingembre",
-       ingr:[{t:"💊 Tramadol LP 100mg + Lyrica 375mg AVANT"},{t:"1 portion colin lieu Picard"},{t:"Poireaux émincés Picard"},{t:"Gingembre Picard"},{t:"Jus de citron + Sel Santé"}],
-       tags:[["ALK","nt-alk"],["MAG","nt-mag"]],
-       conseil:{type:"prep",text:"🌸 Four 180°C / 20 min en papillote. Poireaux + gingembre = combo digestion parfaite."}},
-      {ic:"📺",cl:"ic-sna",lbl:"Snack TV",time:"Soirée",
-       fun:"🌸 Poires rôties à la badiane · Four 170°C / 20 min",
-       ingr:[{t:"1 poire coupée en deux"},{t:"1 étoile de badiane"},{t:"Filet de miel"}],
-       tags:[["ALK","nt-alk"],["FUN","nt-fun"]],conseil:null}
-    ],infusion:INF},
-
-  // ── 17 avril — Vendredi ──
-  '17':{name:"Vendredi 17 avril",mode:"pm-f",modeLabel:"🌿 Fin de semaine",nextMeal:"Demain batch cooking !",livraison:false,batch:false,birthday:false,
-    meals:[
-      {ic:"☀️",cl:"ic-mat",lbl:"Petit-déjeuner 💊",time:"7h – 9h",
-       title:"Porridge sarrasin · Mangue · Graines de lin",
-       ingr:[{t:"Flocons de sarrasin 80g"},{t:"Lait de millet"},{t:"Mangues Picard décongelées"},{t:"Graines de lin 1cs (Oméga-3)"},{t:"💊 Tramadol LP 50mg + Lyrica 325mg"}],
-       tags:[["MAG","nt-mag"],["FER","nt-fer"],["DOPA","nt-dopa"]],conseil:null},
-      {ic:"🥗",cl:"ic-mid",lbl:"Déjeuner",time:"12h – 13h30",
-       title:"Salade thon · Avocat · Tomates mondées · Graines de courge",
-       ingr:[{t:"Thon au naturel 1 boîte"},{t:"Demi-avocat en dés"},{t:"Tomates mondées"},{t:"Graines de courge torréfiées (batch)"},{t:"Persil haché + citron + Sel Santé"},{t:"Huile de lin 1cs"}],
-       tags:[["FER","nt-fer"],["MAG","nt-mag"],["DOPA","nt-dopa"],["VIT-C","nt-vitc"]],
-       conseil:{type:"sjsr",text:"🌿 Avocat + thon + graines = trio oméga-3 anti-SJSR. Tomates mondées = vit C sans acidité."}},
-      {ic:"🍊",cl:"ic-gou",lbl:"Goûter",time:"avant 17h",
-       title:"Chocolat 92% · Graines de courge · Amandes",
-       ingr:[{t:"1 carré chocolat 92%"},{t:"Graines de courge 20g"},{t:"6 amandes"}],
-       tags:[["MAG","nt-mag"],["DOPA","nt-dopa"]],
-       conseil:{type:"tdah",text:"🧠 Préparer ce soir les bases Ninja Creami pour demain !"}},
-      {ic:"🌙",cl:"ic-din",lbl:"Dîner léger 💊",time:"19h – 20h max",
-       title:"💊 Médicaments AVANT · Soupe pois cassés · Lait de coco · Menthe",
-       ingr:[{t:"💊 Tramadol LP 100mg + Lyrica 375mg AVANT"},{t:"Pois cassés 80g"},{t:"Lait de coco 200ml"},{t:"Menthe fraîche"},{t:"Gingembre + Sel Santé"}],
-       tags:[["ALK","nt-alk"],["MAG","nt-mag"]],
-       conseil:{type:"prep",text:"🌸 Pois cassés + menthe = fraîcheur digestive parfaite pour le soir."}},
-      {ic:"📺",cl:"ic-sna",lbl:"Snack TV",time:"Soirée",
-       fun:"🌸 Amandes torréfiées + carré chocolat 85%",
-       ingr:[{t:"Amandes 20g"},{t:"1 carré chocolat 85%"}],
-       tags:[["MAG","nt-mag"],["FUN","nt-fun"]],conseil:null}
-    ],infusion:INF},
-
-  // ── 18 avril — Samedi BATCH ──
-  '18':{name:"Samedi 18 avril",mode:"pm-b",modeLabel:"⏱ Brunch + Batch Cooking",nextMeal:"Brunch tardif puis batch cet après-midi",livraison:false,batch:true,birthday:false,
-    meals:[
-      {ic:"🌅",cl:"ic-mat",lbl:"Brunch · 11h – 13h",time:"11h – 13h",
-       title:"Brunch Batch Day · Caviar d'aubergines au Tahini · Oeufs · Quinoa",
-       ingr:[{t:"Aubergines grillées mixées avec tahini"},{t:"2 oeufs bio mollets"},{t:"Quinoa froid 80g"},{t:"Persil plat + citron + ail"},{t:"Pain sarrasin (optionnel)"},{t:"Graines de sésame"}],
-       tags:[["MAG","nt-mag"],["FER","nt-fer"],["DOPA","nt-dopa"]],
-       steps:["Griller les aubergines au four 220°C / 30 min jusqu à la peau noircie","Laisser refroidir, éplucher et mixer avec tahini + ail + citron","Oeufs mollets 6 min eau bouillante, refroidir et écaler","Dresser : quinoa + caviar aubergines + oeufs coupés","Parsemer persil + sésame + filet huile olive"],
-       cookTime:"35 min (aubergines) + 10 min",
-       conseil:{type:"tdah",text:"🧠 Brunch = petit-déj + déjeuner. Batch après le brunch, ventre plein !"}},
-      {ic:"⏱",cl:"ic-mid",lbl:"Batch Cooking · 14h – 15h30",time:"14h – 15h30",
-       title:"Session Batch · Semaine du 19 au 24 avril",
-       ingr:[{t:"🔥 Air Fryer : amandes 8min · courge 6min"},{t:"🍳 Lentilles vertes 300g · Quinoa 250g · Sarrasin 200g"},{t:"🥬 Épinards sautés ail → 3 portions"},{t:"🥶 Ninja Creami : 2 bases fruits à congeler"},{t:"🍵 Gingembre tranché → bocal hermétique"}],
-       tags:[["MAG","nt-mag"],["FER","nt-fer"]],conseil:null},
-      {ic:"🍊",cl:"ic-gou",lbl:"Goûter",time:"avant 17h",
-       title:"Energy ball · Datte + Noisette + Cacao + Zeste orange",
-       ingr:[{t:"2 dattes Medjool"},{t:"6 noisettes"},{t:"1cc cacao brut"},{t:"Zeste orange"}],
-       tags:[["MAG","nt-mag"],["DOPA","nt-dopa"],["TDAH","nt-tdah"]],conseil:null},
-      {ic:"🌙",cl:"ic-din",lbl:"Dîner léger 💊",time:"19h – 20h max",
-       title:"💊 Médicaments AVANT · Papillote cabillaud · Fenouil · Citron",
-       ingr:[{t:"💊 Tramadol LP 100mg + Lyrica 375mg AVANT"},{t:"1 portion cabillaud Picard"},{t:"Fenouil en lamelles"},{t:"Rondelles citron"},{t:"Gingembre + Sel Santé + thym"}],
-       tags:[["ALK","nt-alk"],["MAG","nt-mag"]],
-       conseil:{type:"prep",text:"🌸 Four 180°C / 20 min. Fenouil = digestion + anti-inflammatoire naturel."}},
-      {ic:"📺",cl:"ic-sna",lbl:"Snack TV",time:"Soirée",
-       fun:"🌸 Sorbet Ninja Creami Framboises",
-       ingr:[{t:"Base framboises congelée"},{t:"Traiter 1 min au Creami"}],
-       tags:[["ALK","nt-alk"],["FUN","nt-fun"]],conseil:null}
-    ],infusion:INF},
-
-  // ── 19 avril — Dimanche BRUNCH ──
-  '19':{name:"Dimanche 19 avril",mode:"pm-f",modeLabel:"🌅 Brunch du dimanche",nextMeal:"Préparer chia pudding ce soir",livraison:false,batch:false,birthday:false,
-    meals:[
-      {ic:"🌅",cl:"ic-mat",lbl:"Brunch · 11h – 13h",time:"11h – 13h",
-       title:"Brunch Dominical · Salade de pois chiches au Basilic · Oeufs",
-       ingr:[{t:"Pois chiches 150g"},{t:"Tomates mondées en dés"},{t:"Basilic frais (dopamine)"},{t:"2 oeufs bio brouillés"},{t:"Huile olive + citron + Sel Santé"},{t:"Sarrasin froid (batch)"}],
-       tags:[["FER","nt-fer"],["MAG","nt-mag"],["DOPA","nt-dopa"]],
-       steps:["Mélanger pois chiches + tomates + basilic déchiré","Arroser citron + huile olive + Sel Santé","Brouiller les oeufs à feu très doux (onctueux)","Dresser sarrasin + salade pois chiches + oeufs","Basilic frais dessus + filet huile olive"],
+      {ic:"🌙",cl:"ic-din",lbl:"Dîner · Sommeil 💊",time:"19h – 20h max",
+       title:"💊 Médicaments AVANT · Crevettes sautées · Riz 3 couleurs · Épinards",
+       ingr:[{t:"💊 Tramadol LP 100mg + Lyrica 375mg AVANT"},{t:"Crevettes 150g décongelées"},{t:"Riz 3 couleurs (batch)"},{t:"Épinards sautés ail"},{t:"Sauce soja + gingembre + sésame"}],
+       tags:[["FER","nt-fer"],["ALK","nt-alk"]],
+       steps:["Médicaments AVANT 💊","Décongeler crevettes eau froide 5 min","Poêler crevettes + gingembre 3 min","Riz chaud + épinards du batch","Sauce soja + sésame en finition"],
        cookTime:"10 min",
-       conseil:{type:"tdah",text:"🧠 Basilic frais = précurseur dopamine naturel. Idéal le dimanche matin !"}},
-      {ic:"🌿",cl:"ic-mid",lbl:"Après-midi · Balade",time:"14h – 18h",
-       title:"Temps libre · Balade avec Sam · Plantes du balcon",
-       ingr:[{t:"Hydratation : eau + tisane"},{t:"Energy ball si petite faim"}],
-       tags:[["ALK","nt-alk"]],
-       conseil:{type:"sjsr",text:"🌿 Balade 20-30 min = circulation + réduction symptômes SJSR nocturnes."}},
-      {ic:"🍊",cl:"ic-gou",lbl:"Goûter",time:"avant 17h",
-       title:"Fraises poêlées au romarin · Amandes",
-       ingr:[{t:"100g fraises coupées"},{t:"Romarin frais"},{t:"Filet de miel"},{t:"8 amandes"},{t:"Four 170°C / 15 min"}],
-       tags:[["MAG","nt-mag"],["FER","nt-fer"],["FUN","nt-fun"]],conseil:null},
-      {ic:"🌙",cl:"ic-din",lbl:"Dîner léger 💊",time:"19h – 20h max",
-       title:"💊 Médicaments AVANT · Velouté brocoli · Petits pois · Lait coco",
-       ingr:[{t:"💊 Tramadol LP 100mg + Lyrica 375mg AVANT"},{t:"Brocoli 400g"},{t:"Petits pois 100g"},{t:"Lait de coco 100ml"},{t:"Gingembre + cannelle + Sel Santé"}],
-       tags:[["ALK","nt-alk"],["MAG","nt-mag"]],
-       conseil:{type:"prep",text:"🌸 Préparer chia pudding de demain pendant la cuisson du velouté !"}},
-      {ic:"📺",cl:"ic-sna",lbl:"Snack TV",time:"Soirée",
-       fun:"🌸 Sorbet Ninja Creami Mangue-Gingembre",
-       ingr:[{t:"Base mangue congelée"},{t:"Traiter 1 min au Creami"}],
+       conseil:{type:"sjsr",text:"🌿 Crevettes + sauce soja + sésame = dîner asiatique express. Anti-inflammatoire et élégant."}},
+      {ic:"📺",cl:"ic-sna",lbl:"Soirée",time:"20h – 21h",
+       fun:"🌸 Smoothie fruits rouges · Millet drink · Miel",
+       ingr:[{t:"Fruits rouges 100g"},{t:"Millet drink 150ml"},{t:"1cc miel bio"}],
        tags:[["ALK","nt-alk"],["FUN","nt-fun"]],conseil:null}
     ],infusion:INF},
 
-  // ── 20 avril — Lundi ──
-  '20':{name:"Lundi 20 avril",mode:"pm-f",modeLabel:"🌿 Semaine",nextMeal:"💊 Médicaments ce matin",livraison:false,batch:false,birthday:false,
+  '16':{name:"Jeudi 16 avril",mode:"pm-f",modeLabel:"💼 Jeudi bureau",nextMeal:"Sardines-laitue bureau · Parmentier ce soir",livraison:false,batch:false,birthday:false,
     meals:[
-      {ic:"☀️",cl:"ic-mat",lbl:"Petit-déjeuner 💊",time:"7h – 9h",
-       title:"Chia pudding · Kiwi · Noix de Grenoble · Oméga-3",
-       ingr:[{t:"Graines de chia 3cs"},{t:"Lait de millet 200ml"},{t:"Kiwi (vit C++)"},{t:"Noix de Grenoble (Oméga-3)"},{t:"💊 Tramadol LP 50mg + Lyrica 325mg"}],
-       tags:[["MAG","nt-mag"],["FER","nt-fer"],["VIT-C","nt-vitc"]],
-       conseil:{type:"prep",text:"🌸 Préparé dimanche soir → 0 effort lundi matin."}},
-      {ic:"🥗",cl:"ic-mid",lbl:"Déjeuner · Maison",time:"12h30 – 14h",
-       title:"Lentilles vertes · Thon · Poivrons rouges · Basilic",
-       ingr:[{t:"Lentilles vertes (batch) 150g"},{t:"Thon au naturel 1 boîte"},{t:"Poivrons rouges crus (vit C)"},{t:"Basilic frais"},{t:"Vinaigre de cidre + Sel Santé"}],
-       tags:[["FER","nt-fer"],["MAG","nt-mag"],["VIT-C","nt-vitc"],["DOPA","nt-dopa"]],
-       conseil:{type:"sjsr",text:"🌿 Poivrons rouges = vit C la plus concentrée des légumes. Binôme parfait avec le fer."}},
+
+      {ic:"☀️",cl:"ic-mat",lbl:"Petit-déjeuner 💊",time:"7h – 8h",
+       title:"Bol violet Ube · Flocons millet · Fruits rouges · Infusion 7x7 💊",
+       ingr:[{t:"Flocons millet 5cs"},{t:"Lait avoine 200ml"},{t:"1cc Ube Powder"},{t:"Fruits rouges décongelés"},{t:"Miel 1cc"},{t:"💊 Tramadol LP 50mg + Lyrica 325mg"}],
+       tags:[["MAG","nt-mag"],["FER","nt-fer"],["DOPA","nt-dopa"]],conseil:{type:"tdah",text:"🧠 Bol violet magique — Ube powder = antioxydant + couleur Instagram unique !"}},
+      {ic:"🥗",cl:"ic-mid",lbl:"Déjeuner Bureau",time:"12h – 13h30",
+       title:"Sardines Connétable · Laitue · Radis · Galette de riz",
+       ingr:[{t:"Sardines Connétable 1 boîte"},{t:"Cœur de laitue"},{t:"Radis croquants"},{t:"Citron + huile colza"},{t:"Galette de riz"}],
+       tags:[["FER","nt-fer"],["MAG","nt-mag"]],conseil:{type:"sjsr",text:"🌿 Sardines = oméga-3 + calcium + B12. Radis = vitamine C qui triple l'absorption du fer."}},
       {ic:"🍊",cl:"ic-gou",lbl:"Goûter",time:"avant 17h",
-       title:"Amandes · Datte · Chocolat 85%",
-       ingr:[{t:"8 amandes"},{t:"1 datte Medjool"},{t:"1 carré chocolat 85%"}],
-       tags:[["MAG","nt-mag"],["DOPA","nt-dopa"]],conseil:null},
-      {ic:"🌙",cl:"ic-din",lbl:"Dîner léger 💊",time:"19h – 20h max",
-       title:"💊 Médicaments AVANT · Filets de dinde · Courgettes-carottes rôties",
-       ingr:[{t:"💊 Tramadol LP 100mg + Lyrica 375mg AVANT"},{t:"Filets de dinde 150g"},{t:"Courgettes en rondelles"},{t:"Carottes en rondelles"},{t:"Thym + Sel Santé + huile olive"}],
-       tags:[["ALK","nt-alk"],["MAG","nt-mag"]],
-       conseil:{type:"prep",text:"🌸 Tofu Air Fryer 180°C / 12 min. Épinards poêlés ail 3 min."}},
-      {ic:"📺",cl:"ic-sna",lbl:"Snack TV",time:"Soirée",
-       fun:"🌸 Fraises à la verveine rôties",
-       ingr:[{t:"100g fraises ou pêche coupée"},{t:"Verveine ou menthe"},{t:"Four 170°C / 15 min"}],
-       tags:[["ALK","nt-alk"],["FUN","nt-fun"]],steps:["Prendre médicaments AVANT 💊","Couper courgettes et carottes en rondelles","Mélanger légumes + huile olive + thym + Sel Santé","Four 200°C / 25 min en retournant à mi-cuisson","Poêler filets de dinde 5 min chaque côté à feu moyen","Dresser : dinde + légumes rôtis + citron pressé"],cookTime:"30 min · Four 200°C",conseil:null}
+       title:"Kiwi · Amandes · Chocolat bio",
+       ingr:[{t:"1 kiwi"},{t:"8 amandes"},{t:"1 carré chocolat bio alter eco"}],
+       tags:[["MAG","nt-mag"],["VIT-C","nt-vitc"]],conseil:null},
+      {ic:"🌙",cl:"ic-din",lbl:"Dîner facile · Sommeil 💊",time:"19h – 20h max",
+       title:"💊 Médicaments AVANT · Parmentier sardine · Lentilles vertes",
+       ingr:[{t:"💊 Tramadol LP 100mg + Lyrica 375mg AVANT"},{t:"Parmentier sardine Auchan"},{t:"Lentilles vertes (batch) 100g"},{t:"Gingembre + curcuma + citron"}],
+       tags:[["FER","nt-fer"],["ALK","nt-alk"]],
+       steps:["Médicaments AVANT 💊","Réchauffer parmentier sardine 5 min","Lentilles du batch + gingembre râpé","Citron pressé sur tout","Dîner en 10 min — facile et nourrissant"],
+       cookTime:"10 min",
+       conseil:{type:"prep",text:"🌸 Le parmentier sardine = protéine + oméga-3 + purée maison. Dîner complet sans effort."}},
+      {ic:"📺",cl:"ic-sna",lbl:"Soirée",time:"20h – 21h",
+       fun:"🌸 Tapioca caramel · Sirop Monin · Coco râpée",
+       ingr:[{t:"Tapioca 4cs"},{t:"200ml eau"},{t:"Sirop Monin caramel sugar free"},{t:"Coco râpée"}],
+       tags:[["ALK","nt-alk"],["FUN","nt-fun"]],conseil:null}
     ],infusion:INF},
 
-  // ── 21 avril — Mardi LIVRAISON Bene Bono ──
-  '21':{name:"Mardi 21 avril",mode:"pm-l",modeLabel:"📦 Livraison Bene Bono",nextMeal:"Premiers légumes frais ce soir !",livraison:true,batch:false,birthday:false,
+  '17':{name:"Vendredi 17 avril",mode:"pm-f",modeLabel:"💼 Vendredi !",nextMeal:"Porridge mangue matin · Thon ce midi",livraison:false,batch:false,birthday:false,
     meals:[
-      {ic:"☀️",cl:"ic-mat",lbl:"Petit-déjeuner 💊",time:"7h – 9h",
-       title:"Porridge sarrasin · Fruits rouges · Graines de courge",
-       ingr:[{t:"Sarrasin cuit (batch) 80g"},{t:"Lait de millet"},{t:"Fruits rouges Picard"},{t:"Graines de courge"},{t:"💊 Tramadol LP 50mg + Lyrica 325mg"}],
-       tags:[["MAG","nt-mag"],["FER","nt-fer"]],conseil:null},
-      {ic:"🥗",cl:"ic-mid",lbl:"Déjeuner · Maison",time:"12h30 – 14h",
-       title:"Haricots rouges · Sardines · Persillade · Citron",
-       ingr:[{t:"Haricots rouges 150g"},{t:"Sardines 1 boîte"},{t:"Persillade Picard"},{t:"Jus de citron"},{t:"Huile colza + Sel Santé"}],
-       tags:[["FER","nt-fer"],["MAG","nt-mag"],["VIT-C","nt-vitc"]],
-       conseil:{type:"sjsr",text:"🌿 La persillade active la vitamine C qui triple l'absorption du fer des haricots."}},
-      {ic:"🍊",cl:"ic-gou",lbl:"Goûter",time:"avant 17h",
-       title:"Chocolat 80% fleur de sel · Pistaches",
-       ingr:[{t:"1 carré chocolat 80% fleur de sel"},{t:"Pistaches 15g"}],
-       tags:[["MAG","nt-mag"],["DOPA","nt-dopa"]],conseil:null},
-      {ic:"🌙",cl:"ic-din",lbl:"Dîner · Premiers légumes frais ! 💊",time:"19h – 20h max",
-       title:"💊 Médicaments AVANT · Poisson blanc · Légumes frais Bene Bono",
-       ingr:[{t:"💊 Tramadol LP 100mg + Lyrica 375mg AVANT"},{t:"1 portion cabillaud"},{t:"Légumes frais Bene Bono",fr:true},{t:"Gingembre + Sel Santé + basilic"}],
-       tags:[["ALK","nt-alk"],["MAG","nt-mag"]],
-       conseil:{type:"prep",text:"🌿 Premiers légumes frais de la semaine ! Vapeur 8 min pour préserver vitamines."}},
-      {ic:"📺",cl:"ic-sna",lbl:"Snack TV",time:"Soirée",
-       fun:"🌸 Energy ball Datte + Amande + Cacao",
-       ingr:[{t:"2 dattes + 8 amandes + 1cc cacao"},{t:"Former 4 boules, frigo 10 min"}],
+
+      {ic:"☀️",cl:"ic-mat",lbl:"Petit-déjeuner 💊",time:"7h – 8h",
+       title:"Pancakes sarrasin · Banane · Fleur d'oranger · Infusion 7x7 💊",
+       ingr:[{t:"Farine sarrasin 80g"},{t:"Lait avoine 150ml"},{t:"1 banane écrasée"},{t:"Arôme fleur d'oranger"},{t:"Graines de lin"},{t:"💊 Tramadol LP 50mg + Lyrica 325mg"}],
+       tags:[["MAG","nt-mag"],["FER","nt-fer"],["DOPA","nt-dopa"]],conseil:{type:"tdah",text:"🧠 Vendredi ! Pancakes rapides — la banane écrasée dans la pâte la rend moelleuse."}},
+      {ic:"🥗",cl:"ic-mid",lbl:"Déjeuner Bureau",time:"12h – 13h30",
+       title:"Salade thon · Cœur de laitue · Kiwi · Graines de courge",
+       ingr:[{t:"Thon Auchan naturel 1 boîte"},{t:"Cœur de laitue"},{t:"1 kiwi tranché"},{t:"Graines de courge"},{t:"Vinaigrette citron-colza-soja"}],
+       tags:[["FER","nt-fer"],["MAG","nt-mag"],["VIT-C","nt-vitc"]],conseil:{type:"sjsr",text:"🌿 Thon + kiwi = fer + vitamine C. Combo absorption maximale du fer."}},
+      {ic:"🍊",cl:"ic-gou",lbl:"Goûter · Fin de semaine",time:"avant 17h",
+       title:"Smoothie mangue-fruits rouges · Miel",
+       ingr:[{t:"Mangues 100g"},{t:"Fruits rouges 80g"},{t:"Millet drink"},{t:"Miel 1cc"}],
+       tags:[["VIT-C","nt-vitc"],["FUN","nt-fun"]],conseil:null},
+      {ic:"🌙",cl:"ic-din",lbl:"Dîner · Sommeil 💊",time:"19h – 20h max",
+       title:"💊 Médicaments AVANT · Maquereau poêlé · Lentilles corail coco · Épinards",
+       ingr:[{t:"💊 Tramadol LP 100mg + Lyrica 375mg AVANT"},{t:"Filet maquereau Auchan"},{t:"Lentilles corail (batch)"},{t:"Crème coco VietCoco 2cs"},{t:"Épinards sautés"},{t:"Citron + curcuma"}],
+       tags:[["FER","nt-fer"],["ALK","nt-alk"]],
+       steps:["Médicaments AVANT 💊","Poêler maquereau 4 min chaque côté","Lentilles + crème coco chauffer 5 min","Épinards réchauffer","Dresser : lentilles coco au fond, maquereau dessus, épinards côté"],
+       cookTime:"12 min",
+       conseil:{type:"sjsr",text:"🌿 Vendredi soir : maquereau + lentilles coco = oméga-3 + magnésium + protéines. Excellente nuit en perspective."}},
+      {ic:"📺",cl:"ic-sna",lbl:"Soirée week-end !",time:"20h – 21h",
+       fun:"🌸 Cerises + chocolat bio · Infusion camomille · Bon week-end !",
+       ingr:[{t:"Cerises décongelées"},{t:"1 carré chocolat bio"},{t:"Infusion camomille-lavande"}],
+       tags:[["ALK","nt-alk"],["FUN","nt-fun"]],conseil:null}
+    ],infusion:INF},
+
+  '18':{name:"Samedi 18 avril",mode:"pm-f",modeLabel:"⏱ Batch Cooking semaine 2",nextMeal:"Brunch bol violet + batch + saumon ce soir",livraison:false,batch:true,birthday:false,
+    meals:[
+
+      {ic:"☀️",cl:"ic-mat",lbl:"Brunch · Samedi",time:"9h – 11h",
+       title:"Bol Ube violet · Fruits rouges · Coco · Graines de courge",
+       ingr:[{t:"Flocons millet 5cs"},{t:"Lait avoine 200ml"},{t:"1cs Ube Powder"},{t:"Fruits rouges décongelés"},{t:"Coco râpée"},{t:"Miel 1cc"},{t:"💊 Tramadol LP 50mg + Lyrica 325mg"}],
+       tags:[["MAG","nt-mag"],["FER","nt-fer"],["DOPA","nt-dopa"]],conseil:{type:"tdah",text:"🧠 Brunch violet avant le batch. Ube + fruits rouges = antioxydants puissants."}},
+      {ic:"⏱",cl:"ic-bat",lbl:"Batch Cooking · Semaine 2",time:"11h – 13h",
+       title:"Batch semaine 2 · Stock pour 5 jours",
+       ingr:[{t:"Quinoa rouge 300g"},{t:"Lentilles corail 250g + curcuma + gingembre"},{t:"Riz 3 couleurs 300g"},{t:"Carottes curcuma à préparer"},{t:"Graines de courge torréfier"},{t:"Gingembre frais : renouveler bocal"}],
+       tags:[["MAG","nt-mag"],["FER","nt-fer"],["TDAH","nt-tdah"]],conseil:{type:"tdah",text:"🧠 Batch semaine 2 — 2h de cuisine = 5 jours de liberté !"}},
+      {ic:"🥗",cl:"ic-mid",lbl:"Déjeuner · Maison",time:"13h30",
+       title:"Bowl tofu grillé ail des ours · Quinoa · Carottes · Cébette",
+       ingr:[{t:"Tofu grillé ail des ours (Têtes Vertes)"},{t:"Quinoa (batch)"},{t:"Carottes curcuma (batch)"},{t:"Cébette ciselée"},{t:"Sauce soja + citron + sésame"}],
+       tags:[["FER","nt-fer"],["MAG","nt-mag"],["DOPA","nt-dopa"]],conseil:{type:"sjsr",text:"🌿 Tofu grillé ail des ours = protéine + probiotiques + saveur unique. Superbe dans un bowl."}},
+      {ic:"🍊",cl:"ic-gou",lbl:"Goûter",time:"16h – 17h",
+       title:"Pumpkin Spice Latte · Amandes · Dattes",
+       ingr:[{t:"Pumpkin Spice Latte 1 sachet"},{t:"Eau chaude"},{t:"8 amandes"},{t:"2 dattes"}],
+       tags:[["MAG","nt-mag"],["FUN","nt-fun"]],conseil:null},
+      {ic:"🌙",cl:"ic-din",lbl:"Dîner · Sommeil 💊",time:"19h – 20h max",
+       title:"💊 Médicaments AVANT · Pavé saumon · Haricots verts · Riz",
+       ingr:[{t:"💊 Tramadol LP 100mg + Lyrica 375mg AVANT"},{t:"1 pavé saumon Norvège"},{t:"Haricots verts Auchan"},{t:"Riz 3 couleurs (batch)"},{t:"Citron + herbes + graines de lin"}],
+       tags:[["FER","nt-fer"],["ALK","nt-alk"]],
+       steps:["Médicaments AVANT 💊","Saumon poêle 5 min chaque côté","Haricots verts casserole 5 min","Riz chaud","Dresser soigneusement","Citron + graines de lin sur saumon"],
+       cookTime:"12 min",
+       conseil:{type:"sjsr",text:"🌿 Saumon samedi soir = oméga-3 + sérotonine. Meilleure nuit de la semaine en perspective."}},
+      {ic:"📺",cl:"ic-sna",lbl:"Soirée",time:"20h – 21h",
+       fun:"🌸 Chocolat chaud Van Houten · Caramel Monin · Infusion",
+       ingr:[{t:"2cc cacao Van Houten"},{t:"200ml eau chaude"},{t:"Sirop Monin caramel"},{t:"Infusion thym citronné"}],
        tags:[["MAG","nt-mag"],["FUN","nt-fun"]],conseil:null}
     ],infusion:INF},
 
-  // ── 22 avril ──
-  '22':{name:"Mercredi 22 avril",mode:"pm-f",modeLabel:"🌿 Légumes frais",nextMeal:"💊 Médicaments ce matin",livraison:false,batch:false,birthday:false,
+  '19':{name:"Dimanche 19 avril",mode:"pm-f",modeLabel:"🌸 Brunch oeufs · Maquereau",nextMeal:"Brunch galettes complètes oeufs brouillés",livraison:false,batch:false,birthday:false,
     meals:[
-      {ic:"☀️",cl:"ic-mat",lbl:"Petit-déjeuner 💊",time:"7h – 9h",
-       title:"Chia pudding · Lait amande · Salade fruits · Pistaches",
-       ingr:[{t:"Graines de chia 3cs"},{t:"Lait amande 200ml"},{t:"Salade fruits Picard"},{t:"Pistaches 15g"},{t:"💊 Tramadol LP 50mg + Lyrica 325mg"}],
-       tags:[["MAG","nt-mag"],["VIT-C","nt-vitc"]],conseil:null},
-      {ic:"🥗",cl:"ic-mid",lbl:"Déjeuner",time:"12h – 13h30",
-       title:"Quinoa · Crevettes · Légumes frais · Mélange thaï",
-       ingr:[{t:"Quinoa (batch) 120g"},{t:"Crevettes Picard 100g"},{t:"Légumes frais Bene Bono",fr:true},{t:"Mélange thaïlandais Picard"},{t:"Citron + huile colza"}],
-       tags:[["FER","nt-fer"],["MAG","nt-mag"],["DOPA","nt-dopa"]],
-       conseil:{type:"sjsr",text:"🌿 Crevettes + légumes frais + mélange thaï = repas coloré riche en zinc et magnésium."}},
-      {ic:"🍊",cl:"ic-gou",lbl:"Goûter",time:"avant 17h",
-       title:"Amandes · Chocolat 92% · Datte",
-       ingr:[{t:"8 amandes"},{t:"1 carré chocolat 92%"},{t:"1 datte Medjool"}],
-       tags:[["MAG","nt-mag"],["DOPA","nt-dopa"]],conseil:null},
-      {ic:"🌙",cl:"ic-din",lbl:"Dîner léger 💊",time:"19h – 20h max",
-       title:"💊 Médicaments AVANT · Soupe carottes-gingembre · Gingembre",
-       ingr:[{t:"💊 Tramadol LP 100mg + Lyrica 375mg AVANT"},{t:"Carottes nouvelles 300g"},{t:"1 poire"},{t:"Gingembre Picard"},{t:"Bouillon maison + Sel Santé"}],
-       tags:[["ALK","nt-alk"],["MAG","nt-mag"]],
-       conseil:{type:"prep",text:"🌸 Carottes nouvelles-poire naturellement sucré = dîner doux et alcalinisant."}},
-      {ic:"📺",cl:"ic-sna",lbl:"Snack TV",time:"Soirée",
-       fun:"🌸 Compotée pomme-rhubarbe sans sucre",
-       ingr:[{t:"2 pommes + rhubarbe si disponible"},{t:"Cannelle + gousse vanille"},{t:"Cuire 15 min à feu doux sans sucre"}],
-       tags:[["ALK","nt-alk"],["FUN","nt-fun"]],conseil:null}
-    ],infusion:INF},
 
-  // ── 23 avril ──
-  '23':{name:"Jeudi 23 avril",mode:"pm-f",modeLabel:"🌿 Légumes frais",nextMeal:"💊 Médicaments ce matin",livraison:false,batch:false,birthday:false,
-    meals:[
-      {ic:"☀️",cl:"ic-mat",lbl:"Petit-déjeuner 💊",time:"7h – 9h",
-       title:"Porridge sarrasin · Fraises poêlées · Noisettes",
-       ingr:[{t:"Sarrasin cuit 80g"},{t:"Lait de millet"},{t:"Fraises poêlées (snack de la veille)"},{t:"Noisettes concassées"},{t:"💊 Tramadol LP 50mg + Lyrica 325mg"}],
-       tags:[["MAG","nt-mag"],["FER","nt-fer"]],conseil:null},
-      {ic:"🥗",cl:"ic-mid",lbl:"Déjeuner",time:"12h – 13h30",
-       title:"Lentilles corail · Poulet · Patate douce · Sauge",
-       ingr:[{t:"Lentilles corail (batch) 150g"},{t:"Blanc de poulet émincé"},{t:"Patate douce cuite en dés"},{t:"Sauge fraîche"},{t:"Huile olive + Sel Santé + citron"}],
-       tags:[["FER","nt-fer"],["MAG","nt-mag"],["VIT-C","nt-vitc"]],
-       conseil:{type:"sjsr",text:"🌿 Patate douce = glucide lent alcalinisant + bêta-carotène anti-inflammatoire."}},
-      {ic:"🍊",cl:"ic-gou",lbl:"Goûter",time:"avant 17h",
-       title:"Graines de courge · Chocolat 85% · Datte",
-       ingr:[{t:"Graines de courge 20g"},{t:"1 carré chocolat 85%"},{t:"1 datte"}],
-       tags:[["MAG","nt-mag"],["DOPA","nt-dopa"],["TDAH","nt-tdah"]],conseil:null},
-      {ic:"🌙",cl:"ic-din",lbl:"Dîner léger 💊",time:"19h – 20h max",
-       title:"💊 Médicaments AVANT · Brandade cabillaud · Courgettes · Basilic",
-       ingr:[{t:"💊 Tramadol LP 100mg + Lyrica 375mg AVANT"},{t:"Cabillaud vapeur 150g"},{t:"Courgettes mixées"},{t:"Huile olive + ail + basilic"},{t:"Sel Santé + citron"}],
-       tags:[["ALK","nt-alk"],["MAG","nt-mag"]],
-       conseil:{type:"prep",text:"🌸 Vapeur douce pour cabillaud + courgettes. Mixer avec basilic frais."}},
-      {ic:"📺",cl:"ic-sna",lbl:"Snack TV",time:"Soirée",
-       fun:"🌸 Sorbet Ninja Creami Framboises-citron",
-       ingr:[{t:"Base framboises + jus citron congelée"},{t:"Traiter 1 min au Creami"}],
-       tags:[["ALK","nt-alk"],["FUN","nt-fun"]],conseil:null}
-    ],infusion:INF},
-
-  // ── 24 avril ──
-  '24':{name:"Vendredi 24 avril",mode:"pm-f",modeLabel:"🌿 Fin de semaine",nextMeal:"Batch demain matin !",livraison:false,batch:false,birthday:false,
-    meals:[
-      {ic:"☀️",cl:"ic-mat",lbl:"Petit-déjeuner 💊",time:"7h – 9h",
-       title:"Chia pudding · Framboises · Purée amande · Cannelle",
-       ingr:[{t:"Graines de chia 3cs"},{t:"Lait de millet 200ml"},{t:"Framboises Picard"},{t:"1cs purée amande"},{t:"Cannelle"},{t:"💊 Tramadol LP 50mg + Lyrica 325mg"}],
-       tags:[["MAG","nt-mag"],["FER","nt-fer"]],conseil:null},
-      {ic:"🥗",cl:"ic-mid",lbl:"Déjeuner",time:"12h – 13h30",
-       title:"Poulet émincé · Lentilles vertes · Carottes curcuma · Sauge",
-       ingr:[{t:"Poulet émincé 120g"},{t:"Lentilles vertes (batch) 120g"},{t:"Carottes curcuma (batch)"},{t:"Sauge Picard"},{t:"Jus de citron + Sel Santé + huile colza"}],
-       tags:[["FER","nt-fer"],["MAG","nt-mag"],["VIT-C","nt-vitc"]],conseil:null},
-      {ic:"🍊",cl:"ic-gou",lbl:"Goûter",time:"avant 17h",
-       title:"Amandes · Noix Grenoble · Chocolat 85%",
-       ingr:[{t:"6 amandes + 3 noix de Grenoble"},{t:"1 carré chocolat 85%"}],
-       tags:[["MAG","nt-mag"],["DOPA","nt-dopa"]],
-       conseil:{type:"sjsr",text:"🌿 Poulet + lentilles + carottes = protéine complète + fer non hémique boosté par la cuisson curcuma."}},
-      {ic:"🌙",cl:"ic-din",lbl:"Dîner léger 💊",time:"19h – 20h max",
-       title:"💊 Médicaments AVANT · Colin lieu · Épinards · Échalote-thym",
-       ingr:[{t:"💊 Tramadol LP 100mg + Lyrica 375mg AVANT"},{t:"1 portion colin lieu"},{t:"Épinards Picard 200g"},{t:"Échalote + thym Picard"},{t:"Huile olive + Sel Santé"}],
-       tags:[["ALK","nt-alk"],["MAG","nt-mag"]],
-       conseil:{type:"prep",text:"🌸 Colin poêle couvercle 8 min. Épinards sautés échalote 3 min."}},
-      {ic:"📺",cl:"ic-sna",lbl:"Snack TV",time:"Soirée",
-       fun:"🌸 Fraises poêlées miel-thym",
-       ingr:[{t:"Abricots ou pêches coupées"},{t:"Miel + thym frais"},{t:"Four 170°C / 15 min"}],
-       tags:[["ALK","nt-alk"],["FUN","nt-fun"]],conseil:null}
-    ],infusion:INF},
-
-  // ── 25 avril — Samedi BATCH ──
-  '25':{name:"Samedi 25 avril",mode:"pm-b",modeLabel:"⏱ Brunch + Batch Cooking",nextMeal:"Brunch tardif puis batch",livraison:false,batch:true,birthday:false,
-    meals:[
-      {ic:"🌅",cl:"ic-mat",lbl:"Brunch · 11h – 13h",time:"11h – 13h",
-       title:"Brunch · Saumon mi-cuit Gingembre-Lin · Sarrasin · Salade",
-       ingr:[{t:"Saumon mi-cuit (portions Picard) 150g"},{t:"Gingembre râpé + graines de lin"},{t:"Sarrasin froid (batch) 80g"},{t:"Mélange salade Picard"},{t:"Avocat + citron + Sel Santé"}],
-       tags:[["FER","nt-fer"],["MAG","nt-mag"],["DOPA","nt-dopa"]],
-       steps:["Pocher saumon 8 min eau frémissante ou Air Fryer 170°C / 12 min","Mélanger sarrasin froid + salade dans grande assiette","Disposer saumon tiède dessus","Râper gingembre frais + parsemer graines de lin","Citron + huile olive + Sel Santé"],
+      {ic:"☀️",cl:"ic-mat",lbl:"Brunch · Dimanche",time:"9h – 11h",
+       title:"Galettes sarrasin complètes · Oeufs brouillés · Cébette · Infusion 7x7 💊",
+       ingr:[{t:"Farine sarrasin 80g"},{t:"Lait avoine 150ml"},{t:"2 oeufs bio brouillés crémeux"},{t:"Cébette ciselée"},{t:"Levure de bière 1cs"},{t:"Graines de lin"},{t:"💊 Tramadol LP 50mg + Lyrica 325mg"}],
+       tags:[["MAG","nt-mag"],["FER","nt-fer"],["DOPA","nt-dopa"]],
+       steps:["Galette sarrasin poêle chaude 3 min","Brouiller oeufs feu doux 3 min — crémeux","Poser sur galette","Cébette + levure de bière + graines de lin","Rouler comme une galette bretonne 🌸"],
        cookTime:"15 min",
-       conseil:{type:"sjsr",text:"🌿 Saumon = meilleure source oméga-3 DHA. Précurseur dopamine n°1 !"}},
-      {ic:"⏱",cl:"ic-mid",lbl:"Batch Cooking · 14h",time:"14h – 15h30",
-       title:"Batch semaine 26 avril – 1er mai",
-       ingr:[{t:"🔥 Air Fryer : amandes · courge"},{t:"🍳 Lentilles vertes + Quinoa + Sarrasin"},{t:"🥬 Épinards sautés → 3 portions"},{t:"🥶 Ninja Creami : mangue + fruits rouges"},{t:"🍵 Gingembre bocal pour la semaine"}],
-       tags:[["MAG","nt-mag"],["FER","nt-fer"]],conseil:null},
-      {ic:"🍊",cl:"ic-gou",lbl:"Goûter",time:"avant 17h",
-       title:"Mousse chocolat 85% express · Cerises",
-       ingr:[{t:"2 carrés chocolat 85% fondus"},{t:"1 blanc oeuf en neige"},{t:"Cerises Picard ou framboises"},{t:"Pincée piment doux"}],
-       tags:[["MAG","nt-mag"],["DOPA","nt-dopa"]],
-       conseil:{type:"tdah",text:"🧠 Mini mousse express : fondre chocolat, incorporer blanc en neige, servir avec cerises."}},
-      {ic:"🌙",cl:"ic-din",lbl:"Dîner léger 💊",time:"19h – 20h max",
-       title:"💊 Médicaments AVANT · Velouté courge-lait coco · Gingembre",
-       ingr:[{t:"💊 Tramadol LP 100mg + Lyrica 375mg AVANT"},{t:"Brocoli frais 400g"},{t:"Lait de coco 100ml"},{t:"Gingembre + curcuma + poivre"},{t:"Graines courge (batch) dessus"}],
-       tags:[["ALK","nt-alk"],["MAG","nt-mag"]],conseil:null},
-      {ic:"📺",cl:"ic-sna",lbl:"Snack TV",time:"Soirée",
-       fun:"🌸 Sorbet Ninja Creami Mangue-Gingembre",
-       ingr:[{t:"Base mangue-gingembre congelée"},{t:"Traiter 1 min au Creami"}],
+       conseil:{type:"tdah",text:"🧠 Dimanche galette bretonne maison. Levure de bière = dopamine + B12. Magnifique !"}},
+      {ic:"🥗",cl:"ic-mid",lbl:"Déjeuner · Maison",time:"13h – 14h30",
+       title:"Bowl riz 3 couleurs · Maquereau · Haricots beurre · Cébette",
+       ingr:[{t:"Riz 3 couleurs (batch) 120g"},{t:"Filet maquereau Auchan émietté"},{t:"Haricots beurre Auchan"},{t:"Cébette + citron + soja"},{t:"Graines de sésame"}],
+       tags:[["FER","nt-fer"],["MAG","nt-mag"]],conseil:{type:"sjsr",text:"🌿 Bowl riz 3 couleurs + maquereau = glucides lents + oméga-3. Sésame = calcium."}},
+      {ic:"🍊",cl:"ic-gou",lbl:"Goûter",time:"16h – 17h",
+       title:"Pomme rôtie au miel · Cannelle · Amandes",
+       ingr:[{t:"1 pomme coupée en dés"},{t:"Miel bio 1cc"},{t:"Cannelle"},{t:"8 amandes"},{t:"Poêle 5 min"}],
+       tags:[["ALK","nt-alk"],["FUN","nt-fun"]],conseil:null},
+      {ic:"🌙",cl:"ic-din",lbl:"Dîner · Sommeil 💊",time:"19h – 20h max",
+       title:"💊 Médicaments AVANT · Tofu nature poêlé · Lentilles vertes · Épinards",
+       ingr:[{t:"💊 Tramadol LP 100mg + Lyrica 375mg AVANT"},{t:"Tofu nature 125g poêlé curcuma"},{t:"Lentilles vertes (batch)"},{t:"Épinards sautés ail"},{t:"Citron + sésame"}],
+       tags:[["FER","nt-fer"],["ALK","nt-alk"]],
+       steps:["Médicaments AVANT 💊","Tofu coupé en dés + curcuma + poêle 5 min","Lentilles + épinards chauffer","Dresser : lentilles base, tofu doré dessus, épinards côté","Citron + sésame"],
+       cookTime:"10 min",
+       conseil:{type:"sjsr",text:"🌿 Tofu doré au curcuma = protéine anti-inflammatoire. Curcuma = curcumine biodisponible."}},
+      {ic:"📺",cl:"ic-sna",lbl:"Soirée",time:"20h – 21h",
+       fun:"🌸 Bol tapioca coco · Cerises · Infusion molène",
+       ingr:[{t:"Tapioca 4cs + eau 200ml"},{t:"Lait coco 2cs"},{t:"Cerises"},{t:"Infusion molène"}],
        tags:[["ALK","nt-alk"],["FUN","nt-fun"]],conseil:null}
     ],infusion:INF},
 
-  // ── 26 avril — Dimanche BRUNCH ──
-  '26':{name:"Dimanche 26 avril",mode:"pm-f",modeLabel:"🌅 Brunch du dimanche",nextMeal:"Préparer chia pudding ce soir",livraison:false,batch:false,birthday:false,
+  '20':{name:"Lundi 20 avril",mode:"pm-f",modeLabel:"💼 Semaine 3",nextMeal:"Sardines-avocat bureau · Crevettes ce soir",livraison:false,batch:false,birthday:false,
     meals:[
-      {ic:"🌅",cl:"ic-mat",lbl:"Brunch · 11h – 13h",time:"11h – 13h",
-       title:"Brunch · Moelleux fraises-noisettes · Oeufs mollets",
-       ingr:[{t:"Pêches 2 + poudre noisettes 50g"},{t:"Farine de riz 50g + 2 oeufs bio"},{t:"Lait végétal + filet de miel"},{t:"2 oeufs mollets en plus"},{t:"Salade verte + citron"}],
-       tags:[["MAG","nt-mag"],["FER","nt-fer"]],
-       steps:["Mixer pêches + noisettes + farine riz + oeufs + lait + miel","Verser dans moule, four 180°C / 20 min","Cuire 2 oeufs mollets 6 min eau bouillante","Dresser moelleux + oeufs + salade verte","Filet citron + Sel Santé"],
-       cookTime:"25 min · Four 180°C",
-       conseil:{type:"tdah",text:"🧠 Le moelleux peut se préparer la veille et se réchauffer 5 min !"}},
-      {ic:"🌿",cl:"ic-mid",lbl:"Après-midi",time:"14h – 18h",
-       title:"Repos · Balcon · Plantes · Sam",
-       ingr:[{t:"Hydratation"},{t:"Energy ball si faim"}],
-       tags:[["ALK","nt-alk"]],conseil:null},
+
+      {ic:"☀️",cl:"ic-mat",lbl:"Petit-déjeuner 💊",time:"7h – 8h",
+       title:"Porridge millet · Mangue · Coco · Infusion 7x7 💊",
+       ingr:[{t:"Flocons millet 5cs"},{t:"Lait avoine 200ml"},{t:"Mangues décongelées 80g"},{t:"Coco râpée 1cs"},{t:"Miel 1cc"},{t:"💊 Tramadol LP 50mg + Lyrica 325mg"}],
+       tags:[["MAG","nt-mag"],["FER","nt-fer"]],conseil:{type:"tdah",text:"🧠 Millet drink + mangue + coco = tropical et anti-inflammatoire. 5 min."}},
+      {ic:"🥗",cl:"ic-mid",lbl:"Déjeuner Bureau",time:"12h – 13h30",
+       title:"Sardines bio · Quinoa · Radis · Graines de courge · Citron",
+       ingr:[{t:"Bio alter eco sardines 1 boîte"},{t:"Quinoa (batch) 100g"},{t:"Radis tranchés"},{t:"Graines de courge"},{t:"Citron + colza"}],
+       tags:[["FER","nt-fer"],["MAG","nt-mag"]],conseil:{type:"sjsr",text:"🌿 Sardines bio alter eco = qualité premium. Quinoa + radis = repas complet anti-SJSR."}},
       {ic:"🍊",cl:"ic-gou",lbl:"Goûter",time:"avant 17h",
-       title:"Amandes torréfiées · Datte · Chocolat 92%",
-       ingr:[{t:"Amandes torréfiées (batch)"},{t:"2 dattes Medjool"},{t:"1 carré chocolat 92%"}],
+       title:"Kiwi · Amandes · MatiMalt · Dattes",
+       ingr:[{t:"1 kiwi"},{t:"8 amandes"},{t:"2 dattes"},{t:"MatiMalt chaud"}],
+       tags:[["MAG","nt-mag"],["VIT-C","nt-vitc"]],conseil:null},
+      {ic:"🌙",cl:"ic-din",lbl:"Dîner · Sommeil 💊",time:"19h – 20h max",
+       title:"💊 Médicaments AVANT · Crevettes cocktail · Riz · Sauce soja gingembre",
+       ingr:[{t:"💊 Tramadol LP 100mg + Lyrica 375mg AVANT"},{t:"Pouce crevettes cocktail 150g"},{t:"Riz 3 couleurs (batch)"},{t:"Sauce soja + gingembre frais + sésame"},{t:"Cébette"}],
+       tags:[["FER","nt-fer"],["ALK","nt-alk"]],
+       steps:["Médicaments AVANT 💊","Crevettes + gingembre râpé poêle 3 min","Riz chaud","Sauce soja + sésame","Cébette en finition"],
+       cookTime:"8 min",
+       conseil:{type:"sjsr",text:"🌿 Crevettes cocktail + riz + sauce soja = dîner asiatique rapide et anti-inflammatoire."}},
+      {ic:"📺",cl:"ic-sna",lbl:"Soirée",time:"20h – 21h",
+       fun:"🌸 Smoothie cerises · Chocolat bio · Infusion camomille",
+       ingr:[{t:"Cerises 100g"},{t:"Millet drink 150ml"},{t:"Chocolat bio râpé"},{t:"Infusion camomille-lavande"}],
+       tags:[["ALK","nt-alk"],["FUN","nt-fun"]],conseil:null}
+    ],infusion:INF},
+
+  '21':{name:"Mardi 21 avril",mode:"pm-f",modeLabel:"💼 Mardi bureau",nextMeal:"Thon-laitue-kiwi bureau · Saumon ce soir",livraison:false,batch:false,birthday:false,
+    meals:[
+
+      {ic:"☀️",cl:"ic-mat",lbl:"Petit-déjeuner 💊",time:"7h – 8h",
+       title:"Bol sarrasin · Mangue · Graines de lin · Infusion 7x7 💊",
+       ingr:[{t:"Flocons sarrasin 5cs"},{t:"Lait avoine"},{t:"Mangue décongelée"},{t:"Graines de lin"},{t:"💊 Tramadol LP 50mg + Lyrica 325mg"}],
+       tags:[["MAG","nt-mag"],["FER","nt-fer"]],conseil:{type:"tdah",text:"🧠 Sarrasin = magnésium + fer. Manga = vitamine C. Combo idéal matin anti-SJSR."}},
+      {ic:"🥗",cl:"ic-mid",lbl:"Déjeuner Bureau",time:"12h – 13h30",
+       title:"Thon · Laitue · Kiwi · Avocats · Vinaigrette soja",
+       ingr:[{t:"Thon Auchan naturel"},{t:"Laitue"},{t:"1 kiwi tranché"},{t:"1/2 avocat"},{t:"Vinaigrette soja-citron-colza"}],
+       tags:[["FER","nt-fer"],["VIT-C","nt-vitc"]],conseil:{type:"sjsr",text:"🌿 Thon + kiwi + avocat = protéine + vit C + graisses saines. Repas parfait anti-SJSR."}},
+      {ic:"🍊",cl:"ic-gou",lbl:"Goûter",time:"avant 17h",
+       title:"Pomme · Amandes · Dattes · Chocolat bio",
+       ingr:[{t:"1 pomme"},{t:"8 amandes"},{t:"2 dattes"},{t:"1 carré chocolat bio"}],
        tags:[["MAG","nt-mag"],["DOPA","nt-dopa"]],conseil:null},
-      {ic:"🌙",cl:"ic-din",lbl:"Dîner léger 💊",time:"19h – 20h max",
-       title:"💊 Médicaments AVANT · Soupe pois cassés-menthe · Lait coco",
-       ingr:[{t:"💊 Tramadol LP 100mg + Lyrica 375mg AVANT"},{t:"Pois cassés 80g"},{t:"Lait de coco 150ml"},{t:"Menthe fraîche"},{t:"Gingembre + Sel Santé"}],
-       tags:[["ALK","nt-alk"],["MAG","nt-mag"]],conseil:null},
-      {ic:"📺",cl:"ic-sna",lbl:"Snack TV",time:"Soirée",
-       fun:"🌸 Sorbet Ninja Creami Fruits Rouges",
-       ingr:[{t:"Base fruits rouges (batch samedi)"},{t:"Traiter 1 min au Creami"}],
+      {ic:"🌙",cl:"ic-din",lbl:"Dîner · Sommeil 💊",time:"19h – 20h max",
+       title:"💊 Médicaments AVANT · Pavé saumon · Lentilles corail coco · Épinards",
+       ingr:[{t:"💊 Tramadol LP 100mg + Lyrica 375mg AVANT"},{t:"1 pavé saumon Norvège"},{t:"Lentilles corail + crème coco"},{t:"Épinards sautés ail"},{t:"Curcuma + gingembre + citron"}],
+       tags:[["FER","nt-fer"],["ALK","nt-alk"]],
+       steps:["Médicaments AVANT 💊","Saumon poêle 5 min chaque côté","Lentilles + crème coco chauffer 5 min","Épinards réchauffer","Dresser : lentilles coco, saumon dessus, épinards côté"],
+       cookTime:"12 min",
+       conseil:{type:"sjsr",text:"🌿 Saumon + lentilles coco + épinards = trio anti-SJSR parfait. Oméga-3 + magnésium + fer."}},
+      {ic:"📺",cl:"ic-sna",lbl:"Soirée",time:"20h – 21h",
+       fun:"🌸 Bol millet chaud · Miel · Cannelle · Bonne nuit",
+       ingr:[{t:"Flocons millet"},{t:"Lait avoine chaud"},{t:"Miel + cannelle"}],
        tags:[["ALK","nt-alk"],["FUN","nt-fun"]],conseil:null}
     ],infusion:INF},
 
-  // ── 27 avril ──
-  '27':{name:"Lundi 27 avril",mode:"pm-f",modeLabel:"🌿 Semaine",nextMeal:"💊 Médicaments ce matin",livraison:false,batch:false,birthday:false,
+  '22':{name:"Mercredi 22 avril",mode:"pm-f",modeLabel:"💼 Mercredi",nextMeal:"Maquereau-quinoa bureau · Steak ce soir",livraison:false,batch:false,birthday:false,
     meals:[
-      {ic:"☀️",cl:"ic-mat",lbl:"Petit-déjeuner 💊",time:"7h – 9h",
-       title:"Chia pudding · Mangue · Graines courge · Cannelle",
-       ingr:[{t:"Graines de chia 3cs"},{t:"Lait de millet 200ml"},{t:"Mangues Picard"},{t:"Graines de courge"},{t:"Cannelle"},{t:"💊 Tramadol LP 50mg + Lyrica 325mg"}],
-       tags:[["MAG","nt-mag"],["FER","nt-fer"],["DOPA","nt-dopa"]],conseil:null},
-      {ic:"🥗",cl:"ic-mid",lbl:"Déjeuner · Maison",time:"12h30 – 14h",
-       title:"Pois chiches · Maquereau · Épinards · Persil-citron",
-       ingr:[{t:"Pois chiches 150g"},{t:"Maquereau 1 boîte"},{t:"Épinards frais"},{t:"Persil haché + citron"},{t:"Huile de lin + Sel Santé"}],
-       tags:[["FER","nt-fer"],["MAG","nt-mag"],["DOPA","nt-dopa"],["VIT-C","nt-vitc"]],
-       conseil:{type:"sjsr",text:"🌿 Huile de lin = oméga-3 végétal. Persil = dopamine + fer naturels."}},
-      {ic:"🍊",cl:"ic-gou",lbl:"Goûter",time:"avant 17h",
-       title:"Energy ball · Datte + Cacao + Sésame",
-       ingr:[{t:"2 dattes + 6 amandes + 1cc cacao + sésame"}],
-       tags:[["MAG","nt-mag"],["DOPA","nt-dopa"],["TDAH","nt-tdah"]],conseil:null},
-      {ic:"🌙",cl:"ic-din",lbl:"Dîner léger 💊",time:"19h – 20h max",
-       title:"💊 Médicaments AVANT · Papillote cabillaud · Asperges · Citron",
-       ingr:[{t:"💊 Tramadol LP 100mg + Lyrica 375mg AVANT"},{t:"1 portion cabillaud"},{t:"Pointes asperges si dispo"},{t:"Rondelles citron + gingembre"},{t:"Sel Santé + herbes Provence"}],
-       tags:[["ALK","nt-alk"],["MAG","nt-mag"]],conseil:null},
-      {ic:"📺",cl:"ic-sna",lbl:"Snack TV",time:"Soirée",
-       fun:"🌸 Poires au four à la badiane",
-       ingr:[{t:"1 poire coupée"},{t:"Badiane + miel"},{t:"Four 170°C / 20 min"}],
-       tags:[["ALK","nt-alk"],["FUN","nt-fun"]],conseil:null}
-    ],infusion:INF},
 
-  // ── 28 avril ──
-  '28':{name:"Mardi 28 avril",mode:"pm-f",modeLabel:"🌿 Semaine",nextMeal:"💊 Médicaments ce matin",livraison:false,batch:false,birthday:false,
-    meals:[
-      {ic:"☀️",cl:"ic-mat",lbl:"Petit-déjeuner 💊",time:"7h – 9h",
-       title:"Porridge sarrasin · Framboises · Noisettes · Lin",
-       ingr:[{t:"Flocons sarrasin 80g"},{t:"Lait de millet"},{t:"Framboises Picard"},{t:"Noisettes + graines lin"},{t:"💊 Tramadol LP 50mg + Lyrica 325mg"}],
-       tags:[["MAG","nt-mag"],["FER","nt-fer"]],conseil:null},
-      {ic:"🥗",cl:"ic-mid",lbl:"Déjeuner · Maison",time:"12h30 – 14h",
-       title:"Lentilles vertes · Thon · Poivrons · Basilic",
-       ingr:[{t:"Lentilles vertes (batch) 150g"},{t:"Thon au naturel"},{t:"Poivrons rouges crus"},{t:"Basilic frais"},{t:"Vinaigre cidre + Sel Santé"}],
-       tags:[["FER","nt-fer"],["MAG","nt-mag"],["VIT-C","nt-vitc"],["DOPA","nt-dopa"]],conseil:null},
+      {ic:"☀️",cl:"ic-mat",lbl:"Petit-déjeuner 💊",time:"7h – 8h",
+       title:"Smoothie bowl fruits rouges · Millet · Coco · Infusion 7x7 💊",
+       ingr:[{t:"Fruits rouges décongelés 120g"},{t:"Millet drink 150ml"},{t:"Coco râpée"},{t:"Miel 1cc"},{t:"Graines de lin + courge"},{t:"💊 Tramadol LP 50mg + Lyrica 325mg"}],
+       tags:[["MAG","nt-mag"],["VIT-C","nt-vitc"],["DOPA","nt-dopa"]],conseil:{type:"tdah",text:"🧠 Smoothie bowl coloré — rouge + blanc coco + graines. Beau et nutritif."}},
+      {ic:"🥗",cl:"ic-mid",lbl:"Déjeuner Bureau",time:"12h – 13h30",
+       title:"Maquereau émietté · Quinoa · Haricots beurre · Cébette",
+       ingr:[{t:"Maquereau Auchan"},{t:"Quinoa (batch) 100g"},{t:"Haricots beurre Auchan"},{t:"Cébette + citron + soja"}],
+       tags:[["FER","nt-fer"],["MAG","nt-mag"]],conseil:{type:"sjsr",text:"🌿 Maquereau + haricots beurre = oméga-3 + protéines végétales. Rassasiant jusqu'au soir."}},
       {ic:"🍊",cl:"ic-gou",lbl:"Goûter",time:"avant 17h",
-       title:"Amandes · Chocolat 85% · Pistaches",
-       ingr:[{t:"6 amandes + pistaches 15g"},{t:"1 carré chocolat 85%"}],
+       title:"Cerises · Amandes · MatiMalt",
+       ingr:[{t:"Cerises décongelées"},{t:"8 amandes"},{t:"MatiMalt chaud"}],
        tags:[["MAG","nt-mag"],["DOPA","nt-dopa"]],conseil:null},
-      {ic:"🌙",cl:"ic-din",lbl:"Dîner léger 💊",time:"19h – 20h max",
-       title:"💊 Médicaments AVANT · Tofu · Brocolis · Curcuma-Gingembre",
-       ingr:[{t:"💊 Tramadol LP 100mg + Lyrica 375mg AVANT"},{t:"Tofu noisette 100g"},{t:"Brocolis Picard 300g"},{t:"Curcuma + gingembre + poivre"},{t:"Huile colza + Sel Santé"}],
-       tags:[["ALK","nt-alk"],["MAG","nt-mag"]],
-       conseil:{type:"prep",text:"🌸 Tofu Air Fryer 12 min. Brocolis vapeur 8 min. Simples et efficaces."}},
-      {ic:"📺",cl:"ic-sna",lbl:"Snack TV",time:"Soirée",
-       fun:"🌸 Compotée pommes-cannelle sans sucre",
-       ingr:[{t:"2 pommes en dés"},{t:"Cannelle + vanille"},{t:"Cuire 15 min feu doux"}],
+      {ic:"🌙",cl:"ic-din",lbl:"Dîner · Sommeil 💊",time:"19h – 20h max",
+       title:"💊 Médicaments AVANT · Steak haché · Poêlée méditerranéenne · Riz",
+       ingr:[{t:"💊 Tramadol LP 100mg + Lyrica 375mg AVANT"},{t:"Steak haché surgelé"},{t:"Poêlée méditerranéenne"},{t:"Riz 3 couleurs (batch)"},{t:"Herbes de Provence + sel Santé"}],
+       tags:[["FER","nt-fer"],["ALK","nt-alk"]],
+       steps:["Médicaments AVANT 💊","Steak : poêle 3 min chaque côté","Poêlée médit. : poêle couverte 8 min","Riz chaud","Dresser : riz moulé, poêlée autour, steak au centre"],
+       cookTime:"15 min",
+       conseil:{type:"prep",text:"🌸 Steak haché + poêlée médit. = repas complet généreux. Profitez !"}},
+      {ic:"📺",cl:"ic-sna",lbl:"Soirée",time:"20h – 21h",
+       fun:"🌸 Chocolat chaud Van Houten · Psyllium · Fleur d'oranger",
+       ingr:[{t:"2cc cacao Van Houten"},{t:"1cc psyllium"},{t:"Eau chaude"},{t:"Arôme fleur d'oranger"}],
+       tags:[["MAG","nt-mag"],["FUN","nt-fun"]],conseil:null}
+    ],infusion:INF},
+
+  '23':{name:"Jeudi 23 avril",mode:"pm-f",modeLabel:"💼 Jeudi bureau",nextMeal:"Sardinière bureau · Crevettes ce soir",livraison:false,batch:false,birthday:false,
+    meals:[
+
+      {ic:"☀️",cl:"ic-mat",lbl:"Petit-déjeuner 💊",time:"7h – 8h",
+       title:"Pancakes sarrasin-levure de bière · Mangue · Miel · 7x7 💊",
+       ingr:[{t:"Farine sarrasin 80g"},{t:"Lait avoine 150ml"},{t:"Levure de bière 1cs"},{t:"Mangue décongelée"},{t:"Miel 1cc"},{t:"💊 Tramadol LP 50mg + Lyrica 325mg"}],
+       tags:[["MAG","nt-mag"],["FER","nt-fer"],["DOPA","nt-dopa"]],conseil:{type:"tdah",text:"🧠 Levure de bière dans la pâte = pancakes plus gonflés + dopamine + B12. Astuce !"}},
+      {ic:"🥗",cl:"ic-mid",lbl:"Déjeuner Bureau",time:"12h – 13h30",
+       title:"Sardinière · Lentilles vertes · Cébette · Galette de riz",
+       ingr:[{t:"Sardinière 1 boîte"},{t:"Lentilles vertes (batch) 100g"},{t:"Cébette"},{t:"Citron + colza"},{t:"Galette de riz"}],
+       tags:[["FER","nt-fer"],["MAG","nt-mag"]],conseil:{type:"sjsr",text:"🌿 Sardinière + lentilles = double dose de protéines + fer + oméga-3."}},
+      {ic:"🍊",cl:"ic-gou",lbl:"Goûter",time:"avant 17h",
+       title:"Kiwi · Amandes · Chocolat bio alter eco",
+       ingr:[{t:"1 kiwi"},{t:"8 amandes"},{t:"1 carré chocolat bio"}],
+       tags:[["VIT-C","nt-vitc"],["MAG","nt-mag"]],conseil:null},
+      {ic:"🌙",cl:"ic-din",lbl:"Dîner · Sommeil 💊",time:"19h – 20h max",
+       title:"💊 Médicaments AVANT · Crevettes cuites · Riz · Haricots verts",
+       ingr:[{t:"💊 Tramadol LP 100mg + Lyrica 375mg AVANT"},{t:"Crevettes cuites 150g"},{t:"Riz 3 couleurs (batch)"},{t:"Haricots verts Auchan"},{t:"Sauce soja + sésame + gingembre"}],
+       tags:[["FER","nt-fer"],["ALK","nt-alk"]],
+       steps:["Médicaments AVANT 💊","Décongeler crevettes","Haricots verts casserole 5 min","Riz chaud","Dresser : riz + haricots + crevettes + sauce soja"],
+       cookTime:"10 min",
+       conseil:{type:"sjsr",text:"🌿 Crevettes + haricots verts + riz = dîner léger et complet."}},
+      {ic:"📺",cl:"ic-sna",lbl:"Soirée",time:"20h – 21h",
+       fun:"🌸 Tapioca coco · Cerises · Infusion thym citronné",
+       ingr:[{t:"Tapioca 4cs + eau"},{t:"Lait coco 2cs"},{t:"Cerises"},{t:"Infusion thym citronné"}],
        tags:[["ALK","nt-alk"],["FUN","nt-fun"]],conseil:null}
     ],infusion:INF},
 
-  // ── 29 avril ──
-  '29':{name:"Mercredi 29 avril",mode:"pm-f",modeLabel:"🌿 Semaine",nextMeal:"💊 Médicaments ce matin",livraison:false,batch:false,birthday:false,
+  '24':{name:"Vendredi 24 avril",mode:"pm-f",modeLabel:"💼 Vendredi semaine 3",nextMeal:"Thon-avocat bureau · Maquereau coco ce soir",livraison:false,batch:false,birthday:false,
     meals:[
-      {ic:"☀️",cl:"ic-mat",lbl:"Petit-déjeuner 💊",time:"7h – 9h",
-       title:"Chia pudding · Kiwi · Noix Grenoble",
-       ingr:[{t:"Chia 3cs"},{t:"Lait millet 200ml"},{t:"Kiwi (vit C++)"},{t:"Noix de Grenoble"},{t:"💊 Tramadol LP 50mg + Lyrica 325mg"}],
-       tags:[["MAG","nt-mag"],["FER","nt-fer"],["VIT-C","nt-vitc"]],conseil:null},
-      {ic:"🥗",cl:"ic-mid",lbl:"Déjeuner · Maison",time:"12h30 – 14h",
-       title:"Quinoa · Sardines · Betteraves · Mâche",
-       ingr:[{t:"Quinoa (batch) 120g"},{t:"Sardines 1 boîte"},{t:"Betteraves en dés"},{t:"Mâche"},{t:"Huile lin + citron + Sel Santé"}],
-       tags:[["FER","nt-fer"],["MAG","nt-mag"],["DOPA","nt-dopa"]],conseil:null},
-      {ic:"🍊",cl:"ic-gou",lbl:"Goûter",time:"avant 17h",
-       title:"Graines courge · Datte · Carré chocolat 92%",
-       ingr:[{t:"Graines courge 20g"},{t:"1 datte"},{t:"1 carré chocolat 92%"}],
-       tags:[["MAG","nt-mag"],["DOPA","nt-dopa"]],conseil:null},
-      {ic:"🌙",cl:"ic-din",lbl:"Dîner léger 💊",time:"19h – 20h max",
-       title:"💊 Médicaments AVANT · Agneau confit · Polenta pistaches",
-       ingr:[{t:"💊 Tramadol LP 100mg + Lyrica 375mg AVANT"},{t:"Agneau 100g (riche en fer)"},{t:"Polenta de maïs 60g"},{t:"Pistaches 20g"},{t:"Sel Santé + sauge"}],
-       tags:[["FER","nt-fer"],["MAG","nt-mag"],["ALK","nt-alk"]],
-       conseil:{type:"sjsr",text:"🌿 Agneau = fer hème le plus biodisponible. Réservé 1 fois par semaine."}},
-      {ic:"📺",cl:"ic-sna",lbl:"Snack TV",time:"Soirée",
-       fun:"🌸 Sorbet Ninja Creami Mangue-Gingembre",
-       ingr:[{t:"Base congelée"},{t:"Traiter 1 min au Creami"}],
+
+      {ic:"☀️",cl:"ic-mat",lbl:"Petit-déjeuner 💊",time:"7h – 8h",
+       title:"Bol violet Ube · Fruits rouges · Graines de courge · 7x7 💊",
+       ingr:[{t:"Flocons millet 5cs"},{t:"Lait avoine"},{t:"1cs Ube Powder"},{t:"Fruits rouges"},{t:"Graines de courge"},{t:"💊 Tramadol LP 50mg + Lyrica 325mg"}],
+       tags:[["MAG","nt-mag"],["FER","nt-fer"],["DOPA","nt-dopa"]],conseil:{type:"tdah",text:"🧠 Bol violet du vendredi — antioxydants maximum pour bien finir la semaine !"}},
+      {ic:"🥗",cl:"ic-mid",lbl:"Déjeuner Bureau",time:"12h – 13h30",
+       title:"Thon · Quinoa · Haricots rouges · Cébette · Citron",
+       ingr:[{t:"Thon Auchan naturel 2ème boîte"},{t:"Quinoa (batch) 100g"},{t:"Haricots rouges"},{t:"Cébette + citron + colza"}],
+       tags:[["FER","nt-fer"],["MAG","nt-mag"]],conseil:{type:"sjsr",text:"🌿 Thon + haricots rouges + quinoa = triple source de protéines. Repas très complet."}},
+      {ic:"🍊",cl:"ic-gou",lbl:"Goûter · Vendredi",time:"avant 17h",
+       title:"Smoothie mangue-fruits rouges · Miel · Bon week-end !",
+       ingr:[{t:"Mangue 100g"},{t:"Fruits rouges 80g"},{t:"Millet drink"},{t:"Miel"}],
+       tags:[["VIT-C","nt-vitc"],["FUN","nt-fun"]],conseil:null},
+      {ic:"🌙",cl:"ic-din",lbl:"Dîner · Sommeil 💊",time:"19h – 20h max",
+       title:"💊 Médicaments AVANT · Maquereau poêlé · Lentilles coco · Épinards",
+       ingr:[{t:"💊 Tramadol LP 100mg + Lyrica 375mg AVANT"},{t:"Filet maquereau Auchan"},{t:"Lentilles corail + crème coco"},{t:"Épinards sautés"},{t:"Curcuma frais + citron"}],
+       tags:[["FER","nt-fer"],["ALK","nt-alk"]],
+       steps:["Médicaments AVANT 💊","Maquereau poêle 4 min chaque côté","Lentilles + crème coco 5 min","Épinards réchauffer","Dresser avec soin — fin de semaine !"],
+       cookTime:"12 min",
+       conseil:{type:"sjsr",text:"🌿 Vendredi soir : maquereau + lentilles coco = oméga-3 + magnésium. Bonne nuit en vue."}},
+      {ic:"📺",cl:"ic-sna",lbl:"Soirée week-end !",time:"20h – 21h",
+       fun:"🌸 Cerises + chocolat bio · Infusion camomille · Bon week-end !",
+       ingr:[{t:"Cerises"},{t:"Chocolat bio"},{t:"Infusion camomille-lavande"}],
        tags:[["ALK","nt-alk"],["FUN","nt-fun"]],conseil:null}
     ],infusion:INF},
 
-  // ── 30 avril ──
-  '30':{name:"Jeudi 30 avril",mode:"pm-f",modeLabel:"🌿 Fin avril !",nextMeal:"Demain : livraison Mai + Batch samedi",livraison:false,batch:false,birthday:false,
+  '25':{name:"Samedi 25 avril",mode:"pm-f",modeLabel:"⏱ Batch Cooking semaine 3",nextMeal:"Brunch pancakes + batch + saumon ce soir",livraison:false,batch:true,birthday:false,
     meals:[
-      {ic:"☀️",cl:"ic-mat",lbl:"Petit-déjeuner 💊",time:"7h – 9h",
-       title:"Porridge sarrasin · Salade fruits Picard · Amandes",
-       ingr:[{t:"Sarrasin cuit 80g"},{t:"Lait de millet"},{t:"Salade fruits Picard"},{t:"Amandes effilées"},{t:"💊 Tramadol LP 50mg + Lyrica 325mg"}],
-       tags:[["MAG","nt-mag"],["FER","nt-fer"],["VIT-C","nt-vitc"]],conseil:null},
-      {ic:"🥗",cl:"ic-mid",lbl:"Déjeuner · Maison",time:"12h30 – 14h",
-       title:"Haricots rouges · Maquereau · Persil · Citron",
-       ingr:[{t:"Haricots rouges 150g"},{t:"Maquereau 1 boîte"},{t:"Persil plat haché"},{t:"Jus citron + Sel Santé"},{t:"Huile colza"}],
-       tags:[["FER","nt-fer"],["MAG","nt-mag"],["DOPA","nt-dopa"]],
-       conseil:{type:"sjsr",text:"🌿 Bilan avril : vous avez tenu votre programme anti-SJSR tout le mois. Bravo !"}},
-      {ic:"🍊",cl:"ic-gou",lbl:"Goûter",time:"avant 17h",
-       title:"Amandes · Chocolat 85% · Datte",
-       ingr:[{t:"8 amandes"},{t:"1 carré chocolat 85%"},{t:"1 datte"}],
-       tags:[["MAG","nt-mag"],["DOPA","nt-dopa"]],conseil:null},
-      {ic:"🌙",cl:"ic-din",lbl:"Dîner léger 💊",time:"19h – 20h max",
-       title:"💊 Médicaments AVANT · Colin lieu · Haricots verts · Basilic",
-       ingr:[{t:"💊 Tramadol LP 100mg + Lyrica 375mg AVANT"},{t:"1 portion colin lieu"},{t:"Haricots verts Picard 200g"},{t:"Basilic Picard"},{t:"Huile olive + Sel Santé"}],
-       tags:[["ALK","nt-alk"],["MAG","nt-mag"]],conseil:null},
-      {ic:"📺",cl:"ic-sna",lbl:"Snack TV",time:"Soirée",
-       fun:"🌸 Energy balls · Datte + Amande + Cacao + Coco",
-       ingr:[{t:"2 dattes + amandes + cacao + coco râpée"},{t:"Mixer + former + frigo 10 min"}],
-       tags:[["MAG","nt-mag"],["DOPA","nt-dopa"],["FUN","nt-fun"]],conseil:null}
+
+      {ic:"☀️",cl:"ic-mat",lbl:"Brunch · Samedi",time:"9h – 11h",
+       title:"Pancakes sarrasin · Cerises poêlées · Miel · Coco",
+       ingr:[{t:"Farine sarrasin 80g"},{t:"Lait avoine 150ml"},{t:"1 oeuf bio"},{t:"Cerises poêlées 3 min avec miel"},{t:"Coco râpée"},{t:"💊 Tramadol LP 50mg + Lyrica 325mg"}],
+       tags:[["MAG","nt-mag"],["FER","nt-fer"],["DOPA","nt-dopa"]],conseil:{type:"tdah",text:"🧠 Cerises poêlées au miel sur pancakes = mélatonine + dopamine + beau à photographier !"}},
+      {ic:"⏱",cl:"ic-bat",lbl:"Batch Cooking · Semaine 3",time:"11h – 13h",
+       title:"Batch final · Dernière semaine d'avril",
+       ingr:[{t:"Quinoa rouge 300g"},{t:"Lentilles corail 200g"},{t:"Riz 3 couleurs 200g"},{t:"Graines de courge torréfier"},{t:"Gingembre frais bocal renouveler"}],
+       tags:[["MAG","nt-mag"],["FER","nt-fer"],["TDAH","nt-tdah"]],conseil:{type:"tdah",text:"🧠 Dernier batch d'avril — bien géré ce mois ! Bravo Ketty."}},
+      {ic:"🥗",cl:"ic-mid",lbl:"Déjeuner · Maison",time:"13h30",
+       title:"Bowl tofu soyeux · Mangue · Sauce soja · Sésame",
+       ingr:[{t:"Tofu soyeux nature 200g"},{t:"Mangue décongelée"},{t:"Sauce soja"},{t:"Sésame"},{t:"Cébette"},{t:"Riz (batch)"}],
+       tags:[["FER","nt-fer"],["MAG","nt-mag"]],conseil:{type:"sjsr",text:"🌿 Tofu soyeux + mangue = combo doux et original. Texture crémeuse + sucré naturel."}},
+      {ic:"🍊",cl:"ic-gou",lbl:"Goûter",time:"16h – 17h",
+       title:"Smoothie violet Ube · Fruits rouges · Miel",
+       ingr:[{t:"1cc Ube Powder"},{t:"Fruits rouges 100g"},{t:"Millet drink 150ml"},{t:"Miel 1cc"}],
+       tags:[["VIT-C","nt-vitc"],["FUN","nt-fun"]],conseil:null},
+      {ic:"🌙",cl:"ic-din",lbl:"Dîner · Sommeil 💊",time:"19h – 20h max",
+       title:"💊 Médicaments AVANT · Pavé saumon · Haricots verts · Carottes",
+       ingr:[{t:"💊 Tramadol LP 100mg + Lyrica 375mg AVANT"},{t:"1 pavé saumon Norvège"},{t:"Haricots verts"},{t:"Carottes curcuma (batch)"},{t:"Citron + herbes + graines de lin"}],
+       tags:[["FER","nt-fer"],["ALK","nt-alk"]],
+       steps:["Médicaments AVANT 💊","Saumon poêle 5 min chaque côté","Légumes chauffer","Dresser soigneusement","Citron + graines de lin"],
+       cookTime:"12 min",
+       conseil:{type:"sjsr",text:"🌿 Samedi soir saumon — 3ème semaine consécutive. Votre corps accumule les oméga-3."}},
+      {ic:"📺",cl:"ic-sna",lbl:"Soirée",time:"20h – 21h",
+       fun:"🌸 Chocolat chaud cacao · Caramel Monin · Soirée kdrama",
+       ingr:[{t:"2cc cacao Van Houten"},{t:"Sirop Monin caramel"},{t:"200ml eau chaude"}],
+       tags:[["MAG","nt-mag"],["FUN","nt-fun"]],conseil:null}
     ],infusion:INF},
 
+  '26':{name:"Dimanche 26 avril",mode:"pm-f",modeLabel:"🌸 Brunch oeufs-jambon",nextMeal:"Brunch galette jambon oeufs",livraison:false,batch:false,birthday:false,
+    meals:[
 
-  // MAI 1-10
+      {ic:"☀️",cl:"ic-mat",lbl:"Brunch · Dimanche",time:"9h – 11h",
+       title:"Galette sarrasin · Jambon · Oeufs brouillés · Cébette · 7x7 💊",
+       ingr:[{t:"Farine sarrasin 80g"},{t:"Lait avoine"},{t:"2 oeufs brouillés"},{t:"Jambon tranches Auchan"},{t:"Cébette"},{t:"Levure de bière"},{t:"💊 Tramadol LP 50mg + Lyrica 325mg"}],
+       tags:[["MAG","nt-mag"],["FER","nt-fer"],["DOPA","nt-dopa"]],conseil:{type:"tdah",text:"🧠 Galette jambon-oeufs-cébette = brunch complet façon crêperie. Votre moment Instagram !"}},
+      {ic:"🥗",cl:"ic-mid",lbl:"Déjeuner · Maison",time:"13h – 14h30",
+       title:"Bowl quinoa · Crevettes cocktail · Mangue · Cébette · Sésame",
+       ingr:[{t:"Quinoa (batch) 120g"},{t:"Crevettes cocktail 120g"},{t:"Mangue décongelée en dés"},{t:"Cébette + soja + sésame + citron"}],
+       tags:[["FER","nt-fer"],["MAG","nt-mag"],["VIT-C","nt-vitc"]],conseil:{type:"sjsr",text:"🌿 Bowl exotique crevettes-mangue-quinoa. Sucré-salé anti-inflammatoire."}},
+      {ic:"🍊",cl:"ic-gou",lbl:"Goûter",time:"16h – 17h",
+       title:"Cerises poêlées · Amandes · MatiMalt",
+       ingr:[{t:"Cerises poêlées au miel"},{t:"8 amandes"},{t:"MatiMalt chaud"}],
+       tags:[["MAG","nt-mag"],["DOPA","nt-dopa"]],conseil:null},
+      {ic:"🌙",cl:"ic-din",lbl:"Dîner · Sommeil 💊",time:"19h – 20h max",
+       title:"💊 Médicaments AVANT · Tofu grillé ail des ours · Riz · Haricots verts",
+       ingr:[{t:"💊 Tramadol LP 100mg + Lyrica 375mg AVANT"},{t:"Tofu grillé ail des ours (Têtes Vertes)"},{t:"Riz 3 couleurs (batch)"},{t:"Haricots verts"},{t:"Sauce soja + gingembre"}],
+       tags:[["FER","nt-fer"],["ALK","nt-alk"]],
+       steps:["Médicaments AVANT 💊","Tofu grillé : poêle 3 min pour réchauffer","Haricots verts casserole 5 min","Riz chaud","Dresser : riz + haricots + tofu + sauce soja"],
+       cookTime:"8 min",
+       conseil:{type:"sjsr",text:"🌿 Tofu grillé ail des ours = protéine + probiotiques + saveur intense. Repas élégant."}},
+      {ic:"📺",cl:"ic-sna",lbl:"Soirée",time:"20h – 21h",
+       fun:"🌸 Tapioca caramel · Coco · Infusion 7x7",
+       ingr:[{t:"Tapioca 4cs + eau"},{t:"Sirop Monin caramel"},{t:"Coco râpée"},{t:"Infusion 7x7"}],
+       tags:[["ALK","nt-alk"],["FUN","nt-fun"]],conseil:null}
+    ],infusion:INF},
 
-  // ── 1er mai — Vendredi LIVRAISON ──
+  '27':{name:"Lundi 27 avril",mode:"pm-f",modeLabel:"💼 Semaine 4",nextMeal:"Sardines-laitue bureau · Saumon ce soir",livraison:false,batch:false,birthday:false,
+    meals:[
+
+      {ic:"☀️",cl:"ic-mat",lbl:"Petit-déjeuner 💊",time:"7h – 8h",
+       title:"Porridge millet · Cerises · Graines de lin · 7x7 💊",
+       ingr:[{t:"Flocons millet 5cs"},{t:"Lait avoine 200ml"},{t:"Cerises décongelées"},{t:"Graines de lin"},{t:"Miel"},{t:"💊 Tramadol LP 50mg + Lyrica 325mg"}],
+       tags:[["MAG","nt-mag"],["FER","nt-fer"]],conseil:{type:"tdah",text:"🧠 Dernière semaine d'avril ! Cerises = mélatonine naturelle même le matin."}},
+      {ic:"🥗",cl:"ic-mid",lbl:"Déjeuner Bureau",time:"12h – 13h30",
+       title:"Sardines Auchan · Laitue · Haricots beurre · Citron",
+       ingr:[{t:"Sardines Auchan huile 1 boîte"},{t:"Laitue"},{t:"Haricots beurre"},{t:"Citron + colza"},{t:"Galette de riz"}],
+       tags:[["FER","nt-fer"],["MAG","nt-mag"]],conseil:{type:"sjsr",text:"🌿 Sardines + haricots beurre = protéine + magnésium. Repas complet en boîte."}},
+      {ic:"🍊",cl:"ic-gou",lbl:"Goûter",time:"avant 17h",
+       title:"Pomme · Amandes · Dattes · Chocolat bio",
+       ingr:[{t:"1 pomme"},{t:"8 amandes"},{t:"2 dattes"},{t:"Chocolat bio"}],
+       tags:[["MAG","nt-mag"],["DOPA","nt-dopa"]],conseil:null},
+      {ic:"🌙",cl:"ic-din",lbl:"Dîner · Sommeil 💊",time:"19h – 20h max",
+       title:"💊 Médicaments AVANT · Dernier pavé saumon · Lentilles corail · Épinards",
+       ingr:[{t:"💊 Tramadol LP 100mg + Lyrica 375mg AVANT"},{t:"1 pavé saumon Norvège"},{t:"Lentilles corail (batch)"},{t:"Épinards sautés"},{t:"Curcuma + citron + graines de lin"}],
+       tags:[["FER","nt-fer"],["ALK","nt-alk"]],
+       steps:["Médicaments AVANT 💊","Saumon poêle 5 min chaque côté","Lentilles + épinards chauffer","Dresser soigneusement","Graines de lin + citron"],
+       cookTime:"12 min",
+       conseil:{type:"sjsr",text:"🌿 4 semaines de saumon = accumulation d'oméga-3. Votre corps vous remercie !"}},
+      {ic:"📺",cl:"ic-sna",lbl:"Soirée",time:"20h – 21h",
+       fun:"🌸 Smoothie cerises-fruits rouges · Miel",
+       ingr:[{t:"Cerises + fruits rouges"},{t:"Millet drink"},{t:"Miel"}],
+       tags:[["ALK","nt-alk"],["FUN","nt-fun"]],conseil:null}
+    ],infusion:INF},
+
+  '28':{name:"Mardi 28 avril",mode:"pm-f",modeLabel:"💼 Mardi",nextMeal:"Maquereau-quinoa bureau · Crevettes ce soir",livraison:false,batch:false,birthday:false,
+    meals:[
+
+      {ic:"☀️",cl:"ic-mat",lbl:"Petit-déjeuner 💊",time:"7h – 8h",
+       title:"Pancakes sarrasin · Mangue · Coco · Miel · 7x7 💊",
+       ingr:[{t:"Farine sarrasin 80g"},{t:"Lait avoine"},{t:"Mangue"},{t:"Coco râpée"},{t:"Miel"},{t:"💊 Tramadol LP 50mg + Lyrica 325mg"}],
+       tags:[["MAG","nt-mag"],["FER","nt-fer"],["DOPA","nt-dopa"]],conseil:{type:"tdah",text:"🧠 Pancakes + mangue + coco = brunch de vacances même en semaine !"}},
+      {ic:"🥗",cl:"ic-mid",lbl:"Déjeuner Bureau",time:"12h – 13h30",
+       title:"Maquereau · Quinoa · Haricots rouges · Cébette · Soja",
+       ingr:[{t:"Maquereau Auchan"},{t:"Quinoa (batch)"},{t:"Haricots rouges"},{t:"Cébette + soja + citron"}],
+       tags:[["FER","nt-fer"],["MAG","nt-mag"]],conseil:{type:"sjsr",text:"🌿 Maquereau + haricots rouges + quinoa = repas complet riche en fer."}},
+      {ic:"🍊",cl:"ic-gou",lbl:"Goûter",time:"avant 17h",
+       title:"Kiwi · Amandes · MatiMalt",
+       ingr:[{t:"1 kiwi"},{t:"8 amandes"},{t:"MatiMalt chaud"}],
+       tags:[["VIT-C","nt-vitc"],["MAG","nt-mag"]],conseil:null},
+      {ic:"🌙",cl:"ic-din",lbl:"Dîner · Sommeil 💊",time:"19h – 20h max",
+       title:"💊 Médicaments AVANT · Crevettes cuites · Lentilles vertes · Carottes",
+       ingr:[{t:"💊 Tramadol LP 100mg + Lyrica 375mg AVANT"},{t:"Crevettes 150g"},{t:"Lentilles vertes (batch)"},{t:"Carottes curcuma (batch)"},{t:"Soja + sésame + gingembre"}],
+       tags:[["FER","nt-fer"],["ALK","nt-alk"]],
+       steps:["Médicaments AVANT 💊","Crevettes poêle 3 min","Lentilles + carottes réchauffer","Dresser en bowl","Sauce soja + sésame"],
+       cookTime:"8 min",
+       conseil:{type:"sjsr",text:"🌿 Crevettes + lentilles vertes + carottes = dîner complet et coloré."}},
+      {ic:"📺",cl:"ic-sna",lbl:"Soirée",time:"20h – 21h",
+       fun:"🌸 Chocolat chaud Van Houten · Infusion camomille",
+       ingr:[{t:"Cacao Van Houten"},{t:"Eau chaude"},{t:"Infusion camomille-lavande"}],
+       tags:[["MAG","nt-mag"],["FUN","nt-fun"]],conseil:null}
+    ],infusion:INF},
+
+  '29':{name:"Mercredi 29 avril",mode:"pm-f",modeLabel:"💼 Avant-dernier jour",nextMeal:"Sardines bureau · Tofu soyeux ce soir",livraison:false,batch:false,birthday:false,
+    meals:[
+
+      {ic:"☀️",cl:"ic-mat",lbl:"Petit-déjeuner 💊",time:"7h – 8h",
+       title:"Bol fruits rouges · Millet · Graines de lin · 7x7 💊",
+       ingr:[{t:"Flocons millet 5cs"},{t:"Lait avoine"},{t:"Fruits rouges"},{t:"Graines de lin"},{t:"Miel"},{t:"💊 Tramadol LP 50mg + Lyrica 325mg"}],
+       tags:[["MAG","nt-mag"],["VIT-C","nt-vitc"]],conseil:{type:"tdah",text:"🧠 Avant-dernier jour d'avril ! Fruits rouges = antioxydants + vitamine C."}},
+      {ic:"🥗",cl:"ic-mid",lbl:"Déjeuner Bureau",time:"12h – 13h30",
+       title:"Sardines · Lentilles vertes · Radis · Galette de riz · Citron",
+       ingr:[{t:"Sardines Auchan huile"},{t:"Lentilles vertes (batch)"},{t:"Radis"},{t:"Citron + colza"},{t:"Galette de riz"}],
+       tags:[["FER","nt-fer"],["MAG","nt-mag"]],conseil:{type:"sjsr",text:"🌿 Dernières sardines Auchan + lentilles = fin de mois bien nutritive."}},
+      {ic:"🍊",cl:"ic-gou",lbl:"Goûter",time:"avant 17h",
+       title:"Cerises · Amandes · Chocolat bio",
+       ingr:[{t:"Cerises"},{t:"8 amandes"},{t:"Chocolat bio alter eco"}],
+       tags:[["MAG","nt-mag"],["DOPA","nt-dopa"]],conseil:null},
+      {ic:"🌙",cl:"ic-din",lbl:"Dîner · Sommeil 💊",time:"19h – 20h max",
+       title:"💊 Médicaments AVANT · Tofu soyeux · Lentilles coco · Épinards",
+       ingr:[{t:"💊 Tramadol LP 100mg + Lyrica 375mg AVANT"},{t:"Tofu soyeux nature"},{t:"Lentilles corail + crème coco"},{t:"Épinards sautés"},{t:"Curcuma + gingembre + citron"}],
+       tags:[["FER","nt-fer"],["ALK","nt-alk"]],
+       steps:["Médicaments AVANT 💊","Lentilles + crème coco chauffer 5 min","Tofu soyeux servir frais ou poêler","Épinards réchauffer","Dresser : lentilles coco au fond, tofu dessus"],
+       cookTime:"8 min",
+       conseil:{type:"sjsr",text:"🌿 Tofu soyeux + lentilles coco = digestion très douce. Idéal avant de dormir."}},
+      {ic:"📺",cl:"ic-sna",lbl:"Soirée",time:"20h – 21h",
+       fun:"🌸 Smoothie mangue-cerises · Miel · Infusion molène",
+       ingr:[{t:"Mangue + cerises"},{t:"Millet drink"},{t:"Miel"},{t:"Infusion molène"}],
+       tags:[["ALK","nt-alk"],["FUN","nt-fun"]],conseil:null}
+    ],infusion:INF},
+
+  '30':{name:"Jeudi 30 avril",mode:"pm-f",modeLabel:"🌸 Dernier jour avril !",nextMeal:"Dernier repas avril — bien géré ce mois !",livraison:false,batch:false,birthday:false,
+    meals:[
+
+      {ic:"☀️",cl:"ic-mat",lbl:"Petit-déjeuner 💊",time:"7h – 8h",
+       title:"Pancakes sarrasin · Fruits rouges · Cerises · Miel · 7x7 💊",
+       ingr:[{t:"Farine sarrasin 80g"},{t:"Lait avoine"},{t:"Fruits rouges + cerises"},{t:"Miel bio"},{t:"Coco râpée"},{t:"💊 Tramadol LP 50mg + Lyrica 325mg"}],
+       tags:[["MAG","nt-mag"],["FER","nt-fer"],["DOPA","nt-dopa"]],conseil:{type:"tdah",text:"🧠 Dernier matin d'avril ! Vous avez tenu tout le mois avec style. Bravo Ketty 🌸"}},
+      {ic:"🥗",cl:"ic-mid",lbl:"Déjeuner Bureau",time:"12h – 13h30",
+       title:"Bowl quinoa · Maquereau · Haricots rouges · Cébette finale",
+       ingr:[{t:"Quinoa (batch)"},{t:"Maquereau Auchan"},{t:"Haricots rouges"},{t:"Cébette + soja + sésame"}],
+       tags:[["FER","nt-fer"],["MAG","nt-mag"]],conseil:{type:"sjsr",text:"🌿 Dernier déjeuner d'avril — maquereau + haricots rouges + quinoa = repas complet."}},
+      {ic:"🍊",cl:"ic-gou",lbl:"Goûter · Fin du mois",time:"avant 17h",
+       title:"Smoothie violet Ube · Cerises · Miel · Célébration !",
+       ingr:[{t:"1cc Ube Powder"},{t:"Cerises 100g"},{t:"Millet drink"},{t:"Miel"},{t:"Coco râpée dessus"}],
+       tags:[["VIT-C","nt-vitc"],["FUN","nt-fun"],["DOPA","nt-dopa"]],
+       conseil:{type:"bday",text:"🌸 Smoothie violet de fin de mois ! Un mois complet de protocole anti-SJSR. Vos statistiques vont le montrer."}},
+      {ic:"🌙",cl:"ic-din",lbl:"Dîner · Dernier d'avril 💊",time:"19h – 20h max",
+       title:"💊 Médicaments AVANT · Maquereau poêlé · Lentilles vertes · Carottes",
+       ingr:[{t:"💊 Tramadol LP 100mg + Lyrica 375mg AVANT"},{t:"Dernier filet maquereau"},{t:"Lentilles vertes"},{t:"Carottes curcuma"},{t:"Citron + herbes"}],
+       tags:[["FER","nt-fer"],["ALK","nt-alk"]],
+       steps:["Médicaments AVANT 💊","Maquereau poêle 4 min","Lentilles + carottes réchauffer","Dresser avec soin","Citron + herbes de Provence"],
+       cookTime:"10 min",
+       conseil:{type:"sjsr",text:"🌿 Dernier dîner d'avril. Un mois de protocole anti-SJSR accompli. Rendez-vous en mai !"}},
+      {ic:"📺",cl:"ic-sna",lbl:"Soirée · Bilan du mois",time:"20h – 21h",
+       fun:"🌸 Chocolat chaud + regarder vos statistiques du mois d'avril !",
+       ingr:[{t:"Cacao Van Houten + eau chaude"},{t:"Sirop Monin caramel"},{t:"Infusion camomille"}],
+       tags:[["ALK","nt-alk"],["FUN","nt-fun"]],
+       conseil:{type:"bday",text:"🌸 Ouvrez l'onglet Statistiques de votre journal — voyez votre progression sur avril. Vous avez fait du bon travail !"}}
+    ],infusion:INF},
+
   'm1':{name:"Vendredi 1er mai",mode:"pm-l",modeLabel:"📦 Livraison La Fourche + Picard",nextMeal:"Renouvellement du stock !",livraison:true,batch:false,birthday:false,
     meals:[
       {ic:"☀️",cl:"ic-mat",lbl:"Petit-déjeuner 💊",time:"7h – 9h",
@@ -3727,6 +3839,257 @@ function renderComparatif() {
   section.innerHTML = html;
 }
 
+
+// ══════════════════════════════════════
+// PLACARD OFFICE — Stock idéal 1 mois
+// ══════════════════════════════════════
+
+const PLACARD_OFFICE = [
+  // ── 🐟 POISSON ──
+  {id:"p001",cat:"poisson",nom:"Pavés saumon Norvège surgelés",qte:"× 4 portions",priorite:1,note:"Dîner 1x/semaine — oméga-3 DHA premium"},
+  {id:"p002",cat:"poisson",nom:"Filets de maquereau surgelés",qte:"× 4 portions",priorite:1,note:"Dîner 1x/semaine + déjeuner bureau émietté"},
+  {id:"p003",cat:"poisson",nom:"Crevettes cuites surgelées",qte:"× 2 boîtes 500g",priorite:1,note:"Dîner 2x/mois — asiatique rapide"},
+  {id:"p004",cat:"poisson",nom:"Filets de cabillaud MSC surgelés",qte:"× 4 portions",priorite:2,note:"Papillotes légères — optionnel si budget"},
+  {id:"p005",cat:"poisson",nom:"Thon au naturel boîtes",qte:"× 4 boîtes",priorite:1,note:"Déjeuner bureau 1x/semaine — pratique"},
+  {id:"p006",cat:"poisson",nom:"Sardines à l'huile d'olive",qte:"× 6 boîtes",priorite:1,note:"Déjeuner bureau 2x/semaine — fer + oméga-3"},
+  {id:"p007",cat:"poisson",nom:"Maquereau à la tomate / nature",qte:"× 2 boîtes",priorite:2,note:"Déjeuner bureau dépannage"},
+  {id:"p008",cat:"poisson",nom:"Sardinière / Parmentier sardine",qte:"× 2 boîtes",priorite:2,note:"Dîner express 5 min"},
+
+  // ── 🥚 PROTÉINES AUTRES ──
+  {id:"p010",cat:"proteines",nom:"Tofu nature",qte:"× 250g",priorite:1,note:"Dîner doré curcuma 1x/semaine"},
+  {id:"p011",cat:"proteines",nom:"Tofu soyeux nature",qte:"× 400g",priorite:1,note:"Dîner velouté — digestion légère"},
+  {id:"p012",cat:"proteines",nom:"Tofu mariné (citron ou herbes)",qte:"× 1",priorite:2,note:"Bowl déjeuner maison week-end"},
+  {id:"p013",cat:"proteines",nom:"Tofu grillé ail des ours",qte:"× 1",priorite:2,note:"Bowl semaine special"},
+  {id:"p014",cat:"proteines",nom:"Oeufs plein air Label Rouge",qte:"× 12 oeufs",priorite:1,note:"Brunchs week-end + galettes complètes"},
+  {id:"p015",cat:"proteines",nom:"Steak haché surgelé",qte:"× 4 steaks",priorite:2,note:"Dîner copieux 1x/mois"},
+  {id:"p016",cat:"proteines",nom:"Jambon tranches naturel sans nitrites",qte:"× 6 tranches",priorite:2,note:"Brunch galette jambon-oeufs"},
+
+  // ── 🌾 CÉRÉALES & FARINES ──
+  {id:"p020",cat:"cereales",nom:"Farine de sarrasin Treblec",qte:"1kg",priorite:1,note:"Pancakes + galettes quotidiens — base principale"},
+  {id:"p021",cat:"farine",nom:"Flocons de sarrasin bio",qte:"350-500g",priorite:1,note:"Porridge matin — rapide 5 min"},
+  {id:"p022",cat:"cereales",nom:"Flocons de millet bio Priméal",qte:"350g",priorite:1,note:"Porridge millet-mangue quotidien"},
+  {id:"p023",cat:"cereales",nom:"Quinoa rouge bio",qte:"500g",priorite:1,note:"Batch hebdo — base tous les bowls"},
+  {id:"p024",cat:"cereales",nom:"Mélange riz 3 couleurs",qte:"500g",priorite:1,note:"Batch hebdo — dîners asiatiques"},
+  {id:"p025",cat:"cereales",nom:"Polenta fine",qte:"500g",priorite:2,note:"Pizzolenta + galettes polenta"},
+  {id:"p026",cat:"cereales",nom:"Tapioca Tipiak",qte:"× 1 paquet",priorite:1,note:"Goûter tapioca-cacao-caramel quotidien"},
+  {id:"p027",cat:"farine",nom:"Farine de riz complet",qte:"500g",priorite:2,note:"Crêpes + gâteaux sans gluten"},
+  {id:"p028",cat:"farine",nom:"Farine de pois chiches",qte:"500g",priorite:2,note:"Panisse + galettes protéinées"},
+  {id:"p029",cat:"farine",nom:"Amidon de maïs (Maïzena)",qte:"× 1 boîte",priorite:2,note:"Béchamel sans gluten + quiche"},
+
+  // ── 🫘 LÉGUMINEUSES ──
+  {id:"p030",cat:"legumineuses",nom:"Lentilles corail bio",qte:"1kg",priorite:1,note:"Batch hebdo — velouté + bolognaise — INDISPENSABLE"},
+  {id:"p031",cat:"legumineuses",nom:"Lentilles vertes bio",qte:"500g",priorite:1,note:"Batch hebdo — bowl + dîner complet"},
+  {id:"p032",cat:"legumineuses",nom:"Haricots rouges en boîte",qte:"× 2",priorite:1,note:"Bowl bureau + dîner rapide"},
+  {id:"p033",cat:"legumineuses",nom:"Haricots verts en boîte / surgelés",qte:"× 2",priorite:1,note:"Légume dîner + bureau rapide"},
+  {id:"p034",cat:"legumineuses",nom:"Haricots beurre en boîte",qte:"× 2",priorite:2,note:"Bowl déjeuner bureau"},
+  {id:"p035",cat:"legumineuses",nom:"Pois chiches en boîte",qte:"× 2",priorite:1,note:"Salade pois chiches + houmous rapide"},
+  {id:"p036",cat:"legumineuses",nom:"Pois cassés",qte:"500g",priorite:2,note:"Soupe pois cassés-menthe hiver"},
+
+  // ── 🍓 FRUITS SURGELÉS ──
+  {id:"p040",cat:"fruits",nom:"Mangues morceaux surgelées",qte:"× 2 sachets 450g",priorite:1,note:"Smoothie bowl + porridge quotidien"},
+  {id:"p041",cat:"fruits",nom:"Mélange fruits rouges surgelés",qte:"× 2 sachets 450g",priorite:1,note:"Pancakes + smoothie + porridge"},
+  {id:"p042",cat:"fruits",nom:"Cerises entières surgelées",qte:"× 1 sachet 450g",priorite:1,note:"Mélatonine naturelle + goûter + soirée"},
+  {id:"p043",cat:"fruits",nom:"Framboises surgelées",qte:"× 1 sachet",priorite:2,note:"Desserts + smoothie"},
+
+  // ── 🥬 LÉGUMES SURGELÉS ──
+  {id:"p045",cat:"legumes",nom:"Épinards branches surgelés",qte:"× 2 sachets 600g",priorite:1,note:"Batch hebdo + dîners — fer indispensable"},
+  {id:"p046",cat:"legumes",nom:"Brocolis surgelés",qte:"× 1 sachet 1kg",priorite:2,note:"Papillotes + dîners — anti-inflammatoire"},
+  {id:"p047",cat:"legumes",nom:"Petits pois surgelés",qte:"× 1 sachet",priorite:2,note:"Légume dîner rapide"},
+
+  // ── 🥛 LAIT VÉGÉTAL ──
+  {id:"p050",cat:"lait",nom:"Lait de millet Primeal / Millet drink",qte:"× 2 bouteilles 1L",priorite:1,note:"Infusion Lait d'Or quotidienne + porridge"},
+  {id:"p051",cat:"lait",nom:"Lait d'avoine",qte:"× 3 briques 1L",priorite:1,note:"Pancakes + porridge + galettes quotidien"},
+  {id:"p052",cat:"lait",nom:"Lait de coco VietCoco",qte:"× 2",priorite:1,note:"Velouté lentilles coco + dîners"},
+  {id:"p053",cat:"lait",nom:"Crème de coco VietCoco",qte:"× 1",priorite:1,note:"Smoothie bowl + lentilles coco"},
+  {id:"p054",cat:"lait",nom:"Alpro soja nature",qte:"× 1 brique",priorite:2,note:"Mayonnaise vegan + sauces"},
+
+  // ── 🌰 ÉPICERIE SÈCHE ──
+  {id:"p060",cat:"sec",nom:"Amandes décortiquées",qte:"500g",priorite:1,note:"Goûter quotidien + magnésium — INDISPENSABLE"},
+  {id:"p061",cat:"sec",nom:"Dattes Medjool",qte:"500g",priorite:1,note:"Goûter quotidien + energy balls"},
+  {id:"p062",cat:"sec",nom:"Graines de courge",qte:"250g",priorite:1,note:"Torréfier + parsemer tous les plats — magnésium"},
+  {id:"p063",cat:"sec",nom:"Graines de lin",qte:"250g",priorite:1,note:"Chaque repas — oméga-3 + transit"},
+  {id:"p064",cat:"sec",nom:"Graines de sésame",qte:"150g",priorite:1,note:"Dîners asiatiques + calcium"},
+  {id:"p065",cat:"sec",nom:"Noix de coco râpée",qte:"200g",priorite:1,note:"Porridge + smoothie bowl + tapioca"},
+  {id:"p066",cat:"sec",nom:"Psyllium blond Amoseeds",qte:"× 1 sachet",priorite:1,note:"Transit + chocolat chaud soir"},
+  {id:"p067",cat:"sec",nom:"Levure de bière Gerblé",qte:"× 1 boîte",priorite:1,note:"Pancakes + galettes + dopamine + B12"},
+  {id:"p068",cat:"sec",nom:"Tahini crème de sésame",qte:"× 1 bocal",priorite:2,note:"Sauces + caviar aubergines"},
+  {id:"p069",cat:"sec",nom:"Algues Nori",qte:"× 1 paquet",priorite:2,note:"Rouleaux nori + iode"},
+  {id:"p070",cat:"sec",nom:"Galettes de riz",qte:"× 1 paquet",priorite:1,note:"Bureau dépannage + goûter"},
+  {id:"p071",cat:"sec",nom:"Sauce soja",qte:"× 1 bouteille",priorite:1,note:"Dîners asiatiques quotidiens"},
+  {id:"p072",cat:"sec",nom:"Miel bio",qte:"250g",priorite:1,note:"Porridge + fruits + pancakes"},
+  {id:"p073",cat:"sec",nom:"Vinaigre de cidre bio",qte:"× 1 bouteille",priorite:2,note:"Absorption fer × 3 + digestion"},
+  {id:"p074",cat:"sec",nom:"Huile d'olive vierge extra bio",qte:"1L",priorite:1,note:"Cuisson quotidienne"},
+  {id:"p075",cat:"sec",nom:"Huile de colza vierge bio",qte:"500ml",priorite:2,note:"Vinaigrettes — oméga-3 à froid"},
+
+  // ── 🍫 ÉPICERIE SUCRÉE ──
+  {id:"p080",cat:"sucre",nom:"Cacao Van Houten en poudre",qte:"× 1 boîte",priorite:1,note:"Chocolat chaud soir + porridge + tapioca"},
+  {id:"p081",cat:"sucre",nom:"Chocolat noir bio 85%",qte:"× 3 tablettes",priorite:1,note:"1 carré/jour — dopamine + magnésium"},
+  {id:"p082",cat:"sucre",nom:"Sirop Monin caramel Sugar Free",qte:"× 1 bouteille",priorite:1,note:"Tapioca + chocolat chaud — sans sucre"},
+  {id:"p083",cat:"sucre",nom:"MatiMalt Favrichon",qte:"× 1 boîte",priorite:1,note:"Soirée sans caféine — chicorée seigle orge"},
+  {id:"p084",cat:"sucre",nom:"Arôme fleur d'oranger",qte:"× 1 flacon",priorite:1,note:"Pancakes + chocolat chaud + tapioca"},
+  {id:"p085",cat:"sucre",nom:"Ube Powder",qte:"× 1 sachet",priorite:2,note:"Bol violet Instagram + antioxydant"},
+  {id:"p086",cat:"sucre",nom:"Pumpkin Spice Latte",qte:"× 1 boîte",priorite:2,note:"Goûter week-end spécial"},
+  {id:"p087",cat:"sucre",nom:"Pépites de chocolat sans gluten",qte:"100g",priorite:2,note:"Cookies + pancakes"},
+
+  // ── 🧂 ÉPICES & SEL SANTÉ ──
+  {id:"p090",cat:"epices",nom:"Sel de mer fin bio",qte:"500g",priorite:1,note:"Sel Santé maison — base quotidienne"},
+  {id:"p091",cat:"epices",nom:"Curcuma en poudre bio",qte:"50g",priorite:1,note:"Sel Santé + curcuma frais — anti-inflammatoire"},
+  {id:"p092",cat:"epices",nom:"Poivre noir moulu bio",qte:"50g",priorite:1,note:"Sel Santé — active le curcuma × 20"},
+  {id:"p093",cat:"epices",nom:"Herbes de Provence bio",qte:"20g",priorite:1,note:"Sel Santé + papillotes + dîners"},
+  {id:"p094",cat:"epices",nom:"Cannelle bio",qte:"30g",priorite:1,note:"Porridges + compotées + glycémie stable"},
+  {id:"p095",cat:"epices",nom:"Gingembre poudre bio",qte:"30g",priorite:2,note:"Complément gingembre frais — infusions"},
+  {id:"p096",cat:"epices",nom:"Cardamome moulue bio",qte:"15g",priorite:2,note:"Lait d'Or + infusions exotiques"},
+  {id:"p097",cat:"epices",nom:"Cumin",qte:"20g",priorite:2,note:"Légumineuses + galettes"},
+  {id:"p098",cat:"epices",nom:"Paprika doux",qte:"20g",priorite:2,note:"Tofu + légumes rôtis"},
+
+  // ── 🥫 CONSERVES & PLATS ──
+  {id:"p100",cat:"conserves",nom:"Ratatouille Cassegrain",qte:"× 2",priorite:2,note:"Dîner express 5 min"},
+  {id:"p101",cat:"conserves",nom:"Lentilles cuisinées Auvergnate",qte:"× 2",priorite:2,note:"Déjeuner bureau dépannage express"},
+  {id:"p102",cat:"conserves",nom:"Pois chiches cuisinés",qte:"× 2",priorite:2,note:"Salade express bureau"},
+  {id:"p103",cat:"conserves",nom:"Coulis de tomates bio",qte:"× 2",priorite:2,note:"Bolognaise lentilles + pizza polenta"},
+  {id:"p104",cat:"conserves",nom:"Tomates pelées entières",qte:"× 2",priorite:2,note:"Soupes + ratatouille maison"},
+
+  // ── 🍵 INFUSIONS ──
+  {id:"p110",cat:"infusions",nom:"7x7 Jentschura alcalinisante",qte:"× 1 boîte",priorite:1,note:"Chaque matin INDISPENSABLE — alcalinisant"},
+  {id:"p111",cat:"infusions",nom:"Camomille-lavande",qte:"× 1 boîte",priorite:1,note:"Soirée relaxation musculaire — SJSR"},
+  {id:"p112",cat:"infusions",nom:"Thym citronné",qte:"× 2 boîtes",priorite:1,note:"Soirée anti-inflammatoire"},
+  {id:"p113",cat:"infusions",nom:"Molène Königskerzenblätter",qte:"× 1 boîte",priorite:2,note:"Infusion muqueuses + respiratoire"},
+  {id:"p114",cat:"infusions",nom:"Gingembre-citron",qte:"× 1 boîte",priorite:2,note:"Dépannage quand gingembre frais épuisé"},
+];
+
+// État du placard (localStorage)
+let placardState = {};
+let placardCurrentCat = 'all';
+
+try {
+  const saved = localStorage.getItem("sjsr_placard");
+  if(saved) placardState = JSON.parse(saved);
+} catch(e) {}
+
+function savePlacard() {
+  try { localStorage.setItem("sjsr_placard", JSON.stringify(placardState)); } catch(e) {}
+}
+
+function filterPlacard(cat, btn) {
+  placardCurrentCat = cat;
+  document.querySelectorAll('#view-placard .diner-filter').forEach(b => b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  renderPlacardList();
+}
+
+function renderPlacardList() {
+  const el = document.getElementById('placardList');
+  if(!el) return;
+
+  const items = placardCurrentCat === 'all'
+    ? PLACARD_OFFICE
+    : PLACARD_OFFICE.filter(i => i.cat === placardCurrentCat);
+
+  // Grouper par catégorie si "all"
+  const CAT_LABELS = {
+    poisson:'🐟 Poisson & fruits de mer',
+    proteines:'🥚 Protéines (tofu, oeufs, viande)',
+    cereales:'🌾 Céréales & féculents',
+    farine:'🫓 Farines',
+    legumineuses:'🫘 Légumineuses',
+    fruits:'🍓 Fruits surgelés',
+    legumes:'🥬 Légumes surgelés',
+    lait:'🥛 Laits végétaux',
+    sec:'🌰 Épicerie sèche & condiments',
+    sucre:'🍫 Épicerie sucrée',
+    epices:'🧂 Épices & Sel Santé',
+    conserves:'🥫 Conserves & plats',
+    infusions:'🍵 Infusions',
+  };
+
+  let html = '';
+  let lastCat = '';
+
+  items.forEach(item => {
+    if(placardCurrentCat === 'all' && item.cat !== lastCat) {
+      lastCat = item.cat;
+      html += `<div style="font-size:0.6rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;margin:0.8rem 0 0.3rem">${CAT_LABELS[item.cat]||item.cat}</div>`;
+    }
+
+    const inStock = placardState[item.id] === true;
+    const prio = item.priorite === 1 ? '🔴' : '🟡';
+
+    html += `<div class="placard-item ${inStock?'in-stock':''}" onclick="togglePlacard('${item.id}')">
+      <div class="placard-check">${inStock ? '✅' : '⬜'}</div>
+      <div style="flex:1">
+        <div style="display:flex;align-items:center;gap:0.3rem">
+          <div class="placard-nom">${item.nom}</div>
+          <div style="font-size:0.55rem">${prio}</div>
+        </div>
+        <div class="placard-qte">${item.qte} · ${item.note}</div>
+      </div>
+    </div>`;
+  });
+
+  el.innerHTML = html;
+  updatePlacardProgress();
+}
+
+function togglePlacard(id) {
+  placardState[id] = !placardState[id];
+  savePlacard();
+  renderPlacardList();
+}
+
+function updatePlacardProgress() {
+  const total = PLACARD_OFFICE.length;
+  const inStock = PLACARD_OFFICE.filter(i => placardState[i.id]).length;
+  const pct = Math.round((inStock/total)*100);
+  const bar = document.getElementById('placardProgressBar');
+  const txt = document.getElementById('placardProgressText');
+  if(bar) bar.style.width = pct + '%';
+  if(txt) txt.textContent = inStock + ' / ' + total + ' articles en stock (' + pct + '%)';
+}
+
+function generateShoppingList() {
+  const missing = PLACARD_OFFICE.filter(i => !placardState[i.id]);
+  if(missing.length === 0) {
+    document.getElementById('placardShoppingContent').innerHTML = '<div style="font-size:0.7rem;color:var(--leaf-dark);font-weight:700">🎉 Placard complet ! Rien à acheter.</div>';
+    document.getElementById('placardShoppingList').style.display = 'block';
+    return;
+  }
+
+  const CAT_LABELS = {
+    poisson:'🐟 Poisson',proteines:'🥚 Protéines',cereales:'🌾 Céréales',
+    farine:'🫓 Farines',legumineuses:'🫘 Légumineuses',fruits:'🍓 Fruits surgelés',
+    legumes:'🥬 Légumes',lait:'🥛 Laits végétaux',sec:'🌰 Épicerie sèche',
+    sucre:'🍫 Épicerie sucrée',epices:'🧂 Épices',conserves:'🥫 Conserves',
+    infusions:'🍵 Infusions'
+  };
+
+  // Trier par priorité puis catégorie
+  const prio1 = missing.filter(i => i.priorite === 1);
+  const prio2 = missing.filter(i => i.priorite === 2);
+
+  let html = '<div style="font-size:0.62rem;font-weight:700;color:var(--blossom-deep);margin-bottom:0.4rem">🔴 Indispensables (' + prio1.length + ')</div>';
+  prio1.forEach(i => {
+    html += `<div style="font-size:0.65rem;padding:0.2rem 0;border-bottom:1px solid rgba(58,40,32,0.06)">• ${i.nom} <span style="color:var(--muted)">${i.qte}</span></div>`;
+  });
+
+  if(prio2.length > 0) {
+    html += '<div style="font-size:0.62rem;font-weight:700;color:var(--pistil);margin:0.5rem 0 0.3rem">🟡 Souhaitables (' + prio2.length + ')</div>';
+    prio2.forEach(i => {
+      html += `<div style="font-size:0.65rem;padding:0.2rem 0;border-bottom:1px solid rgba(58,40,32,0.06)">• ${i.nom} <span style="color:var(--muted)">${i.qte}</span></div>`;
+    });
+  }
+
+  document.getElementById('placardShoppingContent').innerHTML = html;
+  document.getElementById('placardShoppingList').style.display = 'block';
+  document.getElementById('placardShoppingList').scrollIntoView({behavior:'smooth'});
+}
+
+function resetPlacard() {
+  if(!confirm('Remettre tous les articles à "manquant" ?')) return;
+  placardState = {};
+  savePlacard();
+  renderPlacardList();
+}
+
 buildCalendar();
 buildShopping();
 // Load saved batch progress
@@ -4000,17 +4363,18 @@ function toggleAlarm(name,btn){
 
 // ── UPDATE VIEWS to include new ones ──
 function showView(v){
-  const allViews=['calendar','batch','shopping','diner','journal','urgence','tips'];
+  const allViews=['calendar','batch','shopping','diner','journal','urgence','tips','placard'];
   allViews.forEach(id=>{
     const el=document.getElementById('view-'+id);
     if(el) el.style.display=id===v?'block':'none';
   });
   document.querySelectorAll('.nav-tab').forEach((el,i)=>{
-    const map=['calendar','batch','shopping','diner','journal','urgence'];
+    const map=['calendar','batch','shopping','diner','journal','urgence','placard'];
     el.classList.toggle('active',map[i]===v);
   });
   if(v==='diner') buildDiners();
   if(v==='batch'){ renderBatchWeek(currentBatchWeek); }
+  if(v==='placard'){ renderPlacardList(); }
   if(v==='journal'){ loadSleepEntry(); updateSleepStats(); renderCycles(); setTimeout(()=>{if(currentStatsTab==='mensuel')renderMonthlyChart();if(currentStatsTab==='comparatif')renderComparatif();},100); }
   if(v==='journal'){setDateLabel();loadJournalHistory();updateTimerDisplay();}
 }
