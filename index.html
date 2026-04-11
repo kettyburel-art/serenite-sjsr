@@ -1353,7 +1353,7 @@ canvas.sleep-chart{width:100%;height:140px}
 
 <script>
 // ── INFUSIONS ──
-const INF={nom:"Infusion Lune Dorée 🌸",recette:"1cc gingembre · ½cc curcuma · pincée poivre noir · eau 80°C · 8 min",note:"Entre 20h et 21h, sans sucre. Tous les soirs."};
+const INF={nom:"Lait d'Or Écoîdées 🌸",recette:"1cc préparation Lait d'Or Écoîdées dans 200ml lait millet chaud 80°C. Fouetter. OU infusion 7x7 Jentschura. Alterner chaque soir.",note:"Le Lait d'Or se boit avec les médicaments du soir — poivre noir active curcuma x20. Anti-SJSR puissant."};
 const INF_BDAY={nom:"Infusion Anniversaire Dorée 🌸",recette:"1cc gingembre · ½cc curcuma · pincée cardamome · 1 datte infusée · eau 80°C · 10 min",note:"La version luxe pour votre soirée d'anniversaire 🌙"};
 
 // ── IMPULSE DATA ──
@@ -1698,12 +1698,11 @@ const MENUS = {
        tags:[["MAG","nt-mag"],["FER","nt-fer"],["DOPA","nt-dopa"]],
        conseil:{type:"tdah",text:"🧠 Reprise après vacances — le batch de samedi rend ce matin facile. 5 min et c'est prêt."}},
       {ic:"🥗",cl:"ic-mid",lbl:"Déjeuner Bureau",time:"12h – 13h30",
-       title:"Boîte bureau · Sardines · Laitue · Avocats · Graines de courge",
-       ingr:[{t:"Sardines Connétable 1 boîte"},{t:"Cœur de laitue"},{t:"1/2 avocat"},{t:"Graines de courge (batch)"},{t:"Citron + huile colza + sel"},{t:"Galette de riz"}],
-       tags:[["FER","nt-fer"],["MAG","nt-mag"],["VIT-C","nt-vitc"]],
-       steps:["Préparer la veille au soir","Sardines + salade + avocat en boîte hermétique","Graines de courge dans petit sachet","Citron + huile en petite fiole","Au bureau : assembler et déguster"],
-       cookTime:"5 min veille",
-       conseil:{type:"sjsr",text:"🌿 Sardines = oméga-3 + fer + B12. Avocat = graisses saines. Graines de courge = magnésium. Repas anti-SJSR parfait."}},
+       title:"Bowl sarrasin décortiqué · Sardines · Haricots rouges · Mix graines",
+       ingr:[{t:"Sarrasin décortiqué 100g cuit (batch sam 11)"},{t:"Sardines Connétable 1 boîte"},{t:"Haricots rouges boîte"},{t:"Graines de courge torréfiées"},{t:"Citron + colza + sel"}],
+       tags:[["FER","nt-fer"],["MAG","nt-mag"]],
+       steps:["Sarrasin du batch : réchauffer 1 min avec 2cs eau","Haricots rouges : égoutter et rincer","Sardines : égoutter légèrement","Dresser en bowl : sarrasin base, sardines + haricots dessus","Graines de courge + citron + huile colza"],
+       conseil:{type:"sjsr",text:"🌿 Premier bowl sarrasin décortiqué de la semaine ! Grain entier + fer sardines + magnésium = repas anti-SJSR complet. Le sarrasin a un goût de noisette — vous allez aimer."}},
       {ic:"🍊",cl:"ic-gou",lbl:"Goûter · Avant 17h",time:"avant 17h",
        title:"Amandes · Dattes · Cerises · Chocolat bio",
        ingr:[{t:"8 amandes"},{t:"2 dattes"},{t:"Cerises décongelées"},{t:"1 carré chocolat bio alter eco"}],
@@ -1787,9 +1786,11 @@ const MENUS = {
        ingr:[{t:"Flocons millet 5cs"},{t:"Lait avoine 200ml"},{t:"1cc Ube Powder"},{t:"Fruits rouges décongelés"},{t:"Miel 1cc"},{t:"💊 Tramadol LP 50mg + Lyrica 325mg"}],
        tags:[["MAG","nt-mag"],["FER","nt-fer"],["DOPA","nt-dopa"]],conseil:{type:"tdah",text:"🧠 Bol violet Ube — antioxydant + couleur unique !"}},
       {ic:"🥗",cl:"ic-mid",lbl:"Déjeuner Bureau",time:"12h – 13h30",
-       title:"Sardines Connétable · Laitue · Radis · Galette de riz",
-       ingr:[{t:"Sardines Connétable 1 boîte"},{t:"Coeur de laitue"},{t:"Radis croquants"},{t:"Citron + huile colza"},{t:"Galette de riz"}],
-       tags:[["FER","nt-fer"],["MAG","nt-mag"]],conseil:{type:"sjsr",text:"🌿 Sardines + radis = oméga-3 + vitamine C. Repas complet en boîte."}},
+       title:"Sarrasin décortiqué · Maquereau émietté · Radis · Graines courge",
+       ingr:[{t:"Sarrasin décortiqué 100g (batch)"},{t:"Maquereau boîte Auchan"},{t:"Radis croquants"},{t:"Graines de courge"},{t:"Citron + colza + sel"}],
+       tags:[["FER","nt-fer"],["MAG","nt-mag"]],
+       steps:["Sarrasin du batch : réchauffer","Maquereau : émietter à la fourchette dans le bol","Radis : couper en rondelles fines","Dresser : sarrasin base, maquereau dessus, radis sur le côté","Graines courge + citron pressé + filet colza"],
+       conseil:{type:"sjsr",text:"🌿 Maquereau émietté sur sarrasin = oméga-3 + magnésium + grain entier. Radis = vitamine C qui booste l'absorption du fer."}},
       {ic:"🍊",cl:"ic-gou",lbl:"Goûter",time:"avant 17h",
        title:"Kiwi · Amandes · Chocolat bio",
        ingr:[{t:"1 kiwi"},{t:"8 amandes"},{t:"1 carré chocolat bio"}],
@@ -1846,9 +1847,11 @@ const MENUS = {
        ingr:[{t:"Quinoa rouge 300g"},{t:"Lentilles corail 250g + curcuma + gingembre"},{t:"Riz 3 couleurs 300g"},{t:"Carottes curcuma à préparer"},{t:"Graines de courge torréfier"},{t:"Gingembre frais : renouveler bocal"}],
        tags:[["MAG","nt-mag"],["FER","nt-fer"],["TDAH","nt-tdah"]],conseil:{type:"tdah",text:"🧠 Batch semaine 2 — 2h de cuisine = 5 jours de liberté !"}},
       {ic:"🥗",cl:"ic-mid",lbl:"Déjeuner · Maison",time:"13h30",
-       title:"Bowl tofu grillé ail des ours · Quinoa · Carottes · Cébette",
-       ingr:[{t:"Tofu grillé ail des ours (Têtes Vertes)"},{t:"Quinoa (batch)"},{t:"Carottes curcuma (batch)"},{t:"Cébette ciselée"},{t:"Sauce soja + citron + sésame"}],
-       tags:[["FER","nt-fer"],["MAG","nt-mag"],["DOPA","nt-dopa"]],conseil:{type:"sjsr",text:"🌿 Tofu grillé ail des ours = protéine + probiotiques + saveur unique. Superbe dans un bowl."}},
+       title:"Bowl tofu grillé ail des ours · Sarrasin décortiqué · Carottes · Cébette",
+       ingr:[{t:"Tofu grillé ail des ours Têtes Vertes"},{t:"Sarrasin décortiqué batch 120g"},{t:"Carottes curcuma batch"},{t:"Cébette ciselée"},{t:"Sauce soja + citron + sésame"}],
+       tags:[["FER","nt-fer"],["MAG","nt-mag"],["DOPA","nt-dopa"]],
+       steps:["Tofu grillé : poêle 3 min pour réchauffer et dorer","Sarrasin + carottes batch : réchauffer ensemble 3 min","Cébette ciseler aux ciseaux","Dresser : sarrasin base, tofu doré dessus, carottes côté","Sauce soja + citron + sésame en finition"],
+       conseil:{type:"sjsr",text:"🌿 Tofu Les Têtes Vertes + sarrasin décortiqué = deux produits bio locaux. Calcium + magnésium + protéines végétales complètes."}},
       {ic:"🍊",cl:"ic-gou",lbl:"Goûter",time:"16h – 17h",
        title:"Pumpkin Spice Latte · Amandes · Dattes",
        ingr:[{t:"Pumpkin Spice Latte 1 sachet"},{t:"Eau chaude"},{t:"8 amandes"},{t:"2 dattes"}],
@@ -2614,7 +2617,15 @@ const DINERS=[
    ingr:"500g mix farine sans gluten · 30g levure fraîche · 400ml eau tiède (35°C) · 1cc sel · 2cs huile olive",
    steps:"1. Délayer la levure fraîche dans 100ml d'eau tiède (pas chaude — tue la levure). Attendre 5 min qu'elle commence à buller.\n2. Dans grand bol : farine + sel. Faire un puits. Ajouter mélange levure + reste d'eau + huile.\n3. Pétrir 4 min à la main ou avec crochet pétrisseur. La pâte sans gluten est plus collante que la pâte normale — c'est normal.\n4. Former une boule. Couvrir d'un linge humide. Laisser lever 45 min dans un endroit chaud (four éteint avec lumière allumée).\n5. Façonner en pain. Four 210°C 15 min puis baisser à 190°C 20 min. Taper le dessous — ça sonne creux = cuit.",
    tags:['vegan','base']},
-];
+,
+  {cat:'base',time:'3 min',name:"Lait d'Or anti-SJSR",
+   ingr:"1cc préparation Lait d'Or Écoîdées · 200ml lait de millet chaud · 1cc miel bio (optionnel)",
+   steps:"1. Chauffer le lait de millet à 80°C (chaud mais pas bouillant — ne doit pas fumer).\n2. Verser dans votre tasse.\n3. Ajouter 1cc de préparation Lait d'Or Écoîdées.\n4. Fouetter énergiquement 30 sec avec une petite cuillère ou mini-fouet jusqu'à dissolution complète.\n5. Ajouter 1cc miel si vous souhaitez un goût plus doux.\n6. Boire chaud, idéalement avec vos médicaments du soir — le poivre noir de la préparation active la curcumine x20 et potentialise l'effet anti-inflammatoire.",
+   tags:['sjsr','soirée','anti-inflammatoire']},
+  {cat:'soupe',time:'15 min',name:"Lentilles coco gingembre-citronnelle",
+   ingr:"150g lentilles corail · 1 boite lait coco gingembre-citronnelle Base (200ml) · 200ml eau · 1cc curcuma · sel · citron",
+   steps:"1. Rincer les lentilles corail.\n2. Mettre dans casserole avec 200ml eau + 1cc curcuma + sel.\n3. Cuire 12 min feu moyen en remuant.\n4. Quand les lentilles sont fondantes, ajouter la boite de lait de coco gingembre-citronnelle Base en entier.\n5. Mélanger doucement. Chauffer 2 min sans bouillir.\n6. Presser 1/2 citron. Goûter et rectifier sel.\n7. Servir dans un beau bol. Le gingembre + citronnelle du lait coco Base + curcuma = trio anti-SJSR exceptionnel.",
+   tags:['sjsr','soirée','anti-inflammatoire','coco']}];
 // ── PLACARD OFFICE ──
 const PLACARD_OFFICE=[
   {id:"p001",cat:"poisson",nom:"Pavés saumon surgelés",qte:"× 4 portions",priorite:1,note:"Dîner 1x/semaine"},
@@ -2778,7 +2789,7 @@ const BATCH_WEEKS={
   w1:{label:"Batch 11 avril \u00b7 Semaine 1",steps:[
     {id:"b1",action:"Quinoa rouge \u00b7 300g",detail:"12 min \u00b7 Casserole 1",
      tip:"Rincer le quinoa sous l\u2019eau froide 30 sec. Mettre dans casserole avec 600ml eau + pin\u00e9ce sel. Porter \u00e0 \u00e9bullition, baisser feu, couvrir 12 min. \u00c9grainer \u00e0 la fourchette. Laisser refroidir. Mettre en bo\u00eete herm\u00e9tique."},
-    {id:"b2",action:"Riz 3 couleurs \u00b7 300g",detail:"15 min \u00b7 Casserole 2",
+    {id:"b2",action:"Sarrasin d\u00e9cortiqu\u00e9 + Riz 3 couleurs \u00b7 200g chacun",detail:"Sarrasin 12 min \u00b7 Riz 15 min \u00b7 Casseroles 2&3",
      tip:"Rincer le riz. 600ml eau. Porter \u00e0 \u00e9bullition, feu doux, couvrir 15 min. \u00c9grainer. Le riz 3 couleurs est plus ferme que le riz blanc \u2014 c\u2019est normal et voulu."},
     {id:"b3",action:"Lentilles corail \u00b7 250g + gingembre + curcuma",detail:"12 min \u00b7 Casserole 3",
      tip:"Pas besoin de tremper. Rincer. 750ml eau + 1cc gingembre poudre + 1cc curcuma. Feu moyen 12 min en remuant souvent (elles collent facilement). Elles doivent \u00eatre fondantes et dor\u00e9es. Ajouter sel. R\u00e9server."},
