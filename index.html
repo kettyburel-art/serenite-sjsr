@@ -1129,6 +1129,24 @@ canvas.sleep-chart{width:100%;height:140px}
       </div>
     </div>
 
+    <!-- Sieste -->
+    <div class="sleep-section">
+      <div class="sleep-section-label">☀️ Sieste <span style="font-size:0.58rem;color:var(--muted);font-weight:400">(week-end &amp; vacances)</span></div>
+      <div style="display:flex;align-items:center;gap:0.8rem;margin-top:0.4rem">
+        <select id="siesteDuree" onchange="updateSiesteInfo()" style="flex:1;border:1.5px solid rgba(58,40,32,0.15);border-radius:8px;padding:0.4rem 0.6rem;font-size:0.7rem;background:#fff;color:var(--text)">
+          <option value="0">Pas de sieste</option>
+          <option value="15">15 min — micro-sieste</option>
+          <option value="20">20 min — sieste parfaite</option>
+          <option value="30">30 min</option>
+          <option value="45">45 min</option>
+          <option value="60">1h</option>
+          <option value="90">1h30</option>
+          <option value="120">2h</option>
+        </select>
+      </div>
+      <div style="font-size:0.6rem;color:var(--muted);margin-top:0.3rem;font-style:italic" id="siesteInfo">Pas de sieste aujourd’hui</div>
+    </div>
+
     <!-- Douleurs réveil -->
     <div class="sleep-section">
       <div class="sleep-section-label">🦵 Douleurs SJSR / Impatiences au réveil (0-10)</div>
@@ -3050,6 +3068,19 @@ function selectBatchWeek(idx, btn) {
   updateBatchProgress();
 }
 
+function updateSiesteInfo(){
+  var sd=document.getElementById("siesteDuree");
+  var info=document.getElementById("siesteInfo");
+  if(!sd||!info)return;
+  var min=parseInt(sd.value||0);
+  if(min===0){info.textContent="Pas de sieste aujourd’hui";info.style.color="var(--muted)";}
+  else if(min<=20){info.textContent="🌸 Micro-sieste "+min+" min — parfaite !";info.style.color="var(--leaf-dark)";}
+  else if(min<=60){info.textContent="🌸 Sieste "+min+" min — comptée dans votre total";info.style.color="var(--leaf-dark)";}
+  else{info.textContent="🌸 Grande sieste "+min+" min — bien méritée !";info.style.color="var(--leaf-dark)";}
+  autoSaveSleep();
+  updateCumulStats();
+}
+
 buildCalendar();
 buildShopping();
 // Pre-render placard
@@ -3077,7 +3108,9 @@ function removeCycle(i){if(sleepCycles.length<=1)return;sleepCycles.splice(i,1);
 function updateCumulStats(){
   let t=0;sleepCycles.forEach(c=>{if(c.bedtime&&c.wakeTime){const d=calcCycleDuration(c.bedtime,c.wakeTime);if(d>0&&d<720)t+=d;}});
   const nb=Math.max(0,sleepCycles.length-1);
-  const cumul=document.getElementById("slpTotalCumul");if(cumul){cumul.textContent=t>0?formatDuration(t):"—";cumul.className="sleep-calc-value "+(t>=420?"good":t>=300?"warning":"bad");}
+  const siesteEl=document.getElementById("siesteDuree");
+  const siesteMin=siesteEl?parseInt(siesteEl.value||0):0;
+  const cumul=document.getElementById("slpTotalCumul");if(cumul){var tot=t+siesteMin;var sx=siesteMin>0&&t>0?" + "+formatDuration(siesteMin)+" 💤":"";cumul.textContent=t>0?formatDuration(t)+sx:"—";cumul.className="sleep-calc-value "+(tot>=420?"good":tot>=300?"warning":"bad");}
   const levers=document.getElementById("slpNbLevers");if(levers){levers.textContent=nb+"x";levers.className="sleep-calc-value "+(nb<=1?"good":nb<=3?"warning":"bad");}
 }
 function loadSleepEntry(){
@@ -3087,6 +3120,8 @@ function loadSleepEntry(){
   sleepQuality=entry.quality||0;updateStars();sleepFeeling=entry.feeling||"";updateFeelingBtns();
   if(document.getElementById("painMorning")){document.getElementById("painMorning").value=entry.painMorning||0;document.getElementById("painDay").value=entry.painDay||0;updatePainDisplay("painMorning","painMorningDisplay");updatePainDisplay("painDay","painDayDisplay");}
   if(document.getElementById("sleepNotes"))document.getElementById("sleepNotes").value=entry.notes||"";
+  var sdL=document.getElementById("siesteDuree");if(sdL)sdL.value=entry.sieste||0;
+  if(typeof updateSiesteInfo==="function")updateSiesteInfo();
   const ind=document.getElementById("sleepSavedIndicator");if(ind)ind.textContent=entry.savedAt?"✓ Enregistrée à "+entry.savedAt:"";
 }
 function setSleepQuality(n){sleepQuality=n;updateStars();autoSaveSleep();}
@@ -3097,7 +3132,7 @@ function updatePainDisplay(sliderId,displayId){const val=parseInt(document.getEl
 function autoSaveSleep(){
   const key=sleepDateKey();let totalMin=0;sleepCycles.forEach(c=>{if(c.bedtime&&c.wakeTime){const d=calcCycleDuration(c.bedtime,c.wakeTime);if(d>0&&d<720)totalMin+=d;}});
   const pmEl=document.getElementById("painMorning");const pdEl=document.getElementById("painDay");const notesEl=document.getElementById("sleepNotes");
-  sleepData[key]={cycles:sleepCycles,totalMin,nbLevers:Math.max(0,sleepCycles.length-1),quality:sleepQuality,feeling:sleepFeeling,painMorning:pmEl?parseInt(pmEl.value||0):0,painDay:pdEl?parseInt(pdEl.value||0):0,notes:notesEl?notesEl.value||"":"",savedAt:sleepData[key]?.savedAt||""};
+  sleepData[key]={cycles:sleepCycles,totalMin,nbLevers:Math.max(0,sleepCycles.length-1),quality:sleepQuality,feeling:sleepFeeling,painMorning:pmEl?parseInt(pmEl.value||0):0,painDay:pdEl?parseInt(pdEl.value||0):0,notes:notesEl?notesEl.value||"":"",sieste:(document.getElementById("siesteDuree")?parseInt(document.getElementById("siesteDuree").value||0):0),savedAt:sleepData[key]?.savedAt||""};
   try{localStorage.setItem("sjsr_sleep",JSON.stringify(sleepData));}catch(e){}
   const ind=document.getElementById("sleepSavedIndicator");if(ind)ind.textContent="✓ Sauvegardé";updateSleepStats();
 }
@@ -3119,7 +3154,7 @@ function updateSleepStats(){
     const e=sleepData[key];const totalMin=e.totalMin||0;const h=totalMin>0?Math.round(totalMin/6)/10:null;
     const d=new Date(key+"T12:00:00");const dayNames=["Dim","Lun","Mar","Mer","Jeu","Ven","Sam"];const dayLabel=dayNames[d.getDay()]+" "+d.getDate()+"/"+(d.getMonth()+1);
     const nb=e.nbLevers||0;if(h!==null){totH+=h;cntH++;}if(e.quality){totQ+=e.quality;cntQ++;}if(e.painMorning!==undefined){totPM+=e.painMorning;totL+=nb;cntP++;}
-    const qs=e.quality?"★".repeat(e.quality)+"☆".repeat(5-e.quality):"—";const fi=FEELING_ICONS[e.feeling]||"—";const hs=h!==null?h+"h":"—";const ps=e.painMorning!==undefined?e.painMorning+"/10":"—";const bp=h?Math.min(100,(h/9)*100):0;const bc=h>=7?"#6b9e78":h>=5?"#c8a050":"#c04040";
+    const qs=e.quality?"★".repeat(e.quality)+"☆".repeat(5-e.quality):"—";const fi=FEELING_ICONS[e.feeling]||"—";var siesteH=e.sieste||0;var hs=h!==null?h+"h"+(siesteH>0?" +"+Math.round(siesteH/60*10)/10+"h 💤":""):"—";const ps=e.painMorning!==undefined?e.painMorning+"/10":"—";const bp=h?Math.min(100,(h/9)*100):0;const bc=h>=7?"#6b9e78":h>=5?"#c8a050":"#c04040";
     histHTML+=`<div class="sleep-history-row"><div class="shr-date">${dayLabel}</div><div class="shr-hours" style="color:${h>=7?"#4a8a4a":h>=5?"#c47a2a":"#c04040"}">${hs}</div><div class="shr-bar"><div class="shr-bar-fill" style="width:${bp}%;background:${bc}"></div></div><div class="shr-stars" style="font-size:0.62rem;color:#d4a843">${qs}</div><div class="shr-pain" style="font-size:0.62rem;color:${(e.painMorning||0)>=7?"#c04040":(e.painMorning||0)>=4?"#c47a2a":"#4a8a4a"}">${ps}</div><div style="font-size:0.6rem;color:var(--muted);width:20px">${nb}x</div><div class="shr-feeling">${fi}</div></div>`;
   });
   histEl.innerHTML=histHTML;
