@@ -621,7 +621,7 @@ canvas.sleep-chart{width:100%;height:140px}
 
 
 /* ── PLACARD OFFICE ── */
-.placard-item{display:flex;align-items:flex-start;gap:0.6rem;padding:0.6rem 0.5rem;border-bottom:1px solid rgba(58,40,32,0.06);cursor:pointer;border-radius:8px;transition:background 0.15s}
+.placard-item{display:flex;align-items:flex-start;gap:0.6rem;padding:0.6rem 0.5rem;border-bottom:1px solid rgba(58,40,32,0.06);cursor:pointer;border-radius:8px;transition:background 0.15s;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:rgba(0,0,0,0.05)}
 .placard-item:active{background:rgba(107,158,120,0.08)}
 .placard-item.in-stock{opacity:0.5}
 .placard-item.in-stock .placard-nom{text-decoration:line-through;color:var(--muted)}
@@ -848,31 +848,41 @@ canvas.sleep-chart{width:100%;height:140px}
 
 <!-- SHOPPING VIEW -->
 <div id="view-shopping" style="display:none">
-  <div class="shop-section">
-    <div class="shop-week">
-      <div class="shop-week-header">
-        <span class="shop-week-title">🛒 Semaine 1 · 10–14 avril</span>
-        <span class="shop-week-budget">~139€ semaine 1</span>
-      </div>
-      <div class="shop-source-block"><div class="shop-source-title">🌿 La Fourche · bio & sec · ~95€ · stock 5 semaines</div><div id="sl-fourche"></div></div>
-      <div class="shop-source-block"><div class="shop-source-title">❄️ Picard · surgelés · ~130€ · stock 5 semaines</div><div id="sl-picard"></div></div>
-      <div class="shop-source-block"><div class="shop-source-title">🥬 Bene Bono / Marché · frais · ~20-28€ · chaque semaine</div><div id="sl-beno"></div></div>
+
+  <div style="padding:0.8rem 1rem 0.4rem">
+    <div style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:600;color:var(--text)">🛒 Mes courses · Avril–Mai 2026</div>
+    <div style="font-size:0.62rem;color:var(--muted);margin-top:0.15rem">Basé sur vos achats réels du mois</div>
+  </div>
+
+  <!-- BILAN COURSES FAITES -->
+  <div style="margin:0 1rem 0.8rem;background:linear-gradient(135deg,rgba(107,158,120,0.12),rgba(212,168,67,0.06));border-radius:14px;padding:0.8rem 1rem">
+    <div style="font-size:0.65rem;font-weight:700;color:var(--leaf-dark);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.5rem">✅ Courses faites · 10 avril</div>
+    <div style="display:flex;justify-content:space-between;margin-bottom:0.3rem">
+      <div style="font-size:0.72rem;font-weight:700;color:var(--text)">Total dépensé</div>
+      <div style="font-size:0.72rem;font-weight:700;color:var(--blossom-deep)">177€ faits ✅ · +109€ La Fourche à commander</div>
     </div>
-    <div class="shop-week">
-      <div class="shop-week-header">
-        <span class="shop-week-title">🌸 Semaine 2 · 17–30 avril</span>
-        <span class="shop-week-budget">~20-28€/sem (Bene Bono seul)</span>
-      </div>
-      <div style="padding:0.75rem 1rem 0.9rem;font-size:0.76rem;color:var(--muted);font-style:italic;line-height:1.7">
-        🌱 Liste semaine 2 générée après validation de la semaine 1.<br>
-        Budget restant : <strong style="color:var(--leaf-dark)">~70 à 95€</strong>
-      </div>
+    <div style="font-size:0.62rem;color:var(--muted);line-height:1.6">
+      🛒 Auchan av. Prof. Cadiot · 156,61€ · 48 articles<br>
+      🌿 Les Têtes Vertes · 20,05€ · 6 articles<br>
+      🥕 Leclerc Bonneuil · ~25€ · légumes + amandes<br>
+      📦 La Fourche · ~109€ · à commander mardi ou jeudi selon paye
     </div>
   </div>
+
+  <!-- TABS MAGASINS -->
+  <div style="display:flex;gap:0.4rem;padding:0 1rem 0.6rem;overflow-x:auto;scrollbar-width:none">
+    <button class="diner-filter active" onclick="switchShop('auchan',this)">🛒 Auchan</button>
+    <button class="diner-filter" onclick="switchShop('tetes',this)">🌿 Têtes Vertes</button>
+    <button class="diner-filter" onclick="switchShop('leclerc',this)">🥕 Leclerc</button>
+    <button class="diner-filter" onclick="switchShop('fourche',this)">📦 La Fourche</button>
+    <button class="diner-filter" onclick="switchShop('placard',this)">🗄 Placard</button>
+  </div>
+
+  <div id="shop-display" style="padding:0 1rem 4rem"></div>
+
 </div>
 
-<!-- TIPS VIEW -->
-<div <div id="view-batch" style="display:none">
+<div id="view-batch" style="display:none">
   <div class="batch-view">
     <div class="batch-hero">
       <h2>⏱ Mes Sessions Batch Cooking</h2>
@@ -2448,53 +2458,108 @@ const MENUS = {
 
 // ── SHOPPING DATA ──
 const SHOP_DATA={
-  fourche:[
-    {n:"🐟 Sardines huile olive bio × 12",p:"~38€",u:"Déjeuners — fer + oméga-3"},
-    {n:"🐟 Maquereau huile olive bio × 8",p:"~27€",u:"Déjeuners alternés"},
-    {n:"🐟 Thon albacore naturel × 4",p:"~13€",u:"Déjeuners salade thon"},
-    {n:"🫘 Lentilles corail bio 1kg",p:"~3,40€",u:"Batch hebdo + veloutés"},
-    {n:"🫘 Pois chiches bio × 3",p:"~9€",u:"Déjeuners bureau"},
-    {n:"🌾 Sarrasin décortiqué bio 1kg",p:"~3,90€",u:"Batch hebdo"},
-    {n:"🌾 Flocons sarrasin bio 500g",p:"~2,80€",u:"Porridges matin"},
-    {n:"🌾 Quinoa rouge bio 500g × 2",p:"~8€",u:"Batch + brunchs"},
-    {n:"🌱 Graines de lin bio 250g",p:"~2,20€",u:"Oméga-3 chaque repas"},
-    {n:"🥜 Amandes bio 500g",p:"~7,50€",u:"Goûters quotidiens"},
-    {n:"🌴 Dattes Medjool bio 500g",p:"~8€",u:"Energy balls + goûters"},
-    {n:"🍫 Chocolat noir 85% × 3",p:"~11,61€",u:"Goûter quotidien"},
-    {n:"🍫 Cacao brut bio 200g",p:"~4,50€",u:"Porridges + tapioca"},
-    {n:"🫒 Huile olive bio 1L",p:"~9,75€",u:"Cuisson quotidienne"},
-    {n:"🍎 Vinaigre cidre bio 1L",p:"~2,98€",u:"Absorption fer x3"},
-    {n:"🥛 Lait millet bio 6×200ml",p:"~8€",u:"Lait d'Or + porridge"},
-    {n:"🥥 Lait coco bio × 3",p:"~4,47€",u:"Veloutés dîner"},
-    {n:"🍯 Miel bio 250g",p:"~3,50€",u:"Porridges + fruits"},
-    {n:"🧂 Sel mer fin bio 500g",p:"~1,80€",u:"Sel Santé batch"},
-    {n:"🌿 Curcuma poudre bio 50g",p:"~2,50€",u:"Anti-inflammatoire"},
-    {n:"🌿 Poivre noir bio 50g",p:"~2,20€",u:"Active curcuma x20"},
-    {n:"🌿 Cannelle bio 30g",p:"~2,10€",u:"Porridges + glycémie"},
-    {n:"🌿 Gingembre poudre bio 30g",p:"~2,50€",u:"Complément gingembre frais"},
+
+  // ── Auchan av. Prof. Cadiot · 156,61€ · 10 avril ──
+  auchan:[
+    {n:"🐟 Pavés saumon Norvège surgelés × 4",p:"9,99€",u:"Dîners saumon × 4 semaines"},
+    {n:"🦐 Crevettes cuites 80/120 × 2",p:"5,00€",u:"Dîners crevettes"},
+    {n:"🦐 Pouce crevettes cocktail",p:"2,37€",u:"Dîner crevettes cocktail"},
+    {n:"🐟 Filets maquereau surgelés",p:"7,90€",u:"Dîners maquereau"},
+    {n:"🐟 Thon Auchan listao × 2",p:"6,50€",u:"Déjeuners bureau thon"},
+    {n:"🐟 Sardines Auchan huile × 2",p:"4,82€",u:"Déjeuners bureau sardines"},
+    {n:"🐟 Connétable sardines × 2",p:"4,10€",u:"Déjeuners bureau"},
+    {n:"🐟 Parmentier sardine",p:"~2€",u:"Dîner express"},
+    {n:"🐟 Bio alter eco sardines",p:"~2€",u:"Déjeuner bureau premium"},
+    {n:"🥩 Steak haché Auchan surgelé",p:"8,55€",u:"Dîner copieux"},
+    {n:"🥩 Jambon tranches naturel",p:"12,90€",u:"Brunch galette jambon"},
+    {n:"🥚 Oeufs plein air Label Rouge",p:"3,91€",u:"Brunchs week-end"},
+    {n:"🥭 Mangues morceaux × 2",p:"4,48€",u:"Smoothie bowl quotidien"},
+    {n:"🍓 Mélange fruits rouges × 2",p:"7,79€",u:"Pancakes + porridges"},
+    {n:"🍒 Cerises 450g",p:"6,41€",u:"Soirée + mélatonine"},
+    {n:"🥬 Haricots beurre + verts",p:"3,82€",u:"Légumes dîners"},
+    {n:"🥗 Coeur de laitue × 3",p:"1,29€",u:"Déjeuners bureau"},
+    {n:"🌿 Cébette botte",p:"1,39€",u:"Tous les plats"},
+    {n:"🥑 Avocats × 2",p:"2,38€",u:"Bowls déjeuner"},
+    {n:"🥛 Alpro soja nature",p:"2,40€",u:"Sauces + mayo vegan"},
+    {n:"🥥 VietCoco crème coco",p:"2,00€",u:"Veloutés + smoothie"},
+    {n:"🥥 VietCoco lait coco",p:"2,02€",u:"Lentilles coco"},
+    {n:"🍯 Miel bio Auchan",p:"6,73€",u:"Porridges + fruits"},
+    {n:"🫙 Sauce soja Sojasum",p:"~2€",u:"Dîners asiatiques"},
+    {n:"🍫 Chocolat bio alter eco",p:"~4€",u:"Goûter quotidien"},
   ],
-  picard:[
-    {n:"🥚 Oeufs plein air × 12",p:"~4,50€",u:"Brunchs week-end"},
-    {n:"🍓 Fruits rouges mélange 450g × 2",p:"~14€",u:"Porridges + smoothie"},
-    {n:"🥭 Mangues morceaux 450g × 2",p:"~10€",u:"Smoothie bowl quotidien"},
-    {n:"🍒 Cerises 450g",p:"~6€",u:"Mélatonine + soirée"},
-    {n:"🥬 Épinards branches 600g × 2",p:"~6€",u:"Batch sautés ail"},
-    {n:"🥦 Brocolis 1kg",p:"~3,60€",u:"Papillotes + dîners"},
-    {n:"🫚 Gingembre coupé 75g × 2",p:"~4€",u:"Dîners"},
-    {n:"🧄 Ail coupé 100g",p:"~3€",u:"Tous les dîners"},
-    {n:"🌿 Persil plat 250g",p:"~2,25€",u:"Déjeuners — dopamine"},
+
+  // ── Les Têtes Vertes · 20,05€ · 10 avril ──
+  tetes:[
+    {n:"🥛 Millet drink 1L",p:"2,95€",u:"Lait d'Or + porridges"},
+    {n:"🧈 Tofu nature 2×125g",p:"2,95€",u:"Dîner tofu doré curcuma"},
+    {n:"🧈 Tofu soyeux 400g",p:"3,30€",u:"Dîner velouté + bowl"},
+    {n:"🧈 Tofu mariné citron confit",p:"3,90€",u:"Bowl déjeuner maison"},
+    {n:"🧈 Tofu grillé ail des ours",p:"3,10€",u:"Dîner et bowl"},
+    {n:"🌾 Flocons de sarrasin bio 350g",p:"3,85€",u:"Porridges matin"},
   ],
-  beno:[
-    {n:"🍋 Citrons bio × 6",p:"~2,50€",u:"Sur tout — indispensable"},
-    {n:"🥑 Avocats × 3",p:"~4€",u:"Bowl sardines-avocat"},
+
+  // ── Leclerc Bonneuil · ~25€ · 7-10 avril ──
+  leclerc:[
     {n:"🥕 Carottes fraîches",p:"~2€",u:"Batch carottes curcuma"},
-    {n:"🥬 Épinards frais 200g",p:"~2,50€",u:"Déjeuners + dîners"},
-    {n:"🌿 Fenouil × 2",p:"~3€",u:"Velouté fenouil"},
-    {n:"🍎 Pommes × 4",p:"~3€",u:"Compotées + porridges"},
-    {n:"🍌 Bananes × 1 régime",p:"~2€",u:"Porridges quotidiens"},
+    {n:"🥬 Épinards jeunes pousses",p:"~2€",u:"Déjeuners + dîners"},
+    {n:"🌿 Fenouil",p:"~1,50€",u:"Velouté fenouil"},
+    {n:"🌱 Radis",p:"~1€",u:"Déjeuners bureau"},
     {n:"🫚 Gingembre frais",p:"~3€",u:"Infusions + tous plats"},
-    {n:"🌿 Curcuma frais × 2",p:"~3€",u:"Anti-inflammatoire"},
-    {n:"🌿 Persil frais",p:"~1,50€",u:"Déjeuners — fer + dopamine"},
+    {n:"🌿 Curcuma frais",p:"~2€",u:"Anti-inflammatoire"},
+    {n:"🍌 Bananes",p:"~2€",u:"Porridges millet-banane"},
+    {n:"🥝 Kiwis × 3",p:"~2€",u:"Petit-déj vitamine C"},
+    {n:"🍎 Pommes × 2",p:"~2€",u:"Compotées + snacks"},
+    {n:"🌴 Dattes",p:"~3€",u:"Goûter + energy balls"},
+    {n:"🥜 Amandes",p:"~4€",u:"Goûter quotidien"},
+    {n:"🌰 Graines de courge",p:"~2€",u:"Tous les plats"},
+    {n:"🥥 Noix de coco râpée",p:"~2€",u:"Porridges + smoothie"},
+    {n:"🥛 Lait d'avoine × 2",p:"~4€",u:"Pancakes + porridges"},
+  ],
+
+  // ── La Fourche · En attente livraison · ~109€ ──
+  fourche:[
+    {n:"☕ Café décaféiné Mexique 100% arabica",p:"8,30€",u:"Goûter après-midi"},
+    {n:"🥛 Boisson millet-amande-noisette",p:"2,20€",u:"Porridges + Lait d'Or"},
+    {n:"🌺 Fleurs d'hibiscus séchées bio",p:"2,20€",u:"Infusion soirée antioxydant"},
+    {n:"🥛 Boisson avoine dorée bio",p:"1,93€",u:"Porridges + pancakes"},
+    {n:"🥛 Boisson avoine bio × 6",p:"12,17€",u:"Stock 5 semaines"},
+    {n:"🍪 Sablés sarrasin bio",p:"2,99€",u:"Goûter + soirée"},
+    {n:"🌾 Flocons de millet bio",p:"2,60€",u:"Porridges millet-mangue"},
+    {n:"🍫 Chocolat noir 85% fleur de sel",p:"2,99€",u:"Goûter quotidien"},
+    {n:"🍫 Chocolat noir 92% bio",p:"3,45€",u:"Soirée + dopamine"},
+    {n:"🥣 Muesli croustillant nature",p:"5,99€",u:"Petit-déj varié"},
+    {n:"🥣 Muesli croustillant noix-sarrasin",p:"5,92€",u:"Petit-déj varié"},
+    {n:"🍫 Mini palets chocolat cacahuète",p:"3,99€",u:"Goûter premium"},
+    {n:"🌿 Tahin 100% sésame",p:"3,99€",u:"Sauces + bowls"},
+    {n:"🥥 Lait coco concentré sucré",p:"3,65€",u:"Veloutés + desserts"},
+    {n:"🌰 Crème de marrons bio",p:"3,93€",u:"Soirée galette-marrons"},
+    {n:"🥣 Krunchy chocolat avoine",p:"4,90€",u:"Petit-déj croquant"},
+    {n:"🌾 Millet cuisine bio",p:"1,69€",u:"Dîners mijotés"},
+    {n:"🫙 Légumes curry Masala bio",p:"1,69€",u:"Dîner express"},
+    {n:"🌶 Piment en poudre bio",p:"3,89€",u:"Épices dîners"},
+    {n:"🌾 Petits flocons d'avoine bio",p:"2,57€",u:"Porridges avoine"},
+    {n:"🌾 Sarrasin décortiqué bio",p:"3,90€",u:"Bowls · déjà acheté !"},
+    {n:"🌾 Graines de millet bio",p:"4,70€",u:"Porridges + batch"},
+    {n:"🌱 Mix graines pour salades",p:"2,10€",u:"Tous les plats"},
+    {n:"🍠 Patates douces bio",p:"3,80€",u:"Dîners saumon-patate douce"},
+    {n:"🍌 Bananes bio équitable",p:"1,83€",u:"Porridges"},
+    {n:"🫚 Gingembre bio Pérou",p:"5,29€",u:"Infusions + plats"},
+    {n:"🌟 Lait d'Or Écoïdées 150g",p:"~8€",u:"Infusion soir anti-SJSR quotidienne"},
+    {n:"🥥 Lait coco gingembre-citronnelle Base",p:"~3€",u:"Lentilles coco spéciales"},
+  ],
+
+  // ── Ce qu'il restera à acheter en mai (beaucoup moins !) ──
+  placard:[
+    {n:"🐟 Poisson frais/surgelé · saumon + crevettes + maquereau",p:"~35€",u:"Protéines · priorité absolue"},
+    {n:"🧈 Tofu × 4 variétés · Les Têtes Vertes",p:"~14€",u:"Dîners tofu × 4 semaines"},
+    {n:"🥚 Oeufs plein air × 12",p:"~4€",u:"Brunchs week-end"},
+    {n:"🍌 Fruits frais semaine · bananes + kiwis + pommes",p:"~8€",u:"Petit-déj · à acheter au fil des semaines"},
+    {n:"🥬 Légumes frais semaine · carottes + épinards + radis",p:"~8€",u:"Batch + déjeuners · à renouveler"},
+    {n:"🫚 Gingembre frais + curcuma frais",p:"~5€",u:"Infusions + plats · à renouveler mi-mai"},
+    {n:"🍫 Chocolat noir bio × 3 tablettes",p:"~8€",u:"Goûter quotidien · stock épuisé fin avril"},
+    {n:"🥛 Lait de millet × 2 si pas La Fourche",p:"~6€",u:"Lait d'Or quotidien"},
+    {n:"🌴 Dattes si stock épuisé",p:"~4€",u:"Goûter · vérifier avant le 10"},
+    {n:"🥑 Avocats × 3",p:"~4€",u:"Bowls déjeuner bureau"},
   ]
 };
 
@@ -2883,7 +2948,39 @@ function renderBatchWeek(week){
 function toggleBatchStep(id){batchStepsDone[id]=!batchStepsDone[id];try{localStorage.setItem("batchDone",JSON.stringify(batchStepsDone));}catch(e){}renderBatchWeek(currentBatchWeek);}
 function updateBatchProgress(){const w=BATCH_WEEKS[currentBatchWeek];if(!w)return;const done=w.steps.filter(s=>batchStepsDone[s.id]).length;const total=w.steps.length;const el=document.getElementById('batchProgress');if(el)el.style.width=Math.round((done/total)*100)+'%';const txt=document.getElementById('batchProgressText');if(txt)txt.textContent=done+'/'+total+' étapes';}
 
-function buildShopping(){['fourche','picard','beno'].forEach(tab=>{const el=document.getElementById('shop-'+tab);if(!el)return;(SHOP_DATA[tab]||[]).forEach(item=>{el.innerHTML=(SHOP_DATA[tab]||[]).map(item=>`<div class="shop-item"><div class="shop-nom">${item.n}</div><div class="shop-info"><span class="shop-prix">${item.p}</span><span class="shop-usage">${item.u}</span></div></div>`).join('');});});}
+function buildShopping(){switchShop('auchan',document.querySelector('.diner-filter'));}
+
+function switchShop(tab, btn){
+  document.querySelectorAll('#view-shopping .diner-filter').forEach(b=>b.classList.remove('active'));
+  if(btn)btn.classList.add('active');
+  const el=document.getElementById('shop-display');if(!el)return;
+  const items=SHOP_DATA[tab]||[];
+  
+  const LABELS={
+    auchan:'🛒 Auchan · av. Prof. Cadiot · 156,61€ · 10 avril ✅',
+    tetes:'🌿 Les Têtes Vertes · 3 bis av. Léon Blum · 20,05€ · 10 avril ✅',
+    leclerc:'🥕 Leclerc Bonneuil · ~25€ · 7-10 avril ✅',
+    fourche:'📦 La Fourche · En attente livraison · ~109,40€',
+    placard:'🗄 À prévoir pour mai'
+  };
+  
+  const STATUS={
+    auchan:'done',tetes:'done',leclerc:'done',
+    fourche:'pending',placard:'todo'
+  };
+  
+  const s=STATUS[tab];
+  const headerColor=s==='done'?'var(--leaf-dark)':s==='pending'?'#c47a2a':'var(--muted)';
+  const headerBg=s==='done'?'rgba(107,158,120,0.1)':s==='pending'?'rgba(196,122,42,0.08)':'rgba(58,40,32,0.05)';
+  
+  if(items.length===0){el.innerHTML='<div style="text-align:center;color:var(--muted);padding:2rem;font-size:0.75rem">Aucun article</div>';return;}
+  
+  el.innerHTML=`<div style="background:${headerBg};border-radius:10px;padding:0.6rem 0.8rem;margin-bottom:0.6rem;font-size:0.65rem;font-weight:700;color:${headerColor}">${LABELS[tab]||tab}</div>`+
+  items.map(item=>`<div class="shop-item">
+    <div class="shop-nom">${item.n}</div>
+    <div class="shop-info"><span class="shop-prix">${item.p}</span><span class="shop-usage">${item.u}</span></div>
+  </div>`).join('');
+}
 
 let activeCat='all';let activeTime=0;
 function buildDiners(){filterDiners('all',document.querySelector('.diner-filter'));}
@@ -2919,6 +3016,8 @@ function selectBatchWeek(idx, btn) {
 
 buildCalendar();
 buildShopping();
+// Pre-render placard
+try{renderPlacardList();}catch(e){}
 try{const saved=localStorage.getItem("batchDone");if(saved)batchStepsDone=JSON.parse(saved);}catch(e){}
 
 const PAIN_LABELS={0:"Aucune douleur",1:"Très légère",2:"Légère",3:"Légère-modérée",4:"Modérée",5:"Modérée",6:"Modérée-intense",7:"Intense",8:"Très intense",9:"Sévère",10:"Insupportable"};
