@@ -620,6 +620,13 @@ canvas.sleep-chart{width:100%;height:140px}
 .chart-tab.active{background:var(--night);color:#fff}
 
 
+/* ── IA ASSISTANT ── */
+.ia-mode-btn{background:rgba(58,40,32,0.06);color:var(--text);border:1.5px solid rgba(58,40,32,0.1);border-radius:8px;padding:0.35rem 0.7rem;font-size:0.65rem;cursor:pointer;transition:all 0.2s;font-family:inherit}
+.ia-mode-btn.active{background:linear-gradient(135deg,var(--blossom-deep),#8b3a6b);color:#fff;border-color:transparent}
+.ia-mode-btn:active{transform:scale(0.97)}
+.ia-typing::after{content:"▋";animation:blink 0.7s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+
 /* ── PLACARD OFFICE ── */
 .placard-item{display:flex;align-items:flex-start;gap:0.6rem;padding:0.6rem 0.5rem;border-bottom:1px solid rgba(58,40,32,0.06);cursor:pointer;border-radius:8px;transition:background 0.15s;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:rgba(0,0,0,0.05)}
 .placard-item:active{background:rgba(107,158,120,0.08)}
@@ -807,6 +814,7 @@ canvas.sleep-chart{width:100%;height:140px}
   <div class="nav-tab" onclick="showView('diner')">🍽 Ce soir</div>
   <div class="nav-tab" onclick="showView('journal')">📔 Journal</div>
   <div class="nav-tab" onclick="showView('urgence')">🚨 Urgence</div>
+  <div class="nav-tab" onclick="showView('ia')">✨ IA</div>
   <div class="nav-tab" onclick="showView('placard')">🗄️ Placard</div>
 </div>
 
@@ -1328,6 +1336,150 @@ canvas.sleep-chart{width:100%;height:140px}
   <div class="imp-panel-handle"></div>
   <button class="imp-panel-close" onclick="closeImpulse()">✕</button>
   <div id="impContent"></div>
+</div>
+
+<div id="view-ia" style="display:none">
+
+  <!-- Header -->
+  <div style="padding:0.8rem 1rem 0.4rem">
+    <div style="font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:700;color:var(--text)">✨ Assistant IA Sérénité</div>
+    <div style="font-size:0.62rem;color:var(--muted);margin-top:0.15rem">Propulsé par Claude · Anti-SJSR & TDAH · Ketty</div>
+  </div>
+
+  <!-- Tabs IA -->
+  <div style="display:flex;gap:0.4rem;padding:0 1rem 0.6rem">
+    <button class="diner-filter active" id="ia-tab-cuisine" onclick="switchIATab('cuisine',this)">👩‍🍳 Cuisine IA</button>
+    <button class="diner-filter" id="ia-tab-menu" onclick="switchIATab('menu',this)">📅 Menu IA</button>
+  </div>
+
+  <!-- ── TAB CUISINE IA ── -->
+  <div id="ia-panel-cuisine" style="padding:0 1rem">
+
+    <div style="font-size:0.68rem;color:var(--muted);margin-bottom:0.8rem;line-height:1.5">
+      Dites-moi ce que vous avez envie de manger ou ce qui reste dans votre frigo,<br>
+      je vous propose une recette adaptée à votre stock et à votre santé 🌿
+    </div>
+
+    <!-- Mode de question -->
+    <div style="display:flex;gap:0.4rem;margin-bottom:0.6rem;flex-wrap:wrap">
+      <button class="ia-mode-btn active" onclick="setIAMode('frigo',this)">🧊 J'ai ces ingrédients</button>
+      <button class="ia-mode-btn" onclick="setIAMode('envie',this)">💭 J'ai envie de...</button>
+      <button class="ia-mode-btn" onclick="setIAMode('rapide',this)">⚡ Repas rapide</button>
+      <button class="ia-mode-btn" onclick="setIAMode('sjsr',this)">🌿 Anti-SJSR ce soir</button>
+    </div>
+
+    <!-- Input utilisateur -->
+    <textarea id="ia-cuisine-input" placeholder="Ex: j'ai du tofu, du sarrasin et des carottes..." 
+      style="width:100%;border:1.5px solid rgba(58,40,32,0.15);border-radius:12px;padding:0.7rem;
+      font-size:0.72rem;font-family:inherit;color:var(--text);background:#fff;
+      resize:none;height:80px;box-sizing:border-box;outline:none;line-height:1.5"
+      oninput="this.style.height='80px';this.style.height=this.scrollHeight+'px'"></textarea>
+
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-top:0.5rem">
+      <div style="font-size:0.6rem;color:var(--muted)">Stock connu · Profil SJSR/TDAH · Sans gluten/lactose</div>
+      <button onclick="askCuisineIA()" id="ia-cuisine-btn"
+        style="background:linear-gradient(135deg,var(--blossom-deep),#8b3a6b);color:#fff;
+        border:none;border-radius:10px;padding:0.5rem 1rem;font-size:0.7rem;font-weight:700;
+        cursor:pointer;white-space:nowrap">
+        ✨ Générer
+      </button>
+    </div>
+
+    <!-- Réponse IA -->
+    <div id="ia-cuisine-result" style="margin-top:0.8rem;display:none">
+      <div style="background:linear-gradient(135deg,rgba(107,158,120,0.08),rgba(212,168,67,0.04));
+        border-radius:14px;padding:0.8rem;border:1px solid rgba(107,158,120,0.15)">
+        <div style="display:flex;align-items:center;gap:0.4rem;margin-bottom:0.5rem">
+          <div style="font-size:0.6rem;font-weight:700;color:var(--leaf-dark);text-transform:uppercase;letter-spacing:0.08em">✨ Recette IA</div>
+          <div id="ia-cuisine-loading" style="display:none;font-size:0.6rem;color:var(--muted)">génération en cours...</div>
+        </div>
+        <div id="ia-cuisine-text" style="font-size:0.72rem;color:var(--text);line-height:1.7;white-space:pre-wrap"></div>
+      </div>
+      <button onclick="askCuisineIA()" style="margin-top:0.5rem;background:none;border:1px solid rgba(58,40,32,0.15);
+        border-radius:8px;padding:0.3rem 0.8rem;font-size:0.62rem;color:var(--muted);cursor:pointer;width:100%">
+        🔄 Autre suggestion
+      </button>
+    </div>
+
+  </div>
+
+  <!-- ── TAB MENU IA ── -->
+  <div id="ia-panel-menu" style="display:none;padding:0 1rem">
+
+    <div style="font-size:0.68rem;color:var(--muted);margin-bottom:0.8rem;line-height:1.5">
+      Je génère un plan de repas personnalisé basé sur votre stock réel,<br>
+      votre profil SJSR/TDAH et vos préférences 🌸
+    </div>
+
+    <!-- Options menu -->
+    <div style="background:rgba(58,40,32,0.04);border-radius:12px;padding:0.8rem;margin-bottom:0.8rem">
+      <div style="font-size:0.63rem;font-weight:700;color:var(--text);margin-bottom:0.5rem">Options</div>
+      
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem">
+        <div style="font-size:0.65rem;color:var(--muted)">Durée</div>
+        <select id="ia-menu-duree" style="border:1px solid rgba(58,40,32,0.15);border-radius:6px;
+          padding:0.2rem 0.4rem;font-size:0.65rem;background:#fff;color:var(--text)">
+          <option value="3">3 jours</option>
+          <option value="5" selected>5 jours</option>
+          <option value="7">1 semaine</option>
+        </select>
+      </div>
+
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem">
+        <div style="font-size:0.65rem;color:var(--muted)">Priorité</div>
+        <select id="ia-menu-priorite" style="border:1px solid rgba(58,40,32,0.15);border-radius:6px;
+          padding:0.2rem 0.4rem;font-size:0.65rem;background:#fff;color:var(--text)">
+          <option value="sjsr">Anti-SJSR maximum</option>
+          <option value="rapide">Rapide (max 15 min)</option>
+          <option value="varié">Varié et équilibré</option>
+          <option value="batch">Basé sur le batch</option>
+        </select>
+      </div>
+
+      <div style="display:flex;align-items:center;justify-content:space-between">
+        <div style="font-size:0.65rem;color:var(--muted)">Contraintes</div>
+        <select id="ia-menu-contrainte" style="border:1px solid rgba(58,40,32,0.15);border-radius:6px;
+          padding:0.2rem 0.4rem;font-size:0.65rem;background:#fff;color:var(--text)">
+          <option value="">Aucune contrainte</option>
+          <option value="budget_fin">Budget fin de mois</option>
+          <option value="fatigue">Journée fatigue</option>
+          <option value="vacances">Mode vacances</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Contexte optionnel -->
+    <textarea id="ia-menu-input" placeholder="Précisions optionnelles : ex. j'ai peu d'énergie cette semaine, il me reste surtout des sardines..." 
+      style="width:100%;border:1.5px solid rgba(58,40,32,0.15);border-radius:12px;padding:0.7rem;
+      font-size:0.72rem;font-family:inherit;color:var(--text);background:#fff;
+      resize:none;height:60px;box-sizing:border-box;outline:none;line-height:1.5"></textarea>
+
+    <button onclick="askMenuIA()" id="ia-menu-btn"
+      style="margin-top:0.5rem;width:100%;background:linear-gradient(135deg,var(--blossom-deep),#8b3a6b);
+      color:#fff;border:none;border-radius:12px;padding:0.65rem;font-size:0.72rem;font-weight:700;
+      cursor:pointer">
+      ✨ Générer mon menu personnalisé
+    </button>
+
+    <!-- Réponse menu IA -->
+    <div id="ia-menu-result" style="margin-top:0.8rem;display:none">
+      <div style="background:linear-gradient(135deg,rgba(107,158,120,0.08),rgba(212,168,67,0.04));
+        border-radius:14px;padding:0.8rem;border:1px solid rgba(107,158,120,0.15)">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.5rem">
+          <div style="font-size:0.6rem;font-weight:700;color:var(--leaf-dark);text-transform:uppercase;letter-spacing:0.08em">✨ Menu IA généré</div>
+          <div id="ia-menu-loading" style="display:none;font-size:0.6rem;color:var(--muted)">génération...</div>
+        </div>
+        <div id="ia-menu-text" style="font-size:0.7rem;color:var(--text);line-height:1.8;white-space:pre-wrap"></div>
+      </div>
+      <button onclick="askMenuIA()" style="margin-top:0.5rem;background:none;border:1px solid rgba(58,40,32,0.15);
+        border-radius:8px;padding:0.3rem 0.8rem;font-size:0.62rem;color:var(--muted);cursor:pointer;width:100%">
+        🔄 Régénérer
+      </button>
+    </div>
+
+  </div>
+
+  <div style="height:4rem"></div>
 </div>
 
 <div id="view-placard" style="display:none">
@@ -2904,9 +3056,10 @@ function openDay(key){
 function closePanel(){document.getElementById('dayPanel').classList.remove('open');document.getElementById('overlay').classList.remove('show');}
 
 function showView(v){
-  const allViews=['calendar','batch','shopping','diner','journal','urgence','tips','placard'];
+  const allViews=['calendar','batch','shopping','diner','journal','urgence','tips','placard','ia'];
   allViews.forEach(id=>{const el=document.getElementById('view-'+id);if(el)el.style.display=id===v?'block':'none';});
-  document.querySelectorAll('.nav-tab').forEach((el,i)=>{const map=['calendar','batch','shopping','diner','journal','urgence','placard'];el.classList.toggle('active',map[i]===v);});
+  document.querySelectorAll('.nav-tab').forEach((el,i)=>{const map=['calendar','batch','shopping','diner','journal','urgence','ia','placard'];el.classList.toggle('active',map[i]===v);});
+  if(v==='ia'){switchIATab('cuisine',document.getElementById('ia-tab-cuisine'));}
   if(v==='placard')renderPlacardList();
   if(v==='journal'){loadSleepEntry();updateSleepStats();renderCycles();setTimeout(()=>{if(currentStatsTab==='mensuel')renderMonthlyChart();if(currentStatsTab==='comparatif')renderComparatif();},100);}
   if(v==='diner')buildDiners();
@@ -3090,6 +3243,195 @@ function updateSiesteInfo(){
   else{info.textContent="🌸 Grande sieste "+min+" min — bien méritée !";info.style.color="var(--leaf-dark)";}
   autoSaveSleep();
   updateCumulStats();
+}
+
+
+// ══════════════════════════════════════
+// ASSISTANT IA — Cuisine & Menu
+// ══════════════════════════════════════
+
+const KETTY_PROFILE = `PROFIL KETTY :
+- SJSR (Syndrome des Jambes Sans Repos) + TDAH probable
+- Sans gluten + sans lactose strict
+- Médicaments soir : Tramadol LP 100mg + Lyrica 375mg AVANT le dîner
+- Objectif nutritionnel : magnésium, fer, oméga-3, anti-inflammatoire
+
+STOCK DISPONIBLE AVRIL 2026 :
+Poissons/protéines: saumon surgelé x4, crevettes x2, maquereau surgelé, thon boite x2, sardines x6, tofu nature/soyeux/mariné/grillé, oeufs x12
+Légumineuses: lentilles corail 1kg, lentilles vertes, haricots rouges/verts/beurre boites, pois chiches
+Céréales batch: quinoa rouge, riz 3 couleurs, sarrasin décortiqué, farine sarrasin, flocons sarrasin, flocons millet, tapioca
+Légumes: chou chinois x2, carottes, épinards surgelés, laitue, cébette, avocats x2, radis, gingembre frais, curcuma frais
+Fruits surgelés: mangues x2, fruits rouges x2, cerises
+Fruits frais: bananes, kiwis, pommes, dattes
+Laits végétaux: lait avoine x2, millet drink, crème coco VietCoco, lait coco
+Condiments: sauce soja, miel bio, cacao Van Houten, chocolat noir 85%, amandes, graines courge, lin, coco rapée, Lait d'Or Écoidées`;
+
+let iaCuisineMode = 'frigo';
+
+function switchIATab(tab, btn) {
+  document.querySelectorAll('#view-ia .diner-filter').forEach(b => b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  document.getElementById('ia-panel-cuisine').style.display = tab === 'cuisine' ? 'block' : 'none';
+  document.getElementById('ia-panel-menu').style.display = tab === 'menu' ? 'block' : 'none';
+}
+
+function setIAMode(mode, btn) {
+  iaCuisineMode = mode;
+  document.querySelectorAll('.ia-mode-btn').forEach(b => b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  const input = document.getElementById('ia-cuisine-input');
+  if(!input) return;
+  const placeholders = {
+    frigo: 'Ex: j\'ai du tofu, du sarrasin et des carottes...',
+    envie: 'Ex: j\'ai envie de quelque chose de chaud et réconfortant...',
+    rapide: 'Ex: je n\'ai que 10 min, qu\'est-ce que je fais avec des sardines?',
+    sjsr: 'Ex: mes jambes sont agitées ce soir, que manger?'
+  };
+  input.placeholder = placeholders[mode] || '';
+}
+
+async function askCuisineIA() {
+  const input = document.getElementById('ia-cuisine-input');
+  const result = document.getElementById('ia-cuisine-result');
+  const text = document.getElementById('ia-cuisine-text');
+  const loading = document.getElementById('ia-cuisine-loading');
+  const btn = document.getElementById('ia-cuisine-btn');
+  if(!input || !result || !text) return;
+
+  const userMsg = input.value.trim();
+  const modePrompts = {
+    frigo: 'Avec les ingrédients suivants de mon stock, propose-moi une recette détaillée adaptée à mon profil',
+    envie: 'J\'ai envie de',
+    rapide: 'Propose-moi un repas rapide (max 15 min)',
+    sjsr: 'Mes jambes sont agitées ce soir — propose un dîner spécialement anti-SJSR riche en magnésium'
+  };
+
+  const systemPrompt = `Tu es un assistant culinaire expert en cuisine anti-inflammatoire, sans gluten et sans lactose, spécialisé pour le SJSR et le TDAH.
+
+${KETTY_PROFILE}
+
+RÈGLES STRICTES :
+- Toujours sans gluten ET sans lactose
+- Mentionner les bénéfices nutritionnels (magnésium, fer, oméga-3)
+- Rappeler que les médicaments doivent être pris AVANT le dîner
+- Étapes numérotées claires, langage simple
+- Temps de cuisson réaliste
+- Format : Nom recette / Temps / Ingrédients (quantities précises) / Étapes numérotées / Pourquoi c'est bon pour le SJSR`;
+
+  const userPrompt = modePrompts[iaCuisineMode] + (userMsg ? ': ' + userMsg : ' en utilisant ce que j\'ai dans mon stock.');
+
+  result.style.display = 'block';
+  loading.style.display = 'inline';
+  text.textContent = '';
+  text.classList.add('ia-typing');
+  btn.disabled = true;
+  btn.textContent = '⏳ Génération...';
+
+  try {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        system: systemPrompt,
+        messages: [{role: 'user', content: userPrompt}]
+      })
+    });
+    const data = await response.json();
+    const reply = data.content?.[0]?.text || 'Erreur de génération.';
+    text.classList.remove('ia-typing');
+    // Affichage progressif lettre par lettre
+    text.textContent = '';
+    let i = 0;
+    const interval = setInterval(() => {
+      text.textContent += reply[i];
+      i++;
+      if(i >= reply.length) clearInterval(interval);
+    }, 8);
+  } catch(err) {
+    text.classList.remove('ia-typing');
+    text.textContent = 'Erreur de connexion. Vérifiez votre connexion internet et réessayez.';
+  }
+
+  loading.style.display = 'none';
+  btn.disabled = false;
+  btn.textContent = '✨ Générer';
+}
+
+async function askMenuIA() {
+  const dureeEl = document.getElementById('ia-menu-duree');
+  const prioriteEl = document.getElementById('ia-menu-priorite');
+  const contrainteEl = document.getElementById('ia-menu-contrainte');
+  const inputEl = document.getElementById('ia-menu-input');
+  const result = document.getElementById('ia-menu-result');
+  const text = document.getElementById('ia-menu-text');
+  const loading = document.getElementById('ia-menu-loading');
+  const btn = document.getElementById('ia-menu-btn');
+  if(!result || !text) return;
+
+  const duree = dureeEl ? dureeEl.value : '5';
+  const priorite = prioriteEl ? prioriteEl.value : 'sjsr';
+  const contrainte = contrainteEl ? contrainteEl.value : '';
+  const contexte = inputEl ? inputEl.value.trim() : '';
+
+  const systemPrompt = `Tu es un assistant nutritionniste expert en cuisine anti-inflammatoire pour le SJSR et TDAH.
+
+${KETTY_PROFILE}
+
+RÈGLES STRICTES :
+- 100% sans gluten et sans lactose
+- Rappeler systématiquement que les médicaments se prennent AVANT le dîner
+- Petit-déjeuner : porridge OU pancakes sarrasin OU muesli
+- Déjeuner : bowl froid préparable au bureau
+- Dîner : chaud, protéines + légumes + céréales batch
+- Goûter : amandes + dattes OU chocolat noir 85% OU tapioca
+- Mentionner les bénéfices clés (magnésium, fer, oméga-3)
+- Format tableau clair : Jour / Matin / Déjeuner / Dîner / Goûter`;
+
+  const userPrompt = `Génère un plan de repas de ${duree} jours pour Ketty.
+Priorité : ${priorite}.
+${contrainte ? 'Contrainte spéciale : ' + contrainte + '.' : ''}
+${contexte ? 'Contexte supplémentaire : ' + contexte : ''}
+Utilise UNIQUEMENT les ingrédients disponibles dans son stock.
+Sois précise sur les quantités. Commence chaque dîner par un rappel de prendre les médicaments AVANT.`;
+
+  result.style.display = 'block';
+  loading.style.display = 'inline';
+  text.textContent = '';
+  text.classList.add('ia-typing');
+  btn.disabled = true;
+  btn.textContent = '⏳ Génération du menu...';
+
+  try {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        system: systemPrompt,
+        messages: [{role: 'user', content: userPrompt}]
+      })
+    });
+    const data = await response.json();
+    const reply = data.content?.[0]?.text || 'Erreur de génération.';
+    text.classList.remove('ia-typing');
+    text.textContent = '';
+    let i = 0;
+    const interval = setInterval(() => {
+      text.textContent += reply[i];
+      i++;
+      if(i >= reply.length) clearInterval(interval);
+    }, 6);
+  } catch(err) {
+    text.classList.remove('ia-typing');
+    text.textContent = 'Erreur de connexion. Réessayez.';
+  }
+
+  loading.style.display = 'none';
+  btn.disabled = false;
+  btn.textContent = '✨ Générer mon menu personnalisé';
 }
 
 buildCalendar();
