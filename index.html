@@ -3598,6 +3598,13 @@ function renderIAStock(){
   });
   el.innerHTML=html;
 }
+
+// ── INITIALISATION ──
+buildCalendar();
+buildShopping();
+try{const saved=localStorage.getItem("batchDone");if(saved)batchStepsDone=JSON.parse(saved);}catch(e){}
+try{const sp=localStorage.getItem("sjsr_placard");if(sp)placardState=JSON.parse(sp);}catch(e){}
+try{const ss=localStorage.getItem("sjsr_sleep");if(ss)sleepData=JSON.parse(ss);}catch(e){}
 </script>
 
 
