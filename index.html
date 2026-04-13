@@ -621,10 +621,23 @@ canvas.sleep-chart{width:100%;height:140px}
 
 
 /* ── IA ASSISTANT ── */
+.ia-chip{display:inline-block;background:rgba(58,40,32,0.06);color:var(--text);border:1.5px solid rgba(58,40,32,0.12);border-radius:20px;padding:0.45rem 0.85rem;font-size:0.67rem;cursor:pointer;transition:background 0.15s,transform 0.1s;font-family:inherit;white-space:nowrap;-webkit-tap-highlight-color:transparent;user-select:none;-webkit-user-select:none;touch-action:manipulation;min-height:36px;line-height:1.4}
+.ia-chip.active{background:linear-gradient(135deg,var(--blossom-deep),#7a3a5a);color:#fff;border-color:transparent;font-weight:700}
+.ia-chip:active{transform:scale(0.94);opacity:0.85}
+.ia-result-card{background:#fff;border-radius:12px;padding:0.8rem;margin-bottom:0.6rem;box-shadow:0 2px 10px rgba(58,40,32,0.07);border:1px solid rgba(107,158,120,0.15);cursor:pointer;transition:all 0.15s;-webkit-tap-highlight-color:rgba(0,0,0,0.05)}
+.ia-result-card:active{transform:scale(0.98);background:rgba(107,158,120,0.03)}
+.irc-name{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:600;color:var(--text)}
+.irc-meta{font-size:0.62rem;color:var(--muted);margin:0.2rem 0 0.4rem;font-style:italic}
+.ia-score-bar{height:3px;border-radius:2px;background:linear-gradient(90deg,var(--leaf-mid),var(--leaf-dark));margin-top:0.3rem;margin-bottom:0.1rem}
+.ia-menu-day{background:#fff;border-radius:12px;padding:0.8rem;margin-bottom:0.6rem;border-left:3px solid var(--blossom-deep);box-shadow:0 2px 8px rgba(58,40,32,0.05)}
+.ia-menu-day-title{font-family:'Cormorant Garamond',serif;font-size:0.95rem;font-weight:600;color:var(--blossom-deep);margin-bottom:0.5rem}
+.ia-menu-row{display:flex;gap:0.5rem;margin-bottom:0.3rem;align-items:flex-start}
+.ia-menu-label{font-size:0.58rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;width:48px;flex-shrink:0;padding-top:0.1rem}
+.ia-menu-val{font-size:0.68rem;color:var(--text);line-height:1.4;flex:1}
+.ia-stock-cat{font-size:0.6rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;margin:0.7rem 0 0.25rem;padding-bottom:0.15rem;border-bottom:1px solid rgba(58,40,32,0.08)}
+.ia-stock-item{font-size:0.68rem;color:var(--text);padding:0.25rem 0;border-bottom:1px solid rgba(58,40,32,0.04);display:flex;justify-content:space-between;align-items:center}
 .ia-mode-btn{background:rgba(58,40,32,0.06);color:var(--text);border:1.5px solid rgba(58,40,32,0.1);border-radius:8px;padding:0.35rem 0.7rem;font-size:0.65rem;cursor:pointer;transition:all 0.2s;font-family:inherit}
 .ia-mode-btn.active{background:linear-gradient(135deg,var(--blossom-deep),#8b3a6b);color:#fff;border-color:transparent}
-.ia-mode-btn:active{transform:scale(0.97)}
-.ia-typing::after{content:"▋";animation:blink 0.7s infinite}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
 
 /* ── PLACARD OFFICE ── */
@@ -1418,7 +1431,7 @@ canvas.sleep-chart{width:100%;height:140px}
       </div>
     </div>
 
-    <button onclick="chercherRecette()" style="width:100%;background:linear-gradient(135deg,var(--blossom-deep),#7a3a5a);color:#fff;border:none;border-radius:12px;padding:0.7rem;font-size:0.75rem;font-weight:700;cursor:pointer;letter-spacing:0.02em">
+    <button onclick="chercherRecette()" style="width:100%;background:linear-gradient(135deg,var(--blossom-deep),#7a3a5a);color:#fff;border:none;border-radius:12px;padding:0.8rem;font-size:0.75rem;font-weight:700;cursor:pointer;letter-spacing:0.02em;touch-action:manipulation;-webkit-tap-highlight-color:transparent">
       ✨ Trouver ma recette
     </button>
 
@@ -1464,7 +1477,7 @@ canvas.sleep-chart{width:100%;height:140px}
       </div>
     </div>
 
-    <button onclick="genererMenu()" style="width:100%;background:linear-gradient(135deg,var(--blossom-deep),#7a3a5a);color:#fff;border:none;border-radius:12px;padding:0.7rem;font-size:0.75rem;font-weight:700;cursor:pointer">
+    <button onclick="genererMenu()" style="width:100%;background:linear-gradient(135deg,var(--blossom-deep),#7a3a5a);color:#fff;border:none;border-radius:12px;padding:0.8rem;font-size:0.75rem;font-weight:700;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent">
       📅 Générer mon menu
     </button>
 
@@ -3299,6 +3312,117 @@ function selectBatchWeek(idx, btn) {
   if(btn) btn.classList.add('active');
   renderBatchWeek(currentBatchWeek);
   updateBatchProgress();
+}
+
+
+const PAIN_LABELS={0:"Aucune douleur",1:"Très légère",2:"Légère",3:"Légère-modérée",4:"Modérée",5:"Modérée",6:"Modérée-intense",7:"Intense",8:"Très intense",9:"Sévère",10:"Insupportable"};
+const FEELING_ICONS={exhausted:"😫",tired:"😔",ok:"😐",good:"🙂",great:"😊",excellent:"🌟"};
+let sleepCurrentDate=new Date(),sleepQuality=0,sleepFeeling="",sleepData={},sleepCycles=[{bedtime:"22:30",wakeTime:"07:00"}];
+try{const saved=localStorage.getItem("sjsr_sleep");if(saved)sleepData=JSON.parse(saved);}catch(e){}
+function sleepDateKey(d){const dd=d||sleepCurrentDate;return dd.getFullYear()+"-"+String(dd.getMonth()+1).padStart(2,"0")+"-"+String(dd.getDate()).padStart(2,"0");}
+function sleepDateLabel(d){const dd=d||sleepCurrentDate;const days=["Dimanche","Lundi","Mardi","Mercredi","Jeudi","Vendredi","Samedi"];const months=["janvier","février","mars","avril","mai","juin","juillet","août","septembre","octobre","novembre","décembre"];return days[dd.getDay()]+" "+dd.getDate()+" "+months[dd.getMonth()]+" "+dd.getFullYear();}
+function sleepNavDate(delta){sleepCurrentDate=new Date(sleepCurrentDate.getTime()+delta*86400000);loadSleepEntry();updateSleepStats();}
+function toMin(t){if(!t)return 0;const[h,m]=t.split(":").map(Number);return h*60+m;}
+function formatDuration(min){if(min<0)min+=1440;if(min<0)min=0;return Math.floor(min/60)+"h"+String(min%60).padStart(2,"0");}
+function calcCycleDuration(b,w){let d=toMin(w)-toMin(b);if(d<0)d+=1440;return d;}
+function renderCycles(){
+  const container=document.getElementById("sleepCyclesContainer");if(!container)return;container.innerHTML="";
+  sleepCycles.forEach((cycle,i)=>{const div=document.createElement("div");div.className="sleep-cycle-block";const dur=cycle.bedtime&&cycle.wakeTime?calcCycleDuration(cycle.bedtime,cycle.wakeTime):0;div.innerHTML=`<div class="sleep-cycle-header"><div class="sleep-cycle-title">🌙 Cycle ${i+1}</div>${sleepCycles.length>1?`<button class="sleep-cycle-delete" onclick="removeCycle(${i})">✕</button>`:""}</div><div class="sleep-cycle-row"><div class="sleep-cycle-field"><label>${i===0?"Couché":"Recouché"}</label><input type="time" value="${cycle.bedtime||""}" onchange="updateCycle(${i},'bedtime',this.value)"></div><div class="sleep-cycle-field"><label>Levé</label><input type="time" value="${cycle.wakeTime||""}" onchange="updateCycle(${i},'wakeTime',this.value)"></div></div><div class="sleep-cycle-duration" style="color:${dur>=60?"var(--leaf-dark)":"#c47a2a"}">⏱ ${dur>0?formatDuration(dur):"—"}</div>`;container.appendChild(div);});
+  updateCumulStats();
+}
+function updateCycle(i,f,v){sleepCycles[i][f]=v;renderCycles();autoSaveSleep();}
+function addSleepCycle(){sleepCycles.push({bedtime:sleepCycles[sleepCycles.length-1].wakeTime||"",wakeTime:""});renderCycles();autoSaveSleep();}
+function removeCycle(i){if(sleepCycles.length<=1)return;sleepCycles.splice(i,1);renderCycles();autoSaveSleep();}
+function updateCumulStats(){
+  let t=0;sleepCycles.forEach(c=>{if(c.bedtime&&c.wakeTime){const d=calcCycleDuration(c.bedtime,c.wakeTime);if(d>0&&d<720)t+=d;}});
+  const nb=Math.max(0,sleepCycles.length-1);
+  const cumul=document.getElementById("slpTotalCumul");if(cumul){cumul.textContent=t>0?formatDuration(t):"—";cumul.className="sleep-calc-value "+(t>=420?"good":t>=300?"warning":"bad");}
+  const levers=document.getElementById("slpNbLevers");if(levers){levers.textContent=nb+"x";levers.className="sleep-calc-value "+(nb<=1?"good":nb<=3?"warning":"bad");}
+}
+function loadSleepEntry(){
+  const key=sleepDateKey();const el=document.getElementById("sleepDateLabel");if(el)el.textContent=sleepDateLabel();
+  const entry=sleepData[key]||{};
+  sleepCycles=entry.cycles||[{bedtime:"22:30",wakeTime:"07:00"}];renderCycles();
+  sleepQuality=entry.quality||0;updateStars();sleepFeeling=entry.feeling||"";updateFeelingBtns();
+  if(document.getElementById("painMorning")){document.getElementById("painMorning").value=entry.painMorning||0;document.getElementById("painDay").value=entry.painDay||0;updatePainDisplay("painMorning","painMorningDisplay");updatePainDisplay("painDay","painDayDisplay");}
+  if(document.getElementById("sleepNotes"))document.getElementById("sleepNotes").value=entry.notes||"";
+  const ind=document.getElementById("sleepSavedIndicator");if(ind)ind.textContent=entry.savedAt?"✓ Enregistrée à "+entry.savedAt:"";
+}
+function setSleepQuality(n){sleepQuality=n;updateStars();autoSaveSleep();}
+function updateStars(){document.querySelectorAll(".sleep-star").forEach((s,i)=>s.classList.toggle("active",i<sleepQuality));}
+function setSleepFeeling(f){sleepFeeling=f;updateFeelingBtns();autoSaveSleep();}
+function updateFeelingBtns(){document.querySelectorAll(".sleep-feeling-btn").forEach(btn=>{const f=btn.getAttribute("onclick").match(/'([^']+)'/)?.[1];btn.classList.toggle("selected",f===sleepFeeling);});}
+function updatePainDisplay(sliderId,displayId){const val=parseInt(document.getElementById(sliderId)?.value||0);const el=document.getElementById(displayId);if(!el)return;el.textContent=val+" — "+(PAIN_LABELS[val]||"");el.className="pain-val-display p"+val;autoSaveSleep();}
+function autoSaveSleep(){
+  const key=sleepDateKey();let totalMin=0;sleepCycles.forEach(c=>{if(c.bedtime&&c.wakeTime){const d=calcCycleDuration(c.bedtime,c.wakeTime);if(d>0&&d<720)totalMin+=d;}});
+  const pmEl=document.getElementById("painMorning");const pdEl=document.getElementById("painDay");const notesEl=document.getElementById("sleepNotes");
+  sleepData[key]={cycles:sleepCycles,totalMin,nbLevers:Math.max(0,sleepCycles.length-1),quality:sleepQuality,feeling:sleepFeeling,painMorning:pmEl?parseInt(pmEl.value||0):0,painDay:pdEl?parseInt(pdEl.value||0):0,notes:notesEl?notesEl.value||"":"",savedAt:sleepData[key]?.savedAt||""};
+  try{localStorage.setItem("sjsr_sleep",JSON.stringify(sleepData));}catch(e){}
+  const ind=document.getElementById("sleepSavedIndicator");if(ind)ind.textContent="✓ Sauvegardé";updateSleepStats();
+}
+function saveSleepEntry(){
+  const key=sleepDateKey();const now=new Date();const ts=String(now.getHours()).padStart(2,"0")+"h"+String(now.getMinutes()).padStart(2,"0");
+  let totalMin=0;sleepCycles.forEach(c=>{if(c.bedtime&&c.wakeTime){const d=calcCycleDuration(c.bedtime,c.wakeTime);if(d>0&&d<720)totalMin+=d;}});
+  sleepData[key]={cycles:sleepCycles,totalMin,nbLevers:Math.max(0,sleepCycles.length-1),quality:sleepQuality,feeling:sleepFeeling,painMorning:parseInt(document.getElementById("painMorning")?.value||0),painDay:parseInt(document.getElementById("painDay")?.value||0),notes:document.getElementById("sleepNotes")?.value||"",savedAt:ts};
+  try{localStorage.setItem("sjsr_sleep",JSON.stringify(sleepData));}catch(e){}
+  const ind=document.getElementById("sleepSavedIndicator");if(ind)ind.textContent="✓ Enregistrée à "+ts;
+  const btn=document.querySelector(".sleep-save-btn");if(btn){btn.textContent="✅ Nuit enregistrée !";btn.style.background="linear-gradient(135deg,#4a8a5a,#2a6a3a)";setTimeout(()=>{btn.textContent="✓ Confirmer la saisie";btn.style.background="";},2000);}
+  updateSleepStats();
+}
+function updateSleepStats(){
+  const histEl=document.getElementById("sleepHistoryList");if(!histEl)return;
+  const allKeys=Object.keys(sleepData).sort().reverse();
+  if(allKeys.length===0){histEl.innerHTML='<div style="font-size:0.7rem;color:var(--muted);padding:0.5rem">Aucune nuit enregistrée.</div>';return;}
+  let histHTML="",totH=0,cntH=0,totQ=0,cntQ=0,totPM=0,totL=0,cntP=0;
+  allKeys.slice(0,14).forEach(key=>{
+    const e=sleepData[key];const totalMin=e.totalMin||0;const h=totalMin>0?Math.round(totalMin/6)/10:null;
+    const d=new Date(key+"T12:00:00");const dayNames=["Dim","Lun","Mar","Mer","Jeu","Ven","Sam"];const dayLabel=dayNames[d.getDay()]+" "+d.getDate()+"/"+(d.getMonth()+1);
+    const nb=e.nbLevers||0;if(h!==null){totH+=h;cntH++;}if(e.quality){totQ+=e.quality;cntQ++;}if(e.painMorning!==undefined){totPM+=e.painMorning;totL+=nb;cntP++;}
+    const qs=e.quality?"★".repeat(e.quality)+"☆".repeat(5-e.quality):"—";const fi=FEELING_ICONS[e.feeling]||"—";const hs=h!==null?h+"h":"—";const ps=e.painMorning!==undefined?e.painMorning+"/10":"—";const bp=h?Math.min(100,(h/9)*100):0;const bc=h>=7?"#6b9e78":h>=5?"#c8a050":"#c04040";
+    histHTML+=`<div class="sleep-history-row"><div class="shr-date">${dayLabel}</div><div class="shr-hours" style="color:${h>=7?"#4a8a4a":h>=5?"#c47a2a":"#c04040"}">${hs}</div><div class="shr-bar"><div class="shr-bar-fill" style="width:${bp}%;background:${bc}"></div></div><div class="shr-stars" style="font-size:0.62rem;color:#d4a843">${qs}</div><div class="shr-pain" style="font-size:0.62rem;color:${(e.painMorning||0)>=7?"#c04040":(e.painMorning||0)>=4?"#c47a2a":"#4a8a4a"}">${ps}</div><div style="font-size:0.6rem;color:var(--muted);width:20px">${nb}x</div><div class="shr-feeling">${fi}</div></div>`;
+  });
+  histEl.innerHTML=histHTML;
+  const avgH=cntH?(totH/cntH).toFixed(1)+"h":"—";const avgQ=cntQ?(totQ/cntQ).toFixed(1)+"★":"—";const avgPM=cntP?(totPM/cntP).toFixed(1)+"/10":"—";const avgL=cntP?(totL/cntP).toFixed(1)+"x":"—";
+  if(document.getElementById("statAvgSleep")){document.getElementById("statAvgSleep").textContent=avgH;document.getElementById("statAvgQuality").textContent=avgQ;document.getElementById("statAvgPainM").textContent=avgPM;document.getElementById("statAvgLevers").textContent=avgL;}
+}
+let chartCurrentYear=new Date().getFullYear(),chartCurrentMonth=new Date().getMonth(),currentMetric='sleep',currentStatsTab='hebdo';
+const MONTH_NAMES=["Janvier","Février","Mars","Avril","Mai","Juin","Juillet","Août","Septembre","Octobre","Novembre","Décembre"];
+function switchStatsTab(tab,btn){currentStatsTab=tab;['hebdo','mensuel','comparatif'].forEach(t=>{const el=document.getElementById('stats-tab-'+t);if(el)el.style.display=t===tab?'block':'none';});document.querySelectorAll('.chart-tabs .chart-tab').forEach(b=>b.classList.remove('active'));if(btn)btn.classList.add('active');if(tab==='mensuel')renderMonthlyChart();if(tab==='comparatif')renderComparatif();}
+function switchMetric(metric,btn){currentMetric=metric;document.querySelectorAll('#stats-tab-mensuel .chart-tab').forEach(b=>b.classList.remove('active'));if(btn)btn.classList.add('active');renderMonthlyChart();}
+function chartNavMonth(delta){chartCurrentMonth+=delta;if(chartCurrentMonth<0){chartCurrentMonth=11;chartCurrentYear--;}if(chartCurrentMonth>11){chartCurrentMonth=0;chartCurrentYear++;}const label=document.getElementById('chartMonthLabel');if(label)label.textContent=MONTH_NAMES[chartCurrentMonth]+' '+chartCurrentYear;renderMonthlyChart();}
+function getMonthData(year,month){const entries=[];const dim=new Date(year,month+1,0).getDate();for(let d=1;d<=dim;d++){const key=year+"-"+String(month+1).padStart(2,"0")+"-"+String(d).padStart(2,"0");entries.push({day:d,key,entry:sleepData[key]||null});}return entries;}
+function getMetricValue(entry,metric){if(!entry)return null;switch(metric){case 'sleep':return entry.totalMin?Math.round(entry.totalMin/6)/10:null;case 'pain':return entry.painMorning!==undefined?entry.painMorning:null;case 'quality':return entry.quality||null;case 'levers':return entry.nbLevers!==undefined?entry.nbLevers:null;default:return null;}}
+function getMetricConfig(metric){switch(metric){case 'sleep':return{color:'#6b9e78',max:10,unit:'h',goodMin:7};case 'pain':return{color:'#e07840',max:10,unit:'/10',goodMax:3};case 'quality':return{color:'#d4a843',max:5,unit:'★',goodMin:4};case 'levers':return{color:'#a98de0',max:6,unit:'x',goodMax:1};}}
+function renderMonthlyChart(){
+  const canvas=document.getElementById('sleepChartCanvas');if(!canvas)return;
+  const ctx=canvas.getContext('2d');const data=getMonthData(chartCurrentYear,chartCurrentMonth);const cfg=getMetricConfig(currentMetric);
+  const W=canvas.parentElement.offsetWidth||300;const H=140;canvas.width=W;canvas.height=H;
+  const padL=32,padR=12,padT=14,padB=28;const cW=W-padL-padR;const cH=H-padT-padB;
+  ctx.clearRect(0,0,W,H);ctx.fillStyle='#fafaf9';ctx.fillRect(0,0,W,H);
+  ctx.strokeStyle='rgba(58,40,32,0.06)';ctx.lineWidth=1;
+  for(let i=0;i<=5;i++){const y=padT+(cH/5)*i;ctx.beginPath();ctx.moveTo(padL,y);ctx.lineTo(padL+cW,y);ctx.stroke();}
+  const points=[];data.forEach((d,i)=>{const val=getMetricValue(d.entry,currentMetric);const x=padL+(i/(data.length-1))*cW;if(val!==null){const y=padT+cH-(Math.min(val,cfg.max)/cfg.max)*cH;points.push({x,y,val,day:d.day,hasData:true});}else{points.push({x,y:null,val:null,day:d.day,hasData:false});}});
+  ctx.strokeStyle=cfg.color;ctx.lineWidth=2;ctx.lineJoin='round';ctx.beginPath();let fp=true;points.forEach(p=>{if(p.hasData){if(fp){ctx.moveTo(p.x,p.y);fp=false;}else ctx.lineTo(p.x,p.y);}else fp=true;});ctx.stroke();
+  points.forEach(p=>{if(!p.hasData)return;let dc=cfg.color;if(cfg.goodMin&&p.val>=cfg.goodMin)dc='#6b9e78';else if(cfg.goodMax!==undefined&&p.val<=cfg.goodMax)dc='#6b9e78';else dc='#c04040';ctx.beginPath();ctx.arc(p.x,p.y,3,0,Math.PI*2);ctx.fillStyle=dc;ctx.fill();ctx.strokeStyle='#fff';ctx.lineWidth=1.5;ctx.stroke();});
+  ctx.fillStyle='rgba(58,40,32,0.45)';ctx.font='8px sans-serif';ctx.textAlign='center';points.forEach(p=>{if(p.day%5===0||p.day===1)ctx.fillText(p.day,p.x,H-6);});
+  updateMonthlyStats(data);
+}
+function updateMonthlyStats(data){
+  const values=[],pains=[];let gn=0;data.forEach(d=>{if(!d.entry)return;const s=getMetricValue(d.entry,'sleep');const p=getMetricValue(d.entry,'pain');if(s!==null){values.push(s);if(s>=7)gn++;}if(p!==null)pains.push(p);});
+  const n=values.length;if(n===0){['mstatAvg','mstatBest','mstatWorst','mstatNights','mstatGoodNights','mstatPainAvg'].forEach(id=>{const el=document.getElementById(id);if(el)el.textContent='—';});return;}
+  const avg=(values.reduce((a,b)=>a+b,0)/n).toFixed(1);const best=Math.max(...values).toFixed(1);const worst=Math.min(...values).toFixed(1);const painAvg=pains.length?(pains.reduce((a,b)=>a+b,0)/pains.length).toFixed(1):'—';
+  const setEl=(id,val,cls)=>{const el=document.getElementById(id);if(el){el.textContent=val;if(cls)el.className='mstat-val '+cls;}};
+  setEl('mstatAvg',avg+'h',parseFloat(avg)>=7?'good':'bad');setEl('mstatBest',best+'h','good');setEl('mstatWorst',worst+'h','');setEl('mstatNights',n+' nuits','');setEl('mstatGoodNights',gn+' nuits','');setEl('mstatPainAvg',pains.length?painAvg+'/10':'—','');
+}
+function renderComparatif(){
+  const section=document.getElementById('compareSection');if(!section)return;
+  const now=new Date();const months=[];
+  for(let i=5;i>=0;i--){const d=new Date(now.getFullYear(),now.getMonth()-i,1);const data=getMonthData(d.getFullYear(),d.getMonth());const sv=[],pv=[];data.forEach(day=>{if(!day.entry)return;const s=getMetricValue(day.entry,'sleep');const p=getMetricValue(day.entry,'pain');if(s!==null)sv.push(s);if(p!==null)pv.push(p);});if(sv.length>0)months.push({label:MONTH_NAMES[d.getMonth()].slice(0,3)+' '+d.getFullYear(),avgSleep:sv.reduce((a,b)=>a+b,0)/sv.length,avgPain:pv.length?pv.reduce((a,b)=>a+b,0)/pv.length:null,n:sv.length});}
+  if(months.length<1){section.innerHTML='<div style="font-size:0.7rem;color:var(--muted);text-align:center;padding:1.5rem">Continuez à enregistrer vos nuits 🌸</div>';return;}
+  const maxSl=Math.max(...months.map(m=>m.avgSleep),9);let html='<div class="compare-title">📊 Comparatif mensuel</div>';
+  months.forEach((m,i)=>{const prev=i>0?months[i-1]:null;const sw=Math.round((m.avgSleep/maxSl)*100);const pw=m.avgPain!==null?Math.round((m.avgPain/10)*100):0;let sa='',pa='';if(prev){const sd=m.avgSleep-prev.avgSleep;const pd=m.avgPain!==null&&prev.avgPain!==null?m.avgPain-prev.avgPain:0;sa=sd>0.2?'<span class="compare-arrow better">↑</span>':sd<-0.2?'<span class="compare-arrow worse">↓</span>':'<span class="compare-arrow same">→</span>';pa=pd<-0.5?'<span class="compare-arrow better">↓</span>':pd>0.5?'<span class="compare-arrow worse">↑</span>':'<span class="compare-arrow same">→</span>';}
+  html+=`<div style="margin-bottom:0.7rem;padding:0.6rem;background:rgba(58,40,32,0.03);border-radius:10px"><div style="display:flex;justify-content:space-between;margin-bottom:0.4rem"><div style="font-size:0.68rem;font-weight:700">${m.label}</div><div style="font-size:0.6rem;color:var(--muted)">${m.n} nuits</div></div><div class="compare-row"><div class="compare-label">😴</div><div class="compare-bars"><div class="compare-bar-wrap"><div class="compare-bar sleep" style="width:${sw}%"></div></div></div><div class="compare-val">${m.avgSleep.toFixed(1)}h</div>${sa}</div>${m.avgPain!==null?`<div class="compare-row"><div class="compare-label">🦵</div><div class="compare-bars"><div class="compare-bar-wrap"><div class="compare-bar pain" style="width:${pw}%"></div></div></div><div class="compare-val">${m.avgPain.toFixed(1)}/10</div>${pa}</div>`:''}</div>`;});
+  section.innerHTML=html;
 }
 
 function updateSiesteInfo(){
