@@ -1028,6 +1028,7 @@ canvas.sleep-chart{width:100%;height:140px}
   <!-- Filtres catégories -->
   <div style="display:flex;gap:0.4rem;padding:0 1rem 0.6rem;overflow-x:auto;scrollbar-width:none">
     <button class="diner-filter active" onclick="filterDiners('all',this)">Tout</button>
+    <button class="diner-filter" onclick="filterDiners('brunch',this)">🌅 Brunch</button>
     <button class="diner-filter" onclick="filterDiners('entree',this)">🥗 Entrées</button>
     <button class="diner-filter" onclick="filterDiners('plat',this)">🍲 Plats</button>
     <button class="diner-filter" onclick="filterDiners('soupe',this)">🥣 Soupes</button>
@@ -2897,7 +2898,75 @@ const DINERS=[
   {cat:"soupe",time:"15 min",name:"Bouillon chou chinois sarrasin",
    ingr:"1 chou chinois · 100g sarrasin décortiqué · gingembre frais · sauce soja · curcuma · citron",
    steps:"1. Porter 700ml eau à ébullition dans une casserole. Ajouter gingembre frais râpé + 1cc curcuma + sel.\n2. Ajouter sarrasin décortiqué. Cuire 10 min à feu moyen.\n3. Pendant ce temps : couper chou chinois en lanières. Ajouter dans la casserole les 3 dernières minutes — il doit rester légèrement croquant.\n4. Ajouter 1cs sauce soja. Presser citron.\n5. Servir chaud dans un bol profond. Ce bouillon est ultra-apaisant pour les jambes le soir — le bouillon chaud + gingembre = circulation améliorée.",
-   tags:["sjsr","soupe","anti-inflammatoire","soir"]}];
+   tags:["sjsr","soupe","anti-inflammatoire","soir"]},
+
+  // ── NOUVELLES RECETTES · "500 Recettes Sans Gluten" (C. Garnier) & SNFGE ──
+
+  {cat:"brunch",time:"10 min + trempage 12h",name:"Granola au lait de soja",
+   ingr:"Lait de soja 1L · 4 abricots secs · 4 pruneaux · 2 kiwis · 100g amandes · 1cs graines de courge · 1cc cannelle",
+   steps:"1. La VEILLE : couper abricots et pruneaux en dés. Couvrir d’eau. Amandes + graines courge dans un autre bol, couvrir d’eau. Tremper 12h.\n2. Le lendemain : égoutter et mixer amandes grossièrement — grumeleux, pas en poudre.\n3. Grand bol : mélange mixé + pruneaux/abricots + kiwis en rondelles + cannelle.\n4. Verser lait de soja. Mélanger délicatement.\n5. Très consistant — idéal avant une longue journée.\n🌿 SJSR : graines de courge = magnésium + zinc. Amandes = tryptophane.",
+   tags:["sjsr","vegan","brunch","magnésium"]},
+
+  {cat:"brunch",time:"5 min",name:"Bowl quinoa aux fruits et épices",
+   ingr:"500g quinoa cuit (batch) · 1 mangue · 1 banane · 4 abricots secs · 1cs sirop d’érable · 1cc cannelle · 1 pincée quatre-épices",
+   steps:"1. Quinoa du batch — déjà cuit, juste sortir du frigo.\n2. Mangue en dés, banane en rondelles, abricots secs en lanières aux ciseaux.\n3. Grand bol : quinoa + sirop d’érable + fruits. Mélanger.\n4. Cannelle + quatre-épices. Servir frais — peut se préparer la veille.\n⚡ TDAH : zéro cuisson, tout vient du batch. Prêt en 5 min !\n🌿 Quinoa = protéines complètes. Mangue = vitamine C → absorption fer boostée.",
+   tags:["brunch","vegan","rapide","tdah"]},
+
+  {cat:"brunch",time:"15 min",name:"Pancakes flocons de millet",
+   ingr:"200g flocons de millet (mixer en farine) · 2 oeufs · 200ml lait avoine · 1cs huile neutre · 1 pincée sel",
+   steps:"1. Mixer flocons de millet 30 sec en farine fine.\n2. Fouetter oeufs + lait avoine + huile + sel.\n3. Ajouter farine de millet. Pâte homogène. Reposer 5 min.\n4. Poêle antiadhésive légèrement huilée, feu moyen. 2-3 min jusqu’aux bulles. Retourner. 1-2 min.\n5. Servir avec fruits rouges + miel ou mangue + coco râpée.\n🌿 Millet = magnésium + silice. Excellent petit-déjeuner anti-SJSR.",
+   tags:["brunch","sjsr","magnésium"]},
+
+  {cat:"brunch",time:"50 min",name:"Muesli croustillant coco-chocolat",
+   ingr:"200g flocons de riz · 30g riz soufflé · 75g pétales de maïs non sucrés · 1cs coco râpée · 75g sirop d’érable · 1cs huile · 50g chocolat noir 85% râpé",
+   steps:"1. Four 160°C.\n2. Chauffer sirop d’érable + huile jusqu’à fluide. Hors feu : ajouter flocons de riz + riz soufflé + pétales de maïs + coco. Bien enrober.\n3. Fine couche sur plaque avec papier cuisson. Four 45 min en remuant toutes les 15 min.\n4. REFROIDIR COMPLÈTEMENT avant d’ajouter le chocolat râpé (sinon il fond !).\n5. Boîte hermétique 2 semaines. Servir avec lait de millet.\n🍫 Chocolat 85% = magnésium + dopamine naturelle.",
+   tags:["brunch","dopamine","préparation"]},
+
+  {cat:"brunch",time:"15 min",name:"Muesli fruits secs torréfié",
+   ingr:"200g flocons de riz · 200g flocons de soja · 50g noisettes · 50g amandes effilées · 50g raisins secs · 50g cranberries séchées · 20g sucre de canne",
+   steps:"1. Mélanger flocons de riz + soja + noisettes + amandes effilées.\n2. Grande poêle antiadhésive CHAUDE sans huile. Feu moyen. Dorer 5-6 min en remuant constamment — brunissent vite !\n3. Verser dans un plat. REFROIDIR COMPLÈTEMENT.\n4. Ajouter raisins + cranberries + sucre de canne. Conserver en pot en verre.\n🌿 Cranberries = antioxydants. Raisins secs = fer naturel. Noisettes = magnésium.",
+   tags:["brunch","vegan","antioxydant","préparation"]},
+
+  {cat:"plat",time:"12 min + repos 30 min",name:"Crêpes à l’amarante",
+   ingr:"125g farine d’amarante · 25cl lait d’avoine · 3 oeufs · 1cs huile d’olive · 1 pincée sel",
+   steps:"1. Farine d’amarante dans saladier. Creuser un puits.\n2. Fouetter oeufs + lait + huile + sel dans un bol. Verser dans le puits. Pâte fluide.\n3. REPOSER 30 min minimum — indispensable pour l’amarante.\n4. Poêle huilée feu moyen-vif. Louche de pâte. 2 min jusqu’à surface sèche. Retourner. 1 min.\n5. Salé : épinards surg. + tofu + sauce soja. Sucré : miel + fruits rouges.\n🌿 Amarante = protéines complètes + fer + magnésium. Plus nutritive que le sarrasin !\n⚠️ Farine d’amarante = La Fourche ou Biocoop.",
+   tags:["sjsr","protéine","fer","magnésium"]},
+
+  {cat:"plat",time:"15 min + repos 20 min",name:"Galettes sarrasin tofu-épinards",
+   ingr:"250g farine sarrasin · 1 oeuf · 500ml eau · 1cc sel · Garniture : tofu émietté + épinards surg. + sauce soja",
+   steps:"1. Farine sarrasin + sel + oeuf. Eau progressivement — pâte très fluide. Reposer 20 min.\n2. GARNITURE : tofu émietté poêle 3 min feu vif sans bouger. Épinards surg. 2 min. Sauce soja.\n3. Poêle très chaude légèrement huilée. Fine couche de pâte. 3 min — bords se détachent. Retourner. 1 min.\n4. Garniture au centre. Replier les 4 côtés en carré.\n🌿 Fer sarrasin + protéines tofu + magnésium épinards = repas anti-SJSR complet.",
+   tags:["sjsr","fer","magnésium","complet"]},
+
+  {cat:"plat",time:"25 min",name:"Curry quinoa pois chiches",
+   ingr:"200g quinoa (batch) · 2 carottes · 1 boîte pois chiches · 400ml lait coco · 1cc curry Masala · 1cc curcuma · 1cc gingembre frais · sel",
+   steps:"1. Quinoa du batch ou cuire 12 min (2x volume eau).\n2. Carottes en rondelles. Revenir dans 1cs huile 5 min.\n3. Ajouter curry + curcuma + gingembre fraîs râpé. Remuer 2 min.\n4. Pois chiches égouttés + lait coco. Mijoter 10 min feu moyen. Sel.\n5. Servir sur quinoa avec coco râpée.\n🌿 Trio anti-inflammatoire : curry + curcuma + gingembre. Pois chiches = protéines + magnésium.",
+   tags:["sjsr","vegan","anti-inflammatoire","complet"]},
+
+  {cat:"soupe",time:"20 min",name:"Potage froid chou-fleur à l’aneth",
+   ingr:"1 chou-fleur · 400ml bouillon légumes · 2cs huile olive · 1cc aneth séché · 200ml lait avoine · sel · poivre",
+   steps:"1. Chou-fleur en fleurettes. Cuire eau bouillante salée 15 min.\n2. Égoutter. Mixer avec bouillon chaud + huile d’olive + aneth.\n3. Ajouter lait avoine. Mixer jusqu’à texture très lisse. Sel + poivre.\n4. FROID : frigo minimum 2h. Excellent l’été avec glaçons.\n5. OU chaud immédiatement — les deux sont délicieux.\n🌿 Chou-fleur = vitamine C + anti-inflammatoire. Aneth = relaxe les muscles lisses. Idéal SJSR.",
+   tags:["sjsr","vegan","vitC","soupe"]},
+
+  {cat:"dessert",time:"3h10",name:"Granité de poire au citron",
+   ingr:"4 poires mûres · jus de 2 citrons · 2cs miel bio · 100ml eau",
+   steps:"1. Éplucher poires. Mixer avec jus de citron + miel + eau jusqu’à texture lisse.\n2. Plat Pyrex au congélateur.\n3. Toutes les 30 min pendant 3h : gratter avec une fourchette pour créer des cristaux.\n4. Servir dans des verres froids.\n⚡ TDAH : 10 min de préparation, le congélateur fait le reste !\n🌿 Poire = potassium. Citron = vitamine C → absorption du fer boostée.",
+   tags:["dessert","vegan","vitC","léger"]},
+
+  {cat:"dessert",time:"45 min",name:"Clafoutis cerises anti-SJSR",
+   ingr:"300g cerises surg. · 3 oeufs · 80g sucre · 80g farine de riz · 300ml lait avoine · 1cc vanille",
+   steps:"1. Préchauffer four 180°C. Beurrer un plat à gratin. Cerises au fond.\n2. Fouetter oeufs + sucre 2 min — mélange clair et mousseux.\n3. Farine de riz + vanille. Mélanger. Incorporer lait avoine progressivement.\n4. Verser sur les cerises. Four 35 min.\n5. Gonflé et doré — retombe en refroidissant (c’est normal !).\n🌿 Cerises = mélatonine naturelle → sommeil + réduction SJSR.\n🌿 Lait d’avoine = magnésium. Idéal comme dessert du soir anti-SJSR !",
+   tags:["dessert","sjsr","végétarien","cerises"]},
+
+  {cat:"base",time:"55 min",name:"Pain multicéréales maison",
+   ingr:"150g farine de riz · 150g farine sarrasin · 100g fécule de maïs · 50g farine de quinoa · 1 sachet levure boulanger (8g) · 1cc sel · 200ml eau tiède",
+   steps:"1. Préchauffer four 180°C.\n2. Mélanger toutes les farines + levure + sel dans un grand saladier.\n3. Ajouter l’eau progressivement en mélangeant à la cuillère.\n4. La pâte doit être collante comme une pâte à cake — PAS une boule lisse. C’est NORMAL et c’est le SECRET !\n5. Verser dans un moule à manqué huilé. Reposer 30 min à température ambiante.\n6. Enfourner 45 min. Taper en dessous : sonne creux = cuit.\n⚠️ Farine de quinoa et fécule = disponibles en magasin bio (La Fourche, Biocoop).",
+   tags:["base","vegan","pain"]},
+
+  {cat:"base",time:"30 min",name:"Pain express aux graines oméga-3",
+   ingr:"200g farine de riz · 1 sachet levure chimique sg · 2 oeufs · 25cl crème coco VietCoco · 4cs huile de sésame · 2cs graines de lin · 2cs graines de tournesol · 1cc graines de pavot · sel",
+   steps:"1. Préchauffer four 210°C.\n2. Battre oeufs + crème coco VietCoco + huile de sésame + sel.\n3. Incorporer farine de riz + levure chimique. Mélanger.\n4. Ajouter toutes les graines. Mélanger.\n5. Verser dans moule à cake huilé. Cuire 30 min. Couteau propre = cuit.\n🌿 Huile sésame + graines de lin + tournesol = trio oméga-3 anti-inflammatoire.\n💡 Idéal pour accompagner sardines, saumon ou rillettes de poisson.\n✅ Crème coco VietCoco est déjà dans votre stock Auchan !",
+   tags:["base","sjsr","omega3"]}
+];
 // ── PLACARD OFFICE ──
 const PLACARD_OFFICE=[
   {id:"p001",cat:"poisson",nom:"Pavés saumon surgelés",qte:"× 4 portions",priorite:1,note:"Dîner 1x/semaine"},
@@ -3207,7 +3276,7 @@ function filterDinerTime(maxMin,btn){activeTime=maxMin;document.querySelectorAll
 function renderDinerList(){
   const el=document.getElementById('diner-list');if(!el)return;
   let filtered=DINERS.filter(d=>{if(activeCat!=='all'&&d.cat!==activeCat)return false;if(activeTime>0&&parseInt(d.time)>activeTime)return false;return true;});
-  const catEmoji={entree:'🥗',plat:'🍲',soupe:'🥣',dessert:'🍰',base:'📋'};
+  const catEmoji={brunch:'🌅',entree:'🥗',plat:'🍲',soupe:'🥣',dessert:'🍰',base:'📋'};
   el.innerHTML=filtered.map((d,i)=>{const tagHTML=(d.tags||[]).map(t=>`<span style="font-size:0.55rem;background:rgba(107,158,120,0.15);border-radius:4px;padding:0.1rem 0.35rem;color:var(--leaf-dark)">${t}</span>`).join(' ');return `<div class="diner-card" onclick="toggleRecipe(${i})"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.3rem"><div style="font-size:0.8rem;font-weight:700;color:var(--text)">${catEmoji[d.cat]||'🍽'} ${d.name}</div><div style="font-size:0.65rem;color:var(--muted)">⏱ ${d.time}</div></div><div style="font-size:0.65rem;color:var(--muted);margin-bottom:0.3rem;font-style:italic">${d.ingr}</div><div style="display:flex;gap:0.3rem;flex-wrap:wrap">${tagHTML}</div><div id="recipe-steps-${i}" style="display:none;font-size:0.68rem;background:rgba(107,158,120,0.06);border-radius:8px;padding:0.6rem;margin-top:0.4rem;line-height:1.6">${d.steps}</div></div>`;}).join('');
 }
 function toggleRecipe(i){const el=document.getElementById('recipe-steps-'+i);if(!el)return;el.style.display=el.style.display==='none'?'block':'none';}
