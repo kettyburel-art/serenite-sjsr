@@ -1343,141 +1343,141 @@ canvas.sleep-chart{width:100%;height:140px}
 
   <!-- Header -->
   <div style="padding:0.8rem 1rem 0.4rem">
-    <div style="font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:700;color:var(--text)">✨ Assistant IA Sérénité</div>
-    <div style="font-size:0.62rem;color:var(--muted);margin-top:0.15rem">Propulsé par Claude · Anti-SJSR & TDAH · Ketty</div>
+    <div style="font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:700;color:var(--text)">✨ Assistant Cuisine</div>
+    <div style="font-size:0.62rem;color:var(--muted);margin-top:0.1rem">Analyse votre stock · Fonctionne hors connexion · 49 recettes</div>
   </div>
 
-  <!-- Tabs IA -->
+  <!-- Tabs -->
   <div style="display:flex;gap:0.4rem;padding:0 1rem 0.6rem">
-    <button class="diner-filter active" id="ia-tab-cuisine" onclick="switchIATab('cuisine',this)">👩‍🍳 Cuisine IA</button>
-    <button class="diner-filter" id="ia-tab-menu" onclick="switchIATab('menu',this)">📅 Menu IA</button>
+    <button class="diner-filter active" id="ia-tab-recette" onclick="switchIATab('recette',this)">👩‍🍳 Quelle recette ?</button>
+    <button class="diner-filter" id="ia-tab-menu" onclick="switchIATab('menu',this)">📅 Menu semaine</button>
+    <button class="diner-filter" id="ia-tab-stock" onclick="switchIATab('stock',this)">🧊 Mon stock</button>
   </div>
 
-  <!-- ── TAB CUISINE IA ── -->
-  <div id="ia-panel-cuisine" style="padding:0 1rem">
+  <!-- ══ TAB RECETTE ══ -->
+  <div id="ia-panel-recette" style="padding:0 1rem">
 
-    <div style="font-size:0.68rem;color:var(--muted);margin-bottom:0.8rem;line-height:1.5">
-      Dites-moi ce que vous avez envie de manger ou ce qui reste dans votre frigo,<br>
-      je vous propose une recette adaptée à votre stock et à votre santé 🌿
+    <div style="font-size:0.67rem;color:var(--muted);margin-bottom:0.7rem;line-height:1.5">
+      Cochez ce que vous avez envie ou ce qui est disponible — je cherche dans vos 49 recettes 🌿
     </div>
 
-    <!-- Mode de question -->
-    <div style="display:flex;gap:0.4rem;margin-bottom:0.6rem;flex-wrap:wrap">
-      <button class="ia-mode-btn active" onclick="setIAMode('frigo',this)">🧊 J'ai ces ingrédients</button>
-      <button class="ia-mode-btn" onclick="setIAMode('envie',this)">💭 J'ai envie de...</button>
-      <button class="ia-mode-btn" onclick="setIAMode('rapide',this)">⚡ Repas rapide</button>
-      <button class="ia-mode-btn" onclick="setIAMode('sjsr',this)">🌿 Anti-SJSR ce soir</button>
-    </div>
-
-    <!-- Input utilisateur -->
-    <textarea id="ia-cuisine-input" placeholder="Ex: j'ai du tofu, du sarrasin et des carottes..." 
-      style="width:100%;border:1.5px solid rgba(58,40,32,0.15);border-radius:12px;padding:0.7rem;
-      font-size:0.72rem;font-family:inherit;color:var(--text);background:#fff;
-      resize:none;height:80px;box-sizing:border-box;outline:none;line-height:1.5"
-      oninput="this.style.height='80px';this.style.height=this.scrollHeight+'px'"></textarea>
-
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-top:0.5rem">
-      <div style="font-size:0.6rem;color:var(--muted)">Stock connu · Profil SJSR/TDAH · Sans gluten/lactose</div>
-      <button onclick="askCuisineIA()" id="ia-cuisine-btn"
-        style="background:linear-gradient(135deg,var(--blossom-deep),#8b3a6b);color:#fff;
-        border:none;border-radius:10px;padding:0.5rem 1rem;font-size:0.7rem;font-weight:700;
-        cursor:pointer;white-space:nowrap">
-        ✨ Générer
-      </button>
-    </div>
-
-    <!-- Réponse IA -->
-    <div id="ia-cuisine-result" style="margin-top:0.8rem;display:none">
-      <div style="background:linear-gradient(135deg,rgba(107,158,120,0.08),rgba(212,168,67,0.04));
-        border-radius:14px;padding:0.8rem;border:1px solid rgba(107,158,120,0.15)">
-        <div style="display:flex;align-items:center;gap:0.4rem;margin-bottom:0.5rem">
-          <div style="font-size:0.6rem;font-weight:700;color:var(--leaf-dark);text-transform:uppercase;letter-spacing:0.08em">✨ Recette IA</div>
-          <div id="ia-cuisine-loading" style="display:none;font-size:0.6rem;color:var(--muted)">génération en cours...</div>
-        </div>
-        <div id="ia-cuisine-text" style="font-size:0.72rem;color:var(--text);line-height:1.7;white-space:pre-wrap"></div>
+    <!-- Humeur / envie -->
+    <div style="background:rgba(58,40,32,0.03);border-radius:12px;padding:0.7rem;margin-bottom:0.6rem">
+      <div style="font-size:0.62rem;font-weight:700;color:var(--text);margin-bottom:0.4rem">🌡️ Comment je me sens ?</div>
+      <div style="display:flex;gap:0.35rem;flex-wrap:wrap">
+        <button class="ia-chip" onclick="toggleChip(this,'humeur')" data-val="fatigue">😴 Fatiguée</button>
+        <button class="ia-chip" onclick="toggleChip(this,'humeur')" data-val="sjsr">🦵 Jambes agitées</button>
+        <button class="ia-chip" onclick="toggleChip(this,'humeur')" data-val="rapide">⚡ Pas d'énergie</button>
+        <button class="ia-chip" onclick="toggleChip(this,'humeur')" data-val="envie">😋 Bonne humeur</button>
+        <button class="ia-chip" onclick="toggleChip(this,'humeur')" data-val="douceur">🌸 Besoin de douceur</button>
       </div>
-      <button onclick="askCuisineIA()" style="margin-top:0.5rem;background:none;border:1px solid rgba(58,40,32,0.15);
-        border-radius:8px;padding:0.3rem 0.8rem;font-size:0.62rem;color:var(--muted);cursor:pointer;width:100%">
-        🔄 Autre suggestion
-      </button>
     </div>
+
+    <!-- Moment -->
+    <div style="background:rgba(58,40,32,0.03);border-radius:12px;padding:0.7rem;margin-bottom:0.6rem">
+      <div style="font-size:0.62rem;font-weight:700;color:var(--text);margin-bottom:0.4rem">🕐 Quel repas ?</div>
+      <div style="display:flex;gap:0.35rem;flex-wrap:wrap">
+        <button class="ia-chip" onclick="toggleChip(this,'moment')" data-val="brunch">🌅 Brunch</button>
+        <button class="ia-chip" onclick="toggleChip(this,'moment')" data-val="bureau">💼 Bureau (froid)</button>
+        <button class="ia-chip" onclick="toggleChip(this,'moment')" data-val="diner">🌙 Dîner chaud</button>
+        <button class="ia-chip" onclick="toggleChip(this,'moment')" data-val="dessert">🍫 Dessert / Goûter</button>
+        <button class="ia-chip" onclick="toggleChip(this,'moment')" data-val="soupe">🥣 Soupe</button>
+      </div>
+    </div>
+
+    <!-- Temps dispo -->
+    <div style="background:rgba(58,40,32,0.03);border-radius:12px;padding:0.7rem;margin-bottom:0.6rem">
+      <div style="font-size:0.62rem;font-weight:700;color:var(--text);margin-bottom:0.4rem">⏱️ Temps disponible ?</div>
+      <div style="display:flex;gap:0.35rem;flex-wrap:wrap">
+        <button class="ia-chip" onclick="toggleChip(this,'temps')" data-val="5">5 min</button>
+        <button class="ia-chip" onclick="toggleChip(this,'temps')" data-val="15">15 min</button>
+        <button class="ia-chip" onclick="toggleChip(this,'temps')" data-val="30">30 min</button>
+        <button class="ia-chip" onclick="toggleChip(this,'temps')" data-val="60">1h+</button>
+      </div>
+    </div>
+
+    <!-- Ingrédient principal dispo -->
+    <div style="background:rgba(58,40,32,0.03);border-radius:12px;padding:0.7rem;margin-bottom:0.8rem">
+      <div style="font-size:0.62rem;font-weight:700;color:var(--text);margin-bottom:0.4rem">🧊 Ingrédient disponible ?</div>
+      <div style="display:flex;gap:0.35rem;flex-wrap:wrap">
+        <button class="ia-chip" onclick="toggleChip(this,'ingr')" data-val="saumon">🐟 Saumon</button>
+        <button class="ia-chip" onclick="toggleChip(this,'ingr')" data-val="sardines">🐟 Sardines</button>
+        <button class="ia-chip" onclick="toggleChip(this,'ingr')" data-val="maquereau">🐟 Maquereau</button>
+        <button class="ia-chip" onclick="toggleChip(this,'ingr')" data-val="crevettes">🦐 Crevettes</button>
+        <button class="ia-chip" onclick="toggleChip(this,'ingr')" data-val="thon">🐟 Thon</button>
+        <button class="ia-chip" onclick="toggleChip(this,'ingr')" data-val="tofu">🧈 Tofu</button>
+        <button class="ia-chip" onclick="toggleChip(this,'ingr')" data-val="oeufs">🥚 Œufs</button>
+        <button class="ia-chip" onclick="toggleChip(this,'ingr')" data-val="lentilles">🫘 Lentilles</button>
+        <button class="ia-chip" onclick="toggleChip(this,'ingr')" data-val="quinoa">🌾 Quinoa</button>
+        <button class="ia-chip" onclick="toggleChip(this,'ingr')" data-val="sarrasin">🌾 Sarrasin</button>
+        <button class="ia-chip" onclick="toggleChip(this,'ingr')" data-val="millet">🌾 Millet</button>
+        <button class="ia-chip" onclick="toggleChip(this,'ingr')" data-val="chou">🥬 Chou chinois</button>
+        <button class="ia-chip" onclick="toggleChip(this,'ingr')" data-val="mangue">🥭 Mangue</button>
+        <button class="ia-chip" onclick="toggleChip(this,'ingr')" data-val="cerises">🍒 Cerises</button>
+        <button class="ia-chip" onclick="toggleChip(this,'ingr')" data-val="chocolat">🍫 Chocolat</button>
+      </div>
+    </div>
+
+    <button onclick="chercherRecette()" style="width:100%;background:linear-gradient(135deg,var(--blossom-deep),#7a3a5a);color:#fff;border:none;border-radius:12px;padding:0.7rem;font-size:0.75rem;font-weight:700;cursor:pointer;letter-spacing:0.02em">
+      ✨ Trouver ma recette
+    </button>
+
+    <!-- Résultats -->
+    <div id="ia-recette-result" style="margin-top:0.8rem;display:none"></div>
 
   </div>
 
-  <!-- ── TAB MENU IA ── -->
+  <!-- ══ TAB MENU ══ -->
   <div id="ia-panel-menu" style="display:none;padding:0 1rem">
 
-    <div style="font-size:0.68rem;color:var(--muted);margin-bottom:0.8rem;line-height:1.5">
-      Je génère un plan de repas personnalisé basé sur votre stock réel,<br>
-      votre profil SJSR/TDAH et vos préférences 🌸
+    <div style="font-size:0.67rem;color:var(--muted);margin-bottom:0.7rem;line-height:1.5">
+      Je compose un menu équilibré depuis vos 49 recettes · Anti-SJSR · Sans gluten 🌸
     </div>
 
-    <!-- Options menu -->
-    <div style="background:rgba(58,40,32,0.04);border-radius:12px;padding:0.8rem;margin-bottom:0.8rem">
-      <div style="font-size:0.63rem;font-weight:700;color:var(--text);margin-bottom:0.5rem">Options</div>
-      
+    <div style="background:rgba(58,40,32,0.03);border-radius:12px;padding:0.7rem;margin-bottom:0.6rem">
+      <div style="font-size:0.62rem;font-weight:700;color:var(--text);margin-bottom:0.5rem">⚙️ Options</div>
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem">
         <div style="font-size:0.65rem;color:var(--muted)">Durée</div>
-        <select id="ia-menu-duree" style="border:1px solid rgba(58,40,32,0.15);border-radius:6px;
-          padding:0.2rem 0.4rem;font-size:0.65rem;background:#fff;color:var(--text)">
+        <select id="ia-menu-duree" style="border:1px solid rgba(58,40,32,0.15);border-radius:6px;padding:0.25rem 0.5rem;font-size:0.65rem;background:#fff;color:var(--text)">
           <option value="3">3 jours</option>
           <option value="5" selected>5 jours</option>
           <option value="7">1 semaine</option>
         </select>
       </div>
-
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem">
         <div style="font-size:0.65rem;color:var(--muted)">Priorité</div>
-        <select id="ia-menu-priorite" style="border:1px solid rgba(58,40,32,0.15);border-radius:6px;
-          padding:0.2rem 0.4rem;font-size:0.65rem;background:#fff;color:var(--text)">
-          <option value="sjsr">Anti-SJSR maximum</option>
+        <select id="ia-menu-prio" style="border:1px solid rgba(58,40,32,0.15);border-radius:6px;padding:0.25rem 0.5rem;font-size:0.65rem;background:#fff;color:var(--text)">
+          <option value="sjsr">Anti-SJSR max</option>
           <option value="rapide">Rapide (max 15 min)</option>
-          <option value="varié">Varié et équilibré</option>
-          <option value="batch">Basé sur le batch</option>
+          <option value="varie">Varié</option>
+          <option value="batch">Basé batch</option>
         </select>
       </div>
-
       <div style="display:flex;align-items:center;justify-content:space-between">
-        <div style="font-size:0.65rem;color:var(--muted)">Contraintes</div>
-        <select id="ia-menu-contrainte" style="border:1px solid rgba(58,40,32,0.15);border-radius:6px;
-          padding:0.2rem 0.4rem;font-size:0.65rem;background:#fff;color:var(--text)">
-          <option value="">Aucune contrainte</option>
-          <option value="budget_fin">Budget fin de mois</option>
+        <div style="font-size:0.65rem;color:var(--muted)">Mode</div>
+        <select id="ia-menu-mode" style="border:1px solid rgba(58,40,32,0.15);border-radius:6px;padding:0.25rem 0.5rem;font-size:0.65rem;background:#fff;color:var(--text)">
+          <option value="normal">Normal</option>
           <option value="fatigue">Journée fatigue</option>
-          <option value="vacances">Mode vacances</option>
+          <option value="vacances">Mode vacances 🌸</option>
+          <option value="budget">Fin de mois</option>
         </select>
       </div>
     </div>
 
-    <!-- Contexte optionnel -->
-    <textarea id="ia-menu-input" placeholder="Précisions optionnelles : ex. j'ai peu d'énergie cette semaine, il me reste surtout des sardines..." 
-      style="width:100%;border:1.5px solid rgba(58,40,32,0.15);border-radius:12px;padding:0.7rem;
-      font-size:0.72rem;font-family:inherit;color:var(--text);background:#fff;
-      resize:none;height:60px;box-sizing:border-box;outline:none;line-height:1.5"></textarea>
-
-    <button onclick="askMenuIA()" id="ia-menu-btn"
-      style="margin-top:0.5rem;width:100%;background:linear-gradient(135deg,var(--blossom-deep),#8b3a6b);
-      color:#fff;border:none;border-radius:12px;padding:0.65rem;font-size:0.72rem;font-weight:700;
-      cursor:pointer">
-      ✨ Générer mon menu personnalisé
+    <button onclick="genererMenu()" style="width:100%;background:linear-gradient(135deg,var(--blossom-deep),#7a3a5a);color:#fff;border:none;border-radius:12px;padding:0.7rem;font-size:0.75rem;font-weight:700;cursor:pointer">
+      📅 Générer mon menu
     </button>
 
-    <!-- Réponse menu IA -->
-    <div id="ia-menu-result" style="margin-top:0.8rem;display:none">
-      <div style="background:linear-gradient(135deg,rgba(107,158,120,0.08),rgba(212,168,67,0.04));
-        border-radius:14px;padding:0.8rem;border:1px solid rgba(107,158,120,0.15)">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.5rem">
-          <div style="font-size:0.6rem;font-weight:700;color:var(--leaf-dark);text-transform:uppercase;letter-spacing:0.08em">✨ Menu IA généré</div>
-          <div id="ia-menu-loading" style="display:none;font-size:0.6rem;color:var(--muted)">génération...</div>
-        </div>
-        <div id="ia-menu-text" style="font-size:0.7rem;color:var(--text);line-height:1.8;white-space:pre-wrap"></div>
-      </div>
-      <button onclick="askMenuIA()" style="margin-top:0.5rem;background:none;border:1px solid rgba(58,40,32,0.15);
-        border-radius:8px;padding:0.3rem 0.8rem;font-size:0.62rem;color:var(--muted);cursor:pointer;width:100%">
-        🔄 Régénérer
-      </button>
-    </div>
+    <div id="ia-menu-result" style="margin-top:0.8rem;display:none"></div>
 
+  </div>
+
+  <!-- ══ TAB STOCK ══ -->
+  <div id="ia-panel-stock" style="display:none;padding:0 1rem">
+    <div style="font-size:0.67rem;color:var(--muted);margin-bottom:0.7rem;line-height:1.5">
+      Vue rapide de votre stock d'avril 🌸
+    </div>
+    <div id="ia-stock-display"></div>
   </div>
 
   <div style="height:4rem"></div>
@@ -3128,7 +3128,7 @@ function showView(v){
   const allViews=['calendar','batch','shopping','diner','journal','urgence','tips','placard','ia'];
   allViews.forEach(id=>{const el=document.getElementById('view-'+id);if(el)el.style.display=id===v?'block':'none';});
   document.querySelectorAll('.nav-tab').forEach((el,i)=>{const map=['calendar','batch','shopping','diner','journal','urgence','ia','placard'];el.classList.toggle('active',map[i]===v);});
-  if(v==='ia'){switchIATab('cuisine',document.getElementById('ia-tab-cuisine'));}
+  if(v==='ia'){switchIATab('recette',document.getElementById('ia-tab-recette'));}
   if(v==='placard')renderPlacardList();
   if(v==='journal'){loadSleepEntry();updateSleepStats();renderCycles();setTimeout(()=>{if(currentStatsTab==='mensuel')renderMonthlyChart();if(currentStatsTab==='comparatif')renderComparatif();},100);}
   if(v==='diner')buildDiners();
@@ -3319,308 +3319,160 @@ function updateSiesteInfo(){
 // ASSISTANT IA — Cuisine & Menu
 // ══════════════════════════════════════
 
-const KETTY_PROFILE = `PROFIL KETTY :
-- SJSR (Syndrome des Jambes Sans Repos) + TDAH probable
-- Sans gluten + sans lactose strict
-- Médicaments soir : Tramadol LP 100mg + Lyrica 375mg AVANT le dîner
-- Objectif nutritionnel : magnésium, fer, oméga-3, anti-inflammatoire
 
-STOCK DISPONIBLE AVRIL 2026 :
-Poissons/protéines: saumon surgelé x4, crevettes x2, maquereau surgelé, thon boite x2, sardines x6, tofu nature/soyeux/mariné/grillé, oeufs x12
-Légumineuses: lentilles corail 1kg, lentilles vertes, haricots rouges/verts/beurre boites, pois chiches
-Céréales batch: quinoa rouge, riz 3 couleurs, sarrasin décortiqué, farine sarrasin, flocons sarrasin, flocons millet, tapioca
-Légumes: chou chinois x2, carottes, épinards surgelés, laitue, cébette, avocats x2, radis, gingembre frais, curcuma frais
-Fruits surgelés: mangues x2, fruits rouges x2, cerises
-Fruits frais: bananes, kiwis, pommes, dattes
-Laits végétaux: lait avoine x2, millet drink, crème coco VietCoco, lait coco
-Condiments: sauce soja, miel bio, cacao Van Houten, chocolat noir 85%, amandes, graines courge, lin, coco rapée, Lait d'Or Écoidées`;
 
-let iaCuisineMode = 'frigo';
 
-function switchIATab(tab, btn) {
-  document.querySelectorAll('#view-ia .diner-filter').forEach(b => b.classList.remove('active'));
-  if(btn) btn.classList.add('active');
-  document.getElementById('ia-panel-cuisine').style.display = tab === 'cuisine' ? 'block' : 'none';
-  document.getElementById('ia-panel-menu').style.display = tab === 'menu' ? 'block' : 'none';
-}
-
-function setIAMode(mode, btn) {
-  iaCuisineMode = mode;
-  document.querySelectorAll('.ia-mode-btn').forEach(b => b.classList.remove('active'));
-  if(btn) btn.classList.add('active');
-  const input = document.getElementById('ia-cuisine-input');
-  if(!input) return;
-  const placeholders = {
-    frigo: 'Ex: j\'ai du tofu, du sarrasin et des carottes...',
-    envie: 'Ex: j\'ai envie de quelque chose de chaud et réconfortant...',
-    rapide: 'Ex: je n\'ai que 10 min, qu\'est-ce que je fais avec des sardines?',
-    sjsr: 'Ex: mes jambes sont agitées ce soir, que manger?'
-  };
-  input.placeholder = placeholders[mode] || '';
-}
-
-async function askCuisineIA() {
-  const input = document.getElementById('ia-cuisine-input');
-  const result = document.getElementById('ia-cuisine-result');
-  const text = document.getElementById('ia-cuisine-text');
-  const loading = document.getElementById('ia-cuisine-loading');
-  const btn = document.getElementById('ia-cuisine-btn');
-  if(!input || !result || !text) return;
-
-  const userMsg = input.value.trim();
-  const modePrompts = {
-    frigo: 'Avec les ingrédients suivants de mon stock, propose-moi une recette détaillée adaptée à mon profil',
-    envie: 'J\'ai envie de',
-    rapide: 'Propose-moi un repas rapide (max 15 min)',
-    sjsr: 'Mes jambes sont agitées ce soir — propose un dîner spécialement anti-SJSR riche en magnésium'
-  };
-
-  const systemPrompt = `Tu es un assistant culinaire expert en cuisine anti-inflammatoire, sans gluten et sans lactose, spécialisé pour le SJSR et le TDAH.
-
-${KETTY_PROFILE}
-
-RÈGLES STRICTES :
-- Toujours sans gluten ET sans lactose
-- Mentionner les bénéfices nutritionnels (magnésium, fer, oméga-3)
-- Rappeler que les médicaments doivent être pris AVANT le dîner
-- Étapes numérotées claires, langage simple
-- Temps de cuisson réaliste
-- Format : Nom recette / Temps / Ingrédients (quantities précises) / Étapes numérotées / Pourquoi c'est bon pour le SJSR`;
-
-  const userPrompt = modePrompts[iaCuisineMode] + (userMsg ? ': ' + userMsg : ' en utilisant ce que j\'ai dans mon stock.');
-
-  result.style.display = 'block';
-  loading.style.display = 'inline';
-  text.textContent = '';
-  text.classList.add('ia-typing');
-  btn.disabled = true;
-  btn.textContent = '⏳ Génération...';
-
-  try {
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 1000,
-        system: systemPrompt,
-        messages: [{role: 'user', content: userPrompt}]
-      })
-    });
-    const data = await response.json();
-    const reply = data.content?.[0]?.text || 'Erreur de génération.';
-    text.classList.remove('ia-typing');
-    // Affichage progressif lettre par lettre
-    text.textContent = '';
-    let i = 0;
-    const interval = setInterval(() => {
-      text.textContent += reply[i];
-      i++;
-      if(i >= reply.length) clearInterval(interval);
-    }, 8);
-  } catch(err) {
-    text.classList.remove('ia-typing');
-    text.textContent = 'Erreur de connexion. Vérifiez votre connexion internet et réessayez.';
-  }
-
-  loading.style.display = 'none';
-  btn.disabled = false;
-  btn.textContent = '✨ Générer';
-}
-
-async function askMenuIA() {
-  const dureeEl = document.getElementById('ia-menu-duree');
-  const prioriteEl = document.getElementById('ia-menu-priorite');
-  const contrainteEl = document.getElementById('ia-menu-contrainte');
-  const inputEl = document.getElementById('ia-menu-input');
-  const result = document.getElementById('ia-menu-result');
-  const text = document.getElementById('ia-menu-text');
-  const loading = document.getElementById('ia-menu-loading');
-  const btn = document.getElementById('ia-menu-btn');
-  if(!result || !text) return;
-
-  const duree = dureeEl ? dureeEl.value : '5';
-  const priorite = prioriteEl ? prioriteEl.value : 'sjsr';
-  const contrainte = contrainteEl ? contrainteEl.value : '';
-  const contexte = inputEl ? inputEl.value.trim() : '';
-
-  const systemPrompt = `Tu es un assistant nutritionniste expert en cuisine anti-inflammatoire pour le SJSR et TDAH.
-
-${KETTY_PROFILE}
-
-RÈGLES STRICTES :
-- 100% sans gluten et sans lactose
-- Rappeler systématiquement que les médicaments se prennent AVANT le dîner
-- Petit-déjeuner : porridge OU pancakes sarrasin OU muesli
-- Déjeuner : bowl froid préparable au bureau
-- Dîner : chaud, protéines + légumes + céréales batch
-- Goûter : amandes + dattes OU chocolat noir 85% OU tapioca
-- Mentionner les bénéfices clés (magnésium, fer, oméga-3)
-- Format tableau clair : Jour / Matin / Déjeuner / Dîner / Goûter`;
-
-  const userPrompt = `Génère un plan de repas de ${duree} jours pour Ketty.
-Priorité : ${priorite}.
-${contrainte ? 'Contrainte spéciale : ' + contrainte + '.' : ''}
-${contexte ? 'Contexte supplémentaire : ' + contexte : ''}
-Utilise UNIQUEMENT les ingrédients disponibles dans son stock.
-Sois précise sur les quantités. Commence chaque dîner par un rappel de prendre les médicaments AVANT.`;
-
-  result.style.display = 'block';
-  loading.style.display = 'inline';
-  text.textContent = '';
-  text.classList.add('ia-typing');
-  btn.disabled = true;
-  btn.textContent = '⏳ Génération du menu...';
-
-  try {
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 1000,
-        system: systemPrompt,
-        messages: [{role: 'user', content: userPrompt}]
-      })
-    });
-    const data = await response.json();
-    const reply = data.content?.[0]?.text || 'Erreur de génération.';
-    text.classList.remove('ia-typing');
-    text.textContent = '';
-    let i = 0;
-    const interval = setInterval(() => {
-      text.textContent += reply[i];
-      i++;
-      if(i >= reply.length) clearInterval(interval);
-    }, 6);
-  } catch(err) {
-    text.classList.remove('ia-typing');
-    text.textContent = 'Erreur de connexion. Réessayez.';
-  }
-
-  loading.style.display = 'none';
-  btn.disabled = false;
-  btn.textContent = '✨ Générer mon menu personnalisé';
-}
-
-buildCalendar();
-buildShopping();
-// Pre-render placard
-try{renderPlacardList();}catch(e){}
-try{const saved=localStorage.getItem("batchDone");if(saved)batchStepsDone=JSON.parse(saved);}catch(e){}
-
-const PAIN_LABELS={0:"Aucune douleur",1:"Très légère",2:"Légère",3:"Légère-modérée",4:"Modérée",5:"Modérée",6:"Modérée-intense",7:"Intense",8:"Très intense",9:"Sévère",10:"Insupportable"};
-const FEELING_ICONS={exhausted:"😫",tired:"😔",ok:"😐",good:"🙂",great:"😊",excellent:"🌟"};
-let sleepCurrentDate=new Date(),sleepQuality=0,sleepFeeling="",sleepData={},sleepCycles=[{bedtime:"22:30",wakeTime:"07:00"}];
-try{const saved=localStorage.getItem("sjsr_sleep");if(saved)sleepData=JSON.parse(saved);}catch(e){}
-function sleepDateKey(d){const dd=d||sleepCurrentDate;return dd.getFullYear()+"-"+String(dd.getMonth()+1).padStart(2,"0")+"-"+String(dd.getDate()).padStart(2,"0");}
-function sleepDateLabel(d){const dd=d||sleepCurrentDate;const days=["Dimanche","Lundi","Mardi","Mercredi","Jeudi","Vendredi","Samedi"];const months=["janvier","février","mars","avril","mai","juin","juillet","août","septembre","octobre","novembre","décembre"];return days[dd.getDay()]+" "+dd.getDate()+" "+months[dd.getMonth()]+" "+dd.getFullYear();}
-function sleepNavDate(delta){sleepCurrentDate=new Date(sleepCurrentDate.getTime()+delta*86400000);loadSleepEntry();updateSleepStats();}
-function toMin(t){if(!t)return 0;const[h,m]=t.split(":").map(Number);return h*60+m;}
-function formatDuration(min){if(min<0)min+=1440;if(min<0)min=0;return Math.floor(min/60)+"h"+String(min%60).padStart(2,"0");}
-function calcCycleDuration(b,w){let d=toMin(w)-toMin(b);if(d<0)d+=1440;return d;}
-function renderCycles(){
-  const container=document.getElementById("sleepCyclesContainer");if(!container)return;container.innerHTML="";
-  sleepCycles.forEach((cycle,i)=>{const div=document.createElement("div");div.className="sleep-cycle-block";const dur=cycle.bedtime&&cycle.wakeTime?calcCycleDuration(cycle.bedtime,cycle.wakeTime):0;div.innerHTML=`<div class="sleep-cycle-header"><div class="sleep-cycle-title">🌙 Cycle ${i+1}</div>${sleepCycles.length>1?`<button class="sleep-cycle-delete" onclick="removeCycle(${i})">✕</button>`:""}</div><div class="sleep-cycle-row"><div class="sleep-cycle-field"><label>${i===0?"Couché":"Recouché"}</label><input type="time" value="${cycle.bedtime||""}" onchange="updateCycle(${i},'bedtime',this.value)"></div><div class="sleep-cycle-field"><label>Levé</label><input type="time" value="${cycle.wakeTime||""}" onchange="updateCycle(${i},'wakeTime',this.value)"></div></div><div class="sleep-cycle-duration" style="color:${dur>=60?"var(--leaf-dark)":"#c47a2a"}">⏱ ${dur>0?formatDuration(dur):"—"}</div>`;container.appendChild(div);});
-  updateCumulStats();
-}
-function updateCycle(i,f,v){sleepCycles[i][f]=v;renderCycles();autoSaveSleep();}
-function addSleepCycle(){sleepCycles.push({bedtime:sleepCycles[sleepCycles.length-1].wakeTime||"",wakeTime:""});renderCycles();autoSaveSleep();}
-function removeCycle(i){if(sleepCycles.length<=1)return;sleepCycles.splice(i,1);renderCycles();autoSaveSleep();}
-function updateCumulStats(){
-  let t=0;sleepCycles.forEach(c=>{if(c.bedtime&&c.wakeTime){const d=calcCycleDuration(c.bedtime,c.wakeTime);if(d>0&&d<720)t+=d;}});
-  const nb=Math.max(0,sleepCycles.length-1);
-  const siesteEl=document.getElementById("siesteDuree");
-  const siesteMin=siesteEl?parseInt(siesteEl.value||0):0;
-  const cumul=document.getElementById("slpTotalCumul");if(cumul){var tot=t+siesteMin;var sx=siesteMin>0&&t>0?" + "+formatDuration(siesteMin)+" 💤":"";cumul.textContent=t>0?formatDuration(t)+sx:"—";cumul.className="sleep-calc-value "+(tot>=420?"good":tot>=300?"warning":"bad");}
-  const levers=document.getElementById("slpNbLevers");if(levers){levers.textContent=nb+"x";levers.className="sleep-calc-value "+(nb<=1?"good":nb<=3?"warning":"bad");}
-}
-function loadSleepEntry(){
-  const key=sleepDateKey();const el=document.getElementById("sleepDateLabel");if(el)el.textContent=sleepDateLabel();
-  const entry=sleepData[key]||{};
-  sleepCycles=entry.cycles||[{bedtime:"22:30",wakeTime:"07:00"}];renderCycles();
-  sleepQuality=entry.quality||0;updateStars();sleepFeeling=entry.feeling||"";updateFeelingBtns();
-  if(document.getElementById("painMorning")){document.getElementById("painMorning").value=entry.painMorning||0;document.getElementById("painDay").value=entry.painDay||0;updatePainDisplay("painMorning","painMorningDisplay");updatePainDisplay("painDay","painDayDisplay");}
-  if(document.getElementById("sleepNotes"))document.getElementById("sleepNotes").value=entry.notes||"";
-  var sdL=document.getElementById("siesteDuree");if(sdL)sdL.value=entry.sieste||0;
-  if(typeof updateSiesteInfo==="function")updateSiesteInfo();
-  const ind=document.getElementById("sleepSavedIndicator");if(ind)ind.textContent=entry.savedAt?"✓ Enregistrée à "+entry.savedAt:"";
-}
-function setSleepQuality(n){sleepQuality=n;updateStars();autoSaveSleep();}
-function updateStars(){document.querySelectorAll(".sleep-star").forEach((s,i)=>s.classList.toggle("active",i<sleepQuality));}
-function setSleepFeeling(f){sleepFeeling=f;updateFeelingBtns();autoSaveSleep();}
-function updateFeelingBtns(){document.querySelectorAll(".sleep-feeling-btn").forEach(btn=>{const f=btn.getAttribute("onclick").match(/'([^']+)'/)?.[1];btn.classList.toggle("selected",f===sleepFeeling);});}
-function updatePainDisplay(sliderId,displayId){const val=parseInt(document.getElementById(sliderId)?.value||0);const el=document.getElementById(displayId);if(!el)return;el.textContent=val+" — "+(PAIN_LABELS[val]||"");el.className="pain-val-display p"+val;autoSaveSleep();}
-function autoSaveSleep(){
-  const key=sleepDateKey();let totalMin=0;sleepCycles.forEach(c=>{if(c.bedtime&&c.wakeTime){const d=calcCycleDuration(c.bedtime,c.wakeTime);if(d>0&&d<720)totalMin+=d;}});
-  const pmEl=document.getElementById("painMorning");const pdEl=document.getElementById("painDay");const notesEl=document.getElementById("sleepNotes");
-  sleepData[key]={cycles:sleepCycles,totalMin,nbLevers:Math.max(0,sleepCycles.length-1),quality:sleepQuality,feeling:sleepFeeling,painMorning:pmEl?parseInt(pmEl.value||0):0,painDay:pdEl?parseInt(pdEl.value||0):0,notes:notesEl?notesEl.value||"":"",sieste:(document.getElementById("siesteDuree")?parseInt(document.getElementById("siesteDuree").value||0):0),savedAt:sleepData[key]?.savedAt||""};
-  try{localStorage.setItem("sjsr_sleep",JSON.stringify(sleepData));}catch(e){}
-  const ind=document.getElementById("sleepSavedIndicator");if(ind)ind.textContent="✓ Sauvegardé";updateSleepStats();
-}
-function saveSleepEntry(){
-  const key=sleepDateKey();const now=new Date();const ts=String(now.getHours()).padStart(2,"0")+"h"+String(now.getMinutes()).padStart(2,"0");
-  let totalMin=0;sleepCycles.forEach(c=>{if(c.bedtime&&c.wakeTime){const d=calcCycleDuration(c.bedtime,c.wakeTime);if(d>0&&d<720)totalMin+=d;}});
-  sleepData[key]={cycles:sleepCycles,totalMin,nbLevers:Math.max(0,sleepCycles.length-1),quality:sleepQuality,feeling:sleepFeeling,painMorning:parseInt(document.getElementById("painMorning")?.value||0),painDay:parseInt(document.getElementById("painDay")?.value||0),notes:document.getElementById("sleepNotes")?.value||"",savedAt:ts};
-  try{localStorage.setItem("sjsr_sleep",JSON.stringify(sleepData));}catch(e){}
-  const ind=document.getElementById("sleepSavedIndicator");if(ind)ind.textContent="✓ Enregistrée à "+ts;
-  const btn=document.querySelector(".sleep-save-btn");if(btn){btn.textContent="✅ Nuit enregistrée !";btn.style.background="linear-gradient(135deg,#4a8a5a,#2a6a3a)";setTimeout(()=>{btn.textContent="✓ Confirmer la saisie";btn.style.background="";},2000);}
-  updateSleepStats();
-}
-function updateSleepStats(){
-  const histEl=document.getElementById("sleepHistoryList");if(!histEl)return;
-  const allKeys=Object.keys(sleepData).sort().reverse();
-  if(allKeys.length===0){histEl.innerHTML='<div style="font-size:0.7rem;color:var(--muted);padding:0.5rem">Aucune nuit enregistrée.</div>';return;}
-  let histHTML="",totH=0,cntH=0,totQ=0,cntQ=0,totPM=0,totL=0,cntP=0;
-  allKeys.slice(0,14).forEach(key=>{
-    const e=sleepData[key];const totalMin=e.totalMin||0;const h=totalMin>0?Math.round(totalMin/6)/10:null;
-    const d=new Date(key+"T12:00:00");const dayNames=["Dim","Lun","Mar","Mer","Jeu","Ven","Sam"];const dayLabel=dayNames[d.getDay()]+" "+d.getDate()+"/"+(d.getMonth()+1);
-    const nb=e.nbLevers||0;if(h!==null){totH+=h;cntH++;}if(e.quality){totQ+=e.quality;cntQ++;}if(e.painMorning!==undefined){totPM+=e.painMorning;totL+=nb;cntP++;}
-    const qs=e.quality?"★".repeat(e.quality)+"☆".repeat(5-e.quality):"—";const fi=FEELING_ICONS[e.feeling]||"—";var siesteH=e.sieste||0;var hs=h!==null?h+"h"+(siesteH>0?" +"+Math.round(siesteH/60*10)/10+"h 💤":""):"—";const ps=e.painMorning!==undefined?e.painMorning+"/10":"—";const bp=h?Math.min(100,(h/9)*100):0;const bc=h>=7?"#6b9e78":h>=5?"#c8a050":"#c04040";
-    histHTML+=`<div class="sleep-history-row"><div class="shr-date">${dayLabel}</div><div class="shr-hours" style="color:${h>=7?"#4a8a4a":h>=5?"#c47a2a":"#c04040"}">${hs}</div><div class="shr-bar"><div class="shr-bar-fill" style="width:${bp}%;background:${bc}"></div></div><div class="shr-stars" style="font-size:0.62rem;color:#d4a843">${qs}</div><div class="shr-pain" style="font-size:0.62rem;color:${(e.painMorning||0)>=7?"#c04040":(e.painMorning||0)>=4?"#c47a2a":"#4a8a4a"}">${ps}</div><div style="font-size:0.6rem;color:var(--muted);width:20px">${nb}x</div><div class="shr-feeling">${fi}</div></div>`;
+function switchIATab(tab, btn){
+  var panels=['recette','menu','stock'];
+  panels.forEach(function(t){
+    var el=document.getElementById('ia-panel-'+t);
+    if(el) el.style.display=(t===tab)?'block':'none';
   });
-  histEl.innerHTML=histHTML;
-  const avgH=cntH?(totH/cntH).toFixed(1)+"h":"—";const avgQ=cntQ?(totQ/cntQ).toFixed(1)+"★":"—";const avgPM=cntP?(totPM/cntP).toFixed(1)+"/10":"—";const avgL=cntP?(totL/cntP).toFixed(1)+"x":"—";
-  if(document.getElementById("statAvgSleep")){document.getElementById("statAvgSleep").textContent=avgH;document.getElementById("statAvgQuality").textContent=avgQ;document.getElementById("statAvgPainM").textContent=avgPM;document.getElementById("statAvgLevers").textContent=avgL;}
+  document.querySelectorAll('#view-ia .diner-filter').forEach(function(b){b.classList.remove('active');});
+  if(btn) btn.classList.add('active');
+  if(tab==='stock') renderIAStock();
 }
-let chartCurrentYear=new Date().getFullYear(),chartCurrentMonth=new Date().getMonth(),currentMetric='sleep',currentStatsTab='hebdo';
-const MONTH_NAMES=["Janvier","Février","Mars","Avril","Mai","Juin","Juillet","Août","Septembre","Octobre","Novembre","Décembre"];
-function switchStatsTab(tab,btn){currentStatsTab=tab;['hebdo','mensuel','comparatif'].forEach(t=>{const el=document.getElementById('stats-tab-'+t);if(el)el.style.display=t===tab?'block':'none';});document.querySelectorAll('.chart-tabs .chart-tab').forEach(b=>b.classList.remove('active'));if(btn)btn.classList.add('active');if(tab==='mensuel')renderMonthlyChart();if(tab==='comparatif')renderComparatif();}
-function switchMetric(metric,btn){currentMetric=metric;document.querySelectorAll('#stats-tab-mensuel .chart-tab').forEach(b=>b.classList.remove('active'));if(btn)btn.classList.add('active');renderMonthlyChart();}
-function chartNavMonth(delta){chartCurrentMonth+=delta;if(chartCurrentMonth<0){chartCurrentMonth=11;chartCurrentYear--;}if(chartCurrentMonth>11){chartCurrentMonth=0;chartCurrentYear++;}const label=document.getElementById('chartMonthLabel');if(label)label.textContent=MONTH_NAMES[chartCurrentMonth]+' '+chartCurrentYear;renderMonthlyChart();}
-function getMonthData(year,month){const entries=[];const dim=new Date(year,month+1,0).getDate();for(let d=1;d<=dim;d++){const key=year+"-"+String(month+1).padStart(2,"0")+"-"+String(d).padStart(2,"0");entries.push({day:d,key,entry:sleepData[key]||null});}return entries;}
-function getMetricValue(entry,metric){if(!entry)return null;switch(metric){case 'sleep':return entry.totalMin?Math.round(entry.totalMin/6)/10:null;case 'pain':return entry.painMorning!==undefined?entry.painMorning:null;case 'quality':return entry.quality||null;case 'levers':return entry.nbLevers!==undefined?entry.nbLevers:null;default:return null;}}
-function getMetricConfig(metric){switch(metric){case 'sleep':return{color:'#6b9e78',max:10,unit:'h',goodMin:7};case 'pain':return{color:'#e07840',max:10,unit:'/10',goodMax:3};case 'quality':return{color:'#d4a843',max:5,unit:'★',goodMin:4};case 'levers':return{color:'#a98de0',max:6,unit:'x',goodMax:1};}}
-function renderMonthlyChart(){
-  const canvas=document.getElementById('sleepChartCanvas');if(!canvas)return;
-  const ctx=canvas.getContext('2d');const data=getMonthData(chartCurrentYear,chartCurrentMonth);const cfg=getMetricConfig(currentMetric);
-  const W=canvas.parentElement.offsetWidth||300;const H=140;canvas.width=W;canvas.height=H;
-  const padL=32,padR=12,padT=14,padB=28;const cW=W-padL-padR;const cH=H-padT-padB;
-  ctx.clearRect(0,0,W,H);ctx.fillStyle='#fafaf9';ctx.fillRect(0,0,W,H);
-  ctx.strokeStyle='rgba(58,40,32,0.06)';ctx.lineWidth=1;
-  for(let i=0;i<=5;i++){const y=padT+(cH/5)*i;ctx.beginPath();ctx.moveTo(padL,y);ctx.lineTo(padL+cW,y);ctx.stroke();}
-  const points=[];data.forEach((d,i)=>{const val=getMetricValue(d.entry,currentMetric);const x=padL+(i/(data.length-1))*cW;if(val!==null){const y=padT+cH-(Math.min(val,cfg.max)/cfg.max)*cH;points.push({x,y,val,day:d.day,hasData:true});}else{points.push({x,y:null,val:null,day:d.day,hasData:false});}});
-  ctx.strokeStyle=cfg.color;ctx.lineWidth=2;ctx.lineJoin='round';ctx.beginPath();let fp=true;points.forEach(p=>{if(p.hasData){if(fp){ctx.moveTo(p.x,p.y);fp=false;}else ctx.lineTo(p.x,p.y);}else fp=true;});ctx.stroke();
-  points.forEach(p=>{if(!p.hasData)return;let dc=cfg.color;if(cfg.goodMin&&p.val>=cfg.goodMin)dc='#6b9e78';else if(cfg.goodMax!==undefined&&p.val<=cfg.goodMax)dc='#6b9e78';else dc='#c04040';ctx.beginPath();ctx.arc(p.x,p.y,3,0,Math.PI*2);ctx.fillStyle=dc;ctx.fill();ctx.strokeStyle='#fff';ctx.lineWidth=1.5;ctx.stroke();});
-  ctx.fillStyle='rgba(58,40,32,0.45)';ctx.font='8px sans-serif';ctx.textAlign='center';points.forEach(p=>{if(p.day%5===0||p.day===1)ctx.fillText(p.day,p.x,H-6);});
-  updateMonthlyStats(data);
+
+
+
+
+
+
+// ── Assistant IA Local ──
+const iaState={humeur:'',moment:'',temps:'',ingr:''};
+
+function toggleChip(btn,cat){
+  var was=btn.classList.contains('active');
+  btn.parentElement.querySelectorAll('.ia-chip').forEach(b=>b.classList.remove('active'));
+  if(!was){btn.classList.add('active');iaState[cat]=btn.dataset.val;}
+  else iaState[cat]='';
 }
-function updateMonthlyStats(data){
-  const values=[],pains=[];let gn=0;data.forEach(d=>{if(!d.entry)return;const s=getMetricValue(d.entry,'sleep');const p=getMetricValue(d.entry,'pain');if(s!==null){values.push(s);if(s>=7)gn++;}if(p!==null)pains.push(p);});
-  const n=values.length;if(n===0){['mstatAvg','mstatBest','mstatWorst','mstatNights','mstatGoodNights','mstatPainAvg'].forEach(id=>{const el=document.getElementById(id);if(el)el.textContent='—';});return;}
-  const avg=(values.reduce((a,b)=>a+b,0)/n).toFixed(1);const best=Math.max(...values).toFixed(1);const worst=Math.min(...values).toFixed(1);const painAvg=pains.length?(pains.reduce((a,b)=>a+b,0)/pains.length).toFixed(1):'—';
-  const setEl=(id,val,cls)=>{const el=document.getElementById(id);if(el){el.textContent=val;if(cls)el.className='mstat-val '+cls;}};
-  setEl('mstatAvg',avg+'h',parseFloat(avg)>=7?'good':'bad');setEl('mstatBest',best+'h','good');setEl('mstatWorst',worst+'h','');setEl('mstatNights',n+' nuits','');setEl('mstatGoodNights',gn+' nuits','');setEl('mstatPainAvg',pains.length?painAvg+'/10':'—','');
+
+function scoreRecette(r,state){
+  var score=0;
+  var tags=(r.tags||[]).join(' ').toLowerCase();
+  var all=tags+' '+(r.name||'').toLowerCase()+' '+(r.ingr||'').toLowerCase();
+  if(state.moment==='brunch'&&r.cat==='brunch') score+=40;
+  if(state.moment==='bureau'&&(r.cat==='plat'||r.cat==='entree')) score+=20;
+  if(state.moment==='diner'&&(r.cat==='plat'||r.cat==='soupe')) score+=20;
+  if(state.moment==='dessert'&&r.cat==='dessert') score+=40;
+  if(state.moment==='soupe'&&r.cat==='soupe') score+=40;
+  if(state.humeur==='fatigue'||state.humeur==='rapide'){var t=parseInt(r.time)||30;if(t<=10)score+=30;else if(t<=15)score+=20;else if(t<=20)score+=10;}
+  if(state.humeur==='sjsr'){if(tags.includes('sjsr'))score+=30;if(all.includes('magn'))score+=15;}
+  if(state.humeur==='douceur'){if(r.cat==='dessert')score+=20;if(all.includes('coco')||all.includes('miel')||all.includes('chocolat'))score+=15;}
+  if(state.temps){var mx=parseInt(state.temps);var rt=parseInt(r.time)||30;if(rt<=mx)score+=25;else if(rt>mx*1.5)score-=20;}
+  if(state.ingr){
+    var m={saumon:['saumon'],sardines:['sardine'],maquereau:['maquereau'],crevettes:['crevette'],thon:['thon'],tofu:['tofu'],oeufs:['oeuf'],lentilles:['lentille'],quinoa:['quinoa'],sarrasin:['sarrasin'],millet:['millet'],chou:['chou'],mangue:['mangue'],cerises:['cerise'],chocolat:['chocolat','cacao']};
+    var kws=m[state.ingr]||[state.ingr];
+    if(kws.some(k=>all.includes(k)))score+=50;else score-=30;
+  }
+  return score;
 }
-function renderComparatif(){
-  const section=document.getElementById('compareSection');if(!section)return;
-  const now=new Date();const months=[];
-  for(let i=5;i>=0;i--){const d=new Date(now.getFullYear(),now.getMonth()-i,1);const data=getMonthData(d.getFullYear(),d.getMonth());const sv=[],pv=[];data.forEach(day=>{if(!day.entry)return;const s=getMetricValue(day.entry,'sleep');const p=getMetricValue(day.entry,'pain');if(s!==null)sv.push(s);if(p!==null)pv.push(p);});if(sv.length>0)months.push({label:MONTH_NAMES[d.getMonth()].slice(0,3)+' '+d.getFullYear(),avgSleep:sv.reduce((a,b)=>a+b,0)/sv.length,avgPain:pv.length?pv.reduce((a,b)=>a+b,0)/pv.length:null,n:sv.length});}
-  if(months.length<1){section.innerHTML='<div style="font-size:0.7rem;color:var(--muted);text-align:center;padding:1.5rem">Continuez à enregistrer vos nuits 🌸</div>';return;}
-  const maxSl=Math.max(...months.map(m=>m.avgSleep),9);let html='<div class="compare-title">📊 Comparatif mensuel</div>';
-  months.forEach((m,i)=>{const prev=i>0?months[i-1]:null;const sw=Math.round((m.avgSleep/maxSl)*100);const pw=m.avgPain!==null?Math.round((m.avgPain/10)*100):0;let sa='',pa='';if(prev){const sd=m.avgSleep-prev.avgSleep;const pd=m.avgPain!==null&&prev.avgPain!==null?m.avgPain-prev.avgPain:0;sa=sd>0.2?'<span class="compare-arrow better">↑</span>':sd<-0.2?'<span class="compare-arrow worse">↓</span>':'<span class="compare-arrow same">→</span>';pa=pd<-0.5?'<span class="compare-arrow better">↓</span>':pd>0.5?'<span class="compare-arrow worse">↑</span>':'<span class="compare-arrow same">→</span>';}
-  html+=`<div style="margin-bottom:0.7rem;padding:0.6rem;background:rgba(58,40,32,0.03);border-radius:10px"><div style="display:flex;justify-content:space-between;margin-bottom:0.4rem"><div style="font-size:0.68rem;font-weight:700">${m.label}</div><div style="font-size:0.6rem;color:var(--muted)">${m.n} nuits</div></div><div class="compare-row"><div class="compare-label">😴</div><div class="compare-bars"><div class="compare-bar-wrap"><div class="compare-bar sleep" style="width:${sw}%"></div></div></div><div class="compare-val">${m.avgSleep.toFixed(1)}h</div>${sa}</div>${m.avgPain!==null?`<div class="compare-row"><div class="compare-label">🦵</div><div class="compare-bars"><div class="compare-bar-wrap"><div class="compare-bar pain" style="width:${pw}%"></div></div></div><div class="compare-val">${m.avgPain.toFixed(1)}/10</div>${pa}</div>`:''}</div>`;});
-  section.innerHTML=html;
+
+function chercherRecette(){
+  var result=document.getElementById('ia-recette-result');
+  if(!result)return;
+  var scored=DINERS.map(r=>({r,score:scoreRecette(r,iaState)})).filter(x=>x.score>0).sort((a,b)=>b.score-a.score).slice(0,5);
+  if(scored.length===0){
+    result.innerHTML='<div style="text-align:center;padding:1.5rem;font-size:0.75rem;color:var(--muted)">🌸 Aucune recette trouvée.<br>Décochez certains filtres et réessayez.</div>';
+    result.style.display='block';return;
+  }
+  var ce={brunch:'🌅',entree:'🥗',plat:'🍲',soupe:'🥣',dessert:'🍰',base:'📋'};
+  var html='<div style="font-size:0.62rem;font-weight:700;color:var(--leaf-dark);margin-bottom:0.5rem">✨ '+scored.length+' recette'+(scored.length>1?'s':'')+' trouvée'+(scored.length>1?'s':'')+' !</div>';
+  scored.forEach(function(item,i){
+    var r=item.r; var score=item.score;
+    var pct=Math.round((score/scored[0].score)*100);
+    var best=i===0;
+    html+='<div class="ia-result-card" onclick="toggleIARecipe(this)" style="'+(best?'border:2px solid var(--blossom-deep)':'')+'">'+
+      (best?'<div style="font-size:0.58rem;font-weight:700;color:var(--blossom-deep);margin-bottom:0.25rem">⭐ Meilleure suggestion</div>':'')+
+      '<div style="display:flex;justify-content:space-between;align-items:flex-start">'+
+      '<div class="irc-name">'+(ce[r.cat]||'🍽')+' '+r.name+'</div>'+
+      '<div style="font-size:0.6rem;color:var(--muted);flex-shrink:0;margin-left:0.4rem">⏱ '+r.time+'</div></div>'+
+      '<div class="irc-meta">'+((r.ingr||'').slice(0,80))+((r.ingr||'').length>80?'...':'')+'</div>'+
+      '<div class="ia-score-bar" style="width:'+pct+'%"></div>'+
+      '<div class="irc-steps" style="display:none;font-size:0.68rem;line-height:1.7;color:var(--text);background:rgba(107,158,120,0.05);border-radius:8px;padding:0.6rem;margin-top:0.4rem;white-space:pre-wrap">'+(r.steps||'')+'</div>'+
+      '<div style="font-size:0.6rem;color:var(--blossom-deep);margin-top:0.35rem;font-weight:700">▼ Voir les étapes</div>'+
+      '</div>';
+  });
+  result.innerHTML=html;result.style.display='block';
+  result.scrollIntoView({behavior:'smooth'});
+}
+
+function toggleIARecipe(card){
+  var steps=card.querySelector('.irc-steps');
+  var btns=card.querySelectorAll('div[style*="blossom-deep"]');
+  var toggle=btns[btns.length-1];
+  if(!steps)return;
+  var open=steps.style.display==='block';
+  steps.style.display=open?'none':'block';
+  if(toggle)toggle.textContent=open?'▼ Voir les étapes':'▲ Masquer';
+}
+
+function genererMenu(){
+  var duree=parseInt(document.getElementById('ia-menu-duree')?.value||5);
+  var prio=document.getElementById('ia-menu-prio')?.value||'sjsr';
+  var mode=document.getElementById('ia-menu-mode')?.value||'normal';
+  var result=document.getElementById('ia-menu-result');
+  if(!result)return;
+  var shuffle=function(arr){return arr.slice().sort(function(){return Math.random()-0.5;});};
+  var filterP=function(arr){
+    if(prio==='rapide')return arr.filter(r=>parseInt(r.time||'30')<=15);
+    if(prio==='sjsr')return arr.filter(r=>(r.tags||[]).some(t=>String(t).includes('sjsr')));
+    if(prio==='batch')return arr.filter(r=>(r.ingr||'').toLowerCase().includes('batch'));
+    return arr;
+  };
+  var plats=DINERS.filter(r=>r.cat==='plat');
+  var soupes=DINERS.filter(r=>r.cat==='soupe');
+  var brunchs=DINERS.filter(r=>r.cat==='brunch'||r.cat==='entree');
+  var pPlats=filterP(plats);if(pPlats.length===0)pPlats=plats;
+  var sP=shuffle(pPlats);var sB=shuffle(brunchs);var sS=shuffle(soupes);
+  var JOURS=['Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi','Dimanche'];
+  var GOUTERS=['Amandes + dattes + chocolat 85%','Tapioca cacao + caramel Monin','Smoothie mangue + millet drink','Cerises + MatiMalt chaud','Galette riz + miel + coco','Amandes + infusion hibiscus','Chocolat chaud Van Houten'];
+  var isVac=mode==='vacances';
+  var html='<div style="font-size:0.62rem;font-weight:700;color:var(--leaf-dark);margin-bottom:0.6rem">📅 Menu '+duree+' jours · '+prio+(mode!=='normal'?' · '+mode:'')+'</div>';
+  for(var d=0;d<duree;d++){
+    var brunch=sB[d%sB.length];
+    var isSoupe=d%3===2&&sS.length>0;
+    var diner=isSoupe?sS[Math.floor(d/3)%sS.length]:sP[d%sP.length];
+    html+='<div class="ia-menu-day">'+
+      '<div class="ia-menu-day-title">'+JOURS[d%7]+(isVac?' 🌸':'')+'</div>'+
+      '<div class="ia-menu-row"><div class="ia-menu-label">'+(isVac?'Brunch':'Matin')+'</div><div class="ia-menu-val">'+(brunch?brunch.name:'Porridge millet + mangue')+'</div></div>'+
+      (!isVac&&mode!=='fatigue'?'<div class="ia-menu-row"><div class="ia-menu-label">Bureau</div><div class="ia-menu-val">Bowl quinoa + sardines + mix graines</div></div>':'')+
+      '<div class="ia-menu-row"><div class="ia-menu-label">Goûter</div><div class="ia-menu-val">'+GOUTERS[d%GOUTERS.length]+'</div></div>'+
+      '<div class="ia-menu-row" style="border-top:1px solid rgba(58,40,32,0.06);padding-top:0.3rem;margin-top:0.2rem">'+
+      '<div class="ia-menu-label" style="color:var(--blossom-deep)">💊 Dîner</div>'+
+      '<div class="ia-menu-val"><span style="font-size:0.58rem;color:var(--blossom-deep);font-weight:700">Médicaments AVANT · </span>'+(diner?diner.name:'Lentilles corail coco')+'</div>'+
+      '</div></div>';
+  }
+  html+='<div style="background:rgba(107,158,120,0.08);border-radius:10px;padding:0.6rem;font-size:0.65rem;color:var(--leaf-dark);line-height:1.6">🌿 Menu basé sur votre stock · Sans gluten · Anti-SJSR<br>💊 Tramadol LP + Lyrica TOUJOURS avant le dîner</div>';
+  result.innerHTML=html;result.style.display='block';
+  result.scrollIntoView({behavior:'smooth'});
+}
+
+var IA_STOCK=[
+  {cat:'🐟 Poisson surgelé',items:['Saumon ×4','Maquereau','Crevettes ×2','Thon boîte ×2','Sardines ×6 boîtes']},
+  {cat:'🧈 Tofu (Têtes Vertes)',items:['Nature 2×125g','Soyeux 400g','Mariné citron','Grillé ail des ours']},
+  {cat:'🥚 Protéines',items:['Œufs ×12 Label Rouge','Steak haché surgelé','Jambon tranches ×6']},
+  {cat:'🫘 Légumineuses',items:['Lentilles corail 1kg','Lentilles vertes 500g','Haricots rouges/verts/beurre','Pois chiches']},
+  {cat:'🌾 Céréales batch',items:['Quinoa rouge','Riz 3 couleurs','Sarrasin décortiqué','Riz basmati semi-complet','Polenta · Tapioca']},
+  {cat:'🥬 Légumes',items:['Chou chinois ×2 (⚠️ avant 18 avr !)','Carottes · Épinards surgelés','Laitue · Cébette · Avocats · Radis']},
+  {cat:'🍓 Fruits',items:['Mangues surgelées ×2','Fruits rouges surgelés ×2','Cerises surgelées','Bananes · Kiwis · Pommes']},
+  {cat:'🥛 Laits végétaux',items:['Lait avoine ×2','Millet drink','Crème coco · Lait coco']},
+  {cat:'🌟 Biocoop (11 avr)',items:['Lait d’Or Écoîdées 150g','Lait coco gingembre-citronnelle','Sarrasin décortiqué']},
+  {cat:'📦 La Fourche (à commander)',items:['Muesli ×2 · Sablés sarrasin','Chocolat 85%+92%','Café déca · Tahin · Patates douces']},
+];
+
+function renderIAStock(){
+  var el=document.getElementById('ia-stock-display');if(!el)return;
+  var html='';
+  IA_STOCK.forEach(function(s){
+    html+='<div class="ia-stock-cat">'+s.cat+'</div>';
+    s.items.forEach(function(item){
+      var urgent=item.includes('18 avr');
+      html+='<div class="ia-stock-item"><span style="'+(urgent?'color:var(--blossom-deep);font-weight:700':'')+'">'+item+'</span><span style="font-size:0.6rem;color:var(--leaf-dark)">✅</span></div>';
+    });
+  });
+  el.innerHTML=html;
 }
 </script>
 
