@@ -1171,7 +1171,7 @@ canvas.sleep-chart{width:100%;height:140px}
 
     <!-- Douleurs réveil -->
     <div class="sleep-section">
-      <div class="sleep-section-label">🦵 Douleurs SJSR / Impatiences au réveil (0-10)</div>
+      <div class="sleep-section-label">🌅 Douleurs au réveil <span style="font-size:0.58rem;color:var(--muted);font-weight:400">Jambes / impatiences au saut du lit</span></div>
       <div class="pain-val-display p0" id="painMorningDisplay">0 — Aucune douleur</div>
       <input type="range" class="pain-range" id="painMorning" min="0" max="10" value="0"
         oninput="updatePainDisplay('painMorning','painMorningDisplay')">
@@ -1180,10 +1180,19 @@ canvas.sleep-chart{width:100%;height:140px}
 
     <!-- Douleurs journée -->
     <div class="sleep-section">
-      <div class="sleep-section-label">🌞 Douleurs / Impatiences dans la journée (0-10)</div>
+      <div class="sleep-section-label">☀️ Douleurs dans la journée <span style="font-size:0.58rem;color:var(--muted);font-weight:400">Impatiences · tension · fatigue musculaire</span></div>
       <div class="pain-val-display p0" id="painDayDisplay">0 — Aucune douleur</div>
       <input type="range" class="pain-range" id="painDay" min="0" max="10" value="0"
         oninput="updatePainDisplay('painDay','painDayDisplay')">
+      <div class="pain-slider-labels"><span>0 · Aucune</span><span>5 · Modérée</span><span>10 · Insupportable</span></div>
+    </div>
+
+    <!-- Douleurs nuit -->
+    <div class="sleep-section">
+      <div class="sleep-section-label">🌙 Douleurs pendant la nuit <span style="font-size:0.58rem;color:var(--muted);font-weight:400">SJSR nocturne · levers forcés · jambes</span></div>
+      <div class="pain-val-display p0" id="painNightDisplay">0 — Aucune douleur</div>
+      <input type="range" class="pain-range" id="painNight" min="0" max="10" value="0"
+        oninput="updatePainDisplay('painNight','painNightDisplay')">
       <div class="pain-slider-labels"><span>0 · Aucune</span><span>5 · Modérée</span><span>10 · Insupportable</span></div>
     </div>
 
@@ -1214,7 +1223,7 @@ canvas.sleep-chart{width:100%;height:140px}
       <div class="stats-grid" id="sleepStatsGrid">
         <div class="stat-box"><div class="stat-box-val" id="statAvgSleep">—</div><div class="stat-box-label">Sommeil moyen</div></div>
         <div class="stat-box"><div class="stat-box-val" id="statAvgQuality">—</div><div class="stat-box-label">Qualité moyenne</div></div>
-        <div class="stat-box"><div class="stat-box-val" id="statAvgPainM">—</div><div class="stat-box-label">Douleur réveil moy.</div></div>
+        <div class="stat-box" style="min-width:140px"><div class="stat-box-val" style="font-size:0.7rem" id="statAvgPainM">— / — / —</div><div class="stat-box-label" id="statPainLabel">🌅Réveil · ☀️Jour · 🌙Nuit</div></div>
         <div class="stat-box"><div class="stat-box-val" id="statAvgLevers">—</div><div class="stat-box-label">Levers moy./nuit</div></div>
       </div>
       <div id="sleepHistoryList" style="margin:0 1rem 0.5rem"></div>
@@ -3344,7 +3353,14 @@ function loadSleepEntry(){
   const entry=sleepData[key]||{};
   sleepCycles=entry.cycles||[{bedtime:"22:30",wakeTime:"07:00"}];renderCycles();
   sleepQuality=entry.quality||0;updateStars();sleepFeeling=entry.feeling||"";updateFeelingBtns();
-  if(document.getElementById("painMorning")){document.getElementById("painMorning").value=entry.painMorning||0;document.getElementById("painDay").value=entry.painDay||0;updatePainDisplay("painMorning","painMorningDisplay");updatePainDisplay("painDay","painDayDisplay");}
+  if(document.getElementById("painMorning")){
+    document.getElementById("painMorning").value=entry.painMorning||0;
+    document.getElementById("painDay").value=entry.painDay||0;
+    const pnEl=document.getElementById("painNight");if(pnEl)pnEl.value=entry.painNight||0;
+    updatePainDisplay("painMorning","painMorningDisplay");
+    updatePainDisplay("painDay","painDayDisplay");
+    updatePainDisplay("painNight","painNightDisplay");
+  }
   if(document.getElementById("sleepNotes"))document.getElementById("sleepNotes").value=entry.notes||"";
   const ind=document.getElementById("sleepSavedIndicator");if(ind)ind.textContent=entry.savedAt?"✓ Enregistrée à "+entry.savedAt:"";
 }
@@ -3355,15 +3371,15 @@ function updateFeelingBtns(){document.querySelectorAll(".sleep-feeling-btn").for
 function updatePainDisplay(sliderId,displayId){const val=parseInt(document.getElementById(sliderId)?.value||0);const el=document.getElementById(displayId);if(!el)return;el.textContent=val+" — "+(PAIN_LABELS[val]||"");el.className="pain-val-display p"+val;autoSaveSleep();}
 function autoSaveSleep(){
   const key=sleepDateKey();let totalMin=0;sleepCycles.forEach(c=>{if(c.bedtime&&c.wakeTime){const d=calcCycleDuration(c.bedtime,c.wakeTime);if(d>0&&d<720)totalMin+=d;}});
-  const pmEl=document.getElementById("painMorning");const pdEl=document.getElementById("painDay");const notesEl=document.getElementById("sleepNotes");
-  sleepData[key]={cycles:sleepCycles,totalMin,nbLevers:Math.max(0,sleepCycles.length-1),quality:sleepQuality,feeling:sleepFeeling,painMorning:pmEl?parseInt(pmEl.value||0):0,painDay:pdEl?parseInt(pdEl.value||0):0,notes:notesEl?notesEl.value||"":"",savedAt:sleepData[key]?.savedAt||""};
+  const pmEl=document.getElementById("painMorning");const pdEl=document.getElementById("painDay");const pnEl2=document.getElementById("painNight");const notesEl=document.getElementById("sleepNotes");
+  sleepData[key]={cycles:sleepCycles,totalMin,nbLevers:Math.max(0,sleepCycles.length-1),quality:sleepQuality,feeling:sleepFeeling,painMorning:pmEl?parseInt(pmEl.value||0):0,painDay:pdEl?parseInt(pdEl.value||0):0,painNight:document.getElementById("painNight")?parseInt(document.getElementById("painNight").value||0):0,notes:notesEl?notesEl.value||"":"",savedAt:sleepData[key]?.savedAt||""};
   try{localStorage.setItem("sjsr_sleep",JSON.stringify(sleepData));}catch(e){}
   const ind=document.getElementById("sleepSavedIndicator");if(ind)ind.textContent="✓ Sauvegardé";updateSleepStats();
 }
 function saveSleepEntry(){
   const key=sleepDateKey();const now=new Date();const ts=String(now.getHours()).padStart(2,"0")+"h"+String(now.getMinutes()).padStart(2,"0");
   let totalMin=0;sleepCycles.forEach(c=>{if(c.bedtime&&c.wakeTime){const d=calcCycleDuration(c.bedtime,c.wakeTime);if(d>0&&d<720)totalMin+=d;}});
-  sleepData[key]={cycles:sleepCycles,totalMin,nbLevers:Math.max(0,sleepCycles.length-1),quality:sleepQuality,feeling:sleepFeeling,painMorning:parseInt(document.getElementById("painMorning")?.value||0),painDay:parseInt(document.getElementById("painDay")?.value||0),notes:document.getElementById("sleepNotes")?.value||"",savedAt:ts};
+  sleepData[key]={cycles:sleepCycles,totalMin,nbLevers:Math.max(0,sleepCycles.length-1),quality:sleepQuality,feeling:sleepFeeling,painMorning:parseInt(document.getElementById("painMorning")?.value||0),painDay:parseInt(document.getElementById("painDay")?.value||0),painNight:parseInt(document.getElementById("painNight")?.value||0),notes:document.getElementById("sleepNotes")?.value||"",savedAt:ts};
   try{localStorage.setItem("sjsr_sleep",JSON.stringify(sleepData));}catch(e){}
   const ind=document.getElementById("sleepSavedIndicator");if(ind)ind.textContent="✓ Enregistrée à "+ts;
   const btn=document.querySelector(".sleep-save-btn");if(btn){btn.textContent="✅ Nuit enregistrée !";btn.style.background="linear-gradient(135deg,#4a8a5a,#2a6a3a)";setTimeout(()=>{btn.textContent="✓ Confirmer la saisie";btn.style.background="";},2000);}
@@ -3373,17 +3389,23 @@ function updateSleepStats(){
   const histEl=document.getElementById("sleepHistoryList");if(!histEl)return;
   const allKeys=Object.keys(sleepData).sort().reverse();
   if(allKeys.length===0){histEl.innerHTML='<div style="font-size:0.7rem;color:var(--muted);padding:0.5rem">Aucune nuit enregistrée.</div>';return;}
-  let histHTML="",totH=0,cntH=0,totQ=0,cntQ=0,totPM=0,totL=0,cntP=0;
+  let histHTML="",totH=0,cntH=0,totQ=0,cntQ=0,totPM=0,totPJ=0,totPN=0,totL=0,cntP=0;
   allKeys.slice(0,14).forEach(key=>{
     const e=sleepData[key];const totalMin=e.totalMin||0;const h=totalMin>0?Math.round(totalMin/6)/10:null;
     const d=new Date(key+"T12:00:00");const dayNames=["Dim","Lun","Mar","Mer","Jeu","Ven","Sam"];const dayLabel=dayNames[d.getDay()]+" "+d.getDate()+"/"+(d.getMonth()+1);
-    const nb=e.nbLevers||0;if(h!==null){totH+=h;cntH++;}if(e.quality){totQ+=e.quality;cntQ++;}if(e.painMorning!==undefined){totPM+=e.painMorning;totL+=nb;cntP++;}
-    const qs=e.quality?"★".repeat(e.quality)+"☆".repeat(5-e.quality):"—";const fi=FEELING_ICONS[e.feeling]||"—";const hs=h!==null?h+"h":"—";const ps=e.painMorning!==undefined?e.painMorning+"/10":"—";const bp=h?Math.min(100,(h/9)*100):0;const bc=h>=7?"#6b9e78":h>=5?"#c8a050":"#c04040";
+    const nb=e.nbLevers||0;if(h!==null){totH+=h;cntH++;}if(e.quality){totQ+=e.quality;cntQ++;}if(e.painMorning!==undefined){totPM+=e.painMorning;totPJ+=(e.painDay||0);totPN+=(e.painNight||0);totL+=nb;cntP++;}
+    const qs=e.quality?"★".repeat(e.quality)+"☆".repeat(5-e.quality):"—";const fi=FEELING_ICONS[e.feeling]||"—";const siesteH=e.sieste||0;const hs=h!==null?h+"h"+(siesteH>0?" +"+Math.round(siesteH/60*10)/10+"h 💤":""):"—";const pM=e.painMorning!==undefined?e.painMorning:"—";const pJ=e.painDay!==undefined?e.painDay:"—";const pN=e.painNight!==undefined?e.painNight:"—";const ps="🌅"+pM+" ☀️"+pJ+" 🌙"+pN;const bp=h?Math.min(100,(h/9)*100):0;const bc=h>=7?"#6b9e78":h>=5?"#c8a050":"#c04040";
     histHTML+=`<div class="sleep-history-row"><div class="shr-date">${dayLabel}</div><div class="shr-hours" style="color:${h>=7?"#4a8a4a":h>=5?"#c47a2a":"#c04040"}">${hs}</div><div class="shr-bar"><div class="shr-bar-fill" style="width:${bp}%;background:${bc}"></div></div><div class="shr-stars" style="font-size:0.62rem;color:#d4a843">${qs}</div><div class="shr-pain" style="font-size:0.62rem;color:${(e.painMorning||0)>=7?"#c04040":(e.painMorning||0)>=4?"#c47a2a":"#4a8a4a"}">${ps}</div><div style="font-size:0.6rem;color:var(--muted);width:20px">${nb}x</div><div class="shr-feeling">${fi}</div></div>`;
   });
   histEl.innerHTML=histHTML;
-  const avgH=cntH?(totH/cntH).toFixed(1)+"h":"—";const avgQ=cntQ?(totQ/cntQ).toFixed(1)+"★":"—";const avgPM=cntP?(totPM/cntP).toFixed(1)+"/10":"—";const avgL=cntP?(totL/cntP).toFixed(1)+"x":"—";
-  if(document.getElementById("statAvgSleep")){document.getElementById("statAvgSleep").textContent=avgH;document.getElementById("statAvgQuality").textContent=avgQ;document.getElementById("statAvgPainM").textContent=avgPM;document.getElementById("statAvgLevers").textContent=avgL;}
+  const avgH=cntH?(totH/cntH).toFixed(1)+"h":"—";const avgQ=cntQ?(totQ/cntQ).toFixed(1)+"★":"—";const avgPM=cntP?(totPM/cntP).toFixed(1):"—";const avgPJ=cntP?(totPJ/cntP).toFixed(1):"—";const avgPN=cntP?(totPN/cntP).toFixed(1):"—";const avgL=cntP?(totL/cntP).toFixed(1)+"x":"—";
+  if(document.getElementById("statAvgSleep")){
+    document.getElementById("statAvgSleep").textContent=avgH;
+    document.getElementById("statAvgQuality").textContent=avgQ;
+    document.getElementById("statAvgLevers").textContent=avgL;
+    const pm=document.getElementById("statAvgPainM");if(pm)pm.textContent=avgPM+" / "+avgPJ+" / "+avgPN;
+    const pmLabel=document.getElementById("statPainLabel");if(pmLabel)pmLabel.textContent="🌅Réveil · ☀️Jour · 🌙Nuit";
+  }
 }
 let chartCurrentYear=new Date().getFullYear(),chartCurrentMonth=new Date().getMonth(),currentMetric='sleep',currentStatsTab='hebdo';
 const MONTH_NAMES=["Janvier","Février","Mars","Avril","Mai","Juin","Juillet","Août","Septembre","Octobre","Novembre","Décembre"];
