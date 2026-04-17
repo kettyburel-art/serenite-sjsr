@@ -1035,7 +1035,7 @@ canvas.sleep-chart{width:100%;height:140px}
 <div id="view-diner" style="display:none">
   <div class="diner-header" style="padding:0.8rem 1rem 0.4rem">
     <div style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:600;color:var(--text)">🍽 Recettes rapides</div>
-    <div style="font-size:0.62rem;color:var(--muted);margin-top:0.15rem">50 recettes sans gluten · sans lactose · anti-SJSR</div>
+    <div style="font-size:0.62rem;color:var(--muted);margin-top:0.15rem">76 recettes sans gluten · sans lactose · anti-SJSR</div>
   </div>
 
   <!-- Filtres catégories -->
@@ -1220,16 +1220,79 @@ canvas.sleep-chart{width:100%;height:140px}
 
     <!-- TAB: 14 nuits -->
     <div id="stats-tab-hebdo">
-      <div class="stats-grid" id="sleepStatsGrid">
-        <div class="stat-box"><div class="stat-box-val" id="statAvgSleep">—</div><div class="stat-box-label">Sommeil moyen</div></div>
-        <div class="stat-box"><div class="stat-box-val" id="statAvgQuality">—</div><div class="stat-box-label">Qualité moyenne</div></div>
-        <div class="stat-box" style="min-width:140px"><div class="stat-box-val" style="font-size:0.7rem" id="statAvgPainM">— / — / —</div><div class="stat-box-label" id="statPainLabel">🌅Réveil · ☀️Jour · 🌙Nuit</div></div>
-        <div class="stat-box"><div class="stat-box-val" id="statAvgLevers">—</div><div class="stat-box-label">Levers moy./nuit</div></div>
+
+      <!-- ── BLOC SOMMEIL ── -->
+      <div style="margin:0 1rem 0.7rem;background:linear-gradient(135deg,rgba(107,158,120,0.1),rgba(107,158,120,0.03));border-radius:14px;padding:0.8rem;border:1px solid rgba(107,158,120,0.2)">
+        <div style="font-size:0.6rem;font-weight:700;color:var(--leaf-dark);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.5rem">😴 Sommeil</div>
+        <div style="display:flex;gap:0.5rem;flex-wrap:wrap">
+          <div class="stat-box" style="flex:1;min-width:80px">
+            <div class="stat-box-val" id="statAvgSleep">—</div>
+            <div class="stat-box-label">Durée moyenne</div>
+          </div>
+          <div class="stat-box" style="flex:1;min-width:80px">
+            <div class="stat-box-val" id="statAvgQuality">—</div>
+            <div class="stat-box-label">Qualité ⭐</div>
+          </div>
+          <div class="stat-box" style="flex:1;min-width:80px">
+            <div class="stat-box-val" id="statAvgLevers">—</div>
+            <div class="stat-box-label">Levers / nuit</div>
+          </div>
+          <div class="stat-box" style="flex:1;min-width:80px">
+            <div class="stat-box-val" id="statAvgSieste">—</div>
+            <div class="stat-box-label">Sieste moy. 💤</div>
+          </div>
+        </div>
       </div>
+
+      <!-- ── BLOC DOULEURS ── -->
+      <div style="margin:0 1rem 0.7rem;background:linear-gradient(135deg,rgba(196,92,120,0.08),rgba(196,92,120,0.02));border-radius:14px;padding:0.8rem;border:1px solid rgba(196,92,120,0.18)">
+        <div style="font-size:0.6rem;font-weight:700;color:var(--blossom-deep);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.5rem">🦵 Douleurs SJSR</div>
+        <div style="display:flex;gap:0.5rem;flex-wrap:wrap">
+          <div class="stat-box" style="flex:1;min-width:80px;border-color:rgba(196,92,120,0.15)">
+            <div class="stat-box-val" id="statAvgPainM" style="color:var(--blossom-deep)">—</div>
+            <div class="stat-box-label">🌅 Au réveil</div>
+          </div>
+          <div class="stat-box" style="flex:1;min-width:80px;border-color:rgba(196,92,120,0.15)">
+            <div class="stat-box-val" id="statAvgPainJ" style="color:var(--blossom-deep)">—</div>
+            <div class="stat-box-label">☀️ En journée</div>
+          </div>
+          <div class="stat-box" style="flex:1;min-width:80px;border-color:rgba(196,92,120,0.15)">
+            <div class="stat-box-val" id="statAvgPainN" style="color:var(--blossom-deep)">—</div>
+            <div class="stat-box-label">🌙 La nuit</div>
+          </div>
+          <div class="stat-box" style="flex:1;min-width:80px;border-color:rgba(212,168,67,0.2)">
+            <div class="stat-box-val" id="statAvgPainGlobal" style="color:var(--pistil)">—</div>
+            <div class="stat-box-label">📊 Moyenne globale</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── BLOC RESSENTI ── -->
+      <div style="margin:0 1rem 0.7rem;background:linear-gradient(135deg,rgba(124,92,191,0.07),rgba(124,92,191,0.02));border-radius:14px;padding:0.8rem;border:1px solid rgba(124,92,191,0.15)">
+        <div style="font-size:0.6rem;font-weight:700;color:var(--tdah);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.5rem">✨ Ressenti &amp; Bien-être</div>
+        <div style="display:flex;gap:0.5rem;flex-wrap:wrap">
+          <div class="stat-box" style="flex:1;min-width:100px;border-color:rgba(124,92,191,0.15)">
+            <div class="stat-box-val" id="statBestNight" style="color:var(--tdah)">—</div>
+            <div class="stat-box-label">Meilleure nuit</div>
+          </div>
+          <div class="stat-box" style="flex:1;min-width:100px;border-color:rgba(124,92,191,0.15)">
+            <div class="stat-box-val" id="statNbGoodNights" style="color:var(--leaf-dark)">—</div>
+            <div class="stat-box-label">Nuits ≥ 7h ✅</div>
+          </div>
+          <div class="stat-box" style="flex:1;min-width:100px;border-color:rgba(124,92,191,0.15)">
+            <div class="stat-box-val" id="statAvgFeeling" style="color:var(--tdah)">—</div>
+            <div class="stat-box-label">Humeur réveil</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── HISTORIQUE 14 NUITS ── -->
+      <div style="margin:0 1rem 0.3rem;font-size:0.6rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em">📋 14 dernières nuits</div>
       <div id="sleepHistoryList" style="margin:0 1rem 0.5rem"></div>
     </div>
 
     <!-- TAB: Graphiques mensuels -->
+        <!-- TAB: Graphiques mensuels -->
     <div id="stats-tab-mensuel" style="display:none">
       <div style="padding:0 1rem 0.4rem;display:flex;align-items:center;justify-content:space-between">
         <button class="sleep-nav-btn" onclick="chartNavMonth(-1)">‹</button>
@@ -1366,7 +1429,7 @@ canvas.sleep-chart{width:100%;height:140px}
   <!-- Header -->
   <div style="padding:0.8rem 1rem 0.4rem">
     <div style="font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:700;color:var(--text)">✨ Assistant Cuisine</div>
-    <div style="font-size:0.62rem;color:var(--muted);margin-top:0.1rem">Analyse votre stock · Fonctionne hors connexion · 49 recettes</div>
+    <div style="font-size:0.62rem;color:var(--muted);margin-top:0.1rem">Analyse votre stock · Fonctionne hors connexion · 76 recettes</div>
   </div>
 
   <!-- Tabs -->
@@ -1380,7 +1443,7 @@ canvas.sleep-chart{width:100%;height:140px}
   <div id="ia-panel-recette" style="padding:0 1rem">
 
     <div style="font-size:0.67rem;color:var(--muted);margin-bottom:0.7rem;line-height:1.5">
-      Cochez ce que vous avez envie ou ce qui est disponible — je cherche dans vos 49 recettes 🌿
+      Cochez ce que vous avez envie ou ce qui est disponible — je cherche dans vos 76 recettes 🌿
     </div>
 
     <!-- Humeur / envie -->
@@ -1453,7 +1516,7 @@ canvas.sleep-chart{width:100%;height:140px}
   <div id="ia-panel-menu" style="display:none;padding:0 1rem">
 
     <div style="font-size:0.67rem;color:var(--muted);margin-bottom:0.7rem;line-height:1.5">
-      Je compose un menu équilibré depuis vos 49 recettes · Anti-SJSR · Sans gluten 🌸
+      Je compose un menu équilibré depuis vos 76 recettes · Anti-SJSR · Sans gluten 🌸
     </div>
 
     <div style="background:rgba(58,40,32,0.03);border-radius:12px;padding:0.7rem;margin-bottom:0.6rem">
@@ -2883,7 +2946,6 @@ const DINERS=[
    ingr:"500g mix farine sans gluten · 30g levure fraîche · 400ml eau tiède (35°C) · 1cc sel · 2cs huile olive",
    steps:"1. Délayer la levure fraîche dans 100ml d'eau tiède (pas chaude — tue la levure). Attendre 5 min qu'elle commence à buller.\n2. Dans grand bol : farine + sel. Faire un puits. Ajouter mélange levure + reste d'eau + huile.\n3. Pétrir 4 min à la main ou avec crochet pétrisseur. La pâte sans gluten est plus collante que la pâte normale — c'est normal.\n4. Former une boule. Couvrir d'un linge humide. Laisser lever 45 min dans un endroit chaud (four éteint avec lumière allumée).\n5. Façonner en pain. Four 210°C 15 min puis baisser à 190°C 20 min. Taper le dessous — ça sonne creux = cuit.",
    tags:['vegan','base']},
-,
   {cat:'base',time:'3 min',name:"Lait d'Or anti-SJSR",
    ingr:"1cc préparation Lait d'Or Écoîdées · 200ml lait de millet chaud · 1cc miel bio (optionnel)",
    steps:"1. Chauffer le lait de millet à 80°C (chaud mais pas bouillant — ne doit pas fumer).\n2. Verser dans votre tasse.\n3. Ajouter 1cc de préparation Lait d'Or Écoîdées.\n4. Fouetter énergiquement 30 sec avec une petite cuillère ou mini-fouet jusqu'à dissolution complète.\n5. Ajouter 1cc miel si vous souhaitez un goût plus doux.\n6. Boire chaud, idéalement avec vos médicaments du soir — le poivre noir de la préparation active la curcumine x20 et potentialise l'effet anti-inflammatoire.",
@@ -2905,7 +2967,7 @@ const DINERS=[
 
   {cat:'plat',time:'25 min',name:"Cabillaud en papillote lentilles",
    ingr:"2 filets cabillaud MSC (~150g chacun) · 100g lentilles corail · 1 carotte · épinards · ail · huile olive · curcuma · paprika · thym · citron · graines courge",
-   steps:"1. LENTILLES : rincer lentilles corail. Cuire 12 min dans 2.5x leur volume d\'eau + sel + curcuma. Égoutter.\n2. LÉGUMES : couper carotte en rondelles fines. Hacher ail. Mélanger carottes + épinards + ail + 1cs huile + paprika + sel + herbes.\n3. PAPILLOTE : préchauffer four 180°C. Sur papier cuisson, déposer légumes au centre. Poser filet cabillaud dessus. Arroser huile olive + citron. Fermer hermétiquement.\n4. CUISSON : 18-20 min selon épaisseur. Le cabillaud est cuit quand la chair est opaque et s\'effeui\'lle facilement.\n5. DRESSAGE : lentilles corail en fond d\'assiette, cabillaud + légumes dessus. Graines courge pour le croquant.\n⚠️ POUR MAI : à faire dès que vous achetez du cabillaud MSC surgelé — recette IG bas très anti-SJSR.",
+   steps:"1. LENTILLES : rincer lentilles corail. Cuire 12 min dans 2.5x leur volume d\'eau + sel + curcuma. Égoutter.\n2. LÉGUMES : couper carotte en rondelles fines. Hacher ail. Mélanger carottes + épinards + ail + 1cs huile + paprika + sel + herbes.\n3. PAPILLOTE : préchauffer four 180°C. Sur papier cuisson, déposer légumes au centre. Poser filet cabillaud dessus. Arroser huile olive + citron. Fermer hermétiquement.\n4. CUISSON : 18-20 min selon épaisseur. Le cabillaud est cuit quand la chair est opaque et s\'effeuille facilement.\n5. DRESSAGE : lentilles corail en fond d\'assiette, cabillaud + légumes dessus. Graines courge pour le croquant.\n⚠️ POUR MAI : à faire dès que vous achetez du cabillaud MSC surgelé — recette IG bas très anti-SJSR.",
    tags:['sjsr','poisson','mai']},
 
   {cat:'plat',time:'30 min',name:"Pancakes moelleux sans gluten",
@@ -2987,7 +3049,89 @@ const DINERS=[
   {cat:"base",time:"30 min",name:"Pain express aux graines oméga-3",
    ingr:"200g farine de riz · 1 sachet levure chimique sg · 2 oeufs · 25cl crème coco VietCoco · 4cs huile de sésame · 2cs graines de lin · 2cs graines de tournesol · 1cc graines de pavot · sel",
    steps:"1. Préchauffer four 210°C.\n2. Battre oeufs + crème coco VietCoco + huile de sésame + sel.\n3. Incorporer farine de riz + levure chimique. Mélanger.\n4. Ajouter toutes les graines. Mélanger.\n5. Verser dans moule à cake huilé. Cuire 30 min. Couteau propre = cuit.\n🌿 Huile sésame + graines de lin + tournesol = trio oméga-3 anti-inflammatoire.\n💡 Idéal pour accompagner sardines, saumon ou rillettes de poisson.\n✅ Crème coco VietCoco est déjà dans votre stock Auchan !",
-   tags:["base","sjsr","omega3"]}
+   tags:["base","sjsr","omega3"]},
+
+  // ── NOUVELLES RECETTES (Snapchat "sans gluten facile" - lot décembre 2025) ──
+  {cat:"dessert",time:"25 min",name:"Cookies sticks sans gluten",
+   ingr:"1 oeuf · 85g mix farine sg (ou farine de riz) · 40g poudre d'amandes · 1cs bombée beurre d'amande · 25g sucre de coco · 6g levure chimique sg · 50g pépites chocolat noir 70%+ · ½cc cannelle · pincée Sel Santé",
+   steps:"1. Préchauffer four 180°C.\n2. Dans un saladier : mélanger oeuf + beurre d'amande + sucre de coco jusqu'à crémeux.\n3. Ajouter mix farine + poudre d'amandes + levure + cannelle + Sel Santé. Mélanger.\n4. Incorporer les pépites de chocolat. La pâte est assez ferme — c'est normal.\n5. Former des sticks allongés de 8-10 cm avec les mains (comme des grosses frites).\n6. Déposer sur plaque + papier cuisson, espacés (ils gonflent un peu).\n7. Cuire 18-20 min — légèrement dorés sur les bords.\n8. Laisser tiédir avant de déguster — ils durcissent en refroidissant.\n🌿 Poudre d'amande + sucre de coco + cannelle = IG bas, magnésium, dopamine.\n💡 Plaisir occasionnel (1-2x/semaine) — idéal avec thé vert l'après-midi.",
+   tags:["dessert","sjsr","chocolat","plaisir"]},
+
+  {cat:"plat",time:"55 min",name:"Cake salé saumon-épinards sans gluten",
+   ingr:"3 oeufs · 150g mix farine sg · 1 sachet levure chimique sg · 10cl huile olive · 12cl lait d'amande (ou Alpro soja) · 150g saumon frais ou fumé · 150g épinards frais (ou surgelés) · 1 gousse d'ail · 1cs persil + basilic frais · zeste + jus ½ citron · Sel Santé · poivre",
+   steps:"1. Préchauffer four 180°C.\n2. Si épinards frais : faire tomber à la poêle avec l'ail écrasé 2 min. Essorer. Si surgelés : décongeler et bien essorer.\n3. Dans un saladier : battre les oeufs avec Sel Santé + poivre.\n4. Ajouter mix farine + levure chimique. Mélanger.\n5. Incorporer huile olive + lait végétal progressivement.\n6. Ajouter saumon coupé en dés + épinards + herbes fraîches + zeste et jus de citron.\n7. Verser dans un moule à cake chemisé de papier cuisson.\n8. Cuire 40-45 min — lame de couteau doit ressortir propre.\n9. Laisser tiédir 10 min avant de démouler.\n🌿 Saumon (oméga 3) + épinards (fer) + citron (vitamine C pour absorption du fer) + persil (dopamine).\n💡 Apéro, brunch, pique-nique ou dîner léger avec salade verte. Se congèle en tranches individuelles.\n✅ Zéro glutamate (pas de fromage fort, pas de cube bouillon) — 100% protocole.",
+   tags:["plat","sjsr","poisson","complet"]},
+
+  {cat:"dessert",time:"25 min",name:"Biscuits moelleux banane-avoine-chocolat ⭐",
+   ingr:"2 bananes bien mûres · 120g flocons d'avoine sg · 40g pépites chocolat noir 70%+ · 1cs purée d'amande · 1cs graines de lin moulues · 1cc cannelle · pincée Sel Santé",
+   steps:"1. Préchauffer four 180°C.\n2. Écraser les bananes dans un bol jusqu'à purée bien lisse (plus elles sont mûres, mieux c'est).\n3. Ajouter flocons d'avoine + purée d'amande + graines de lin + cannelle + Sel Santé. Mélanger.\n4. La pâte doit être homogène et un peu collante — c'est normal.\n5. Incorporer les pépites de chocolat.\n6. Déposer de petites boules de pâte sur plaque + papier cuisson. Aplatir légèrement avec le dos d'une cuillère.\n7. Cuire 12-15 min — légèrement dorés sur les bords.\n8. Laisser tiédir 5 min avant de déguster.\n🌿 RECETTE PHARE SJSR : banane (magnésium + tryptophane → mélatonine), avoine (fer), amande (magnésium), lin (oméga 3), chocolat noir (dopamine).\n💡 Goûter fin d'après-midi idéal — la banane favorise la production de mélatonine pour la nuit.\n✅ Sans sucre ajouté (sucrosité naturelle des bananes mûres) · IG modéré.\n♻️ Excellente façon de valoriser les bananes noircies.",
+   tags:["dessert","sjsr","brunch","sans-sucre-ajoute"]},
+
+  {cat:"base",time:"5 min",name:"Mix farine sans gluten maison",
+   ingr:"200g poudre d'amandes · 200g farine de riz complet · 200g farine de sarrasin · 150g fécule de tapioca · 50g fécule de pomme de terre",
+   steps:"1. Dans un grand bocal en verre hermétique (minimum 1L) : verser tous les ingrédients.\n2. Fermer et secouer vigoureusement 30 sec pour bien homogénéiser.\n3. S'utilise en remplacement 1:1 de la farine de blé dans toute recette de gâteau, cake, pancakes, biscuits.\n4. Secouer à nouveau avant chaque utilisation (les farines se séparent).\n🌿 Magnésium (amande + sarrasin) · Fer non-héminique (sarrasin) · IG modéré (sarrasin + riz complet).\n💡 Conservation : bocal hermétique à l'abri de la lumière, 3 mois max.\n✅ Zéro additif vs mix industriels souvent chargés en exhausteurs.\n💰 Plus économique que les mix tout prêts — à préparer en batch mensuel.\n🛒 Tous les ingrédients disponibles à La Fourche en vrac ou Biocoop.",
+   tags:["base","sjsr","batch","vegan"]},
+
+  // ── RECETTES FASTOCHES NOMADES (ebook concours sans gluten/sans lait) ──
+  {cat:"dessert",time:"10 min + 12h repos",name:"Barres dattes-noisettes-chocolat ⭐",
+   ingr:"300g dattes moelleuses · 120g noisettes · 90g chocolat noir 70%+ · pincée Sel Santé",
+   steps:"1. Torréfier les noisettes 5 min au four 180°C ou poêle sans matière grasse — elles doivent dorer légèrement.\n2. Dénoyauter les dattes. Si elles ne sont pas très moelleuses, les tremper 30 min dans du thé tiède puis égoutter.\n3. Hacher grossièrement le chocolat au couteau.\n4. Mixer noisettes + chocolat au robot : poudre grossière (pas trop fine, garder de la texture). Retirer du bol.\n5. Mixer les dattes jusqu'à pâte. Ajouter le mélange noisettes-chocolat + pincée Sel Santé. Mixer à nouveau pour homogénéiser.\n6. Tasser dans un moule carré (16x16cm) chemisé de papier cuisson. Couvrir de papier, placer un poids dessus.\n7. Réfrigérer au moins 12h (idéalement une nuit). Découper en 10 barres.\n🌿 RECETTE PHARE SJSR : magnésium (dattes + noisettes + chocolat noir) · dopamine (chocolat + torréfaction) · Zéro sucre ajouté (sucrosité naturelle des dattes) · IG modéré grâce aux fibres.\n💡 Barre pré-workout ou goûter bureau — se conserve 10 jours au frigo.\n🥜 Variante : amandes, noix de pécan ou mix d'oléagineux à la place des noisettes.",
+   tags:["dessert","sjsr","batch","sans-sucre-ajoute"]},
+
+  {cat:"dessert",time:"30 min",name:"Barres énergie avoine-graines ⭐",
+   ingr:"80g flocons d'avoine sg · 80ml lait d'amande · 1 poignée raisins secs · 1 poignée mix amandes-noisettes concassées · 1cs graines de courge · 1cs graines de lin moulues · 3cs compote pomme · 1cs miel · ½cc cannelle",
+   steps:"1. Préchauffer four 180°C.\n2. Dans un saladier : tout mélanger simplement jusqu'à obtenir une pâte grumeleuse homogène.\n3. Verser dans un moule à cake (12x26 cm) chemisé de papier cuisson. Bien tasser avec le dos d'une cuillère.\n4. Cuire 25 min — les bords doivent dorer.\n5. Laisser refroidir complètement dans le moule avant de couper en 5-6 barres.\n🌿 RECETTE PHARE SJSR : avoine (fer + fibres) · graines de courge (zinc + magnésium) · graines de lin (oméga 3) · amandes (magnésium) · miel sur compote (IG maîtrisé).\n💡 Barre pré-sortie sportive ou collation bureau. Bien moins sucrée que les barres du commerce.\n♻️ Se conservent 5 jours boîte hermétique, ou se congèlent individuellement.",
+   tags:["dessert","sjsr","batch","omega3"]},
+
+  {cat:"dessert",time:"30 min",name:"Biscuits noix-châtaigne purée d'amandes",
+   ingr:"80g purée d'amande · 60g sucre de coco · 1 œuf · ¼cc vanille liquide · 90g farine de châtaigne · ½cc poudre à lever sg · 75g noix décortiquées · pincée Sel Santé",
+   steps:"1. Préchauffer four 180°C.\n2. Dans un saladier : mélanger purée d'amande + sucre de coco jusqu'à crémeux.\n3. Ajouter œuf + vanille + Sel Santé. Bien fouetter.\n4. Incorporer farine de châtaigne + poudre à lever.\n5. Mixer grossièrement les noix (garder des morceaux). Ajouter à la pâte.\n6. Former un boudin de 5 cm de diamètre. Découper des tranches de 0,5 cm.\n7. Disposer sur plaque + papier cuisson. Cuire 12-15 min — légèrement dorés, encore un peu mous (ils durcissent en refroidissant).\n🌿 Magnésium (amande + noix + châtaigne) · IG bas (sucre de coco + farine de châtaigne) · Fer végétal (châtaigne).\n💡 Croquants dehors, fondants dedans. Addictifs — faire un double batch !\n♻️ Se conservent 1 semaine boîte hermétique.",
+   tags:["dessert","sjsr","batch"]},
+
+  {cat:"dessert",time:"15 min + trempage 3h",name:"Craquelins sarrasin-goji",
+   ingr:"140g graines de sarrasin décortiquées · 40g baies de goji · 40g poudre de noisettes · 20g farine de riz complet · 1cs sirop d'agave · pincée Sel Santé",
+   steps:"1. Faire tremper les graines de sarrasin 3h dans un grand bol d'eau. Tremper aussi les baies de goji 3h dans un petit bol. Le sarrasin va développer un mucilage qui sert de liant naturel (remplace l'œuf).\n2. Rincer et bien égoutter le sarrasin. Égoutter le goji (garder le jus rose pour une infusion !).\n3. Préchauffer four 190°C.\n4. Mêler tous les ingrédients dans un saladier — la pâte est collante grâce au mucilage, c'est normal.\n5. Déposer des cuillerées bombées sur plaque + papier cuisson, aplatir légèrement.\n6. Cuire 15 min en surveillant — doivent être dorés sur les bords.\n🌿 IG très bas (sarrasin entier) · Antioxydants puissants (goji) · Magnésium + fer (sarrasin + noisettes) · Zéro œuf grâce au mucilage.\n💡 Parfaits pour grignotage sain l'après-midi. Original et ultra-digestible.\n♻️ Se conservent 1 semaine boîte hermétique.",
+   tags:["dessert","sjsr","batch","vegan"]},
+
+  {cat:"dessert",time:"40 min",name:"Muffins pommes-sarrasin ⭐",
+   ingr:"125g farine de sarrasin · 40g farine de riz complet · 60g flocons de millet · 2cc levure chimique sg · ½cc Sel Santé · 1cc cannelle · 50g noix hachées · 100ml huile de colza · 100ml lait de riz · 150ml compote de pomme · 3cs sirop d'érable · 1 grosse pomme en dés · 30g graines de courge + extra",
+   steps:"1. Préchauffer four 190°C.\n2. Dans un saladier : mélanger tous les ingrédients secs (farines + flocons + levure + Sel Santé + cannelle + noix + graines de courge).\n3. Dans un autre saladier : mélanger ingrédients liquides (huile + lait + compote + sirop d'érable) + dés de pomme.\n4. Combiner les deux mélanges — ne pas sur-mélanger.\n5. Verser dans des moules à muffins (rempli aux ¾). Saupoudrer de graines de courge supplémentaires.\n6. Cuire 25-30 min — lame de couteau propre = cuit.\n7. Laisser refroidir sur grille.\n🌿 RECETTE PHARE SJSR : fer (sarrasin + millet + noix) · magnésium (sarrasin + graines de courge + noix) · oméga 3 (huile de colza) · zinc (graines de courge) · IG maîtrisé.\n💡 Petit-déj ou goûter ultra-complet. Tient bien au bureau.\n♻️ Se congèlent individuellement.",
+   tags:["dessert","sjsr","batch","brunch","omega3"]},
+
+  {cat:"base",time:"40 min",name:"Granola salé curcuma-cranberries ⭐",
+   ingr:"60g flocons d'avoine sg · 30g graines mélangées (courge + tournesol + sésame) · 20g amandes entières · 1 poignée cranberries séchées · 1cc curcuma · ½cc gingembre en poudre · 10cl eau tiède · 5cl huile de colza · pincée Sel Santé",
+   steps:"1. Préchauffer four 150°C.\n2. Dans un saladier : mélanger tous les ingrédients secs (flocons + graines + amandes + cranberries + curcuma + gingembre + Sel Santé).\n3. Faire tiédir l'eau, ajouter l'huile de colza. Verser sur le mélange sec. Mélanger et laisser gonfler 5 min.\n4. Étaler sur plaque + papier cuisson (ou petits moules silicone pour portions).\n5. Cuire 30-40 min en remuant toutes les 10 min — doré et sec.\n6. Laisser refroidir complètement avant de casser/démouler.\n🌿 RECETTE PHARE SJSR : curcuma + gingembre (anti-inflammatoire + circulation) · oméga 3 (colza + graines) · magnésium (avoine + amandes) · zéro sucre ajouté.\n💡 À mélanger avec yaourt végétal pour déjeuner bureau ou snack anti-SJSR. Original : c'est SALÉ, pas sucré.\n♻️ Se conserve 3 semaines boîte hermétique.",
+   tags:["base","sjsr","batch","omega3","anti-inflammatoire"]},
+
+  {cat:"base",time:"25 min",name:"Mini muffins polenta-pois chiches salés",
+   ingr:"60g farine de pois chiches · 50g polenta · 1cs graines de tournesol décortiquées · 1cc poudre à lever sg · 1cc sucre · 8cl lait d'amande · 3cl huile d'olive · ½cc Sel Santé · poivre",
+   steps:"1. Préchauffer four 180°C.\n2. Dans un bol : mélanger farine de pois chiches + polenta + levure + sucre + graines de tournesol + Sel Santé + poivre. Creuser un puits.\n3. Verser lait d'amande + huile d'olive dans le puits. Mélanger — pâte épaisse.\n4. Verser 1cs de pâte par moule à mini muffins (bien remplir, la pâte ne monte pas beaucoup).\n5. Décorer de quelques graines de tournesol supplémentaires.\n6. Cuire 20 min.\n7. Déguster tiède ou froid.\n🌿 Protéines végétales (pois chiches) · Magnésium (polenta + amande) · Ultra-rassasiants.\n💡 Snack salé bureau parfait — change des muffins sucrés. Variante : ajouter olives noires ou tomates séchées.\n♻️ Se conservent 3 jours boîte hermétique.",
+   tags:["base","sjsr","vegan","proteine"]},
+
+  {cat:"dessert",time:"30 min",name:"Biscuits sarrasin raisins-chocolat",
+   ingr:"80g flocons de sarrasin · 60g farine de sarrasin · 2cs huile de sésame · 70g raisins secs · 4cs pépites chocolat noir 70%+ · 1 poignée noisettes concassées · 125ml jus de pomme · pincée Sel Santé · 1cc cannelle",
+   steps:"1. Dans un saladier : mélanger flocons + farine de sarrasin + huile de sésame + cannelle + Sel Santé.\n2. Ajouter les raisins secs, pépites de chocolat, noisettes concassées. Mélanger.\n3. Verser le jus de pomme progressivement en mélangeant après chaque ajout.\n4. Laisser reposer 20 min (le temps de préchauffer four 180°C).\n5. Former des petits tas à la cuillère sur plaque + papier cuisson. Aplatir légèrement.\n6. Cuire 15 min — dorés sur les bords.\n🌿 Fer (sarrasin + raisins secs) · Magnésium (sarrasin + noisettes + chocolat) · Huile de sésame (anti-inflammatoire) · IG modéré (fibres du sarrasin).\n💡 Goûter nourrissant et réchauffant pour l'hiver. Se fait en 10 min de préparation active.\n♻️ Se conservent 1 semaine boîte hermétique au frais.",
+   tags:["dessert","sjsr","batch"]},
+
+  {cat:"dessert",time:"15 min",name:"Cookies banane-pralin express",
+   ingr:"1 grosse banane bien mûre · 200g mix farine sg (ou farine de riz) · 15g sucre de coco · 1 pincée cannelle · ½cc bicarbonate · 1cs pâte de pralin · 2cs huile de colza · pincée Sel Santé",
+   steps:"1. Préchauffer four 180°C.\n2. Dans un saladier : écraser la banane avec sucre de coco + cannelle + Sel Santé.\n3. Ajouter farine + bicarbonate. Bien mélanger.\n4. Incorporer pâte de pralin + huile. La pâte doit être modelable.\n5. Former des petites boules, déposer sur plaque + papier cuisson.\n6. Cuire 10 min — rester moelleux (ne pas trop cuire).\n🌿 Banane (magnésium + tryptophane → mélatonine) · Oméga 3 (huile de colza) · IG bas (sucre de coco + banane mûre).\n💡 Sans œuf, sans lait, sans gluten. Super rapide — 15 min top chrono.\n♻️ Se conservent 4 jours boîte hermétique.",
+   tags:["dessert","sjsr","rapide","vegan"]},
+
+  {cat:"dessert",time:"25 min",name:"Mini muffins banane-purées oléagineuses",
+   ingr:"1 petite banane · 1cs purée de cacahuètes · 1cs purée de noisettes · 3 noix + 6 noisettes hachées · 2cs farine de riz · 1cc poudre à lever sg · 2cs flocons de millet · 2cs lait d'amande · 2 abricots secs en dés · pincée Sel Santé",
+   steps:"1. Préchauffer four 180°C.\n2. Écraser la banane dans un saladier. Mélanger avec les 2 purées d'oléagineux.\n3. Ajouter noix et noisettes hachées.\n4. Incorporer farine de riz + poudre à lever + flocons de millet + lait d'amande + Sel Santé.\n5. Ajouter les dés d'abricots secs. Mélanger.\n6. Répartir dans 10 moules à mini muffins.\n7. Cuire 15 min — dorés et lame propre.\n🌿 Triple magnésium (banane + noisettes + amande) · Fer (noix + abricots secs + millet) · Tryptophane (banane).\n💡 Ultra rapide et polyvalent : petit-déj, goûter, en-cas bureau. Sans gluten, sans lait, sans œuf, sans soja.\n♻️ Se conservent 4 jours, se congèlent en portions.",
+   tags:["dessert","sjsr","rapide","brunch","vegan"]},
+
+  {cat:"plat",time:"60 min",name:"Cake salé carotte-curcuma-tomates séchées",
+   ingr:"90g farine de riz complet · 70g farine de maïs · 40g poudre d'amandes · 20g sucre de coco · ½ sachet levure chimique sg · ½cc bicarbonate · 2cc curcuma · ¾cc Sel Santé · pincée piment d'Espelette · 1cs graines de pavot · 30g amandes concassées · 1cs jus de citron · 70g carotte râpée · 100g purée de patate douce (ou 2 œufs) · 6 tomates séchées en dés · 8 olives noires en dés · 200ml lait d'amande · 4 branches coriandre fraîche",
+   steps:"1. Préchauffer four 210°C. Huiler un moule à cake.\n2. Râper carottes + ajouter jus de citron (évite oxydation). Ciseler coriandre, couper tomates et olives en petits dés.\n3. Saladier 1 (secs) : farines + poudre d'amandes + sel + curcuma + piment + sucre + levure + bicarbonate + amandes + pavot.\n4. Saladier 2 (humides) : purée patate douce + lait d'amande + huile d'olive. Ajouter coriandre + olives + tomates.\n5. Combiner les deux saladiers + carottes râpées. Mélanger sans sur-travailler.\n6. Verser dans le moule. Cuire 10 min à 210°C, puis baisser à 180°C et cuire encore 35-40 min.\n7. Démouler et refroidir avant de réserver au frais.\n🌿 Curcuma + piment (anti-inflammatoire SJSR) · Fer (patate douce + amandes) · Magnésium (amandes) · Béta-carotène (carotte) · Zéro glutamate (ni fromage ni bouillon cube).\n💡 Déguster bien frais avec salade verte. Apéro, déjeuner bureau, pique-nique.\n♻️ Se conserve 3 jours au frigo, se congèle en tranches.",
+   tags:["plat","sjsr","anti-inflammatoire","batch"]},
+
+  {cat:"dessert",time:"20 min",name:"Cœurs fondants croûte-cœur modulable",
+   ingr:"CROÛTE : 70g flocons d'avoine sg moulus (ou crème de riz) · 50g purée de fruits OU 30g fruits secs trempés · 1cc graines de lin moulues · pincée Sel Santé\nCŒUR : 60g garniture au choix (purée d'amande + épices pour version sucrée, OU fromage végétal + herbes pour version salée)",
+   steps:"1. Dans un bol : mélanger les ingrédients de la croûte avec les doigts jusqu'à pâte modelable (texture pâte à modeler).\n2. Séparer en 4 boules : 2 grosses (40g) + 2 petites (20g).\n3. Écraser chaque boule en disques de 5mm d'épaisseur.\n4. Foncer 2 petits moules silicone (ou ramequins) avec les 2 grands disques — former un panier.\n5. Remplir avec la garniture cœur — attention ne pas dépasser le bord.\n6. Couvrir avec les 2 petits disques. Appuyer sur les bords pour souder.\n7. Démouler délicatement, rouler doucement dans la main pour vérifier que tout est soudé.\n8. Si croûte contient farine non-précuite : cuire 10 min à 180°C après avoir huilé légèrement les cœurs.\n🌿 Formule modulable au gré des humeurs et du stock. Version sucrée : purée d'oléagineux + fruits secs = magnésium. Version salée : tapenade, caviar d'aubergine, mousse d'avocat.\n💡 Format original, ludique, facile à transporter dans lunch box. Perfect pour batch Sunday.\n♻️ Se conservent 2 jours au frais.",
+   tags:["dessert","sjsr","batch","modulable"]}
 ];
 // ── PLACARD OFFICE ──
 const PLACARD_OFFICE=[
@@ -3389,22 +3533,37 @@ function updateSleepStats(){
   const histEl=document.getElementById("sleepHistoryList");if(!histEl)return;
   const allKeys=Object.keys(sleepData).sort().reverse();
   if(allKeys.length===0){histEl.innerHTML='<div style="font-size:0.7rem;color:var(--muted);padding:0.5rem">Aucune nuit enregistrée.</div>';return;}
-  let histHTML="",totH=0,cntH=0,totQ=0,cntQ=0,totPM=0,totPJ=0,totPN=0,totL=0,cntP=0;
+  let histHTML="",totH=0,cntH=0,totQ=0,cntQ=0,totPM=0,totPJ=0,totPN=0,totSieste=0,totL=0,cntP=0,bestNight=0,nbGoodNights=0,feelingCount={};
   allKeys.slice(0,14).forEach(key=>{
     const e=sleepData[key];const totalMin=e.totalMin||0;const h=totalMin>0?Math.round(totalMin/6)/10:null;
     const d=new Date(key+"T12:00:00");const dayNames=["Dim","Lun","Mar","Mer","Jeu","Ven","Sam"];const dayLabel=dayNames[d.getDay()]+" "+d.getDate()+"/"+(d.getMonth()+1);
-    const nb=e.nbLevers||0;if(h!==null){totH+=h;cntH++;}if(e.quality){totQ+=e.quality;cntQ++;}if(e.painMorning!==undefined){totPM+=e.painMorning;totPJ+=(e.painDay||0);totPN+=(e.painNight||0);totL+=nb;cntP++;}
+    const nb=e.nbLevers||0;if(h!==null){totH+=h;cntH++;}if(e.quality){totQ+=e.quality;cntQ++;}if(e.painMorning!==undefined){totPM+=e.painMorning;totPJ+=(e.painDay||0);totPN+=(e.painNight||0);totSieste+=(e.sieste||0);totL+=nb;cntP++;}
+    if(h!==null){if(h>bestNight)bestNight=h;if(h>=7)nbGoodNights++;}
+    if(e.feeling)feelingCount[e.feeling]=(feelingCount[e.feeling]||0)+1;
     const qs=e.quality?"★".repeat(e.quality)+"☆".repeat(5-e.quality):"—";const fi=FEELING_ICONS[e.feeling]||"—";const siesteH=e.sieste||0;const hs=h!==null?h+"h"+(siesteH>0?" +"+Math.round(siesteH/60*10)/10+"h 💤":""):"—";const pM=e.painMorning!==undefined?e.painMorning:"—";const pJ=e.painDay!==undefined?e.painDay:"—";const pN=e.painNight!==undefined?e.painNight:"—";const ps="🌅"+pM+" ☀️"+pJ+" 🌙"+pN;const bp=h?Math.min(100,(h/9)*100):0;const bc=h>=7?"#6b9e78":h>=5?"#c8a050":"#c04040";
     histHTML+=`<div class="sleep-history-row"><div class="shr-date">${dayLabel}</div><div class="shr-hours" style="color:${h>=7?"#4a8a4a":h>=5?"#c47a2a":"#c04040"}">${hs}</div><div class="shr-bar"><div class="shr-bar-fill" style="width:${bp}%;background:${bc}"></div></div><div class="shr-stars" style="font-size:0.62rem;color:#d4a843">${qs}</div><div class="shr-pain" style="font-size:0.62rem;color:${(e.painMorning||0)>=7?"#c04040":(e.painMorning||0)>=4?"#c47a2a":"#4a8a4a"}">${ps}</div><div style="font-size:0.6rem;color:var(--muted);width:20px">${nb}x</div><div class="shr-feeling">${fi}</div></div>`;
   });
   histEl.innerHTML=histHTML;
   const avgH=cntH?(totH/cntH).toFixed(1)+"h":"—";const avgQ=cntQ?(totQ/cntQ).toFixed(1)+"★":"—";const avgPM=cntP?(totPM/cntP).toFixed(1):"—";const avgPJ=cntP?(totPJ/cntP).toFixed(1):"—";const avgPN=cntP?(totPN/cntP).toFixed(1):"—";const avgL=cntP?(totL/cntP).toFixed(1)+"x":"—";
+  const mostFeeling=Object.keys(feelingCount).sort((a,b)=>feelingCount[b]-feelingCount[a])[0]||"";
   if(document.getElementById("statAvgSleep")){
+    // Bloc sommeil
     document.getElementById("statAvgSleep").textContent=avgH;
     document.getElementById("statAvgQuality").textContent=avgQ;
     document.getElementById("statAvgLevers").textContent=avgL;
-    const pm=document.getElementById("statAvgPainM");if(pm)pm.textContent=avgPM+" / "+avgPJ+" / "+avgPN;
-    const pmLabel=document.getElementById("statPainLabel");if(pmLabel)pmLabel.textContent="🌅Réveil · ☀️Jour · 🌙Nuit";
+    const siesteAvgEl=document.getElementById("statAvgSieste");
+    if(siesteAvgEl)siesteAvgEl.textContent=cntP>0?Math.round(totSieste/cntP)+"min":"—";
+    // Bloc douleurs séparées
+    const pmEl2=document.getElementById("statAvgPainM");if(pmEl2)pmEl2.textContent=avgPM+"/10";
+    const pjEl=document.getElementById("statAvgPainJ");if(pjEl)pjEl.textContent=avgPJ+"/10";
+    const pnEl3=document.getElementById("statAvgPainN");if(pnEl3)pnEl3.textContent=avgPN+"/10";
+    const pgEl=document.getElementById("statAvgPainGlobal");
+    if(pgEl)pgEl.textContent=cntP>0?((totPM+totPJ+totPN)/(cntP*3)).toFixed(1)+"/10":"—";
+    // Bloc ressenti
+    const bestEl=document.getElementById("statBestNight");if(bestEl)bestEl.textContent=bestNight+"h";
+    const goodEl=document.getElementById("statNbGoodNights");if(goodEl)goodEl.textContent=nbGoodNights+" nuits";
+    const feelEl=document.getElementById("statAvgFeeling");
+    if(feelEl){const fIcon={exhausted:"😫",tired:"😔",ok:"😐",good:"🙂",great:"😊",excellent:"🌟"};feelEl.textContent=mostFeeling?fIcon[mostFeeling]||mostFeeling:"—";}
   }
 }
 let chartCurrentYear=new Date().getFullYear(),chartCurrentMonth=new Date().getMonth(),currentMetric='sleep',currentStatsTab='hebdo';
